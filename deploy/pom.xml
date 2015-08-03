@@ -14,7 +14,6 @@
 	<description>Packages the project EAR and eventually deploys it into WildFly</description>
 
 	<properties>
-		<wildfly-maven-plugin-version>1.1.0.Alpha2</wildfly-maven-plugin-version>
 		<app.filename>jobapplication</app.filename>
 	</properties>
 
@@ -79,7 +78,6 @@
 			<plugin>
 				<groupId>org.wildfly.plugins</groupId>
 				<artifactId>wildfly-maven-plugin</artifactId>
-				<version>${wildfly-maven-plugin-version}</version>
 				<executions>
 					<execution>
 						<phase>install</phase>
@@ -90,6 +88,7 @@
 				</executions>
 				<configuration>
 					<filename>${app.filename}.ear</filename>
+					<skip>false</skip>
 				</configuration>
 			</plugin>
 		</plugins>
