@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<description>Object Oriented Design example project</description>
+	<description>Job candidates application</description>
 
 	<modules>
 		<module>business</module>

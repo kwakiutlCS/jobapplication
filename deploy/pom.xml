@@ -15,7 +15,7 @@
 
 	<properties>
 		<wildfly-maven-plugin-version>1.1.0.Alpha2</wildfly-maven-plugin-version>
-		<app.filename>jobplatform</app.filename>
+		<app.filename>jobapplication</app.filename>
 	</properties>
 
 	<dependencies>
@@ -70,7 +70,7 @@
 						<webModule>
 							<groupId>pt.uc.dei.aor.project.alberto_ricardo</groupId>
 							<artifactId>presentation</artifactId>
-							<contextRoot>/jobplatform</contextRoot>
+							<contextRoot>/jobapplication</contextRoot>
 						</webModule>
 					</modules>
 				</configuration>
