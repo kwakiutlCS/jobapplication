@@ -1,5 +1,5 @@
 package pt.uc.dei.aor.project.business.model;
 
-public interface IPosition {
+public interface IPosition  {
 
 }
