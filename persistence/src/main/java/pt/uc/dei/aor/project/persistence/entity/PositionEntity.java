@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -45,16 +46,15 @@ public class PositionEntity {
 	@Column 
 	private String sla;
 	
-	// change variable name
+	// change variable name ??
 	@Column
-	private String contact;
+	private String contactPerson;
 	
 	@Column
 	private String company;
 	
-	// change string
-	@Column
-	private String technicalArea;
+	@ManyToMany
+	private List<TechnicalAreaEntity> technicalAreas;
 	
 	@Column
 	private String description;
@@ -62,6 +62,6 @@ public class PositionEntity {
 //	@Column
 //	private List<String> publication;
 	
-//	@ManyToOne
-//	private GuiaoEntity guiao;
+    @ManyToOne
+    private ScriptEntity script;
 }

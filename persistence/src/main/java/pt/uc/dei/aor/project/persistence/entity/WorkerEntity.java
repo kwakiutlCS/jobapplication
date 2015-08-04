@@ -6,7 +6,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Table;
@@ -20,7 +19,7 @@ public class WorkerEntity extends User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="role")
 	@Enumerated
-	@Column
+	@Column(name="role")
 	private List<Role> roles;
 
 }

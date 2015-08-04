@@ -1,19 +1,17 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.List;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="script")
-public class ScriptEntity {
-
+@Table(name="question_topic")
+public class QuestionTopicEntity {
+	
 	@Id
 	private int id;
 	
-	@OneToMany
-	private List<ScriptEntryEntity> entries;
+	@Column
+	private String title;
 }
