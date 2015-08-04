@@ -23,6 +23,7 @@ public class CandidateEntity extends User {
 	@Column
 	private String mobilePhone;
 	
+	// change string
 	@Column
 	private String qualifications;
 	
@@ -30,6 +31,6 @@ public class CandidateEntity extends User {
 	private String cv;
 	
 	@Column
-	private String motivationLetter;
+	private String coverLetter;
 	
 }

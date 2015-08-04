@@ -19,7 +19,8 @@ public class WorkerEntity extends User {
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="role")
-	@Enumerated(EnumType.STRING)
+	@Enumerated
 	@Column
 	private List<Role> roles;
+
 }
