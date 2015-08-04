@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -35,6 +37,6 @@ public class CandidateEntity extends User {
 	@Column
 	private String cv;
 	
-	//@OneToMany(mappedBy="candidate")
-	//private List<ApplicationEntity> applications;
+	@OneToMany(mappedBy="candidate")
+	private List<ApplicationEntity> applications;
 }

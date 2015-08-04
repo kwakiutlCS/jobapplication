@@ -6,6 +6,7 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class User {
+	
 	@Id
 	protected long id;
 	
