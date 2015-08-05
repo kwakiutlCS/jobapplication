@@ -9,6 +9,18 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class User {
 	
+	public User(String login, String email, String password, String name, String surname) {
+		this.login = login;
+		this.password = password;
+		this.email = email;
+		this.name = name;
+		this.surname = surname;
+	}
+	
+	public User() {
+		
+	}
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
