@@ -22,7 +22,7 @@ public class JobProposalEntity {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
-	private String id_proposal;
+	private int id_proposal;
 	@Enumerated(EnumType.STRING)
 	@Column
 	private ProposalSituation situation;
