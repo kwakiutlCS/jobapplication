@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.persistence.util.ProposalSituation;
+
 
 @Entity
 @Table(name="proposal")
@@ -23,7 +25,7 @@ public class JobProposalEntity {
 	private String id_proposal;
 	@Enumerated(EnumType.STRING)
 	@Column
-	private String situation;
+	private ProposalSituation situation;
 	@Column
 	private LocalDate date;
 	

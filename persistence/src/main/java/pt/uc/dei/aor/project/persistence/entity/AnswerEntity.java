@@ -18,7 +18,6 @@ public class AnswerEntity {
 	private int id_answer;
 
 	@ManyToOne
-	@Column
 	private InterviewEntity interview;
 
 }

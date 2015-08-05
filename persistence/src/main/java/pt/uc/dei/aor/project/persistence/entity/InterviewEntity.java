@@ -20,7 +20,6 @@ public class InterviewEntity {
 
 	
 	@ManyToOne
-	@Column(nullable=false) 
 	private ApplicationEntity application;
 	@Column
 	private int classification;

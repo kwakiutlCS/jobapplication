@@ -8,7 +8,9 @@
 	<module-name>presentation</module-name>
 
 	<welcome-file-list>
-		<welcome-file>index.xhtml</welcome-file>
+		<welcome-file>/manager/index.xhtml</welcome-file>
+		<welcome-file>/admin/index.xhtml</welcome-file>
+		<welcome-file>/interview/index.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<servlet>
@@ -21,4 +23,70 @@
 		<servlet-name>facesServlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/index.xhtml</form-login-page>
+			<form-error-page>/loginerror.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
+	
+	
+	<security-constraint>
+		<display-name>Manager Access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Only Manager Access</web-resource-name>
+			<url-pattern>/manager/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Manager</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>Admin Access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Only Admin Access</web-resource-name>
+			<url-pattern>/admin/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Admin</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<display-name>Interview Access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Only Interview Access</web-resource-name>
+			<url-pattern>/interview/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>Interviewer</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	
+	<security-role>
+		<role-name>Admin</role-name>
+	</security-role>
+	
+	<security-role>
+		<role-name>Interviewer</role-name>
+	</security-role>
+	
+	<security-role>
+		<role-name>Manager</role-name>
+	</security-role>
+	
+	
 </web-app>

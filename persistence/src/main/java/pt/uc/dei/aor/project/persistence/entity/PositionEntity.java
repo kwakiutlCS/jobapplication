@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -19,6 +21,7 @@ import pt.uc.dei.aor.project.persistence.util.PositionState;
 public class PositionEntity {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
 	@Column

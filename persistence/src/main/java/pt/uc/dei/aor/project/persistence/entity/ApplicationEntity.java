@@ -29,16 +29,12 @@ public class ApplicationEntity {
 	private String sourceInfo; 
 	
 	@ManyToOne
-	@Column(nullable=false)
 	private CandidateEntity candidate;
 	@ManyToOne
-	@Column(nullable=false)
 	private PositionEntity position;
 	@OneToMany(mappedBy="application")
-	@Column
 	private List<InterviewEntity> interviews;
 	@OneToOne
-	@Column
 	private JobProposalEntity proposal;
 	
 
