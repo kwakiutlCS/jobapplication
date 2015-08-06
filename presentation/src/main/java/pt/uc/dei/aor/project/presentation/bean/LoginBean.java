@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.enterprise.context.RequestScoped;
@@ -10,6 +11,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.service.WorkerBusinessService;
 
@@ -47,25 +49,19 @@ public class LoginBean {
 		String result = "";
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		//HttpSession session = request.getSession();
+		
 		try {
 			request.login(login, password);
-			request.setAttribute("full_name", workerService.getWorkerFullName(login));
-//			user.setUser(ejb.getUserEntity(email));
-//			UserDetail ud = (UserDetail) dozering(user.getUser());
-//			single.add(ud);
-//			session.setAttribute("user", ud);
-//			if (user.getUser().getRoles().contains(Role.USER)) {
-//				result = "Authorized/entry.xhtml?faces-redirect=true";
-//			} else if (user.getUser().getRoles().contains(Role.ADMIN)) {
-//				result = "Admin/index.xhtml";
-//			} else result = "Admin/index.xhtml";
-			Random rand = new Random();
-			double x = rand.nextDouble();
-			if (x < 1) {
+			
+			IWorker worker = workerService.getWorkerByLogin(login);
+			request.getSession().setAttribute("full_name", worker.getFullName());
+			
+			List<String> roles = worker.getRoles();
+			
+			if (roles.contains("ADMIN")) {
 				result = "/admin/index.xhtml?faces-redirect=true";
 			}
-			else if (x < 0.7) {
+			else if (roles.contains("MANAGER")) {
 				result = "/manager/index.xhtml?faces-redirect=true";
 			}
 			else 
@@ -95,6 +91,6 @@ public class LoginBean {
 	public String getName() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (String) request.getAttribute("full_name");
+		return (String) request.getSession().getAttribute("full_name");
 	}
 }

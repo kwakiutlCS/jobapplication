@@ -27,4 +27,9 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		return workerPersistence.getWorkerFullName(login);
 	}
 
+	@Override
+	public IWorker getWorkerByLogin(String login) {
+		return workerPersistence.getWorkerByLogin(login);
+	}
+
 }

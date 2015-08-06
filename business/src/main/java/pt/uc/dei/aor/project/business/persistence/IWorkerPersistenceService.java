@@ -8,4 +8,6 @@ public interface IWorkerPersistenceService {
 
 	String getWorkerFullName(String login);
 
+	IWorker getWorkerByLogin(String login);
+
 }

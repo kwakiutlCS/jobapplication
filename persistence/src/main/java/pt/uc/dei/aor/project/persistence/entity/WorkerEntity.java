@@ -36,4 +36,7 @@ public class WorkerEntity extends User {
 	@Column(name="role")
 	private List<Role> roles;
 
+	public List<Role> getRoles() {
+		return roles;
+	}
 }
