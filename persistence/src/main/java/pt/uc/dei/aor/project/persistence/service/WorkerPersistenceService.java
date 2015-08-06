@@ -1,8 +1,11 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -25,6 +28,22 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return new WorkerProxy(entity);
 	}
 
+	
+	@Override
+	public String getWorkerFullName(String login) {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("findWorkerByLogin", WorkerEntity.class);
+		query.setParameter("login", login);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		
+		if (!entities.isEmpty()) {
+			WorkerEntity entity = entities.get(0);
+			return entity.getName()+" "+entity.getSurname();
+		}
+		
+		return null;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
     private WorkerEntity getEntity(IWorker workerProxy) {

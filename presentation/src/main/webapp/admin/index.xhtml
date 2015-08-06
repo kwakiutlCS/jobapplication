@@ -10,5 +10,10 @@
 </h:head>
 <h:body>
 	<h2>admin page</h2>
+	<h3>#{loginBean.name}</h3>
+	<h:form>
+		<h:messages />
+		<h:commandButton value="sair" action="#{loginBean.logout()}" />
+	</h:form>
 </h:body>
 </html>

@@ -22,4 +22,9 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		return workerPersistence.save(worker);
 	}
 
+	@Override
+	public String getWorkerFullName(String login) {
+		return workerPersistence.getWorkerFullName(login);
+	}
+
 }

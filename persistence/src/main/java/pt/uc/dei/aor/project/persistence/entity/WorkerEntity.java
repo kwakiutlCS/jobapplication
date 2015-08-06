@@ -9,12 +9,17 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.persistence.util.Role;
 
 @Entity
 @Table(name="worker")
+@NamedQueries({
+	@NamedQuery(name = "findWorkerByLogin",query="from WorkerEntity u where u.login = :login"),
+})
 public class WorkerEntity extends User {
 	
 	public WorkerEntity(String login, String email, String password, String name, String surname) {
