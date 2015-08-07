@@ -25,19 +25,19 @@ public class User {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;
 	
-	@Column
+	@Column(nullable=false, unique=true)
 	protected String login;
 	
-	@Column
+	@Column(nullable=false)
 	protected String password;
 	
-	@Column
+	@Column(nullable=false)
 	protected String name;
 	
-	@Column
+	@Column(nullable=false)
 	protected String surname;
 	
-	@Column
+	@Column(nullable=false, unique=true)
 	protected String email;
 
 	public long getId() {

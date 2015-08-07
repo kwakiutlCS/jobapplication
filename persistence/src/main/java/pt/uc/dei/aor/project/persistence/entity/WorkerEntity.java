@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Index;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -31,12 +33,11 @@ public class WorkerEntity extends User {
 	}
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name="role")
+	@CollectionTable(name="role", indexes={@Index(columnList="workerentity_id")})
 	@Enumerated(EnumType.STRING)
-	@Column(name="role")
-	private List<Role> roles;
+	private Set<Role> roles;
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 }

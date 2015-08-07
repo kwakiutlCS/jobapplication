@@ -16,7 +16,7 @@ public class QuestionEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
+	@Column(nullable=false)
 	private String text;
 	
 	// to change
