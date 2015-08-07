@@ -35,6 +35,7 @@ public class WorkerEntity extends User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="role", indexes={@Index(columnList="workerentity_id")})
 	@Enumerated(EnumType.STRING)
+	@Column(name="role")
 	private Set<Role> roles;
 
 	public Set<Role> getRoles() {
