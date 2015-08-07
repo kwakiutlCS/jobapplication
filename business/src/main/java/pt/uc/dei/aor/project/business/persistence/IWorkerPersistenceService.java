@@ -6,8 +6,6 @@ public interface IWorkerPersistenceService {
 
 	IWorker save(IWorker worker);
 
-	String getWorkerFullName(String login);
-
 	IWorker getWorkerByLogin(String login);
 
 }

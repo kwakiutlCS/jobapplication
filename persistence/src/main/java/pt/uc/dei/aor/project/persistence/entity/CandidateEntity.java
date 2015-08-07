@@ -39,4 +39,22 @@ public class CandidateEntity extends User {
 	
 	@OneToMany(mappedBy="candidate")
 	private List<ApplicationEntity> applications;
+	
+	
+	public CandidateEntity(String login, String email, String password, String name, String surname) {
+		super(login, email, password, name, surname);
+		city = "a";
+		address = "a";
+		country = "a";
+		phone = "a";
+		mobilePhone = "a";
+		qualifications = "a";
+		institution = "a";
+		cv = "a";
+	}
+
+	public CandidateEntity() {
+		
+	}
+	
 }

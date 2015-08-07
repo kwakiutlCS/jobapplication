@@ -1,6 +1,5 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -35,6 +34,7 @@ public class WorkerEntity extends User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="role", indexes={@Index(columnList="workerentity_id")})
 	@Enumerated(EnumType.STRING)
+	@Column(name="role")
 	private Set<Role> roles;
 
 	public Set<Role> getRoles() {

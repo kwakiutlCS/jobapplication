@@ -6,7 +6,7 @@ public interface IWorkerBusinessService {
 	
 	IWorker createNewWorker(String login, String name, String surname, String email, String password);
 	
-	String getWorkerFullName(String login);
-
 	IWorker getWorkerByLogin(String login);
+
+	
 }

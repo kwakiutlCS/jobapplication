@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
+
+	<display-name>web presentation public</display-name>
+	<module-name>presentation-public</module-name>
+
+	<welcome-file-list>
+		<welcome-file>/authorized/index.xhtml</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>facesServlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>facesServlet</servlet-name>
+		<url-pattern>*.xhtml</url-pattern>
+	</servlet-mapping>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/index.xhtml</form-login-page>
+			<form-error-page>/loginerror.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
+	
+	
+	<security-constraint>
+		<display-name>Candidate Access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Only Candidate Access</web-resource-name>
+			<url-pattern>/authorized/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>CANDIDATE</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-role>
+		<role-name>CANDIDATE</role-name>
+	</security-role>
+	
+	
+</web-app>

@@ -28,22 +28,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return new WorkerProxy(entity);
 	}
 
-	// TODO remove this 
-	@Override
-	public String getWorkerFullName(String login) {
-		TypedQuery<WorkerEntity> query = em.createNamedQuery("findWorkerByLogin", WorkerEntity.class);
-		query.setParameter("login", login);
 		
-		List<WorkerEntity> entities = query.getResultList();
-		
-		if (!entities.isEmpty()) {
-			WorkerEntity entity = entities.get(0);
-			return entity.getName()+" "+entity.getSurname();
-		}
-		
-		return null;
-	}
-	
 	@Override
 	public IWorker getWorkerByLogin(String login) {
 		TypedQuery<WorkerEntity> query = em.createNamedQuery("findWorkerByLogin", WorkerEntity.class);
