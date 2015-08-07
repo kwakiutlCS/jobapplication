@@ -11,19 +11,19 @@ import javax.persistence.Table;
 @Table(name="candidate")
 public class CandidateEntity extends User {
 
-	@Column
+	@Column(nullable=false)
 	private String address;
 	
-	@Column
+	@Column(nullable=false)
 	private String city;
 	
-	@Column
+	@Column(nullable=false)
 	private String country;
 	
 	@Column
 	private String phone;
 	
-	@Column
+	@Column(nullable=false)
 	private String mobilePhone;
 	
 	// change string

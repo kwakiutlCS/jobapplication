@@ -16,7 +16,7 @@ public class ScriptEntryEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
+	@Column(nullable=false)
 	private int position;
 	
 	@OneToOne
