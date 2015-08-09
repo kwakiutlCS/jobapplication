@@ -1,6 +1,5 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
