@@ -19,18 +19,18 @@ public class LoginBean {
 	@Inject
 	private IWorkerBusinessService workerService;
 	
-	private String login;
+	private String username;
 	private String password;
 	
 	public LoginBean() {
 	}
 	
-	public String getLogin() {
-		return login;
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setLogin(String login) {
-		this.login = login;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public String getPassword() {
@@ -48,9 +48,9 @@ public class LoginBean {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		
 		try {
-			request.login(login, password);
+			request.login(username, password);
 			
-			IWorker worker = workerService.getWorkerByLogin(login);
+			IWorker worker = workerService.getWorkerByLogin(username);
 			request.getSession().setAttribute("full_name", worker.getFullName());
 			
 			List<String> roles = worker.getRoles();

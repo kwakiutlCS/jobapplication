@@ -23,11 +23,6 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public String getWorkerFullName(String login) {
-		return workerPersistence.getWorkerFullName(login);
-	}
-
-	@Override
 	public IWorker getWorkerByLogin(String login) {
 		return workerPersistence.getWorkerByLogin(login);
 	}
