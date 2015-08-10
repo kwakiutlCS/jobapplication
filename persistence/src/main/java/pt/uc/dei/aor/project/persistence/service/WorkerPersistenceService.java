@@ -23,10 +23,18 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	public IWorker save(IWorker worker) {
 		WorkerEntity entity = getEntity(worker);
 		
-		entity = em.merge(entity);
+		em.persist(entity);
 		
 		return new WorkerProxy(entity);
 	}
+	
+	@Override
+	public void delete(IWorker worker) {
+		IWorker workerProxy = getWorkerByLogin(worker.getLogin());
+		
+		em.remove(getEntity(workerProxy));
+	}
+
 	
 	@Override
 	public IWorker getWorkerByLogin(String login) {
@@ -54,5 +62,6 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
         throw new IllegalStateException();
     }
 
+	
 
 }

@@ -7,4 +7,6 @@ public interface IWorker {
 	public String getFullName();
 	
 	public List<String> getRoles();
+
+	public String getLogin();
 }

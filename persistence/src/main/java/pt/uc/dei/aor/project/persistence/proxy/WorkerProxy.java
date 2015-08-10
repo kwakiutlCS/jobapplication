@@ -38,4 +38,9 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return roles;
 	}
 
+	@Override
+	public String getLogin() {
+		return entity.getLogin();
+	}
+
 }
