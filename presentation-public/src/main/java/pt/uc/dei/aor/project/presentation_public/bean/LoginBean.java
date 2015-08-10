@@ -1,7 +1,5 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
-import java.util.List;
-
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -9,7 +7,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 @Named

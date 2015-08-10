@@ -1,13 +1,10 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.presentation_public.security.Encryptor;
 
 @Named

@@ -1,7 +1,6 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -9,11 +8,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
-import pt.uc.dei.aor.project.business.service.WorkerBusinessService;
 
 @Named
 @RequestScoped
