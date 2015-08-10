@@ -42,5 +42,10 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	public String getLogin() {
 		return entity.getLogin();
 	}
+	
+	@Override
+	public long getId() {
+		return entity.getId();
+	}
 
 }

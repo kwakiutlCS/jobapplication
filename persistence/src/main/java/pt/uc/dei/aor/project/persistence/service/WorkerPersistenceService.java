@@ -30,15 +30,15 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	
 	@Override
 	public void delete(IWorker worker) {
-		IWorker workerProxy = getWorkerByLogin(worker.getLogin());
+		WorkerEntity entity = getEntity(worker); 
 		
-		em.remove(getEntity(workerProxy));
+		em.remove(em.merge(entity));
 	}
 
 	
 	@Override
 	public IWorker getWorkerByLogin(String login) {
-		TypedQuery<WorkerEntity> query = em.createNamedQuery("findWorkerByLogin", WorkerEntity.class);
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findWorkerByLogin", WorkerEntity.class);
 		query.setParameter("login", login);
 		
 		List<WorkerEntity> entities = query.getResultList();

@@ -64,7 +64,9 @@ public class WorkerPersistenceServiceTest {
     	
     	IWorker worker = factory.worker(login, email, password, name, surname);
     	workerEjb.save(worker);
-    	assertThat(workerEjb.getWorkerByLogin(login), is(IsInstanceOf.instanceOf(WorkerProxy.class)));
+    	
+    	worker = workerEjb.getWorkerByLogin(login);
+    	assertThat(worker, is(IsInstanceOf.instanceOf(WorkerProxy.class)));
     	
     	workerEjb.delete(worker);
     	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));

@@ -9,4 +9,6 @@ public interface IWorker {
 	public List<String> getRoles();
 
 	public String getLogin();
+	
+	public long getId();
 }
