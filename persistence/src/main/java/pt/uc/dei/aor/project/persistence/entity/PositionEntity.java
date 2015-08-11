@@ -46,7 +46,7 @@ public class PositionEntity {
 	private PositionState state;
 	
 	@Column(nullable=false)
-	private int numPositions;
+	private int vacancies;
 	
 	@Column(nullable=false)
 	private LocalDate openingDate;

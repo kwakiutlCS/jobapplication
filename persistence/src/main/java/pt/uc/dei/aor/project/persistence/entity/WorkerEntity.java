@@ -1,4 +1,4 @@
-package pt.uc.dei.aor.project.persistence.entity;
+ package pt.uc.dei.aor.project.persistence.entity;
 
 import java.util.Set;
 
