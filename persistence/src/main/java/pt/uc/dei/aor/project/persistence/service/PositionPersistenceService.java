@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -9,7 +10,7 @@ import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.PositionProxy;
 
-
+@Stateless
 public class PositionPersistenceService implements IPositionPersistenceService {
 	
 	@PersistenceContext(unitName = "jobs")

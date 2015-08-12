@@ -13,7 +13,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		this.entity = entity != null ? entity : new PositionEntity();
 	}
 
-	public PositionProxy(LocalDate openingDate, int code, String title,int vacancies, LocalDate closingDate,
+	public PositionProxy(LocalDate openingDate, String title,int vacancies, LocalDate closingDate,
 			String sla, String contactPerson, String company, String description) {
 		
 		entity = new PositionEntity();
