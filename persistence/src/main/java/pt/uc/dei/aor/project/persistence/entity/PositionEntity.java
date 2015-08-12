@@ -47,9 +47,11 @@ public class PositionEntity {
 	@Column(nullable=false)
 	private List<Localization> localization;
 	
+	@ElementCollection
+	@CollectionTable(name="position_state", joinColumns = @JoinColumn(name="id_position"))
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false)
-	private PositionState state;
+	private List<PositionState> state;
 	
 	@Column(nullable=false)
 	private int vacancies;
@@ -115,11 +117,11 @@ public class PositionEntity {
 		this.localization = localization;
 	}
 
-	public PositionState getState() {
+	public List<PositionState> getState() {
 		return state;
 	}
 
-	public void setState(PositionState state) {
+	public void setState(List<PositionState> state) {
 		this.state = state;
 	}
 
