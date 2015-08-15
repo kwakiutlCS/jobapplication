@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public interface IModelFactory {
 
+
 	IWorker worker(String login, String email, String password, String name, String surname);	
 	
 	IPosition position (LocalDate openingDate, 
@@ -17,14 +18,7 @@ public interface IModelFactory {
 						String description);
 	
 	IPublicationChanhel publicationChannel(String channel);
-	
-	
-	
-	
-	
-	
 
-	
-	
-	
+	IScript script();	
+
 }

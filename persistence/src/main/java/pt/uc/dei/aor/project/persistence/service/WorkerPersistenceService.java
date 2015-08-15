@@ -23,14 +23,22 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	public IWorker save(IWorker worker) {
 		WorkerEntity entity = getEntity(worker);
 		
-		entity = em.merge(entity);
+		em.persist(entity);
 		
 		return new WorkerProxy(entity);
 	}
 	
 	@Override
+	public void delete(IWorker worker) {
+		WorkerEntity entity = getEntity(worker); 
+		
+		em.remove(em.merge(entity));
+	}
+
+	
+	@Override
 	public IWorker getWorkerByLogin(String login) {
-		TypedQuery<WorkerEntity> query = em.createNamedQuery("findWorkerByLogin", WorkerEntity.class);
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findWorkerByLogin", WorkerEntity.class);
 		query.setParameter("login", login);
 		
 		List<WorkerEntity> entities = query.getResultList();
@@ -54,5 +62,6 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
         throw new IllegalStateException();
     }
 
+	
 
 }

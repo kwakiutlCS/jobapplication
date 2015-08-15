@@ -5,8 +5,12 @@ import java.time.LocalDate;
 import javax.ejb.Stateless;
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+
+import pt.uc.dei.aor.project.business.model.IScript;
+
 import pt.uc.dei.aor.project.business.model.IWorker;
 
 @Stateless
@@ -31,6 +35,10 @@ public class ModelFactory implements IModelFactory {
 		return null;
 	}
 
+    @Override
+	public IScript script() {
+		return new ScriptProxy();
+	}
 
-	
+
 }

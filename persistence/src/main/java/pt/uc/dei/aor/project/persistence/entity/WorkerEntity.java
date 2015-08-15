@@ -19,7 +19,7 @@ import pt.uc.dei.aor.project.persistence.util.Role;
 @Entity
 @Table(name="worker")
 @NamedQueries({
-	@NamedQuery(name = "findWorkerByLogin",query="from WorkerEntity u where u.login = :login"),
+	@NamedQuery(name = "Worker.findWorkerByLogin",query="from WorkerEntity u where u.login = :login"),
 })
 public class WorkerEntity extends User {
 	

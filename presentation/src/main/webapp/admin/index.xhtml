@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<meta charset="utf-8" />
@@ -16,5 +17,11 @@
 		<h:commandButton action="createposition.xhtml?faces-redirect=true" value="criar posição" />
 		<h:commandButton value="sair" action="#{loginBean.logout()}" />
 	</h:form>
+	
+	<p:menu>
+        <p:submenu>
+            <p:menuitem value="Internal" outcome="/admin/scripts" />
+        </p:submenu>
+    </p:menu>
 </h:body>
 </html>

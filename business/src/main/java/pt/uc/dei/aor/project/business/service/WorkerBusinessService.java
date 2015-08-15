@@ -27,4 +27,8 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		return workerPersistence.getWorkerByLogin(login);
 	}
 
+	@Override
+	public void deleteWorker(IWorker worker) {
+		workerPersistence.delete(worker);
+	}
 }

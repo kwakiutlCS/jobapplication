@@ -8,4 +8,6 @@ public interface IWorkerPersistenceService {
 
 	IWorker getWorkerByLogin(String login);
 
+	void delete(IWorker worker);
+
 }
