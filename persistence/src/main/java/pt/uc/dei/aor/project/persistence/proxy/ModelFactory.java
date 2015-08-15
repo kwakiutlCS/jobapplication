@@ -22,11 +22,11 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IPosition position(LocalDate openingDate, int code, String title,
+	public IPosition position(LocalDate openingDate, String title,
 			int vacancy, LocalDate closingDate, String sla,
 			String responsableName, String company, String description) {
-		// TODO Auto-generated method stub
-		return null;
+		return new PositionProxy(openingDate, title, vacancy,closingDate, sla,
+				responsableName, company, description);
 	}
 
 	@Override
@@ -39,6 +39,5 @@ public class ModelFactory implements IModelFactory {
 	public IScript script() {
 		return new ScriptProxy();
 	}
-
 
 }

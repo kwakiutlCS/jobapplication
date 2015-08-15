@@ -1,4 +1,4 @@
-package pt.uc.dei.aor.project.presentation.bean;
+ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -7,7 +7,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 
 
@@ -23,11 +22,7 @@ public class PositionBean implements Serializable {
 	@Inject
 	private IPositionBusinessService position;
 	
-	//@Inject 
-	private IPublicationChanhel channel;
-	
 	private LocalDate openingDate;
-	private int code; 
 	private String title;
 	private int vacancies; 
 	private LocalDate closingDate;
@@ -50,14 +45,6 @@ public class PositionBean implements Serializable {
 		this.position = position;
 	}
 
-	public IPublicationChanhel getChannel() {
-		return channel;
-	}
-
-	public void setChannel(IPublicationChanhel channel) {
-		this.channel = channel;
-	}
-
 	public LocalDate getOpeningDate() {
 		return openingDate;
 	}
@@ -66,13 +53,6 @@ public class PositionBean implements Serializable {
 		this.openingDate = openingDate;
 	}
 
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
 
 	public String getTitle() {
 		return title;
@@ -155,7 +135,7 @@ public class PositionBean implements Serializable {
 	}
 	
 	public String createPosition() {
-		position.createNewPosition(openingDate, code, title, vacancies, 
+		position.createNewPosition(openingDate, title, vacancies, 
 				closingDate, sla, contactPerson, company, description);
 		String result="new position";
 		
