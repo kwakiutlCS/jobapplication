@@ -10,14 +10,18 @@
 	<title>index </title>
 </h:head>
 <h:body>
+
 	<h2>add scripts page</h2>
-	
 	<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable">
 		<p:column>#{entry.text}</p:column>
 	</p:dataTable>
-	
-	<h2>Add question</h2>
+	<h:form id="saveScriptForm" prependId="false">
+		<p:commandButton value="Gravar" action="#{scriptBean.updateScript}"
+		rendered="true" id="updateScriptBtn"/>
+	</h:form>	
+		
 	<h:form id="addQuestionForm" prependId="false">
+	<h2>Add question</h2>
 		<p:messages autoUpdate="true" />
 		
 		<p:selectOneMenu value="#{scriptBean.questionType}">
@@ -28,7 +32,7 @@
 		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"/>
 		<br />
 		<p:commandButton value="Adicionar" action="#{scriptBean.addQuestion}"
-		update="questionTextField scriptQuestionTable" />
+		update="questionTextField scriptQuestionTable :updateScriptBtn" />
 	</h:form>
 	
 </h:body>

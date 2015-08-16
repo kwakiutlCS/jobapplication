@@ -1,7 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,7 +63,7 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 
 	@Override
 	public void addQuestion(String questionText, String questionType) {
-		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType));
+		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition()));
 	}
 
 	

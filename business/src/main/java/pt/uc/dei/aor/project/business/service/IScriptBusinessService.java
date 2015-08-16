@@ -11,7 +11,7 @@ public interface IScriptBusinessService {
 
 	public IScript createNewScript();
 
-	public IScript addQuestion(IScript script, String questionText, String questionType);
-
 	public List<String> getQuestionTypeList();
+
+	public IScript update(IScript editableScript);
 }

@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,10 +25,9 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	
 	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
 	private QuestionEntity question;
-
 	
-	public ScriptEntryEntity(String questionText, String questionType) {
-		position = 1;
+	public ScriptEntryEntity(String questionText, String questionType, int position) {
+		this.position = position;
 		question = new QuestionEntity(questionText, questionType);
 	}
 
@@ -45,7 +45,10 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	public int compareTo(ScriptEntryEntity o) {
 		return position-o.position;
 	}
+
+
+	public int getPosition() {
+		return position;
+	}
 	
-	
-	// add connection to script ???
 }

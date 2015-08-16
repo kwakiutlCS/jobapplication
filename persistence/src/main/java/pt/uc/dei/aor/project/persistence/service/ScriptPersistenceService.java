@@ -32,17 +32,11 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 	@Override
 	public IScript save(IScript script) {
 		ScriptEntity entity = getEntity(script);
-		entity.setEntries(new TreeSet<>());
-		em.persist(entity);
-		return new ScriptProxy(entity);
-	}
-	
-	@Override
-	public IScript update(IScript script) {
-		ScriptEntity entity = getEntity(script);
 		entity = em.merge(entity);
 		return new ScriptProxy(entity);
 	}
+	
+	
 	
 	@Override
 	public List<IScript> findAllScripts() {
@@ -57,13 +51,7 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 		return proxies;
 	}
 	
-	@Override
-	public List<IScriptEntry> findEntriesByScript(IScript script) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
+		
 	@SuppressWarnings("unchecked")
     private ScriptEntity getEntity(IScript scriptProxy) {
         if (scriptProxy instanceof IProxyToEntity<?>) {

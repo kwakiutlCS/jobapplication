@@ -16,9 +16,12 @@
 		<h:commandLink action="#{scriptBean.addScript}" value="add new Script" />
 	</h:form>
 	
-	<p:dataTable value="#{scriptBean.scripts}" var="script">
-		<p:column>#{script.id}</p:column>
-	</p:dataTable>
+	<h:form id="scriptsForm">
+		<p:dataTable value="#{scriptBean.scripts}" var="script">
+			<p:column>#{script.id}</p:column>
+			<p:column><p:commandButton value="edit" action="#{scriptBean.edit(script)}" /></p:column>
+		</p:dataTable>
+	</h:form>
 	
 </h:body>
 </html>

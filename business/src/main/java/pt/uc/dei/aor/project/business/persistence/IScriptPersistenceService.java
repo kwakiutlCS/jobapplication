@@ -9,10 +9,6 @@ public interface IScriptPersistenceService {
 
 	List<IScript> findAllScripts();
 
-	List<IScriptEntry> findEntriesByScript(IScript script);
-
 	IScript save(IScript script);
-
-	IScript update(IScript script);
-
+	
 }
