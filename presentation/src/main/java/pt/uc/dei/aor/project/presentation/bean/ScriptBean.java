@@ -35,9 +35,7 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void addQuestion() {
-		System.out.println(editableScript.getEntries());
 		editableScript.addQuestion(questionText, questionType);
-		System.out.println(editableScript.getEntries());
 		pendingAlteration = true;
 	}
 	

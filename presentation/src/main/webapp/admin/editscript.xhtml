@@ -15,10 +15,10 @@
 	<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable">
 		<p:column>#{entry.text}</p:column>
 	</p:dataTable>
-	<h:form id="saveScriptForm" prependId="false">
+	<h:form id="saveScriptForm">
 		<p:commandButton value="Gravar" action="#{scriptBean.updateScript}"
 		rendered="#{scriptBean.pendingAlteration}" id="updateScriptBtn"
-		update="updateScriptBtn" />
+		update="@form" />
 	</h:form>	
 		
 	<h:form id="addQuestionForm" prependId="false">
@@ -33,7 +33,7 @@
 		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"/>
 		<br />
 		<p:commandButton value="Adicionar" action="#{scriptBean.addQuestion}"
-		update="questionTextField scriptQuestionTable" />
+		update="questionTextField scriptQuestionTable saveScriptForm" />
 	</h:form>
 	
 </h:body>
