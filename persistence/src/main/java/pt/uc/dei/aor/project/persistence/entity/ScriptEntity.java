@@ -32,12 +32,8 @@ public class ScriptEntity {
 	@OneToMany(cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch=FetchType.EAGER)
 	private SortedSet<ScriptEntryEntity> entries;
 
-	@Transient
-	private int nextPosition;
-	
 	public ScriptEntity() {
 		this.entries = new TreeSet<>();
-		nextPosition = 0;
 	}
 	
 	public long getId() {
@@ -53,7 +49,7 @@ public class ScriptEntity {
 	}
 
 	public int getNextPosition() {
-		return nextPosition++;
+		return entries.last().getPosition()+1;
 	}
 	
 	
