@@ -2,49 +2,81 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
 
-<h:head>
-	<meta charset="utf-8" />
-	<title>index </title>
-</h:head>
-<h:body>
+	<h:head>
+		<meta charset="utf-8" />
+		<title>Create Position</title>
+	</h:head>
+	<h:body>
+	
+	<h:form id="newpositionform">
+			<p:growl id="msgs" showDetail="true" />
 
-	<h:panelGroup>
-		
-		<h:form id="newpositionform">
-						
-			<h:outputLabel for="opdate" value="opening date" />
-			<h:inputText id="opdate" 
-				value="#{positionBean.openingDate}" required="true" />
-			<br />
-			<h:outputLabel for="title" value="Title" />
-			<h:inputText id="title" value="#{positionBean.title}" />
-			<br />
-			<h:outputLabel for="vacancies" value="Vacancies" />
-			<h:inputText id="vacancies" value="#{positionBean.vacancies}" />
-			<br />
-			<h:outputLabel for="closDate" value="Closing Date" />
-			<h:inputText id="closDate" value="#{positionBean.closingDate}" />
-			<br />
-			<h:outputLabel for="sla" value="SLA" />
-			<h:inputText id="sla" value="#{positionBean.sla}" />
-			<br />
-			<h:outputLabel for="contactPerson" value="Contact Person" />
-			<h:inputText id="contactPerson" value="#{positionBean.contactPerson}" />
-			<br />
-			<h:outputLabel for="company" value="Company" />
-			<h:inputText id="company" value="#{positionBean.company}" />
-			<br />
-			<h:outputLabel for="description" value="Description" />
-			<h:inputText id="description" value="#{positionBean.vacancies}" />
-			
-			<h:commandButton action="#{positionBean.createPosition()}" value="Create Position" />
+			<h:panelGrid columns="2" cellpadding="5">
+
+				<p:outputLabel for="opdate" value="opening date" />
+
+				<p:calendar id="opdate" style="width: 100%;"
+					value="#{positionBean.openingDate}" />
+
+
+				<p:outputLabel for="title" value="Title" />
+				<p:inputText id="title" value="#{positionBean.title}" />
+
+
+				<p:outputLabel for="vacancies" value="Vacancies" />
+				<p:spinner id="vacancies" value="#{positionBean.vacancies}" />
+
+
+				<p:outputLabel for="closdate" value="Closing Date" />
+				<p:calendar id="closdate" style="width: 100%;"
+					value="#{positionBean.closingDate}" />
+
+
+				<p:outputLabel for="sla" value="SLA" />
+				<p:inputText id="sla" value="#{positionBean.sla}" />
+
+
+				<p:outputLabel for="contactPerson" value="Contact Person" />
+				<p:inputText id="contactPerson"
+					value="#{positionBean.contactPerson}" />
+
+
+				<p:outputLabel for="company" value="Company" />
+				<p:inputText id="company" value="#{positionBean.company}" />
+
+
+				<p:outputLabel for="description" value="Description" />
+				<p:inputText id="description" value="#{positionBean.description}" />
+
+				<p:outputLabel for="local" value="Localization" />
+				<p:selectOneMenu id="local" value="#{positionBean.localization}">
+					<f:selectItems value="#{positionBean.localizations}"
+						var="localization" itemValue="#{localization}"
+						itemLabel="#{localization.label}" />
+						</p:selectOneMenu>
+
+					<p:outputLabel for="positionState" value="Position State" />
+					<p:inputText id="positionState"
+						value="#{positionBean.positionState}" />
+
+					<p:outputLabel for="tecnhicalArea" value="Tecnhical Area" />
+					<p:inputText id="tecnhicalArea"
+						value="#{positionBean.technicalArea}" />
+			</h:panelGrid>
+
+			<p:commandButton process="@form" value="Submit" update="msgs"
+				action="#{positionBean.createPosition}" icon="ui-icon-check" />
+
 
 		</h:form>
-	</h:panelGroup>
+
+
 	
-	<h:link outcome="index" value="back" />
-	
-</h:body>
+		
+	</h:body>
+</f:view>
 </html>

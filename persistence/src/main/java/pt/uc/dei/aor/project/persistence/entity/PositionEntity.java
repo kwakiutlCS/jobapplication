@@ -1,6 +1,6 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -15,12 +15,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import pt.uc.dei.aor.project.persistence.util.Localization;
+import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.persistence.util.PositionState;
 import pt.uc.dei.aor.project.persistence.util.TechnicalArea;
 
@@ -41,26 +40,23 @@ public class PositionEntity {
 	@Column(nullable=false)
 	private String title;
 	
-	@ElementCollection
-	@CollectionTable(name="position_localization", joinColumns = @JoinColumn(name="id_position"))
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=false)
-	private List<Localization> localization;
+	private Localization localization;
 	
-	@ElementCollection
-	@CollectionTable(name="position_state", joinColumns = @JoinColumn(name="id_position"))
 	@Enumerated(EnumType.STRING)
-	@Column(nullable=false)
-	private List<PositionState> state;
+	@Column(nullable=true)
+	private PositionState state;
 	
 	@Column(nullable=false)
 	private int vacancies;
 	
 	@Column(nullable=false)
-	private LocalDate openingDate;
+	private Date openingDate;
 	
 	@Column(nullable=false)
-	private LocalDate closingDate;
+	private Date closingDate;
 	
 	@Column(nullable=false) 
 	private String sla;
@@ -84,6 +80,42 @@ public class PositionEntity {
 	
     @ManyToOne
     private ScriptEntity script;
+    
+    
+    
+
+	public PositionEntity(String title, Localization localization,
+			PositionState state, int vacancies, Date openingDate,
+			Date closingDate, String sla, String contactPerson, String company,
+			List<TechnicalArea> technicalAreas, String description,
+			Set<PublicationChannelEntity> publications, ScriptEntity script) {
+		super();
+		this.title = title;
+		this.localization = localization;
+		this.state = state;
+		this.vacancies = vacancies;
+		this.openingDate = openingDate;
+		this.closingDate = closingDate;
+		this.sla = sla;
+		this.contactPerson = contactPerson;
+		this.company = company;
+		this.technicalAreas = technicalAreas;
+		this.description = description;
+		this.publications = publications;
+		this.script = script;
+	}
+
+	public PositionEntity() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public PositionEntity(Date openingDate2, String title2,
+			Localization localization2, int vacancies2, Date closingDate2,
+			String sla2, String contactPerson2, String company2,
+			String description2, Set<PublicationChannelEntity> publications2,
+			ScriptEntity script2) {
+		// TODO Auto-generated constructor stub
+	}
 
 	public int getId() {
 		return id;
@@ -109,19 +141,19 @@ public class PositionEntity {
 		this.title = title;
 	}
 
-	public List<Localization> getLocalization() {
+	public Localization getLocalization() {
 		return localization;
 	}
 
-	public void setLocalization(List<Localization> localization) {
+	public void setLocalization(Localization localization) {
 		this.localization = localization;
 	}
 
-	public List<PositionState> getState() {
+	public PositionState getState() {
 		return state;
 	}
 
-	public void setState(List<PositionState> state) {
+	public void setState(PositionState state) {
 		this.state = state;
 	}
 
@@ -133,19 +165,19 @@ public class PositionEntity {
 		this.vacancies = vacancies;
 	}
 
-	public LocalDate getOpeningDate() {
+	public Date getOpeningDate() {
 		return openingDate;
 	}
 
-	public void setOpeningDate(LocalDate openingDate) {
+	public void setOpeningDate(Date openingDate) {
 		this.openingDate = openingDate;
 	}
 
-	public LocalDate getClosingDate() {
+	public Date getClosingDate() {
 		return closingDate;
 	}
 
-	public void setClosingDate(LocalDate closingDate) {
+	public void setClosingDate(Date closingDate) {
 		this.closingDate = closingDate;
 	}
 

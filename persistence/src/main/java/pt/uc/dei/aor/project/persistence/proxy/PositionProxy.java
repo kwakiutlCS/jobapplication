@@ -1,9 +1,18 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
+import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
+import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
+import pt.uc.dei.aor.project.persistence.util.PositionState;
+import pt.uc.dei.aor.project.persistence.util.TechnicalArea;
 
 public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> {
 
@@ -13,17 +22,25 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		this.entity = entity != null ? entity : new PositionEntity();
 	}
 
-	public PositionProxy(LocalDate openingDate, String title,int vacancies, LocalDate closingDate,
-			String sla, String contactPerson, String company, String description) {
+	public PositionProxy(Date openingDate, String title, Localization localization, int vacancies, Date closingDate, String sla, 
+			String contactPerson, String company ,String description) {
 		
-		entity = new PositionEntity();
+		Set<PublicationChannelEntity> publications = new TreeSet<>();
+		ScriptEntity script = null;
+		List<TechnicalArea> technicalAreas = new ArrayList<>();		
+		PositionState state = PositionState.CLOSED;
+		
+		entity = new PositionEntity(title, localization,
+				state,  vacancies, openingDate,
+				closingDate,  sla,  contactPerson, company,
+				 technicalAreas,  description,
+				 publications,  script);
 	}
 
 	@Override
 	public PositionEntity getEntity() {
 		return entity;
 	}
-
 
 
 }

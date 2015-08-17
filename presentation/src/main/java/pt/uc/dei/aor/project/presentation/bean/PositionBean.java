@@ -1,17 +1,20 @@
  package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
+import pt.uc.dei.aor.project.business.util.Localization;
 
 
 @Named
-@RequestScoped
+@SessionScoped
 public class PositionBean implements Serializable {
 	
 	/**
@@ -22,21 +25,30 @@ public class PositionBean implements Serializable {
 	@Inject
 	private IPositionBusinessService position;
 	
-	private LocalDate openingDate;
+	
+	private Date openingDate;
 	private String title;
 	private int vacancies; 
-	private LocalDate closingDate;
+	private Date closingDate;
 	private String sla;
 	private String contactPerson;
 	private String company;
 	private String description;
-	private String localization;
+	private Localization localization;
 	private String positionState;
 	private String technicalArea;
+	
 	
 	public PositionBean() {
 	}
 
+	
+	public List<Localization> getLocalizations(){
+		
+		return Arrays.asList(Localization.values());
+	}
+	
+	
 	public IPositionBusinessService getPosition() {
 		return position;
 	}
@@ -45,11 +57,11 @@ public class PositionBean implements Serializable {
 		this.position = position;
 	}
 
-	public LocalDate getOpeningDate() {
+	public Date getOpeningDate() {
 		return openingDate;
 	}
 
-	public void setOpeningDate(LocalDate openingDate) {
+	public void setOpeningDate(Date openingDate) {
 		this.openingDate = openingDate;
 	}
 
@@ -70,11 +82,11 @@ public class PositionBean implements Serializable {
 		this.vacancies = vacancies;
 	}
 
-	public LocalDate getClosingDate() {
+	public Date getClosingDate() {
 		return closingDate;
 	}
 
-	public void setClosingDate(LocalDate closingDate) {
+	public void setClosingDate(Date closingDate) {
 		this.closingDate = closingDate;
 	}
 
@@ -110,13 +122,16 @@ public class PositionBean implements Serializable {
 		this.description = description;
 	}
 
-	public String getLocalization() {
+
+	public Localization getLocalization() {
 		return localization;
 	}
 
-	public void setLocalization(String localization) {
+
+	public void setLocalization(Localization localization) {
 		this.localization = localization;
 	}
+
 
 	public String getPositionState() {
 		return positionState;
@@ -135,10 +150,14 @@ public class PositionBean implements Serializable {
 	}
 	
 	public String createPosition() {
-		position.createNewPosition(openingDate, title, vacancies, 
-				closingDate, sla, contactPerson, company, description);
-		String result="new position";
 		
+		technicalArea = "um";
+		positionState = "três";
+		
+		position.createNewPosition(openingDate, title, localization, vacancies, closingDate, sla, contactPerson, company, description);
+		String result="new position";
+		System.out.println("Dat ab "+openingDate+" Title "+title+" Vacancies "+vacancies+" closingdate "+ closingDate+" sla "+sla+
+				" contact "+contactPerson+" company "+company+" description "+description);
 		return  result;
 	}
 	

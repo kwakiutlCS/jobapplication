@@ -1,6 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.ejb.Stateless;
 
@@ -8,6 +8,7 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.util.Localization;
 
 @Stateless
 public class ModelFactory implements IModelFactory {
@@ -18,11 +19,10 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IPosition position(LocalDate openingDate, String title,
-			int vacancy, LocalDate closingDate, String sla,
-			String responsableName, String company, String description) {
-		return new PositionProxy(openingDate, title, vacancy,closingDate, sla,
-				responsableName, company, description);
+	public IPosition position(Date openingDate, String title, Localization localization, int vacancies, Date closingDate, String sla, 
+			String contactPerson, String company ,String description) {
+		return new PositionProxy(openingDate, title,localization, vacancies,closingDate, sla,
+				contactPerson, company, description);
 	}
 
 	@Override
