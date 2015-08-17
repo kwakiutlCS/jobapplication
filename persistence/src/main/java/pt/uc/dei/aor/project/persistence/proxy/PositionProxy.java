@@ -8,11 +8,12 @@ import java.util.TreeSet;
 
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.util.Localization;
+import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
-import pt.uc.dei.aor.project.persistence.util.PositionState;
-import pt.uc.dei.aor.project.persistence.util.TechnicalArea;
+
 
 public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> {
 

@@ -6,9 +6,10 @@ import java.util.List;
 
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
-import pt.uc.dei.aor.project.persistence.util.QuestionType;
+
 
 public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 

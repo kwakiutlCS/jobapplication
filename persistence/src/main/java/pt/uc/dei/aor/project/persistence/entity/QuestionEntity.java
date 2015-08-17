@@ -13,7 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import pt.uc.dei.aor.project.persistence.util.QuestionType;
+import pt.uc.dei.aor.project.business.util.QuestionType;
+
+
 
 @Entity
 @Table(name="question")
