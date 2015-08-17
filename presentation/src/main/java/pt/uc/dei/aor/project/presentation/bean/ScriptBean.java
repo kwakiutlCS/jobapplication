@@ -39,6 +39,11 @@ public class ScriptBean implements Serializable {
 		pendingAlteration = true;
 	}
 	
+	public void deleteQuestion(IScriptEntry entry) {
+		editableScript.deleteQuestion(entry);
+		pendingAlteration = true;
+	}
+	
 	public void updateScript() {
 		editableScript = scriptEjb.update(editableScript);
 		pendingAlteration=false;

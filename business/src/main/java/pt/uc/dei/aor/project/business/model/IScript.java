@@ -11,4 +11,6 @@ public interface IScript {
 	public List<String> getQuestionTypeList();
 
 	public void addQuestion(String questionText, String questionType);
+
+	public void deleteQuestion(IScriptEntry entry);
 }

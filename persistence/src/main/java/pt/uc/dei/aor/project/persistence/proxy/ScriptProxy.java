@@ -66,6 +66,19 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition()));
 	}
 
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void deleteQuestion(IScriptEntry entry) {
+		ScriptEntryEntity entryEntity;
+		if (entry instanceof IProxyToEntity<?>) {
+            entryEntity = ((IProxyToEntity<ScriptEntryEntity>) entry).getEntity();
+        }
+		else throw new IllegalStateException();
+        
+		entity.getEntries().remove(entryEntity);
+	}
+
 	
 
 }
