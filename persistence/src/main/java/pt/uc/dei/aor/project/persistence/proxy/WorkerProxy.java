@@ -26,7 +26,7 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 
 	@Override
 	public String getFullName() {
-		return entity.getEmail()+" "+entity.getSurname();
+		return entity.getName()+" "+entity.getSurname();
 	}
 
 	@Override
