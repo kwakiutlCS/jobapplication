@@ -13,9 +13,11 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.persistence.entity.User;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
@@ -30,6 +32,7 @@ public class WorkerPersistenceServiceTest {
         	.addAsResource("META-INF/persistence.xml")
        		.addPackage(User.class.getPackage())
        		.addPackage(Role.class.getPackage())
+       		.addPackage(Localization.class.getPackage())
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
             .addClass(IWorker.class)

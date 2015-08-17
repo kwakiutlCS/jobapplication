@@ -5,23 +5,29 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <h:head>
 	<meta charset="utf-8" />
-	<title>index </title>
+	<title>index</title>
 </h:head>
+
 <h:body>
 	<h2>admin page</h2>
 	<h3>#{loginBean.name}</h3>
 	<h:form>
 		<h:messages />
-		<h:commandButton action="createposition.xhtml?faces-redirect=true" value="criar posição" />
+		<h:button outcome="createposition.xhtml?faces-redirect=true"
+			value="criar posição" />
 		<h:commandButton value="sair" action="#{loginBean.logout()}" />
+
 	</h:form>
-	
+
 	<p:menu>
-        <p:submenu>
-            <p:menuitem value="Internal" outcome="/admin/scripts" />
-        </p:submenu>
-    </p:menu>
+		<p:submenu>
+			<p:menuitem value="Internal" outcome="/admin/scripts" />
+		</p:submenu>
+	</p:menu>
+
 </h:body>
+
 </html>
