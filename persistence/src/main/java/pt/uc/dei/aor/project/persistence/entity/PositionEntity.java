@@ -20,8 +20,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
-import pt.uc.dei.aor.project.persistence.util.PositionState;
-import pt.uc.dei.aor.project.persistence.util.TechnicalArea;
+import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
+
 
 @Entity
 @Table(name="position")

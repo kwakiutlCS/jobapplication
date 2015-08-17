@@ -1,4 +1,4 @@
-package pt.uc.dei.aor.project.persistence.util;
+package pt.uc.dei.aor.project.business.util;
 
 public enum QuestionType {
 	SHORT_ANSWER("Resposta curta"),
