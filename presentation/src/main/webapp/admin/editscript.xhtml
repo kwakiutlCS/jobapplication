@@ -24,7 +24,7 @@
 	
 	<h:form id="saveScriptForm" prependId="false">
 		<p:commandButton value="Gravar" action="#{scriptBean.updateScript}"
-		rendered="#{scriptBean.pendingAlteration}" id="updateScriptBtn"
+		disabled="#{not scriptBean.pendingAlteration}" id="updateScriptBtn"
 		update="@form" />
 	</h:form>	
 		
@@ -34,17 +34,29 @@
 		
 		<p:selectOneMenu value="#{scriptBean.questionType}">
 			<f:selectItems value="#{scriptBean.questionTypeList}" />
+			<f:ajax render="@form" />
 		</p:selectOneMenu>
 		<br />
 		<p:inputTextarea rows="3" cols="50" required="true" placeholder="Questão..." 
 		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"/>
 		<br />
 		
-		<h:panelGroup id="scaleOptions">
+		<h:panelGroup id="scaleOptions" rendered="#{scriptBean.questionType eq 'Escala'}" >
 			<p:outputLabel for="minOption" value="Valor mínimo" />
 			<p:inputText id="minOption" value="#{scriptBean.minOption}" />
 			<p:outputLabel for="maxOption" value="Valor máximo" />
 			<p:inputText id="maxOption" value="#{scriptBean.maxOption}" />
+			<br />
+		</h:panelGroup>
+		
+		<h:panelGroup id="multipleOptions" rendered="#{scriptBean.questionType eq 'Escolha múltipla'}">
+			<p:dataTable value="#{scriptBean.answers}" var="answer">
+				<p:column>#{answer}</p:column>
+			</p:dataTable>
+			<p:outputLabel for="answerOption" value="Hipótese de resposta" />
+			<p:inputText id="answerOption" value="#{scriptBean.answerOption}" />
+			<p:commandButton value="adicionar resposta" action="#{scriptBean.addAnswer}" 
+			update="multipleOptions" process="answerOption @this" />
 			<br />
 		</h:panelGroup>
 		
