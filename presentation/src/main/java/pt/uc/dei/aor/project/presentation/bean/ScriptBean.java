@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
@@ -23,6 +24,10 @@ public class ScriptBean implements Serializable {
 	private IScript editableScript;
 	private String questionText;
 	private String questionType;
+	private int minOption = 1;
+	private int maxOption = 5;
+	private String answerOption;
+	private List<String> answers;
 	private boolean pendingAlteration = false;
 	
 	
@@ -36,6 +41,11 @@ public class ScriptBean implements Serializable {
 	
 	public void addQuestion() {
 		editableScript.addQuestion(questionText, questionType);
+		pendingAlteration = true;
+	}
+	
+	public void deleteQuestion(IScriptEntry entry) {
+		editableScript.deleteQuestion(entry);
 		pendingAlteration = true;
 	}
 	
@@ -58,6 +68,12 @@ public class ScriptBean implements Serializable {
 		editableScript = script;
 		pendingAlteration = false;
 		return "editscript.xhtml?faces-redirect=true";
+	}
+	
+	public void addAnswer() {
+		System.out.println(answerOption);
+		if (answers == null) answers = new ArrayList<>();
+		answers.add(answerOption);
 	}
 	
 	// getters and setters
@@ -83,5 +99,37 @@ public class ScriptBean implements Serializable {
 
 	public void setPendingAlteration(boolean pendingAlteration) {
 		this.pendingAlteration = pendingAlteration;
+	}
+
+	public int getMinOption() {
+		return minOption;
+	}
+
+	public void setMinOption(int minOption) {
+		this.minOption = minOption;
+	}
+
+	public int getMaxOption() {
+		return maxOption;
+	}
+
+	public void setMaxOption(int maxOption) {
+		this.maxOption = maxOption;
+	}
+
+	public String getAnswerOption() {
+		return answerOption;
+	}
+
+	public void setAnswerOption(String answerOption) {
+		this.answerOption = answerOption;
+	}
+
+	public List<String> getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(List<String> answers) {
+		this.answers = answers;
 	}
 }

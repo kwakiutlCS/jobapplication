@@ -38,7 +38,7 @@ public class QuestionEntity {
 
 	public QuestionEntity(String questionText, String questionType) {
 		text = questionText;
-		this.questionType = QuestionType.LONG_ANSWER;
+		this.questionType = QuestionType.toEnum(questionType);
 	}
 
 	public QuestionEntity() {

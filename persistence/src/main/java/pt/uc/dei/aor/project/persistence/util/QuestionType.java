@@ -19,4 +19,11 @@ public enum QuestionType {
 	public String toString() {
 		return name;
 	}
+	
+	public static QuestionType toEnum(String name) {
+		for (QuestionType qt : QuestionType.values()) {
+			if (qt.name.equals(name)) return qt;
+		}
+		return null;
+	}
 }
