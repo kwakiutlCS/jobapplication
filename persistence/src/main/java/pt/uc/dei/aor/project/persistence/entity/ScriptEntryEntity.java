@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,10 +30,18 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 		question = new QuestionEntity(questionText, questionType);
 	}
 
+	public ScriptEntryEntity(String questionText, String questionType, int position, int min, int max) {
+		this.position = position;
+		question = new QuestionEntity(questionText, questionType, min, max);
+	}
 
 	public ScriptEntryEntity() {
 	}
 
+	public ScriptEntryEntity(String questionText, String questionType, int position, List<String> options) {
+		this.position = position;
+		question = new QuestionEntity(questionText, questionType, options);
+	}
 
 	public QuestionEntity getQuestion() {
 		return question;

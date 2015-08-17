@@ -8,6 +8,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
+import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
+import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.service.IScriptBusinessService;
@@ -39,8 +42,15 @@ public class ScriptBean implements Serializable {
 		return editableScript.getEntries();
 	}
 	
-	public void addQuestion() {
-		editableScript.addQuestion(questionText, questionType);
+	public void addQuestion() throws IllegalQuestionTypeException, IllegalScaleException, IllegalAnswerOptionsException {
+		if (questionType.equals("Escala")) {
+			scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
+		}
+		else if (questionType.equals("Escolha múltipla")) {
+			scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
+		}
+		else 
+			scriptEjb.addQuestion(editableScript, questionText, questionType);
 		pendingAlteration = true;
 	}
 	

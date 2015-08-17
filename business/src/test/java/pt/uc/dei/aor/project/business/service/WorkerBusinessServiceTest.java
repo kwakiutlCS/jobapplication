@@ -26,6 +26,9 @@ public class WorkerBusinessServiceTest {
 	@Mock
 	private IWorkerPersistenceService workerEjb;
 	
+	@Mock
+	private IWorker iWorker;
+	
 	@InjectMocks
 	WorkerBusinessService ejb;
 	
@@ -37,6 +40,12 @@ public class WorkerBusinessServiceTest {
 		verify(workerEjb).getWorkerByLogin(login);
 	}
 	
+	@Test
+	public void shouldCallCorrectMethodWhenDeletingUser() {
+		ejb.deleteWorker(iWorker);
+		
+		verify(workerEjb).delete(iWorker);
+	}
 	
 	@Test
 	public void shouldCreateAnUserCorrectly() {

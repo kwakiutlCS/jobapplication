@@ -8,11 +8,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="answer_choice")
-public class AnswerChoiceEntity {
+@Table(name="question_scale")
+public class QuestionScale {
 	
-	public AnswerChoiceEntity(String s) {
-		answer = s;
+	public QuestionScale(int min, int max) {
+		this.min = min;
+		this.max = max;
+	}
+	
+	public QuestionScale() {
 	}
 
 	@Id
@@ -20,6 +24,8 @@ public class AnswerChoiceEntity {
 	private long id;
 	
 	@Column(nullable=false)
-	private String answer;
+	private int min;
 	
+	@Column(nullable=false)
+	private int max;
 }

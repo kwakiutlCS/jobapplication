@@ -8,9 +8,11 @@ public interface IScript {
 
 	public List<IScriptEntry> getEntries();
 
-	public List<String> getQuestionTypeList();
-
 	public void addQuestion(String questionText, String questionType);
 
 	public void deleteQuestion(IScriptEntry entry);
+
+	public void addQuestion(String questionText, String questionType, int min, int max);
+
+	public void addQuestion(String questionText, String questionType, List<String> options);
 }

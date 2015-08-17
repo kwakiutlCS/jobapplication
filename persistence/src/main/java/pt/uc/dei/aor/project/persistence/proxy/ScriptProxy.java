@@ -49,25 +49,25 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 		return entries;
 	}
 
-
-	@Override
-	public List<String> getQuestionTypeList() {
-		List<String> list = new LinkedList<>();
-		
-		for (QuestionType qt : QuestionType.values()) {
-			list.add(qt.toString());
-		}
-		
-		return list;
-	}
-
-
+	
 	@Override
 	public void addQuestion(String questionText, String questionType) {
 		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition()));
 	}
 
-
+	@Override
+	public void addQuestion(String questionText, String questionType, int min, int max) {
+		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition(),
+				min, max));
+	}
+	
+	@Override
+	public void addQuestion(String questionText, String questionType, List<String> options) {
+		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition(),
+				options));
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteQuestion(IScriptEntry entry) {
@@ -79,7 +79,5 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
         
 		entity.getEntries().remove(entryEntity);
 	}
-
-	
 
 }
