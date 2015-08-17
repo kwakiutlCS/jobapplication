@@ -39,6 +39,15 @@
 		<p:inputTextarea rows="3" cols="50" required="true" placeholder="Questão..." 
 		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"/>
 		<br />
+		
+		<h:panelGroup id="scaleOptions">
+			<p:outputLabel for="minOption" value="Valor mínimo" />
+			<p:inputText id="minOption" value="#{scriptBean.minOption}" />
+			<p:outputLabel for="maxOption" value="Valor máximo" />
+			<p:inputText id="maxOption" value="#{scriptBean.maxOption}" />
+			<br />
+		</h:panelGroup>
+		
 		<p:commandButton value="Adicionar" action="#{scriptBean.addQuestion}"
 		update="questionTextField scriptQuestionTable saveScriptForm" />
 	</h:form>

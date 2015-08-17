@@ -23,6 +23,8 @@ public class ScriptBean implements Serializable {
 	private IScript editableScript;
 	private String questionText;
 	private String questionType;
+	private int minOption = 1;
+	private int maxOption = 5;
 	private boolean pendingAlteration = false;
 	
 	
@@ -88,5 +90,21 @@ public class ScriptBean implements Serializable {
 
 	public void setPendingAlteration(boolean pendingAlteration) {
 		this.pendingAlteration = pendingAlteration;
+	}
+
+	public int getMinOption() {
+		return minOption;
+	}
+
+	public void setMinOption(int minOption) {
+		this.minOption = minOption;
+	}
+
+	public int getMaxOption() {
+		return maxOption;
+	}
+
+	public void setMaxOption(int maxOption) {
+		this.maxOption = maxOption;
 	}
 }
