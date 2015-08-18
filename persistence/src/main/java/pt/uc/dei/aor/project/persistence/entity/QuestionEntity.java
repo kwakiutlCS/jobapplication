@@ -45,7 +45,7 @@ public class QuestionEntity {
 	private Set<AnswerChoiceEntity> answers;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	private QuestionScale scale;
+	private QuestionScaleEntity scale;
 
 	public QuestionEntity(String questionText, String questionType) {
 		text = questionText;
@@ -59,7 +59,7 @@ public class QuestionEntity {
 	public QuestionEntity(String questionText, String questionType, int min, int max) {
 		text = questionText;
 		this.questionType = QuestionType.toEnum(questionType);
-		scale = new QuestionScale(min, max);
+		scale = new QuestionScaleEntity(min, max);
 	}
 
 	public QuestionEntity(String questionText, String questionType, List<String> options) {

@@ -86,6 +86,10 @@ public class ScriptBean implements Serializable {
 		answers.add(answerOption);
 	}
 	
+	public void deleteAnswer(String answer) {
+		answers.remove(answer);
+	}
+	
 	// getters and setters
 	public String getQuestionText() {
 		return questionText;
