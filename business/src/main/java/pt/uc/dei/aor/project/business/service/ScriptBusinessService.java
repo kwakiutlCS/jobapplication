@@ -67,7 +67,6 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	@Override
 	public void addQuestion(IScript script, String questionText, String questionType, List<String> options) 
 		throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
-		System.out.println(options);
 		if (!"Escolha múltipla".equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
 		script.addQuestion(questionText, questionType, options);

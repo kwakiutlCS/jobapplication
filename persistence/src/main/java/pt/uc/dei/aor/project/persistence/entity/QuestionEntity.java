@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
@@ -63,7 +65,7 @@ public class QuestionEntity {
 	public QuestionEntity(String questionText, String questionType, List<String> options) {
 		text = questionText;
 		this.questionType = QuestionType.toEnum(questionType);
-		answers = new TreeSet<>();
+		answers = new HashSet<>();
 		for (String s : options) {
 			answers.add(new AnswerChoiceEntity(s));
 		}
