@@ -2,7 +2,9 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -30,7 +32,7 @@ public class ScriptBean implements Serializable {
 	private int minOption = 1;
 	private int maxOption = 5;
 	private String answerOption;
-	private List<String> answers;
+	private Set<String> answers;
 	private boolean pendingAlteration = false;
 	
 	
@@ -82,7 +84,7 @@ public class ScriptBean implements Serializable {
 	
 	public void addAnswer() {
 		System.out.println(answerOption);
-		if (answers == null) answers = new ArrayList<>();
+		if (answers == null) answers = new HashSet<>();
 		answers.add(answerOption);
 	}
 	
@@ -139,11 +141,11 @@ public class ScriptBean implements Serializable {
 		this.answerOption = answerOption;
 	}
 
-	public List<String> getAnswers() {
+	public Set<String> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<String> answers) {
+	public void setAnswers(Set<String> answers) {
 		this.answers = answers;
 	}
 }

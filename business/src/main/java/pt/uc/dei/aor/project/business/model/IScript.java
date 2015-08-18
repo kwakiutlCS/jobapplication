@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.model;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface IScript {
@@ -14,5 +15,5 @@ public interface IScript {
 
 	public void addQuestion(String questionText, String questionType, int min, int max);
 
-	public void addQuestion(String questionText, String questionType, List<String> options);
+	public void addQuestion(String questionText, String questionType, Collection<String> options);
 }

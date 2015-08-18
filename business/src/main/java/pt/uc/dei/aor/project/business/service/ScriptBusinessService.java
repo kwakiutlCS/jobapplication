@@ -1,7 +1,10 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -65,10 +68,17 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	}
 
 	@Override
-	public void addQuestion(IScript script, String questionText, String questionType, List<String> options) 
+	public void addQuestion(IScript script, String questionText, String questionType, Collection<String> options) 
 		throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		if (!"Escolha múltipla".equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
+		
+		Set<String> set = new HashSet<>();
+		for (String s : options)
+			set.add(s);
+		
+		if (set.size() < options.size()) throw new IllegalAnswerOptionsException();
+		
 		script.addQuestion(questionText, questionType, options);
 	}
 

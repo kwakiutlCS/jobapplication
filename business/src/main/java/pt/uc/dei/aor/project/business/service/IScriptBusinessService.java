@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.util.Collection;
 import java.util.List;
 
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
@@ -23,6 +24,6 @@ public interface IScriptBusinessService {
 	void addQuestion(IScript sript, String questionText, String questionType, int min, int max)
 			throws IllegalQuestionTypeException, IllegalScaleException;
 
-	void addQuestion(IScript script, String questionText, String questionType, List<String> options)
+	void addQuestion(IScript script, String questionText, String questionType, Collection<String> options)
 			throws IllegalQuestionTypeException, IllegalAnswerOptionsException;
 }
