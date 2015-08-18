@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.util.Localization;
+import pt.uc.dei.aor.project.business.util.PositionState;
 
 
 @Named
@@ -35,7 +36,7 @@ public class PositionBean implements Serializable {
 	private String company;
 	private String description;
 	private Localization localization;
-	private String positionState;
+	private PositionState state;
 	private String technicalArea;
 	
 	
@@ -46,6 +47,11 @@ public class PositionBean implements Serializable {
 	public List<Localization> getLocalizations(){
 		
 		return Arrays.asList(Localization.values());
+	}
+	
+	public List<PositionState> getPositionStates(){
+		
+		return Arrays.asList(PositionState.values());
 	}
 	
 	
@@ -132,14 +138,16 @@ public class PositionBean implements Serializable {
 		this.localization = localization;
 	}
 
-
-	public String getPositionState() {
-		return positionState;
+	
+	public PositionState getPositionState() {
+		return state;
 	}
 
-	public void setPositionState(String positionState) {
-		this.positionState = positionState;
+
+	public void setPositionState(PositionState state) {
+		this.state = state;
 	}
+
 
 	public String getTechnicalArea() {
 		return technicalArea;
@@ -152,9 +160,8 @@ public class PositionBean implements Serializable {
 	public String createPosition() {
 		
 		technicalArea = "um";
-		positionState = "três";
 		
-		position.createNewPosition(openingDate, title, localization, vacancies, closingDate, sla, contactPerson, company, description);
+		position.createNewPosition(openingDate, title, localization, state, vacancies, closingDate, sla, contactPerson, company, description);
 		String result="new position";
 		System.out.println("Dat ab "+openingDate+" Title "+title+" Vacancies "+vacancies+" closingdate "+ closingDate+" sla "+sla+
 				" contact "+contactPerson+" company "+company+" description "+description);

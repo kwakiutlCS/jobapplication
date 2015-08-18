@@ -23,19 +23,18 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		this.entity = entity != null ? entity : new PositionEntity();
 	}
 
-	public PositionProxy(Date openingDate, String title, Localization localization, int vacancies, Date closingDate, String sla, 
+	public PositionProxy(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
 			String contactPerson, String company ,String description) {
-		
+
 		Set<PublicationChannelEntity> publications = new TreeSet<>();
 		ScriptEntity script = null;
 		List<TechnicalArea> technicalAreas = new ArrayList<>();		
-		PositionState state = PositionState.CLOSED;
-		
+
 		entity = new PositionEntity(title, localization,
 				state,  vacancies, openingDate,
 				closingDate,  sla,  contactPerson, company,
-				 technicalAreas,  description,
-				 publications,  script);
+				technicalAreas,  description,
+				publications,  script);
 	}
 
 	@Override

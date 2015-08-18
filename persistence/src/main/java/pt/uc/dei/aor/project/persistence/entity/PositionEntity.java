@@ -107,15 +107,6 @@ public class PositionEntity {
 	}
 
 	public PositionEntity() {
-		// TODO Auto-generated constructor stub
-	}
-
-	public PositionEntity(Date openingDate2, String title2,
-			Localization localization2, int vacancies2, Date closingDate2,
-			String sla2, String contactPerson2, String company2,
-			String description2, Set<PublicationChannelEntity> publications2,
-			ScriptEntity script2) {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {

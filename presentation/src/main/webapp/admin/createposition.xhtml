@@ -11,8 +11,8 @@
 		<title>Create Position</title>
 	</h:head>
 	<h:body>
-	
-	<h:form id="newpositionform">
+
+		<h:form id="newpositionform">
 			<p:growl id="msgs" showDetail="true" />
 
 			<h:panelGrid columns="2" cellpadding="5">
@@ -57,15 +57,18 @@
 					<f:selectItems value="#{positionBean.localizations}"
 						var="localization" itemValue="#{localization}"
 						itemLabel="#{localization.label}" />
-						</p:selectOneMenu>
+				</p:selectOneMenu>
 
-					<p:outputLabel for="positionState" value="Position State" />
-					<p:inputText id="positionState"
-						value="#{positionBean.positionState}" />
+				<p:outputLabel for="positionState" value="Position State" />
+				<p:selectOneMenu id="positionState"
+					value="#{positionBean.positionState}" >
+				<f:selectItems value="#{positionBean.positionStates}" var="positionState"
+					itemValue="#{positionState}" itemLabel="#{positionState.positionStateLabel}" />
+					</p:selectOneMenu>
 
-					<p:outputLabel for="tecnhicalArea" value="Tecnhical Area" />
-					<p:inputText id="tecnhicalArea"
-						value="#{positionBean.technicalArea}" />
+				<p:outputLabel for="tecnhicalArea" value="Tecnhical Area" />
+				<p:inputText id="tecnhicalArea"
+					value="#{positionBean.technicalArea}" />
 			</h:panelGrid>
 
 			<p:commandButton process="@form" value="Submit" update="msgs"
@@ -75,8 +78,8 @@
 		</h:form>
 
 
-	
-		
+
+
 	</h:body>
 </f:view>
 </html>

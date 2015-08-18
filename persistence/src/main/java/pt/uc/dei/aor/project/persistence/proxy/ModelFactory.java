@@ -5,14 +5,12 @@ import java.util.Date;
 import javax.ejb.Stateless;
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
-
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
-
 import pt.uc.dei.aor.project.business.model.IScript;
-
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
+import pt.uc.dei.aor.project.business.util.PositionState;
 
 @Stateless
 public class ModelFactory implements IModelFactory {
@@ -23,9 +21,9 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IPosition position(Date openingDate, String title, Localization localization, int vacancies, Date closingDate, String sla, 
+	public IPosition position(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
 			String contactPerson, String company ,String description) {
-		return new PositionProxy(openingDate, title,localization, vacancies,closingDate, sla,
+		return new PositionProxy(openingDate, title,localization, state, vacancies,closingDate, sla,
 				contactPerson, company, description);
 	}
 
