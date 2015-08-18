@@ -82,5 +82,10 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		script.addQuestion(questionText, questionType, options);
 	}
 
+	@Override
+	public void deleteScript(IScript script) {
+		scriptPersistence.delete(script);
+	}
+
 
 }

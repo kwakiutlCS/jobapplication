@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -74,7 +76,26 @@ public class QuestionEntity {
 	public String getText() {
 		return text;
 	}
+
+	public String getType() {
+		return questionType.toString();
+	}
+
+	public String getMin() {
+		return String.valueOf(scale.getMin());
+	}
 	
+	public String getMax() {
+		return String.valueOf(scale.getMax());
+	}
+
+	public Collection<String> getAnswers() {
+		List<String> list = new ArrayList<>();
+		for (AnswerChoiceEntity a : answers) {
+			list.add(a.getAnswer());
+		}
+		return list;
+	}
 	
 	// add connection to ScriptEntryEntity???
 }

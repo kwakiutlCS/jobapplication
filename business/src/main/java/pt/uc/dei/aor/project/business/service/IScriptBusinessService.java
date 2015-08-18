@@ -26,4 +26,6 @@ public interface IScriptBusinessService {
 
 	void addQuestion(IScript script, String questionText, String questionType, Collection<String> options)
 			throws IllegalQuestionTypeException, IllegalAnswerOptionsException;
+
+	public void deleteScript(IScript script);
 }

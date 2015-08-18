@@ -82,6 +82,10 @@ public class ScriptBean implements Serializable {
 		return "editscript.xhtml?faces-redirect=true";
 	}
 	
+	public void delete(IScript script) {
+		scriptEjb.deleteScript(script);
+	}
+	
 	public void addAnswer() {
 		if (answers == null) answers = new HashSet<>();
 		answers.add(answerOption);

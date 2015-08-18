@@ -19,7 +19,12 @@
 	<h:form id="scriptsForm">
 		<p:dataTable value="#{scriptBean.scripts}" var="script">
 			<p:column>#{script.id}</p:column>
-			<p:column><p:commandLink value="edit" action="#{scriptBean.edit(script)}" /></p:column>
+			<p:column>
+				<p:commandLink value="edit" action="#{scriptBean.edit(script)}" />
+				<p:commandLink value="delete" action="#{scriptBean.delete(script)}"
+				update="@form" />
+			</p:column>
+			
 		</p:dataTable>
 	</h:form>
 	

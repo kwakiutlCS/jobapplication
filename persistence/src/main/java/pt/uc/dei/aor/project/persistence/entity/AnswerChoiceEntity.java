@@ -51,8 +51,13 @@ public class AnswerChoiceEntity {
 		return true;
 	}
 
-	
-	
+	public long getId() {
+		return id;
+	}
+
+	public String getAnswer() {
+		return answer;
+	}
 	
 	
 }

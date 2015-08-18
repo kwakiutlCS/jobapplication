@@ -28,4 +28,18 @@ public class QuestionScaleEntity {
 	
 	@Column(nullable=false)
 	private int max;
+
+	public int getMin() {
+		return min;
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	
 }
