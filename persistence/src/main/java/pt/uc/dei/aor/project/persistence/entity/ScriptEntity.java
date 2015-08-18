@@ -27,7 +27,7 @@ public class ScriptEntity {
 	private int id;
 	
 	@OrderBy("position ASC")
-	@OneToMany(cascade={CascadeType.MERGE, CascadeType.PERSIST}, fetch=FetchType.EAGER)
+	@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	private SortedSet<ScriptEntryEntity> entries;
 
 	public ScriptEntity() {

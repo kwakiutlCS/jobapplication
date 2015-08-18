@@ -38,7 +38,8 @@
 		</p:selectOneMenu>
 		<br />
 		<p:inputTextarea rows="3" cols="50" required="true" placeholder="Questão..." 
-		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"/>
+		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"
+		label="Texto da questão" />
 		<br />
 		
 		<h:panelGroup id="scaleOptions" rendered="#{scriptBean.questionType eq 'Escala'}" >

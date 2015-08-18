@@ -83,7 +83,6 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void addAnswer() {
-		System.out.println(answerOption);
 		if (answers == null) answers = new HashSet<>();
 		answers.add(answerOption);
 	}

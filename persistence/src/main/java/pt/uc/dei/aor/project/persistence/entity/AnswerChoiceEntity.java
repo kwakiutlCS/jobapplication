@@ -15,6 +15,10 @@ public class AnswerChoiceEntity {
 		answer = s;
 	}
 
+	public AnswerChoiceEntity() {
+	}
+	
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -26,7 +30,7 @@ public class AnswerChoiceEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((answer == null) ? 0 : answer.hashCode());
 		return result;
 	}
 
@@ -39,10 +43,15 @@ public class AnswerChoiceEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		AnswerChoiceEntity other = (AnswerChoiceEntity) obj;
-		if (id != other.id)
+		if (answer == null) {
+			if (other.answer != null)
+				return false;
+		} else if (!answer.equals(other.answer))
 			return false;
 		return true;
 	}
+
+	
 	
 	
 	
