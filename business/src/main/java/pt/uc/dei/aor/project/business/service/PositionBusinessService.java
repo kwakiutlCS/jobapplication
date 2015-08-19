@@ -25,10 +25,10 @@ public class PositionBusinessService implements IPositionBusinessService {
 	
 		
 	@Override
-	public IPosition createNewPosition(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
+	public IPosition createNewPosition(Date openingDate, String title, List<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
 			String contactPerson, String company , List<TechnicalArea> technicalAreas, String description) {
 		
-		IPosition position = factory.position(openingDate, title, localization, state, vacancies, closingDate, sla, 
+		IPosition position = factory.position(openingDate, title, localizations, state, vacancies, closingDate, sla, 
 				contactPerson, company, technicalAreas, description);
 		
 		return positionPersistence.save(position);

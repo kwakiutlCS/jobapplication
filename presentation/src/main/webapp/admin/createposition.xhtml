@@ -53,11 +53,11 @@
 				<p:inputText id="description" value="#{positionBean.description}" />
 
 				<p:outputLabel for="local" value="Localization" />
-				<p:selectOneMenu id="local" value="#{positionBean.localization}">
+				<p:selectManyMenu id="local" value="#{positionBean.localizations}" converter="localizationConverter">
 					<f:selectItems value="#{positionBean.localizations}"
 						var="localization" itemValue="#{localization}"
-						itemLabel="#{localization.label}" />
-				</p:selectOneMenu>
+						itemLabel="#{localization.localizationLabel}" />
+				</p:selectManyMenu>
 
 				<p:outputLabel for="positionState" value="Position State" />
 				<p:selectOneMenu id="positionState"

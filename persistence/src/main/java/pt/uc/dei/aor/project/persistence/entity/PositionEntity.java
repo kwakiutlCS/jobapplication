@@ -37,10 +37,10 @@ public class PositionEntity {
 	@Column(nullable=false)
 	private String title;
 	
-
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="localization", indexes={@Index(columnList="positionentity_id")})
 	@Enumerated(EnumType.STRING)
-	@Column(nullable=false)
-	private Localization localization;
+	private List<Localization> localizations;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=true)
@@ -81,14 +81,14 @@ public class PositionEntity {
     
     
 
-	public PositionEntity(String title, Localization localization,
+	public PositionEntity(String title, List<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, String sla, String contactPerson, String company,
 			List<TechnicalArea> technicalAreas, String description,
 			Set<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
 		this.title = title;
-		this.localization = localization;
+		this.localizations = localizations;
 		this.state = state;
 		this.vacancies = vacancies;
 		this.openingDate = openingDate;
@@ -121,12 +121,12 @@ public class PositionEntity {
 		this.title = title;
 	}
 
-	public Localization getLocalization() {
-		return localization;
+	public List<Localization> getLocalizations() {
+		return localizations;
 	}
 
-	public void setLocalization(Localization localization) {
-		this.localization = localization;
+	public void setLocalizations(List<Localization> localizations) {
+		this.localizations = localizations;
 	}
 
 	public PositionState getState() {

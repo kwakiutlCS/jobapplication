@@ -7,14 +7,14 @@ package pt.uc.dei.aor.project.business.util;
 		OPORTO("Oporto"), 
 		CLIENT("Client");
 		
-		private String label;
+		private String localizationLabel;
 
-	    private Localization(String label) {
-	        this.label = label;
+	    private Localization(String localizationLabel) {
+	        this.localizationLabel = localizationLabel;
 	    }
 
-	    public String getLabel() {
-	        return label;
+	    public String getLocalizationLabel() {
+	        return localizationLabel;
 	    }
 
 }

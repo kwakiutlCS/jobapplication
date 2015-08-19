@@ -38,7 +38,7 @@ public class PositionBean implements Serializable {
 	private String contactPerson;
 	private String company;
 	private String description;
-	private Localization localization;
+	private List<Localization> localizations;
 	private PositionState state;
 	private List<TechnicalArea> technicalAreas;
 	
@@ -48,7 +48,9 @@ public class PositionBean implements Serializable {
 	
 	public List<Localization> getLocalizations(){
 		
-		return Arrays.asList(Localization.values());
+		List<Localization> localizations = new ArrayList<Localization>(EnumSet.allOf(Localization.class));
+		
+		return localizations;
 	}
 	
 	public List<PositionState> getPositionStates(){
@@ -156,13 +158,8 @@ public class PositionBean implements Serializable {
 	}
 
 
-	public Localization getLocalization() {
-		return localization;
-	}
-
-
-	public void setLocalization(Localization localization) {
-		this.localization = localization;
+	public void setLocalizations(List<Localization> localizations) {
+		this.localizations = localizations;
 	}
 
 
@@ -183,7 +180,7 @@ public class PositionBean implements Serializable {
 
 	public String createPosition() {
 		
-		position.createNewPosition(openingDate, title, localization, state, vacancies, closingDate, sla, contactPerson,
+		position.createNewPosition(openingDate, title, localizations, state, vacancies, closingDate, sla, contactPerson,
 				company, technicalAreas, description);
 		
 		String result="new position";

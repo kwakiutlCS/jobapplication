@@ -23,9 +23,9 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IPosition position(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
+	public IPosition position(Date openingDate, String title, List<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
 			String contactPerson, String company ,List<TechnicalArea> technicalAreas, String description) {
-		return new PositionProxy(openingDate, title,localization, state, vacancies,closingDate, sla,
+		return new PositionProxy(openingDate, title,localizations, state, vacancies,closingDate, sla,
 				contactPerson, company, technicalAreas, description);
 	}
 
