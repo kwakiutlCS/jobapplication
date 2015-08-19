@@ -95,6 +95,11 @@ public class ScriptBean implements Serializable {
 		answers.remove(answer);
 	}
 	
+	public void markToUpdate() {
+		pendingAlteration = true;
+		System.out.println("alterations: "+pendingAlteration);
+	}
+	
 	// getters and setters
 	public String getQuestionText() {
 		return questionText;

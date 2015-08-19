@@ -49,4 +49,11 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		return entity.getQuestion().getAnswers();
 	}
 
+
+	@Override
+	public void setText(String text) {
+		entity.getQuestion().setText(text);
+		
+	}
+
 }

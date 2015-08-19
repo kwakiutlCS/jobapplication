@@ -96,6 +96,10 @@ public class QuestionEntity {
 		}
 		return list;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
 	
 	// add connection to ScriptEntryEntity???
 }

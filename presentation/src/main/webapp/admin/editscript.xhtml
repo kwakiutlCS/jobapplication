@@ -15,7 +15,11 @@
 		<h2>add scripts page</h2>
 		<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
 			<p:column headerText="Question">
-				#{entry.text}
+				<p:inplace editor="true">
+					<p:ajax event="save" listener="#{scriptBean.markToUpdate}"
+					update="saveScriptForm" />
+					<p:inputText value="#{entry.text}"/>
+				</p:inplace>
 				<h:panelGroup rendered="#{entry.questionType eq 'Escala'}">
 					<br />
 					<h:outputText value="Mínimo: #{entry.min} - Máximo: #{entry.max}" />
@@ -45,6 +49,7 @@
 	<h:form id="addQuestionForm" prependId="false">
 	<h2>Add question</h2>
 		<p:messages autoUpdate="true" />
+		<p:growl autoUpdate="true" />
 		
 		<p:selectOneMenu value="#{scriptBean.questionType}" required="true">
 			<f:selectItems value="#{scriptBean.questionTypeList}" />
@@ -53,7 +58,7 @@
 		<br />
 		<p:inputTextarea rows="3" cols="50" required="true" placeholder="Questão..." 
 		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"
-		label="Texto da questão" />
+		label="Texto da questão" requiredMessage="qualquer coisa" />
 		<br />
 		
 		<h:panelGroup id="scaleOptions" rendered="#{scriptBean.questionType eq 'Escala'}" >

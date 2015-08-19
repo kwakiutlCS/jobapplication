@@ -6,6 +6,8 @@ public interface IScriptEntry {
 	
 	public String getText();
 	
+	public void setText(String text);
+	
 	public String getQuestionType();
 	
 	public String getMin();
