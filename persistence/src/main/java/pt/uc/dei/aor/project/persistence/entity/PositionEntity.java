@@ -21,6 +21,7 @@ import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 
 @Entity
@@ -65,8 +66,8 @@ public class PositionEntity {
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="technical_area", indexes={@Index(columnList="positionentity_id")})
-//	@Enumerated(EnumType.STRING)
-	private List<String> technicalAreas;
+	@Enumerated(EnumType.STRING)
+	private List<TechnicalArea> technicalAreas;
 	
 	@Column
 	private String description;
@@ -83,7 +84,7 @@ public class PositionEntity {
 	public PositionEntity(String title, Localization localization,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, String sla, String contactPerson, String company,
-			List<String> technicalAreas, String description,
+			List<TechnicalArea> technicalAreas, String description,
 			Set<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
 		this.title = title;
@@ -184,11 +185,11 @@ public class PositionEntity {
 		this.company = company;
 	}
 
-	public List<String> getTechnicalAreas() {
+	public List<TechnicalArea> getTechnicalAreas() {
 		return technicalAreas;
 	}
 
-	public void setTechnicalAreas(List<String> technicalAreas) {
+	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
 		this.technicalAreas = technicalAreas;
 	}
 

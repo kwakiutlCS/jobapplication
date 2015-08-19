@@ -67,7 +67,7 @@
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="area" value="Technical Area"/>
-					<p:selectManyMenu id="area" value="#{positionBean.technicalAreas}">
+					<p:selectManyMenu id="area" value="#{positionBean.technicalAreas}" converter="technicalAreaConverter">
 					<f:selectItems value="#{positionBean.technicalAreas}" var="technicalArea"
 					itemValue="#{technicalArea}" itemLabel="#{technicalArea.technicalAreaLabel}" />
 					</p:selectManyMenu>

@@ -11,6 +11,7 @@ import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 
 @Stateless
@@ -25,7 +26,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 		
 	@Override
 	public IPosition createNewPosition(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
-			String contactPerson, String company , List<String> technicalAreas, String description) {
+			String contactPerson, String company , List<TechnicalArea> technicalAreas, String description) {
 		
 		IPosition position = factory.position(openingDate, title, localization, state, vacancies, closingDate, sla, 
 				contactPerson, company, technicalAreas, description);

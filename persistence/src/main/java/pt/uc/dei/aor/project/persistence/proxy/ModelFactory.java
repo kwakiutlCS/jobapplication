@@ -12,6 +12,7 @@ import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 @Stateless
 public class ModelFactory implements IModelFactory {
@@ -23,7 +24,7 @@ public class ModelFactory implements IModelFactory {
 
 	@Override
 	public IPosition position(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
-			String contactPerson, String company ,List<String> technicalAreas, String description) {
+			String contactPerson, String company ,List<TechnicalArea> technicalAreas, String description) {
 		return new PositionProxy(openingDate, title,localization, state, vacancies,closingDate, sla,
 				contactPerson, company, technicalAreas, description);
 	}

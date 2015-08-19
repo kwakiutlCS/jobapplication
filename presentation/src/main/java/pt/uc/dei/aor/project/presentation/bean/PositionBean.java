@@ -40,7 +40,7 @@ public class PositionBean implements Serializable {
 	private String description;
 	private Localization localization;
 	private PositionState state;
-	private List<String> technicalAreas;
+	private List<TechnicalArea> technicalAreas;
 	
 	public PositionBean() {
 	}
@@ -176,7 +176,7 @@ public class PositionBean implements Serializable {
 	}
 
 
-	public void setTechnicalAreas(List<String> technicalAreas) {
+	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
 		this.technicalAreas = technicalAreas;
 	}
 

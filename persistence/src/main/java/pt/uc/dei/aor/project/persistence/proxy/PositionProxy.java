@@ -8,6 +8,7 @@ import java.util.TreeSet;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
@@ -22,7 +23,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	public PositionProxy(Date openingDate, String title, Localization localization, PositionState state, int vacancies, Date closingDate, String sla, 
-			String contactPerson, String company ,List<String> technicalAreas, String description) {
+			String contactPerson, String company ,List<TechnicalArea> technicalAreas, String description) {
 
 		Set<PublicationChannelEntity> publications = new TreeSet<>();
 		ScriptEntity script = null;	
@@ -33,6 +34,8 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 				technicalAreas,  description,
 				publications,  script);
 	}
+
+
 
 	@Override
 	public PositionEntity getEntity() {
