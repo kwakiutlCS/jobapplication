@@ -65,10 +65,13 @@
 				<f:selectItems value="#{positionBean.positionStates}" var="positionState"
 					itemValue="#{positionState}" itemLabel="#{positionState.positionStateLabel}" />
 					</p:selectOneMenu>
+					
+					<p:outputLabel for="area" value="Technical Area"/>
+					<p:selectManyMenu id="area" value="#{positionBean.technicalAreas}">
+					<f:selectItems value="#{positionBean.technicalAreas}" var="technicalArea"
+					itemValue="#{technicalArea}" itemLabel="#{technicalArea.technicalAreaLabel}" />
+					</p:selectManyMenu>
 
-				<p:outputLabel for="tecnhicalArea" value="Tecnhical Area" />
-				<p:inputText id="tecnhicalArea"
-					value="#{positionBean.technicalArea}" />
 			</h:panelGrid>
 
 			<p:commandButton process="@form" value="Submit" update="msgs"

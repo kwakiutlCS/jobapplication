@@ -21,7 +21,6 @@ import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
-import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 
 @Entity
@@ -31,12 +30,8 @@ public class PositionEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(nullable=false, unique=true)
+	@Column(name="id", nullable=false, unique=true)
 	private int id;
-	
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(nullable=false, unique=true)
-	private int code;
 	
 	@Column(nullable=false)
 	private String title;
@@ -70,8 +65,8 @@ public class PositionEntity {
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="technical_area", indexes={@Index(columnList="positionentity_id")})
-	@Enumerated(EnumType.STRING)
-	private List<TechnicalArea> technicalAreas;
+//	@Enumerated(EnumType.STRING)
+	private List<String> technicalAreas;
 	
 	@Column
 	private String description;
@@ -88,7 +83,7 @@ public class PositionEntity {
 	public PositionEntity(String title, Localization localization,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, String sla, String contactPerson, String company,
-			List<TechnicalArea> technicalAreas, String description,
+			List<String> technicalAreas, String description,
 			Set<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
 		this.title = title;
@@ -108,21 +103,13 @@ public class PositionEntity {
 
 	public PositionEntity() {
 	}
-
+	
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
 	}
 
 	public String getTitle() {
@@ -197,11 +184,11 @@ public class PositionEntity {
 		this.company = company;
 	}
 
-	public List<TechnicalArea> getTechnicalAreas() {
+	public List<String> getTechnicalAreas() {
 		return technicalAreas;
 	}
 
-	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
+	public void setTechnicalAreas(List<String> technicalAreas) {
 		this.technicalAreas = technicalAreas;
 	}
 
