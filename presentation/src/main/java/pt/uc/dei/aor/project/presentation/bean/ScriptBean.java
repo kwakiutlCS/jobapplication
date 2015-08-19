@@ -39,7 +39,7 @@ public class ScriptBean implements Serializable {
 	public List<IScript> getScripts() {
 		return scriptEjb.getScripts();
 	}
-	
+			
 	public List<IScriptEntry> getEntries() {
 		return editableScript.getEntries();
 	}

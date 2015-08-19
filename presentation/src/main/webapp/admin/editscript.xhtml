@@ -13,8 +13,8 @@
 	
 	<h:form id="questionListForm" prependId="false">
 		<h2>add scripts page</h2>
-		<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable">
-			<p:column>
+		<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
+			<p:column headerText="Question">
 				#{entry.text}
 				<h:panelGroup rendered="#{entry.questionType eq 'Escala'}">
 					<br />
@@ -28,7 +28,7 @@
 					</ui:repeat>
 				</h:panelGroup>
 			</p:column>
-			<p:column>#{entry.questionType}</p:column>
+			<p:column headerText="Question Type">#{entry.questionType}</p:column>
 			<p:column>
 				<p:commandLink value="delete" action="#{scriptBean.deleteQuestion(entry)}"
 				update="scriptQuestionTable saveScriptForm" />
