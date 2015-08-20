@@ -53,6 +53,10 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 		for (ScriptEntity se : entities) {
 			proxies.add(new ScriptProxy(se));
 		}
+		
+		System.out.println("ENTRIES");
+		for (ScriptEntryEntity se : entities.get(0).getEntries())
+			System.out.println(se);
 		return proxies;
 	}
 	

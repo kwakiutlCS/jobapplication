@@ -14,7 +14,9 @@
 	
 	<h:form id="questionListForm" prependId="false">
 		<h2>add scripts page</h2>
-		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
+		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" 
+		var="entry" id="scriptQuestionTable" rowIndexVar="row" draggableRows="true">
+			<p:ajax event="rowReorder" listener="#{scriptBean.onRowReorder}" update="saveScriptForm" />
 			<p:column headerText="Question">
 				<p:inplace editor="true">
 					<p:ajax event="save" listener="#{scriptBean.markToUpdate}"

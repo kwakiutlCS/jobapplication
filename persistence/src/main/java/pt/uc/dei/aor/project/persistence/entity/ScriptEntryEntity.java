@@ -57,5 +57,12 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	public int getPosition() {
 		return position;
 	}
+
+	public void setPosition(int position) {
+		this.position = position;
+	}
 	
+	public String toString() {
+		return position+" -> "+question.getText();
+	}
 }

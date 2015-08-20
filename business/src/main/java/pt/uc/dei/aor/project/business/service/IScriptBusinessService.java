@@ -28,4 +28,6 @@ public interface IScriptBusinessService {
 			throws IllegalQuestionTypeException, IllegalAnswerOptionsException;
 
 	public void deleteScript(IScript script);
+
+	public void moveQuestion(IScript script, int fromIndex, int toIndex);
 }

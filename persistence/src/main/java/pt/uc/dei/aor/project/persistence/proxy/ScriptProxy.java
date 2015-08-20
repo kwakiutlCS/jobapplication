@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -84,6 +86,58 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 		else throw new IllegalStateException();
         
 		entity.getEntries().remove(entryEntity);
+	}
+
+
+	@Override
+	public void moveQuestion(int fromIndex, int toIndex) {
+		SortedSet<ScriptEntryEntity> reordered = new TreeSet<>();
+		List<ScriptEntryEntity> list = new ArrayList<>();
+		SortedSet<ScriptEntryEntity> set = entity.getEntries();
+		
+		int counter = 0;
+		int basePosition = -1;
+		
+		if (fromIndex < toIndex) {
+			while(!set.isEmpty()) {
+				ScriptEntryEntity entry = set.first();
+				set.remove(entry);
+				
+				if (counter == fromIndex) {
+					basePosition = entry.getPosition();
+					entry.setPosition(basePosition+(toIndex-fromIndex));
+				}
+				else if (counter > fromIndex && counter <= toIndex){
+					entry.setPosition(basePosition+counter-fromIndex-1);
+				}
+				
+				list.add(entry);
+				counter++;
+			}
+		}
+		else {
+			while(!set.isEmpty()) {
+				ScriptEntryEntity entry = set.first();
+				set.remove(entry);
+				
+				if (counter >= toIndex && counter < fromIndex) {
+					if (basePosition == -1)
+						basePosition = entry.getPosition();
+					entry.setPosition(basePosition+counter-toIndex+1);
+				}
+				else if (counter == fromIndex){
+					entry.setPosition(basePosition);
+				}
+				
+				list.add(entry);
+				counter++;
+			}
+		}
+		
+		for (ScriptEntryEntity se : list) {
+			reordered.add(se);
+		}
+		entity.setEntries(reordered);
 	}
 
 }

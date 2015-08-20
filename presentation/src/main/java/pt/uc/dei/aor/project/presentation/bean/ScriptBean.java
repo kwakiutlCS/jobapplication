@@ -10,6 +10,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.ReorderEvent;
+
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
@@ -97,7 +99,13 @@ public class ScriptBean implements Serializable {
 	
 	public void markToUpdate() {
 		pendingAlteration = true;
-		System.out.println("alterations: "+pendingAlteration);
+	}
+	
+	public void onRowReorder(ReorderEvent event) {
+		int fromIndex = event.getFromIndex();
+		int toIndex = event.getToIndex();
+		scriptEjb.moveQuestion(editableScript, fromIndex, toIndex);
+		pendingAlteration = true;
 	}
 	
 	// getters and setters

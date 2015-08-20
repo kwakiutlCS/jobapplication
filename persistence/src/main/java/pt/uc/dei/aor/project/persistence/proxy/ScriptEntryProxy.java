@@ -1,6 +1,8 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
 import java.util.Collection;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -87,6 +89,10 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		if (maxInt > Integer.parseInt(getMin()))
 			entity.getQuestion().setMax(maxInt);				
 	
+	}
+	
+	public String toString() {
+		return "proxy: "+entity;
 	}
 
 }

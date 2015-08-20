@@ -56,7 +56,6 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	public void addQuestion(IScript script, String questionText, String questionType) throws IllegalQuestionTypeException {
 		if (questionType.equals("Escala") || questionType.equals("Escolha múltipla"))
 			throw new IllegalQuestionTypeException();
-		System.out.println(questionText+" "+questionType);
 		script.addQuestion(questionText, questionType);
 	}
 
@@ -86,6 +85,11 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	@Override
 	public void deleteScript(IScript script) {
 		scriptPersistence.delete(script);
+	}
+
+	@Override
+	public void moveQuestion(IScript script, int fromIndex, int toIndex) {
+		script.moveQuestion(fromIndex, toIndex);
 	}
 
 
