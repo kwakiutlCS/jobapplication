@@ -8,21 +8,33 @@
 <h:head>
 	<meta charset="utf-8" />
 	<title>index </title>
+	<h:outputStylesheet library="css" name="editScript.css" />
 </h:head>
 <h:body>
 	
 	<h:form id="questionListForm" prependId="false">
 		<h2>add scripts page</h2>
-		<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
+		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
 			<p:column headerText="Question">
 				<p:inplace editor="true">
 					<p:ajax event="save" listener="#{scriptBean.markToUpdate}"
 					update="saveScriptForm" />
-					<p:inputText value="#{entry.text}"/>
+					<p:inputText value="#{entry.text}" />
 				</p:inplace>
 				<h:panelGroup rendered="#{entry.questionType eq 'Escala'}">
 					<br />
-					<h:outputText value="Mínimo: #{entry.min} - Máximo: #{entry.max}" />
+					<p:panelGrid columns="4" styleClass="scaleTable">
+						<p:outputLabel value="Minimum:" for="minimum" />
+						<p:inplace editor="true">
+							<p:ajax event="save" listener="#{scriptBean.markToUpdate}" update="saveScriptForm" />
+							<p:spinner value="#{entry.min}" id="minimum" />
+						</p:inplace>
+						<p:outputLabel value="Maximum:" for="maximum" />
+						<p:inplace editor="true">
+							<p:ajax event="save" listener="#{scriptBean.markToUpdate}" update="saveScriptForm" />
+							<p:spinner value="#{entry.max}" id="maximum" />
+						</p:inplace>
+					</p:panelGrid>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{entry.questionType eq 'Escolha múltipla'}">
 					<br />
@@ -49,7 +61,6 @@
 	<h:form id="addQuestionForm" prependId="false">
 	<h2>Add question</h2>
 		<p:messages autoUpdate="true" />
-		<p:growl autoUpdate="true" />
 		
 		<p:selectOneMenu value="#{scriptBean.questionType}" required="true">
 			<f:selectItems value="#{scriptBean.questionTypeList}" />
@@ -58,14 +69,14 @@
 		<br />
 		<p:inputTextarea rows="3" cols="50" required="true" placeholder="Questão..." 
 		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"
-		label="Texto da questão" requiredMessage="qualquer coisa" />
+		label="Texto da questão" />
 		<br />
 		
 		<h:panelGroup id="scaleOptions" rendered="#{scriptBean.questionType eq 'Escala'}" >
 			<p:outputLabel for="minOption" value="Valor mínimo" />
-			<p:inputText id="minOption" value="#{scriptBean.minOption}" />
+			<p:spinner id="minOption" value="#{scriptBean.minOption}" />
 			<p:outputLabel for="maxOption" value="Valor máximo" />
-			<p:inputText id="maxOption" value="#{scriptBean.maxOption}" />
+			<p:spinner id="maxOption" value="#{scriptBean.maxOption}" />
 			<br />
 		</h:panelGroup>
 		

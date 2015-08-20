@@ -82,12 +82,12 @@ public class QuestionEntity {
 		return questionType.toString();
 	}
 
-	public String getMin() {
-		return String.valueOf(scale.getMin());
+	public int getMin() {
+		return scale.getMin();
 	}
 	
-	public String getMax() {
-		return String.valueOf(scale.getMax());
+	public int getMax() {
+		return scale.getMax();
 	}
 
 	public Collection<String> getAnswers() {
@@ -101,6 +101,15 @@ public class QuestionEntity {
 	public void setText(String text) {
 		this.text = text;
 	}
+
+	public void setMin(int min) {
+		scale.setMin(min);
+	}
+	
+	public void setMax(int max) {
+		scale.setMax(max);
+	}
+	
 	
 	// add connection to ScriptEntryEntity???
 }

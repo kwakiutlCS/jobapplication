@@ -47,6 +47,7 @@ public class ScriptEntity {
 	}
 
 	public int getNextPosition() {
+		if (entries.isEmpty()) return 0;
 		return entries.last().getPosition()+1;
 	}
 	

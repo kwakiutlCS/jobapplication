@@ -40,6 +40,14 @@ public class QuestionScaleEntity {
 	public void setId(long id) {
 		this.id = id;
 	}
+
+	public void setMin(int min) {
+		this.min = min;
+	}
+	
+	public void setMax(int max) {
+		this.max = max;
+	}
 	
 	
 }

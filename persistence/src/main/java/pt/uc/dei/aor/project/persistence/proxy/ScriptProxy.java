@@ -53,7 +53,6 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 	
 	@Override
 	public void addQuestion(String questionText, String questionType) {
-		System.out.println(entity.getEntries());
 		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition()));
 	}
 
