@@ -19,15 +19,15 @@ public interface IScriptBusinessService {
 
 	public IScript update(IScript editableScript);
 
-	void addQuestion(IScript iScript, String questionText, String questionType) throws IllegalQuestionTypeException;
+	public IScript addQuestion(IScript iScript, String questionText, String questionType) throws IllegalQuestionTypeException;
 
-	void addQuestion(IScript sript, String questionText, String questionType, int min, int max)
+	public IScript addQuestion(IScript sript, String questionText, String questionType, int min, int max)
 			throws IllegalQuestionTypeException, IllegalScaleException;
 
-	void addQuestion(IScript script, String questionText, String questionType, Collection<String> options)
+	public IScript addQuestion(IScript script, String questionText, String questionType, Collection<String> options)
 			throws IllegalQuestionTypeException, IllegalAnswerOptionsException;
 
 	public void deleteScript(IScript script);
 
-	public void moveQuestion(IScript script, int fromIndex, int toIndex);
+	public IScript moveQuestion(IScript script, int fromIndex, int toIndex);
 }
