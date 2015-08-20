@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +12,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,11 +44,11 @@ public class QuestionEntity {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private QuestionTopicEntity topic;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Set<AnswerChoiceEntity> answers;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	private QuestionScale scale;
+	private QuestionScaleEntity scale;
 
 	public QuestionEntity(String questionText, String questionType) {
 		text = questionText;
@@ -59,7 +62,7 @@ public class QuestionEntity {
 	public QuestionEntity(String questionText, String questionType, int min, int max) {
 		text = questionText;
 		this.questionType = QuestionType.toEnum(questionType);
-		scale = new QuestionScale(min, max);
+		scale = new QuestionScaleEntity(min, max);
 	}
 
 	public QuestionEntity(String questionText, String questionType, List<String> options) {
@@ -73,6 +76,38 @@ public class QuestionEntity {
 
 	public String getText() {
 		return text;
+	}
+
+	public String getType() {
+		return questionType.toString();
+	}
+
+	public int getMin() {
+		return scale.getMin();
+	}
+	
+	public int getMax() {
+		return scale.getMax();
+	}
+
+	public Collection<String> getAnswers() {
+		List<String> list = new ArrayList<>();
+		for (AnswerChoiceEntity a : answers) {
+			list.add(a.getAnswer());
+		}
+		return list;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public void setMin(int min) {
+		scale.setMin(min);
+	}
+	
+	public void setMax(int max) {
+		scale.setMax(max);
 	}
 	
 	

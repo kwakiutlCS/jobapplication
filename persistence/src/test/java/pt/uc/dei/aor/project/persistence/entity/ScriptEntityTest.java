@@ -26,7 +26,7 @@ public class ScriptEntityTest {
 	}
 	
 	
-	@Ignore
+	@Test
 	public void shouldReturnZeroPositionWhenEmpty() {
 		assertThat(script.getNextPosition(), is(equalTo(0)));
 	}

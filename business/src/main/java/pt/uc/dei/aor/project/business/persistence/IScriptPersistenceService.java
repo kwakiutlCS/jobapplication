@@ -10,5 +10,7 @@ public interface IScriptPersistenceService {
 	List<IScript> findAllScripts();
 
 	IScript save(IScript script);
+
+	void delete(IScript script);
 	
 }

@@ -22,7 +22,7 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	@Column(nullable=false)
 	private int position;
 	
-	@OneToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
+	@OneToOne(cascade={CascadeType.ALL})
 	private QuestionEntity question;
 	
 	public ScriptEntryEntity(String questionText, String questionType, int position) {

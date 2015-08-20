@@ -113,6 +113,30 @@ public class ScriptBusinessServiceTest {
 		ejb.addQuestion(iScript, questionText, questionType, options);
 	}
 	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddQuestionWithNullChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+		String questionText = "a question text";
+		String questionType = "Escolha múltipla";
+		List<String> options = null;
+		ejb.addQuestion(iScript, questionText, questionType, options);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddQuestionWithRepeatedChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+		String questionText = "a question text";
+		String questionType = "Escolha múltipla";
+		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Manhã"});
+		ejb.addQuestion(iScript, questionText, questionType, options);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddQuestionWithRepeatedChoice2() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+		String questionText = "a question text";
+		String questionType = "Escolha múltipla";
+		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "manhã"});
+		ejb.addQuestion(iScript, questionText, questionType, options);
+	}
+	
 	@Test
 	public void shouldReturnSevenQuestionTypes() {
 		int typesCount = 7;

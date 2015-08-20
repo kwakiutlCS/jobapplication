@@ -2,7 +2,9 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -30,14 +32,14 @@ public class ScriptBean implements Serializable {
 	private int minOption = 1;
 	private int maxOption = 5;
 	private String answerOption;
-	private List<String> answers;
+	private Set<String> answers;
 	private boolean pendingAlteration = false;
 	
 	
 	public List<IScript> getScripts() {
 		return scriptEjb.getScripts();
 	}
-	
+			
 	public List<IScriptEntry> getEntries() {
 		return editableScript.getEntries();
 	}
@@ -80,10 +82,22 @@ public class ScriptBean implements Serializable {
 		return "editscript.xhtml?faces-redirect=true";
 	}
 	
+	public void delete(IScript script) {
+		scriptEjb.deleteScript(script);
+	}
+	
 	public void addAnswer() {
-		System.out.println(answerOption);
-		if (answers == null) answers = new ArrayList<>();
+		if (answers == null) answers = new HashSet<>();
 		answers.add(answerOption);
+	}
+	
+	public void deleteAnswer(String answer) {
+		answers.remove(answer);
+	}
+	
+	public void markToUpdate() {
+		pendingAlteration = true;
+		System.out.println("alterations: "+pendingAlteration);
 	}
 	
 	// getters and setters
@@ -135,11 +149,11 @@ public class ScriptBean implements Serializable {
 		this.answerOption = answerOption;
 	}
 
-	public List<String> getAnswers() {
+	public Set<String> getAnswers() {
 		return answers;
 	}
 
-	public void setAnswers(List<String> answers) {
+	public void setAnswers(Set<String> answers) {
 		this.answers = answers;
 	}
 }

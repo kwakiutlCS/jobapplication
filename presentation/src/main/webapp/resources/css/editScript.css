@@ -1,0 +1,13 @@
+
+
+.questionsTable th:nth-child(2) {
+	width: 200px;
+}
+
+.questionsTable th:nth-child(3) {
+	width: 100px;
+}
+
+.scaleTable td:nth-child(odd)) {
+	width: 100px;
+}
