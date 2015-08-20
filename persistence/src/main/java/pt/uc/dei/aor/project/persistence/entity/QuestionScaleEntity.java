@@ -9,14 +9,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="question_scale")
-public class QuestionScale {
+public class QuestionScaleEntity {
 	
-	public QuestionScale(int min, int max) {
+	public QuestionScaleEntity(int min, int max) {
 		this.min = min;
 		this.max = max;
 	}
 	
-	public QuestionScale() {
+	public QuestionScaleEntity() {
 	}
 
 	@Id
@@ -28,4 +28,18 @@ public class QuestionScale {
 	
 	@Column(nullable=false)
 	private int max;
+
+	public int getMin() {
+		return min;
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	
 }

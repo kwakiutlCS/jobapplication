@@ -36,8 +36,13 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 		return new ScriptProxy(entity);
 	}
 	
-	
-	
+	@Override
+	public void delete(IScript script) {
+		ScriptEntity entity = getEntity(script);
+		em.remove(em.merge(entity));
+	}
+
+		
 	@Override
 	public List<IScript> findAllScripts() {
 		TypedQuery<ScriptEntity> query = em.createNamedQuery("Script.findAllScripts", ScriptEntity.class);
@@ -60,8 +65,6 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 
         throw new IllegalStateException();
     }
-
-	
 
 	
 }

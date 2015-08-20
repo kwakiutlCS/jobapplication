@@ -13,8 +13,26 @@
 	
 	<h:form id="questionListForm" prependId="false">
 		<h2>add scripts page</h2>
-		<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable">
-			<p:column>#{entry.text}</p:column>
+		<p:dataTable value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
+			<p:column headerText="Question">
+				<p:inplace editor="true">
+					<p:ajax event="save" listener="#{scriptBean.markToUpdate}"
+					update="saveScriptForm" />
+					<p:inputText value="#{entry.text}"/>
+				</p:inplace>
+				<h:panelGroup rendered="#{entry.questionType eq 'Escala'}">
+					<br />
+					<h:outputText value="Mínimo: #{entry.min} - Máximo: #{entry.max}" />
+				</h:panelGroup>
+				<h:panelGroup rendered="#{entry.questionType eq 'Escolha múltipla'}">
+					<br />
+					<ui:repeat value="#{entry.answers}" var="answer">
+						<h:outputText value="#{answer}" />
+						<br />					
+					</ui:repeat>
+				</h:panelGroup>
+			</p:column>
+			<p:column headerText="Question Type">#{entry.questionType}</p:column>
 			<p:column>
 				<p:commandLink value="delete" action="#{scriptBean.deleteQuestion(entry)}"
 				update="scriptQuestionTable saveScriptForm" />
@@ -31,14 +49,16 @@
 	<h:form id="addQuestionForm" prependId="false">
 	<h2>Add question</h2>
 		<p:messages autoUpdate="true" />
+		<p:growl autoUpdate="true" />
 		
-		<p:selectOneMenu value="#{scriptBean.questionType}">
+		<p:selectOneMenu value="#{scriptBean.questionType}" required="true">
 			<f:selectItems value="#{scriptBean.questionTypeList}" />
 			<f:ajax render="@form" />
 		</p:selectOneMenu>
 		<br />
 		<p:inputTextarea rows="3" cols="50" required="true" placeholder="Questão..." 
-		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"/>
+		value="#{scriptBean.questionText}" name="Texto da Questão" id="questionTextField"
+		label="Texto da questão" requiredMessage="qualquer coisa" />
 		<br />
 		
 		<h:panelGroup id="scaleOptions" rendered="#{scriptBean.questionType eq 'Escala'}" >
@@ -52,6 +72,10 @@
 		<h:panelGroup id="multipleOptions" rendered="#{scriptBean.questionType eq 'Escolha múltipla'}">
 			<p:dataTable value="#{scriptBean.answers}" var="answer">
 				<p:column>#{answer}</p:column>
+				<p:column>
+					<p:commandLink value="delete" action="#{scriptBean.deleteAnswer(answer)}"
+					update="multipleOptions" process="@this" />
+				</p:column>
 			</p:dataTable>
 			<p:outputLabel for="answerOption" value="Hipótese de resposta" />
 			<p:inputText id="answerOption" value="#{scriptBean.answerOption}" />
@@ -63,6 +87,8 @@
 		<p:commandButton value="Adicionar" action="#{scriptBean.addQuestion}"
 		update="questionTextField scriptQuestionTable saveScriptForm" />
 	</h:form>
+	
+	<p:link value="voltar" outcome="scripts?faces-redirect=true" />
 	
 </h:body>
 </html>

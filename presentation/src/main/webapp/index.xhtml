@@ -2,30 +2,34 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<meta charset="utf-8" />
 	<title>index </title>
+	
+	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 <h:body>
 
-	<h:panelGroup>
-		<h:form id="loginform">
-						
-			<h:outputLabel for="mail" value="login" />
-			<h:inputText id="mail" 
-				value="#{loginBean.username}" required="true" />
-			<br />
-			<h:outputLabel for="password" value="password" />
-			<h:inputSecret id="password"
-				value="#{loginBean.password}" />
+	<h:form id="loginform">
+			<p:messages autoUpdate="true" />
+			<p:panelGrid columns="2">
 			
-			<h:commandButton action="#{loginBean.login}" value="Entrar" />
+				<p:outputLabel for="mail" value="login" />
+				<p:inputText id="mail" 
+					value="#{loginBean.username}" required="true" />
+				<p:outputLabel for="password" value="password" />
+				<p:password id="password" required="true"
+					value="#{loginBean.password}" />
+			
+				<p:commandButton action="#{loginBean.login}" value="Entrar" />
+			</p:panelGrid>		
 
 		</h:form>
 		
-	</h:panelGroup>
+	
 
 	<h:link outcome="register" value="register" />
 	
