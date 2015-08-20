@@ -72,15 +72,13 @@ public class PositionEntity {
 	@Column
 	private String description;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "positions")
 	private Set<PublicationChannelEntity> publications;
 	
     @ManyToOne
     private ScriptEntity script;
     
     
-    
-
 	public PositionEntity(String title, List<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, String sla, String contactPerson, String company,
