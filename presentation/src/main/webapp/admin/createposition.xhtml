@@ -51,28 +51,48 @@
 
 				<p:outputLabel for="description" value="Description" />
 				<p:inputText id="description" value="#{positionBean.description}" />
-
+				
 				<p:outputLabel for="local" value="Localization" />
-				<p:selectManyMenu id="local" value="#{positionBean.localizations}" converter="localizationConverter">
+				<p:selectCheckboxMenu id="local" value="#{positionBean.localizations}"
+					converter="localizationConverter" >
 					<f:selectItems value="#{positionBean.localizations}"
 						var="localization" itemValue="#{localization}"
 						itemLabel="#{localization.localizationLabel}" />
-				</p:selectManyMenu>
+				</p:selectCheckboxMenu>
+				
+				<p:outputLabel for="area" value="Technical Area" />
+				<p:selectCheckboxMenu  id="area" value="#{positionBean.technicalAreas}"
+					converter="technicalAreaConverter">
+					<f:selectItems value="#{positionBean.technicalAreas}"
+						var="technicalArea" itemValue="#{technicalArea}"
+						itemLabel="#{technicalArea.technicalAreaLabel}" />
+				</p:selectCheckboxMenu>
 
 				<p:outputLabel for="positionState" value="Position State" />
 				<p:selectOneMenu id="positionState"
-					value="#{positionBean.positionState}" >
-				<f:selectItems value="#{positionBean.positionStates}" var="positionState"
-					itemValue="#{positionState}" itemLabel="#{positionState.positionStateLabel}" />
-					</p:selectOneMenu>
-					
-					<p:outputLabel for="area" value="Technical Area"/>
-					<p:selectManyMenu id="area" value="#{positionBean.technicalAreas}" converter="technicalAreaConverter">
-					<f:selectItems value="#{positionBean.technicalAreas}" var="technicalArea"
-					itemValue="#{technicalArea}" itemLabel="#{technicalArea.technicalAreaLabel}" />
-					</p:selectManyMenu>
+					value="#{positionBean.positionState}">
+					<f:selectItems value="#{positionBean.positionStates}"
+						var="positionState" itemValue="#{positionState}"
+						itemLabel="#{positionState.positionStateLabel}" />
+				</p:selectOneMenu>
+
+
+				<p:outputLabel value="Publication Channel" />
+
+				<p:commandButton value="Insert"
+					type="button" onclick="PF('dlg3').show();" />
 
 			</h:panelGrid>
+
+			<form>
+				<p:dialog header="Insert new channel" widgetVar="dlg3" height="100">
+					<p:inputText value="#{publicationChannelBean.channel}" />
+
+					<p:commandButton value="Submit" update="msgs"
+						action="#{publicationChannelBean.createNewPublicationChannel()}" />
+				</p:dialog>
+			</form>
+
 
 			<p:commandButton process="@form" value="Submit" update="msgs"
 				action="#{positionBean.createPosition}" icon="ui-icon-check" />
