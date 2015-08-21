@@ -30,4 +30,6 @@ public interface IScriptBusinessService {
 	public void deleteScript(IScript script);
 
 	public IScript moveQuestion(IScript script, int fromIndex, int toIndex);
+
+	public IScript delete(IScript script, IScriptEntry entry);
 }

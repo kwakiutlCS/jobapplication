@@ -96,5 +96,11 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		return update(script);
 	}
 
+	@Override
+	public IScript delete(IScript script, IScriptEntry entry) {
+		script.deleteQuestion(entry);
+		return update(script);
+	}
+
 
 }

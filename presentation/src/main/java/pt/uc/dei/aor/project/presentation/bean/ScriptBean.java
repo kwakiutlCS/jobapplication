@@ -59,7 +59,7 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void deleteQuestion(IScriptEntry entry) {
-		editableScript.deleteQuestion(entry);
+		scriptEjb.delete(editableScript, entry);
 		pendingAlteration = true;
 	}
 	
