@@ -4,6 +4,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.hamcrest.core.IsInstanceOf;
@@ -18,10 +21,10 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
+import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.User;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
-import pt.uc.dei.aor.project.persistence.util.Role;
 
 @RunWith(Arquillian.class)
 public class WorkerPersistenceServiceTest {
@@ -62,10 +65,12 @@ public class WorkerPersistenceServiceTest {
     	String password = "password";
     	String name = "name";
     	String surname = "surname";
+    	List<Role> roles = new ArrayList<>();
+    	roles.add(Role.ADMIN);
     	
     	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
     	
-    	IWorker worker = factory.worker(login, email, password, name, surname);
+    	IWorker worker = factory.worker(login, email, password, name, surname, roles);
     	workerEjb.save(worker);
     	
     	worker = workerEjb.getWorkerByLogin(login);

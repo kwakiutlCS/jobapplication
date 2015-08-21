@@ -4,18 +4,20 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.presentation.security.Encryptor;
 
 @Named
 @RequestScoped
-public class RegisterBean {
+public class WorkerBean {
 	
 	@Inject
 	private IWorkerBusinessService workerService;
@@ -26,6 +28,25 @@ public class RegisterBean {
 	private String name;
 	private String surname;
 	private List<Role> roles;
+	
+	
+	public void register() {
+		try {
+			workerService.createNewWorker(login, name, surname, email, Encryptor.encrypt(password), roles);
+		} catch (NoRoleException e) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Missing role", "At least one role should be selected");
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+	
+	public List<IWorker> getUsers() {
+		return workerService.findAllUsers();
+	}
+	
+	public List<Role> getPossibleRoles() {
+		return workerService.getRoles();
+	}
 	
 	public String getLogin() {
 		return login;
@@ -43,8 +64,6 @@ public class RegisterBean {
 		this.password = password;
 	}
 	
-	
-
 	public String getEmail() {
 		return email;
 	}
@@ -68,24 +87,13 @@ public class RegisterBean {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
-
-	public String register() {
-		try {
-			workerService.createNewWorker(login, name, surname, email, Encryptor.encrypt(password), roles);
-		} catch (NoRoleException e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Missing role", "At least one role should be selected");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
-		return "index.xhtml";
-	}
 
 	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setRoles(List<Role> role) {
+		this.roles = role;
 	}
 }
+

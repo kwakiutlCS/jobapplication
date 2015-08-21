@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.business.persistence;
 
+import java.util.List;
+
 import pt.uc.dei.aor.project.business.model.IWorker;
 
 public interface IWorkerPersistenceService {
@@ -9,5 +11,7 @@ public interface IWorkerPersistenceService {
 	IWorker getWorkerByLogin(String login);
 
 	void delete(IWorker worker);
+
+	List<IWorker> findAllUsers();
 
 }

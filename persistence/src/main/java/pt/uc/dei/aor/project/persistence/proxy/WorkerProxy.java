@@ -1,11 +1,12 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
-import pt.uc.dei.aor.project.persistence.util.Role;
 
 public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 
@@ -15,8 +16,9 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		this.entity = entity != null ? entity : new WorkerEntity();
 	}
 
-	public WorkerProxy(String login, String email, String password, String name, String surname) {
-		entity = new WorkerEntity(login, email, password, name, surname);
+	public WorkerProxy(String login, String email, String password, String name, 
+			String surname, Collection<Role> roles) {
+		entity = new WorkerEntity(login, email, password, name, surname, roles);
 	}
 
 	@Override
@@ -46,6 +48,21 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	@Override
 	public long getId() {
 		return entity.getId();
+	}
+
+	@Override
+	public String getName() {
+		return entity.getName();
+	}
+
+	@Override
+	public String getSurname() {
+		return entity.getSurname();
+	}
+
+	@Override
+	public String getEmail() {
+		return entity.getEmail();
 	}
 
 }

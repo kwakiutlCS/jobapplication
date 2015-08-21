@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -50,6 +51,20 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return null;
 	}
 	
+	@Override
+	public List<IWorker> findAllUsers() {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findAllWorkers", WorkerEntity.class);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		List<IWorker> proxies = new ArrayList<>();
+		
+		for (WorkerEntity we : entities) {
+			proxies.add(new WorkerProxy(we));
+		}
+		
+		return proxies;
+	}
+
 	
 	
 	

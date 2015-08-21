@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -12,14 +13,16 @@ import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 @Stateless
 public class ModelFactory implements IModelFactory {
 	
 	@Override
-	public IWorker worker(String login, String email, String password, String name, String surname) {
-		return new WorkerProxy(login, email, password, name, surname);
+	public IWorker worker(String login, String email, String password, String name, 
+			String surname, Collection<Role> roles) {
+		return new WorkerProxy(login, email, password, name, surname, roles);
 	}
 
 	@Override

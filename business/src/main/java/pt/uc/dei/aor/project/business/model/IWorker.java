@@ -11,4 +11,11 @@ public interface IWorker {
 	public String getLogin();
 	
 	public long getId();
+	
+	public String getName();
+	
+	public String getSurname();
+	
+	public String getEmail();
+	
 }

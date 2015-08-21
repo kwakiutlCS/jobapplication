@@ -1,5 +1,7 @@
  package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -14,17 +16,21 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import pt.uc.dei.aor.project.persistence.util.Role;
+import pt.uc.dei.aor.project.business.util.Role;
 
 @Entity
 @Table(name="worker")
 @NamedQueries({
 	@NamedQuery(name = "Worker.findWorkerByLogin",query="from WorkerEntity u where u.login = :login"),
+	@NamedQuery(name = "Worker.findAllWorkers",query="from WorkerEntity u"),
 })
 public class WorkerEntity extends User {
 	
-	public WorkerEntity(String login, String email, String password, String name, String surname) {
+	public WorkerEntity(String login, String email, String password, String name, 
+			String surname, Collection<Role> roles) {
 		super(login, email, password, name, surname);
+		this.roles = new HashSet<>();
+		this.roles.addAll(roles);
 	}
 
 	public WorkerEntity() {
