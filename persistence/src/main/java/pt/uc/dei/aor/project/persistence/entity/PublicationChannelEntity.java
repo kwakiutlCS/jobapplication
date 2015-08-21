@@ -20,16 +20,19 @@ public class PublicationChannelEntity {
 	private int id;
 	
 	@Column(nullable=false)
-	private String title;
+	private String channel;
 	
 	@ManyToMany
 	private List<PositionEntity> positions;
 	
 	
-	public PublicationChannelEntity(String channel) {
-	}
 
 	
+	public PublicationChannelEntity(String channel) {
+		this.channel = channel;
+	}
+
+
 	public PublicationChannelEntity() {
 	}
 
@@ -44,13 +47,13 @@ public class PublicationChannelEntity {
 	}
 
 
-	public String getTitle() {
-		return title;
+	public String getChannel() {
+		return channel;
 	}
 
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitle(String channel) {
+		this.channel = channel;
 	}
 
 
