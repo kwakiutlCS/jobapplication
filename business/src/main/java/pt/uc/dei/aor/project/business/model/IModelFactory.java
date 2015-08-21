@@ -13,7 +13,7 @@ public interface IModelFactory {
 	IWorker worker(String login, String email, String password, String name, String surname);	
 
 	IPosition position(Date openingDate, String title, List<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
-			String contactPerson, String company ,List<TechnicalArea> technicalAreas, String description);
+			String contactPerson, String company ,List<TechnicalArea> technicalAreas, String description, IScript script);
 
 	IPublicationChanhel publicationChannel(String channel);
 

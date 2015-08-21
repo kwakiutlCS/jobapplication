@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
@@ -41,6 +42,7 @@ public class PositionBean implements Serializable {
 	private List<Localization> localizations;
 	private PositionState state;
 	private List<TechnicalArea> technicalAreas;
+	private IScript script;
 	
 	public PositionBean() {
 	}
@@ -181,7 +183,7 @@ public class PositionBean implements Serializable {
 	public String createPosition() {
 		
 		position.createNewPosition(openingDate, title, localizations, state, vacancies, closingDate, sla, contactPerson,
-				company, technicalAreas, description);
+				company, technicalAreas, description, script);
 		
 		String result="new position";
 		

@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
@@ -26,10 +27,10 @@ public class PositionBusinessService implements IPositionBusinessService {
 		
 	@Override
 	public IPosition createNewPosition(Date openingDate, String title, List<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
-			String contactPerson, String company , List<TechnicalArea> technicalAreas, String description) {
+			String contactPerson, String company , List<TechnicalArea> technicalAreas, String description, IScript script) {
 		
 		IPosition position = factory.position(openingDate, title, localizations, state, vacancies, closingDate, sla, 
-				contactPerson, company, technicalAreas, description);
+				contactPerson, company, technicalAreas, description, script);
 		
 		return positionPersistence.save(position);
 	}
