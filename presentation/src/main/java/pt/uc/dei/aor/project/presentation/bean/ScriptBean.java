@@ -10,6 +10,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.ReorderEvent;
+
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
@@ -46,18 +48,18 @@ public class ScriptBean implements Serializable {
 	
 	public void addQuestion() throws IllegalQuestionTypeException, IllegalScaleException, IllegalAnswerOptionsException {
 		if (questionType.equals("Escala")) {
-			scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
+			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
 		}
 		else if (questionType.equals("Escolha múltipla")) {
-			scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
+			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
 		}
 		else 
-			scriptEjb.addQuestion(editableScript, questionText, questionType);
+			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType);
 		pendingAlteration = true;
 	}
 	
 	public void deleteQuestion(IScriptEntry entry) {
-		editableScript.deleteQuestion(entry);
+		scriptEjb.delete(editableScript, entry);
 		pendingAlteration = true;
 	}
 	
@@ -97,7 +99,13 @@ public class ScriptBean implements Serializable {
 	
 	public void markToUpdate() {
 		pendingAlteration = true;
-		System.out.println("alterations: "+pendingAlteration);
+	}
+	
+	public void onRowReorder(ReorderEvent event) {
+		int fromIndex = event.getFromIndex();
+		int toIndex = event.getToIndex();
+		editableScript = scriptEjb.moveQuestion(editableScript, fromIndex, toIndex);
+		pendingAlteration = true;
 	}
 	
 	// getters and setters

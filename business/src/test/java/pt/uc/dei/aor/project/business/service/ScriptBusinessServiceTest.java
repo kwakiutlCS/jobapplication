@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -165,4 +166,14 @@ public class ScriptBusinessServiceTest {
 		verify(factory).script();
 	}
 	
+	@Test 
+	public void shouldReorderQuestionsCorrectly() throws IllegalQuestionTypeException {
+		ejb.addQuestion(iScript, "question1", "Resposta curta");
+		ejb.addQuestion(iScript, "question2", "Resposta curta");
+		ejb.addQuestion(iScript, "question3", "Resposta curta");
+		ejb.addQuestion(iScript, "question4", "Resposta curta");
+		ejb.moveQuestion(iScript, 2, 0);
+		
+		verify(iScript).moveQuestion(2, 0);
+	}
 }

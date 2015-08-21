@@ -16,4 +16,6 @@ public interface IScript {
 	public void addQuestion(String questionText, String questionType, int min, int max);
 
 	public void addQuestion(String questionText, String questionType, Collection<String> options);
+
+	public void moveQuestion(int fromIndex, int toIndex);
 }

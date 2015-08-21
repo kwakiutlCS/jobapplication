@@ -9,54 +9,60 @@
 	<meta charset="utf-8" />
 	<title>index </title>
 	<h:outputStylesheet library="css" name="editScript.css" />
+	<h:outputScript library="js" name="editScript.js" />
 </h:head>
 <h:body>
+
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+ 
+	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+    	<p:graphicImage value="img/loading.gif" />
+	</p:dialog>
 	
 	<h:form id="questionListForm" prependId="false">
 		<h2>add scripts page</h2>
-		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" var="entry" id="scriptQuestionTable" rowIndexVar="row">
+		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" 
+		var="entry" id="scriptQuestionTable" rowIndexVar="row" draggableRows="true">
+			<p:ajax event="rowReorder" listener="#{scriptBean.onRowReorder}" update="scriptQuestionTable" />
 			<p:column headerText="Question">
 				<p:inplace editor="true">
-					<p:ajax event="save" listener="#{scriptBean.markToUpdate}"
-					update="saveScriptForm" />
+					<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
 					<p:inputText value="#{entry.text}" />
 				</p:inplace>
-				<h:panelGroup rendered="#{entry.questionType eq 'Escala'}">
-					<br />
+				<p:link value="+" styleClass="showExtra" rendered="#{entry.questionType eq 'Escala' or
+				entry.questionType eq 'Escolha múltipla'}" />
+				<h:panelGroup styleClass="extraInfo" 
+				rendered="#{entry.questionType eq 'Escala'}" layout="block">
 					<p:panelGrid columns="4" styleClass="scaleTable">
 						<p:outputLabel value="Minimum:" for="minimum" />
 						<p:inplace editor="true">
-							<p:ajax event="save" listener="#{scriptBean.markToUpdate}" update="saveScriptForm" />
+							<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
 							<p:spinner value="#{entry.min}" id="minimum" />
 						</p:inplace>
 						<p:outputLabel value="Maximum:" for="maximum" />
 						<p:inplace editor="true">
-							<p:ajax event="save" listener="#{scriptBean.markToUpdate}" update="saveScriptForm" />
+							<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
 							<p:spinner value="#{entry.max}" id="maximum" />
 						</p:inplace>
 					</p:panelGrid>
 				</h:panelGroup>
-				<h:panelGroup rendered="#{entry.questionType eq 'Escolha múltipla'}">
-					<br />
+				<h:panelGroup styleClass="extraInfo" 
+				rendered="#{entry.questionType eq 'Escolha múltipla'}" layout="block">
 					<ui:repeat value="#{entry.answers}" var="answer">
-						<h:outputText value="#{answer}" />
+						<p:inplace editor="true">
+							<p:inputText value="#{answer}" />
+						</p:inplace>
 						<br />					
 					</ui:repeat>
 				</h:panelGroup>
 			</p:column>
 			<p:column headerText="Question Type">#{entry.questionType}</p:column>
 			<p:column>
-				<p:commandLink value="delete" action="#{scriptBean.deleteQuestion(entry)}"
-				update="scriptQuestionTable saveScriptForm" />
+				<p:commandButton action="#{scriptBean.deleteQuestion(entry)}"
+				update="scriptQuestionTable" icon="ui-icon-trash" />
 			</p:column>
 		</p:dataTable>
 	</h:form>
-	
-	<h:form id="saveScriptForm" prependId="false">
-		<p:commandButton value="Gravar" action="#{scriptBean.updateScript}"
-		disabled="#{not scriptBean.pendingAlteration}" id="updateScriptBtn"
-		update="@form" />
-	</h:form>	
 		
 	<h:form id="addQuestionForm" prependId="false">
 	<h2>Add question</h2>
@@ -96,7 +102,7 @@
 		</h:panelGroup>
 		
 		<p:commandButton value="Adicionar" action="#{scriptBean.addQuestion}"
-		update="questionTextField scriptQuestionTable saveScriptForm" />
+		update="questionTextField scriptQuestionTable" />
 	</h:form>
 	
 	<p:link value="voltar" outcome="scripts?faces-redirect=true" />

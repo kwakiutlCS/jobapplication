@@ -53,23 +53,24 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	}
 
 	@Override
-	public void addQuestion(IScript script, String questionText, String questionType) throws IllegalQuestionTypeException {
+	public IScript addQuestion(IScript script, String questionText, String questionType) throws IllegalQuestionTypeException {
 		if (questionType.equals("Escala") || questionType.equals("Escolha múltipla"))
 			throw new IllegalQuestionTypeException();
-		System.out.println(questionText+" "+questionType);
 		script.addQuestion(questionText, questionType);
+		return update(script);
 	}
 
 	@Override
-	public void addQuestion(IScript script, String questionText, String questionType, int min, int max) 
+	public IScript addQuestion(IScript script, String questionText, String questionType, int min, int max) 
 			throws IllegalQuestionTypeException, IllegalScaleException { 
 		if (!"Escala".equals(questionType)) throw new IllegalQuestionTypeException();
 		if (max <= min) throw new IllegalScaleException();
 		script.addQuestion(questionText, questionType, min, max);
+		return update(script);
 	}
 
 	@Override
-	public void addQuestion(IScript script, String questionText, String questionType, Collection<String> options) 
+	public IScript addQuestion(IScript script, String questionText, String questionType, Collection<String> options) 
 		throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		if (!"Escolha múltipla".equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
@@ -81,11 +82,24 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		if (set.size() < options.size()) throw new IllegalAnswerOptionsException();
 		
 		script.addQuestion(questionText, questionType, options);
+		return update(script);
 	}
 
 	@Override
 	public void deleteScript(IScript script) {
 		scriptPersistence.delete(script);
+	}
+
+	@Override
+	public IScript moveQuestion(IScript script, int fromIndex, int toIndex) {
+		script.moveQuestion(fromIndex, toIndex);
+		return update(script);
+	}
+
+	@Override
+	public IScript delete(IScript script, IScriptEntry entry) {
+		script.deleteQuestion(entry);
+		return update(script);
 	}
 
 
