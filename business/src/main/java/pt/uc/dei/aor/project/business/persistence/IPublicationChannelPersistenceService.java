@@ -5,5 +5,7 @@ import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
 public interface IPublicationChannelPersistenceService {
 	
 	IPublicationChanhel save(IPublicationChanhel publicationChannel);
+	
+	//IPublicationChanhel findAllPublicationChannels();
 
 }

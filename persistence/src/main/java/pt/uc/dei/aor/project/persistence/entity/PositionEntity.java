@@ -31,8 +31,10 @@ public class PositionEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id", nullable=false, unique=true)
 	private int id;
+	
+	@Column(nullable=false)
+	private String code;
 	
 	@Column(nullable=false)
 	private String title;
@@ -85,6 +87,7 @@ public class PositionEntity {
 			List<TechnicalArea> technicalAreas, String description,
 			Set<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
+		this.code="1";
 		this.title = title;
 		this.localizations = localizations;
 		this.state = state;
@@ -109,6 +112,14 @@ public class PositionEntity {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getTitle() {

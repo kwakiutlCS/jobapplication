@@ -23,16 +23,37 @@ public class PublicationChannelBean implements Serializable {
 	private IPublicationChannelBusService publicationChannel;
 	
 	
-	
+	private String channel;
+
+
+	public String getChannel() {
+		return channel;
+	}
+
+	public void setChannel(String channel) {
+		this.channel = channel;
+	}
+
 
 	public IPublicationChannelBusService getPublicationChannel() {
 		return publicationChannel;
 	}
 
+
 	public void setPublicationChannel(IPublicationChannelBusService publicationChannel) {
 		this.publicationChannel = publicationChannel;
 	}
 
+	
+	public String createNewPublicationChannel(){
+		
+		String result="";
+		
+		publicationChannel.createNewPublicationChannel(channel);
+		
+		return result;
+		
+	}
 	
 	
 
