@@ -38,6 +38,8 @@ public class ScriptBean implements Serializable {
 	private String answerOption;
 	private SortedSet<String> answers;
 	private String scriptTitle;
+	private boolean editScriptTitle = false;
+	private String newTitle;
 	
 	
 	public IScript getEditableScript() {
@@ -116,6 +118,17 @@ public class ScriptBean implements Serializable {
 		return values;
 	}
 	
+	public void prepareEditTitle() {
+		setEditScriptTitle(true);
+		setNewTitle(editableScript.getTitle());
+	}
+	
+	public void editTitle() {
+		editableScript.setTitle(newTitle);
+		scriptEjb.update(editableScript);
+		setEditScriptTitle(false);
+	}
+	
 	// getters and setters
 	public String getQuestionText() {
 		return questionText;
@@ -171,5 +184,21 @@ public class ScriptBean implements Serializable {
 
 	public void setScriptTitle(String scriptTitle) {
 		this.scriptTitle = scriptTitle;
+	}
+
+	public boolean isEditScriptTitle() {
+		return editScriptTitle;
+	}
+
+	public void setEditScriptTitle(boolean editScriptTitle) {
+		this.editScriptTitle = editScriptTitle;
+	}
+
+	public String getNewTitle() {
+		return newTitle;
+	}
+
+	public void setNewTitle(String newTitle) {
+		this.newTitle = newTitle;
 	}
 }

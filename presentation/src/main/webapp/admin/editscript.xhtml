@@ -20,7 +20,17 @@
 	</p:dialog>
 	
 	<h:form id="questionListForm" prependId="false">
-		<h2>#{scriptBean.editableScript.title}</h2>
+		<h:panelGroup rendered="#{not scriptBean.editScriptTitle}" id="normalTitle">
+			<h2>#{scriptBean.editableScript.title}</h2>
+			<p:commandLink value="edit" action="#{scriptBean.prepareEditTitle()}" 
+			process="@this" update="@form" />		
+		</h:panelGroup>
+		<h:panelGroup rendered="#{scriptBean.editScriptTitle}" id="editingTitle">
+			<p:inputText id="newTitle" value="#{scriptBean.newTitle}" />
+			<p:commandButton value="edit" action="#{scriptBean.editTitle()}" 
+			process="@this newTitle" update="@form" />		
+		</h:panelGroup>
+		
 		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" 
 		var="entry" id="scriptQuestionTable" rowIndexVar="row" draggableRows="true">
 			<p:ajax event="rowReorder" listener="#{scriptBean.onRowReorder}" update="scriptQuestionTable" />
