@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import pt.uc.dei.aor.project.business.util.QuestionType;
+
 public class ScriptEntityTest {
 
 	private ScriptEntity script = new ScriptEntity();
@@ -21,7 +23,7 @@ public class ScriptEntityTest {
 	
 	@Test
 	public void shouldReturnCorrectNextPosition() {
-		script.getEntries().add(new ScriptEntryEntity("text", "Resposta curta", 0));
+		script.getEntries().add(new ScriptEntryEntity("text", QuestionType.SHORT_ANSWER, 0));
 		assertThat(script.getNextPosition(), is(equalTo(1)));
 	}
 	

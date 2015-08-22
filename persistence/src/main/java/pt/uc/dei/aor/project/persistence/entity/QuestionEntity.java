@@ -53,24 +53,24 @@ public class QuestionEntity {
 	@OneToOne(cascade=CascadeType.ALL)
 	private QuestionScaleEntity scale;
 
-	public QuestionEntity(String questionText, String questionType) {
+	public QuestionEntity(String questionText, QuestionType questionType) {
 		text = questionText;
-		this.questionType = QuestionType.toEnum(questionType);
+		this.questionType = questionType;
 	}
 
 	public QuestionEntity() {
 		
 	}
 	
-	public QuestionEntity(String questionText, String questionType, int min, int max) {
+	public QuestionEntity(String questionText, QuestionType questionType, int min, int max) {
 		text = questionText;
-		this.questionType = QuestionType.toEnum(questionType);
+		this.questionType = questionType;
 		scale = new QuestionScaleEntity(min, max);
 	}
 
-	public QuestionEntity(String questionText, String questionType, List<String> options) {
+	public QuestionEntity(String questionText, QuestionType questionType, List<String> options) {
 		text = questionText;
-		this.questionType = QuestionType.toEnum(questionType);
+		this.questionType = questionType;
 		answers = new TreeSet<>();
 		for (String s : options) {
 			answers.add(new AnswerChoiceEntity(s));
@@ -81,8 +81,8 @@ public class QuestionEntity {
 		return text;
 	}
 
-	public String getType() {
-		return questionType.toString();
+	public QuestionType getType() {
+		return questionType;
 	}
 
 	public int getMin() {

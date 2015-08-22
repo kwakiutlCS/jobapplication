@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.business.util.QuestionType;
+
 @Entity
 @Table(name="script_entry")
 public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
@@ -25,12 +27,12 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	@OneToOne(cascade={CascadeType.ALL})
 	private QuestionEntity question;
 	
-	public ScriptEntryEntity(String questionText, String questionType, int position) {
+	public ScriptEntryEntity(String questionText, QuestionType questionType, int position) {
 		this.position = position;
 		question = new QuestionEntity(questionText, questionType);
 	}
 
-	public ScriptEntryEntity(String questionText, String questionType, int position, int min, int max) {
+	public ScriptEntryEntity(String questionText, QuestionType questionType, int position, int min, int max) {
 		this.position = position;
 		question = new QuestionEntity(questionText, questionType, min, max);
 	}
@@ -38,7 +40,7 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	public ScriptEntryEntity() {
 	}
 
-	public ScriptEntryEntity(String questionText, String questionType, int position, List<String> options) {
+	public ScriptEntryEntity(String questionText, QuestionType questionType, int position, List<String> options) {
 		this.position = position;
 		question = new QuestionEntity(questionText, questionType, options);
 	}

@@ -18,6 +18,7 @@ import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
 public class ScriptProxyTest {
@@ -28,12 +29,12 @@ public class ScriptProxyTest {
 	public void init() {
 		script = new ScriptProxy("title");
 				
-		script.addQuestion("question 1", "Escala", 1, 5);
-		script.addQuestion("question 2", "Escala", 1, 5);
-		script.addQuestion("question 3", "Escala", 1, 5);
-		script.addQuestion("question 4", "Escala", 1, 5);
-		script.addQuestion("question 5", "Escala", 1, 5);
-		script.addQuestion("question 6", "Escala", 1, 5);
+		script.addQuestion("question 1", QuestionType.SCALE, 1, 5);
+		script.addQuestion("question 2", QuestionType.SCALE, 1, 5);
+		script.addQuestion("question 3", QuestionType.SCALE, 1, 5);
+		script.addQuestion("question 4", QuestionType.SCALE, 1, 5);
+		script.addQuestion("question 5", QuestionType.SCALE, 1, 5);
+		script.addQuestion("question 6", QuestionType.SCALE, 1, 5);
 		
 	}
 	

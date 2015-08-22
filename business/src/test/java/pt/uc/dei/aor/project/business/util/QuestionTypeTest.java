@@ -17,7 +17,7 @@ public class QuestionTypeTest {
 	
 	@Test
 	public void shouldReturnCorrectType() {
-		String text = "Escolha múltipla";
+		String text = "Multiple choice";
 		assertThat(QuestionType.toEnum(text), is(equalTo(QuestionType.MULTIPLE_CHOICE)));
 	}
 	

@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.business.model;
 import java.util.Collection;
 
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 
 public interface IScriptEntry {
 	
@@ -10,7 +11,7 @@ public interface IScriptEntry {
 	
 	public void setText(String text);
 	
-	public String getQuestionType();
+	public QuestionType getQuestionType();
 	
 	public String getMin();
 	

@@ -1,6 +1,8 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +19,7 @@ import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.business.util.Role;
 
 @Stateless
 public class ScriptBusinessService implements IScriptBusinessService {
@@ -37,14 +40,8 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	}
 
 	@Override
-	public List<String> getQuestionTypeList() {
-		List<String> list = new LinkedList<>();
-		
-		for (QuestionType qt : QuestionType.values()) {
-			list.add(qt.toString());
-		}
-		
-		return list;
+	public List<QuestionType> getQuestionTypeList() {
+		return new ArrayList<>(EnumSet.allOf(QuestionType.class));
 	}
 
 	@Override
@@ -53,26 +50,26 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	}
 
 	@Override
-	public IScript addQuestion(IScript script, String questionText, String questionType) throws IllegalQuestionTypeException {
-		if (questionType.equals("Escala") || questionType.equals("Escolha múltipla"))
+	public IScript addQuestion(IScript script, String questionText, QuestionType questionType) throws IllegalQuestionTypeException {
+		if (questionType.equals(QuestionType.SCALE) || questionType.equals(QuestionType.MULTIPLE_CHOICE))
 			throw new IllegalQuestionTypeException();
 		script.addQuestion(questionText, questionType);
 		return update(script);
 	}
 
 	@Override
-	public IScript addQuestion(IScript script, String questionText, String questionType, int min, int max) 
+	public IScript addQuestion(IScript script, String questionText, QuestionType questionType, int min, int max) 
 			throws IllegalQuestionTypeException, IllegalScaleException { 
-		if (!"Escala".equals(questionType)) throw new IllegalQuestionTypeException();
+		if (!QuestionType.SCALE.equals(questionType)) throw new IllegalQuestionTypeException();
 		if (max <= min) throw new IllegalScaleException();
 		script.addQuestion(questionText, questionType, min, max);
 		return update(script);
 	}
 
 	@Override
-	public IScript addQuestion(IScript script, String questionText, String questionType, Collection<String> options) 
+	public IScript addQuestion(IScript script, String questionText, QuestionType questionType, Collection<String> options) 
 		throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
-		if (!"Escolha múltipla".equals(questionType)) throw new IllegalQuestionTypeException();
+		if (!QuestionType.MULTIPLE_CHOICE.equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
 		
 		Set<String> set = new HashSet<>();

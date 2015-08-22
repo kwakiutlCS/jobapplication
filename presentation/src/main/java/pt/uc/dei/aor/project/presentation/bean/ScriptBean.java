@@ -2,7 +2,6 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -20,6 +19,7 @@ import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.service.IScriptBusinessService;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 
 @Named
 @SessionScoped
@@ -32,7 +32,7 @@ public class ScriptBean implements Serializable {
 	
 	private IScript editableScript;
 	private String questionText;
-	private String questionType;
+	private QuestionType questionType;
 	private int minOption = 1;
 	private int maxOption = 5;
 	private String answerOption;
@@ -53,10 +53,10 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void addQuestion() throws IllegalQuestionTypeException, IllegalScaleException, IllegalAnswerOptionsException {
-		if (questionType.equals("Escala")) {
+		if (questionType.equals(QuestionType.SCALE)) {
 			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
 		}
-		else if (questionType.equals("Escolha múltipla")) {
+		else if (questionType.equals(QuestionType.MULTIPLE_CHOICE)) {
 			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
 		}
 		else 
@@ -71,7 +71,7 @@ public class ScriptBean implements Serializable {
 		editableScript = scriptEjb.update(editableScript);
 	}
 	
-	public List<String> getQuestionTypeList() {
+	public List<QuestionType> getQuestionTypeList() {
 		return scriptEjb.getQuestionTypeList();
 	}
 
@@ -125,11 +125,11 @@ public class ScriptBean implements Serializable {
 		this.questionText = questionText;
 	}
 
-	public String getQuestionType() {
+	public QuestionType getQuestionType() {
 		return questionType;
 	}
 
-	public void setQuestionType(String questionType) {
+	public void setQuestionType(QuestionType questionType) {
 		this.questionType = questionType;
 	}
 

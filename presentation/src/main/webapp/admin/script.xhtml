@@ -18,18 +18,18 @@
 				<h:panelGroup layout="block" styleClass="questionTitle">
 					#{entry.text}
 				</h:panelGroup>
-				<p:inputText rendered="#{entry.questionType eq 'Resposta curta'}" />	
-				<p:inputTextarea rendered="#{entry.questionType eq 'Resposta longa'}" />	
-				<p:inputMask rendered="#{entry.questionType eq 'Hora'}" mask="99h99" />	
-				<p:calendar navigator="true" rendered="#{entry.questionType eq 'Data'}" />	
-				<p:selectOneRadio rendered="#{entry.questionType eq 'Verdadeiro ou falso'}" >
+				<p:inputText rendered="#{entry.questionType eq 'SHORT_ANSWER'}" />	
+				<p:inputTextarea rendered="#{entry.questionType eq 'LONG_ANSWER'}" />	
+				<p:inputMask rendered="#{entry.questionType eq 'TIME'}" mask="99h99" />	
+				<p:calendar navigator="true" rendered="#{entry.questionType eq 'DATE'}" />	
+				<p:selectOneRadio rendered="#{entry.questionType eq 'TRUE_FALSE'}" >
 					<f:selectItem itemLabel="yes" />
 					<f:selectItem itemLabel="no" />
 				</p:selectOneRadio>
-				<p:selectOneMenu rendered="#{entry.questionType eq 'Escala'}">
+				<p:selectOneMenu rendered="#{entry.questionType eq 'SCALE'}">
 					<f:selectItems value="#{scriptBean.getScaleValues(entry)}" />
 				</p:selectOneMenu>
-				<p:selectOneRadio rendered="#{entry.questionType eq 'Escolha múltipla'}"
+				<p:selectOneRadio rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}"
 				layout="grid" columns="3">
 					<f:selectItems value="#{entry.answers}" />
 				</p:selectOneRadio>

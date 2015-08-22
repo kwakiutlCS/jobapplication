@@ -8,6 +8,7 @@ import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 
 public interface IScriptBusinessService {
 	
@@ -15,16 +16,16 @@ public interface IScriptBusinessService {
 
 	public IScript createNewScript(String scriptTitle);
 
-	public List<String> getQuestionTypeList();
+	public List<QuestionType> getQuestionTypeList();
 
 	public IScript update(IScript editableScript);
 
-	public IScript addQuestion(IScript iScript, String questionText, String questionType) throws IllegalQuestionTypeException;
+	public IScript addQuestion(IScript iScript, String questionText, QuestionType questionType) throws IllegalQuestionTypeException;
 
-	public IScript addQuestion(IScript sript, String questionText, String questionType, int min, int max)
+	public IScript addQuestion(IScript sript, String questionText, QuestionType questionType, int min, int max)
 			throws IllegalQuestionTypeException, IllegalScaleException;
 
-	public IScript addQuestion(IScript script, String questionText, String questionType, Collection<String> options)
+	public IScript addQuestion(IScript script, String questionText, QuestionType questionType, Collection<String> options)
 			throws IllegalQuestionTypeException, IllegalAnswerOptionsException;
 
 	public void deleteScript(IScript script);

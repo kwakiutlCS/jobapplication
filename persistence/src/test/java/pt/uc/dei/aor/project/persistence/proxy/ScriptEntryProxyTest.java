@@ -13,6 +13,7 @@ import org.junit.Test;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 
 public class ScriptEntryProxyTest {
 
@@ -21,7 +22,7 @@ public class ScriptEntryProxyTest {
 		
 	@Before
 	public void init() {
-		script.addQuestion("question 1", "Escala", 1, 5);
+		script.addQuestion("question 1", QuestionType.SCALE, 1, 5);
 		entry = script.getEntries().get(0);
 	}
 	

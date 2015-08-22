@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
 public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntryEntity> {
@@ -33,7 +34,7 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 
 
 	@Override
-	public String getQuestionType() {
+	public QuestionType getQuestionType() {
 		return entity.getQuestion().getType();
 	}
 
