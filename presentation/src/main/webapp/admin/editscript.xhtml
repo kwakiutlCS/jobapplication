@@ -20,7 +20,7 @@
 	</p:dialog>
 	
 	<h:form id="questionListForm" prependId="false">
-		<h2>add scripts page</h2>
+		<h2>#{scriptBean.editableScript.title}</h2>
 		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" 
 		var="entry" id="scriptQuestionTable" rowIndexVar="row" draggableRows="true">
 			<p:ajax event="rowReorder" listener="#{scriptBean.onRowReorder}" update="scriptQuestionTable" />

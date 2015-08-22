@@ -26,7 +26,7 @@ public class ScriptProxyTest {
 	
 	@Before
 	public void init() {
-		script = new ScriptProxy();
+		script = new ScriptProxy("title");
 				
 		script.addQuestion("question 1", "Escala", 1, 5);
 		script.addQuestion("question 2", "Escala", 1, 5);
@@ -108,5 +108,19 @@ public class ScriptProxyTest {
 		assertThat(set.remove(0).getText(), is(equalTo("question 4")));
 		assertThat(set.remove(0).getText(), is(equalTo("question 5")));
 		assertThat(set.remove(0).getText(), is(equalTo("question 1")));
+	}
+	
+	@Test
+	public void shouldAddScriptWithCorrectTitle() {
+		String title = "title";
+		IScript script = new ScriptProxy(title);
+		assertThat(script.getTitle(), is(equalTo(title)));
+	}
+	
+	@Test
+	public void shouldModifyScriptTitle() {
+		String title = "otherTitle";
+		script.setTitle(title);
+		assertThat(script.getTitle(), is(equalTo(title)));
 	}
 }

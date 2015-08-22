@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<title>index </title>
+</h:head>
+<h:body>
+	<h2>#{scriptBean.editableScript.title}</h2>
+	
+	<p:panelGrid columns="1">
+		<ui:repeat value="#{scriptBean.entries}" var="entry">
+			<h:panelGroup layout="block" styleClass="questionBlock">
+				<h:panelGroup layout="block" styleClass="questionTitle">
+					#{entry.text}
+				</h:panelGroup>
+				<p:inputText rendered="#{entry.questionType eq 'Resposta curta'}" />	
+				<p:inputTextarea rendered="#{entry.questionType eq 'Resposta longa'}" />	
+				<p:inputMask rendered="#{entry.questionType eq 'Hora'}" mask="99h99" />	
+				<p:calendar navigator="true" rendered="#{entry.questionType eq 'Data'}" />	
+				<p:selectOneRadio rendered="#{entry.questionType eq 'Verdadeiro ou falso'}" >
+					<f:selectItem itemLabel="yes" />
+					<f:selectItem itemLabel="no" />
+				</p:selectOneRadio>
+				<p:selectOneMenu rendered="#{entry.questionType eq 'Escala'}">
+					<f:selectItems value="#{scriptBean.getScaleValues(entry)}" />
+				</p:selectOneMenu>
+				<p:selectOneRadio rendered="#{entry.questionType eq 'Escolha múltipla'}"
+				layout="grid" columns="3">
+					<f:selectItems value="#{entry.answers}" />
+				</p:selectOneRadio>
+			</h:panelGroup>
+		</ui:repeat>
+	</p:panelGrid>
+	
+	<h:link value="back" outcome="scripts" />
+</h:body>
+</html>

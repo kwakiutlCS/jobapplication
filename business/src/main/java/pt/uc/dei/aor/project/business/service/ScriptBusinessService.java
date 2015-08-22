@@ -32,8 +32,8 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	}
 
 	@Override
-	public IScript createNewScript() {
-		return factory.script();
+	public IScript createNewScript(String title) {
+		return factory.script(title);
 	}
 
 	@Override

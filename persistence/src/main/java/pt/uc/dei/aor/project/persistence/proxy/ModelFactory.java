@@ -38,8 +38,8 @@ public class ModelFactory implements IModelFactory {
 	}
 
     @Override
-	public IScript script() {
-		return new ScriptProxy();
+	public IScript script(String title) {
+		return new ScriptProxy(title);
 	}
 
 }

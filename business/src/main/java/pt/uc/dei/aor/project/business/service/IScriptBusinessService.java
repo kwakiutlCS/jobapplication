@@ -13,7 +13,7 @@ public interface IScriptBusinessService {
 	
 	public List<IScript> getScripts();
 
-	public IScript createNewScript();
+	public IScript createNewScript(String scriptTitle);
 
 	public List<String> getQuestionTypeList();
 

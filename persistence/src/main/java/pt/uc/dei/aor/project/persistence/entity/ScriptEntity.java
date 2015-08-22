@@ -4,6 +4,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,9 @@ public class ScriptEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
+	@Column(nullable=false)
+	private String title;
+	
 	@OrderBy("position ASC")
 	@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	private SortedSet<ScriptEntryEntity> entries;
@@ -34,6 +38,11 @@ public class ScriptEntity {
 		this.entries = new TreeSet<>();
 	}
 	
+	public ScriptEntity(String title) {
+		this.entries = new TreeSet<>();
+		this.title = title;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -51,6 +60,12 @@ public class ScriptEntity {
 		  return entries.last().getPosition()+1;
 
 	}
+
+	public String getTitle() {
+		return title;
+	}
 	
-	
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }

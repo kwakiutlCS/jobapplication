@@ -22,9 +22,8 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 		this.entity = entity != null ? entity : new ScriptEntity();
 	}
 
-
-	public ScriptProxy() {
-		this(null);
+	public ScriptProxy(String title) {
+		this.entity = new ScriptEntity(title);
 	}
 
 
@@ -138,6 +137,16 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 			reordered.add(se);
 		}
 		entity.setEntries(reordered);
+	}
+
+	@Override
+	public String getTitle() {
+		return entity.getTitle();
+	}
+	
+	@Override
+	public void setTitle(String title) {
+		entity.setTitle(title);
 	}
 
 }

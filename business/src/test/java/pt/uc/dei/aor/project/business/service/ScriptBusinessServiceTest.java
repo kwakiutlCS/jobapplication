@@ -161,9 +161,10 @@ public class ScriptBusinessServiceTest {
 	
 	@Test
 	public void shouldCallCorrectFunctionToCreateScript() {
-		ejb.createNewScript();
+		String title = "title";
+		ejb.createNewScript(title);
 		
-		verify(factory).script();
+		verify(factory).script(title);
 	}
 	
 	@Test 

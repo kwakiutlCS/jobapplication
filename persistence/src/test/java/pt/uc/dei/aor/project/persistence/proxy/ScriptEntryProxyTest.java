@@ -16,7 +16,7 @@ import pt.uc.dei.aor.project.business.model.IScriptEntry;
 
 public class ScriptEntryProxyTest {
 
-	private IScript script = new ScriptProxy();
+	private IScript script = new ScriptProxy("title");
 	private IScriptEntry entry;
 		
 	@Before

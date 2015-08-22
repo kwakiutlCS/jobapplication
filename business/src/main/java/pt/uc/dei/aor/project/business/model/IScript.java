@@ -18,4 +18,8 @@ public interface IScript {
 	public void addQuestion(String questionText, String questionType, Collection<String> options);
 
 	public void moveQuestion(int fromIndex, int toIndex);
+
+	public String getTitle();
+
+	void setTitle(String title);
 }

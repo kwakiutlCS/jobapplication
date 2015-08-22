@@ -20,7 +20,7 @@ public interface IModelFactory {
 
 	IPublicationChanhel publicationChannel(String channel);
 
-	IScript script();	
+	IScript script(String title);	
 
 
 }

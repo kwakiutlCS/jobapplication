@@ -37,8 +37,12 @@ public class ScriptBean implements Serializable {
 	private int maxOption = 5;
 	private String answerOption;
 	private SortedSet<String> answers;
-	private boolean pendingAlteration = false;
+	private String scriptTitle;
 	
+	
+	public IScript getEditableScript() {
+		return editableScript;
+	}
 	
 	public List<IScript> getScripts() {
 		return scriptEjb.getScripts();
@@ -57,17 +61,14 @@ public class ScriptBean implements Serializable {
 		}
 		else 
 			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType);
-		pendingAlteration = true;
 	}
 	
 	public void deleteQuestion(IScriptEntry entry) {
 		scriptEjb.delete(editableScript, entry);
-		pendingAlteration = true;
 	}
 	
 	public void updateScript() {
 		editableScript = scriptEjb.update(editableScript);
-		pendingAlteration=false;
 	}
 	
 	public List<String> getQuestionTypeList() {
@@ -75,15 +76,18 @@ public class ScriptBean implements Serializable {
 	}
 
 	public String addScript() {
-		editableScript = scriptEjb.createNewScript();
-		pendingAlteration = false;
+		editableScript = scriptEjb.createNewScript(scriptTitle);
 		return "editscript.xhtml?faces-redirect=true";
 	}
 	
 	public String edit(IScript script) {
 		editableScript = script;
-		pendingAlteration = false;
 		return "editscript.xhtml?faces-redirect=true";
+	}
+	
+	public String view(IScript script) {
+		editableScript = script;
+		return "script.xhtml?faces-redirect=true";
 	}
 	
 	public void delete(IScript script) {
@@ -99,15 +103,17 @@ public class ScriptBean implements Serializable {
 		answers.remove(answer);
 	}
 	
-	public void markToUpdate() {
-		pendingAlteration = true;
-	}
-	
 	public void onRowReorder(ReorderEvent event) {
 		int fromIndex = event.getFromIndex();
 		int toIndex = event.getToIndex();
 		editableScript = scriptEjb.moveQuestion(editableScript, fromIndex, toIndex);
-		pendingAlteration = true;
+	}
+	
+	public List<Integer> getScaleValues(IScriptEntry entry) {
+		List<Integer> values = new ArrayList<>();
+		for (int i = Integer.parseInt(entry.getMin()); i <= Integer.parseInt(entry.getMax()); i++)
+			values.add(i);
+		return values;
 	}
 	
 	// getters and setters
@@ -125,14 +131,6 @@ public class ScriptBean implements Serializable {
 
 	public void setQuestionType(String questionType) {
 		this.questionType = questionType;
-	}
-
-	public boolean isPendingAlteration() {
-		return pendingAlteration;
-	}
-
-	public void setPendingAlteration(boolean pendingAlteration) {
-		this.pendingAlteration = pendingAlteration;
 	}
 
 	public int getMinOption() {
@@ -165,5 +163,13 @@ public class ScriptBean implements Serializable {
 
 	public void setAnswers(List<String> answers) {
 		this.answers.addAll(answers);
+	}
+
+	public String getScriptTitle() {
+		return scriptTitle;
+	}
+
+	public void setScriptTitle(String scriptTitle) {
+		this.scriptTitle = scriptTitle;
 	}
 }
