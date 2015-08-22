@@ -24,7 +24,8 @@ public class StartUpEjb {
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		try {
-			workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
+			if (workerEjb.getWorkerByLogin("admin") == null)
+				workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
 					Encryptor.encrypt("admin"), roles);
 		} catch (NoRoleException e) {
 		

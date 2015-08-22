@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -34,7 +36,7 @@ public class ScriptBean implements Serializable {
 	private int minOption = 1;
 	private int maxOption = 5;
 	private String answerOption;
-	private Set<String> answers;
+	private SortedSet<String> answers;
 	private boolean pendingAlteration = false;
 	
 	
@@ -89,7 +91,7 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void addAnswer() {
-		if (answers == null) answers = new HashSet<>();
+		if (answers == null) answers = new TreeSet<>();
 		answers.add(answerOption);
 	}
 	
@@ -161,7 +163,7 @@ public class ScriptBean implements Serializable {
 		return answers;
 	}
 
-	public void setAnswers(Set<String> answers) {
-		this.answers = answers;
+	public void setAnswers(List<String> answers) {
+		this.answers.addAll(answers);
 	}
 }

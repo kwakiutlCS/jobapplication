@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="answer_choice")
-public class AnswerChoiceEntity {
+public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity> {
 	
 	public AnswerChoiceEntity(String s) {
 		answer = s;
@@ -57,6 +57,11 @@ public class AnswerChoiceEntity {
 
 	public String getAnswer() {
 		return answer;
+	}
+
+	@Override
+	public int compareTo(AnswerChoiceEntity o) {
+		return answer.compareTo(o.answer);
 	}
 	
 	

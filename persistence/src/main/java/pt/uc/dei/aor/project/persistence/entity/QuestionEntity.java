@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -44,8 +46,9 @@ public class QuestionEntity {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private QuestionTopicEntity topic;
 	
+	@OrderBy("answer ASC")
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private Set<AnswerChoiceEntity> answers;
+	private SortedSet<AnswerChoiceEntity> answers;
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	private QuestionScaleEntity scale;
@@ -68,7 +71,7 @@ public class QuestionEntity {
 	public QuestionEntity(String questionText, String questionType, List<String> options) {
 		text = questionText;
 		this.questionType = QuestionType.toEnum(questionType);
-		answers = new HashSet<>();
+		answers = new TreeSet<>();
 		for (String s : options) {
 			answers.add(new AnswerChoiceEntity(s));
 		}
