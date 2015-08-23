@@ -98,7 +98,7 @@ public class ScriptBean implements Serializable {
 	
 	public void addAnswer() {
 		if (answers == null) answers = new TreeSet<>();
-		answers.add(answerOption);
+		answers.add(answerOption.trim());
 	}
 	
 	public void deleteAnswer(String answer) {

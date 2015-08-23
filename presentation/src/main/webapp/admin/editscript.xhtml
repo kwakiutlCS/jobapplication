@@ -59,11 +59,15 @@
 				<h:panelGroup styleClass="extraInfo" 
 				rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}" layout="block">
 					<ui:repeat value="#{entry.answers}" var="answer">
-						<p:inplace editor="true">
-							<p:inputText value="#{answer}" />
-						</p:inplace>
-						<br />					
+						<h:outputText value="#{answer}" /> 
+						<p:commandLink value="delete" action="#{scriptEntryBean.deleteOption(entry, answer)}"
+						process="@this" update="@form" />
+						<br />				
 					</ui:repeat>
+					<p:outputLabel for="answerOption" value="New answer" />
+					<p:inputText id="answerOption" value="#{scriptEntryBean.option}" />
+					<p:commandButton value="add" action="#{scriptEntryBean.addAnswer(entry)}"
+					process="@this answerOption" update="@form" />	
 				</h:panelGroup>
 			</p:column>
 			<p:column headerText="Question Type">#{entry.questionType.label}</p:column>

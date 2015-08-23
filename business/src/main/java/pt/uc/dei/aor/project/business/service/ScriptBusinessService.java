@@ -72,13 +72,16 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		if (!QuestionType.MULTIPLE_CHOICE.equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
 		
+		List<String> trimmed = new ArrayList<>();
 		Set<String> set = new HashSet<>();
-		for (String s : options)
-			set.add(s.toLowerCase());
 		
-		if (set.size() < options.size()) throw new IllegalAnswerOptionsException();
+		for (String s : options) {
+			trimmed.add(s.trim());
+			set.add(s.trim());
+		}
+		if (set.size() < trimmed.size()) throw new IllegalAnswerOptionsException();
 		
-		script.addQuestion(questionText, questionType, options);
+		script.addQuestion(questionText, questionType, trimmed);
 		return update(script);
 	}
 

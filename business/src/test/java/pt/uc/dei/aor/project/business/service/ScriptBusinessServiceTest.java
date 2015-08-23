@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -131,13 +132,27 @@ public class ScriptBusinessServiceTest {
 		ejb.addQuestion(iScript, questionText, questionType, options);
 	}
 	
-	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithRepeatedChoice2() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	@Test
+	public void shouldNotThrowExceptionWhenAddQuestionWithRepeatedChoice2() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "manhã"});
 		ejb.addQuestion(iScript, questionText, questionType, options);
 	}
+	
+	
+	@Test
+	public void shouldTrimAnswersWhenAddQuestion() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+		String questionText = "a question text";
+		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
+		List<String> options = Arrays.asList(new String[]{"  Manhã", "Tarde  ", " Noite  "});
+		ejb.addQuestion(iScript, questionText, questionType, options);
+		List<String> trimmed = new ArrayList<>();
+		
+		for (String o : options) trimmed.add(o.trim());
+		verify(iScript).addQuestion(questionText, questionType, trimmed);
+	}
+	
 	
 	@Test
 	public void shouldReturnSevenQuestionTypes() {

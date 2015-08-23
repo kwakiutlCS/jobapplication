@@ -96,4 +96,19 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		return "proxy: "+entity;
 	}
 
+	@Override
+	public long getId() {
+		return entity.getId();
+	}
+
+	@Override
+	public void addAnswer(String option) {
+		entity.addAnswer(option);
+	}
+
+	@Override
+	public void removeAnswer(String answer) {
+		entity.removeAnswer(answer);
+	}
+
 }

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -15,6 +17,9 @@ import pt.uc.dei.aor.project.business.util.QuestionType;
 
 @Entity
 @Table(name="script_entry")
+@NamedQueries({
+	@NamedQuery(name = "ScriptEntry.findAnswer",query="from ScriptEntity u where id = :id"),
+})
 public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 
 	@Id
@@ -66,5 +71,17 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	
 	public String toString() {
 		return position+" -> "+question.getText();
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void addAnswer(String option) {
+		question.addAnswer(option);
+	}
+
+	public void removeAnswer(String answer) {
+		question.removeAnswer(answer);
 	}
 }

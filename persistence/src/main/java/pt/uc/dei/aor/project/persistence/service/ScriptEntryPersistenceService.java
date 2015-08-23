@@ -1,8 +1,11 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.persistence.IScriptEntryPersistenceService;
@@ -32,7 +35,6 @@ public class ScriptEntryPersistenceService implements IScriptEntryPersistenceSer
 	}
 
 		
-	
 	@SuppressWarnings("unchecked")
     private ScriptEntryEntity getEntity(IScriptEntry scriptEntryProxy) {
         if (scriptEntryProxy instanceof IProxyToEntity<?>) {
@@ -42,5 +44,6 @@ public class ScriptEntryPersistenceService implements IScriptEntryPersistenceSer
         throw new IllegalStateException();
     }
 
+	
 	
 }

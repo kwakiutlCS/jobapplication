@@ -112,6 +112,14 @@ public class QuestionEntity {
 	public void setMax(int max) {
 		scale.setMax(max);
 	}
+
+	public void addAnswer(String option) {
+		answers.add(new AnswerChoiceEntity(option));
+	}
+
+	public void removeAnswer(String answer) {
+		answers.remove(new AnswerChoiceEntity(answer));
+	}
 	
 	
 	// add connection to ScriptEntryEntity???

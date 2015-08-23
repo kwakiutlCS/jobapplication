@@ -22,4 +22,10 @@ public interface IScriptEntry {
 	public void setMax(String max) throws IllegalScaleException;
 	
 	public Collection<String> getAnswers();
+	
+	public long getId();
+
+	public void addAnswer(String option);
+
+	public void removeAnswer(String answer);
 }
