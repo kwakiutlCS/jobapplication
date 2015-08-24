@@ -33,6 +33,12 @@ public class WorkerBean {
 	public void register() {
 		try {
 			workerService.createNewWorker(login, name, surname, email, Encryptor.encrypt(password), roles);
+			login = null;
+			password = null;
+			email = null;
+			name = null;
+			surname = null;
+			roles = null;
 		} catch (NoRoleException e) {
 			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Missing role", "At least one role should be selected");

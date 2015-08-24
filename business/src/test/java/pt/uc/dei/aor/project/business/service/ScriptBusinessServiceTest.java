@@ -117,7 +117,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithNullChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithNullChoices() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = null;
@@ -129,6 +129,22 @@ public class ScriptBusinessServiceTest {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Manhã"});
+		ejb.addQuestion(iScript, questionText, questionType, options);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddQuestionWithEmptyChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+		String questionText = "a question text";
+		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
+		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", ""});
+		ejb.addQuestion(iScript, questionText, questionType, options);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddQuestionWithNullChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+		String questionText = "a question text";
+		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
+		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", null});
 		ejb.addQuestion(iScript, questionText, questionType, options);
 	}
 	

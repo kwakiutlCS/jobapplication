@@ -42,6 +42,7 @@ public class ScriptEntryBean implements Serializable {
 	public void addAnswer(IScriptEntry entry) {
 		try {
 			ejb.addAnswer(entry, option);
+			option = null;
 		} catch (IllegalAnswerOptionsException e) {
 			addMessage(FacesMessage.SEVERITY_ERROR, "Repeated message");
 		}

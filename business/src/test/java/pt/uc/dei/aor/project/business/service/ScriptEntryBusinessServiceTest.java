@@ -80,4 +80,22 @@ public class ScriptEntryBusinessServiceTest {
 		ejb.removeAnswer(iScriptEntry, "option_a");
 	}
 	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddingEmptyAnswer() throws IllegalAnswerOptionsException {
+		String option = "";
+		List<String> list = Arrays.asList(new String[]{"option_a","option_b"});
+		when(iScriptEntry.getAnswers()).thenReturn(list);
+		
+		ejb.addAnswer(iScriptEntry, option);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddingNullAnswer() throws IllegalAnswerOptionsException {
+		String option = null;
+		List<String> list = Arrays.asList(new String[]{"option_a","option_b"});
+		when(iScriptEntry.getAnswers()).thenReturn(list);
+		
+		ejb.addAnswer(iScriptEntry, option);
+	}
+	
 }

@@ -76,6 +76,7 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		Set<String> set = new HashSet<>();
 		
 		for (String s : options) {
+			if (s == null || s.equals("")) throw new IllegalAnswerOptionsException();
 			trimmed.add(s.trim());
 			set.add(s.trim());
 		}

@@ -25,6 +25,7 @@ public class ScriptEntryBusinessService implements IScriptEntryBusinessService {
 
 	@Override
 	public void addAnswer(IScriptEntry entry, String option) throws IllegalAnswerOptionsException {
+		if (option == null || option.equals("")) throw new IllegalAnswerOptionsException();
 		if (entry.getAnswers().contains(option)) throw new IllegalAnswerOptionsException();
 		entry.addAnswer(option.trim());
 		save(entry);

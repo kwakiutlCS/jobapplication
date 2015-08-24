@@ -8,6 +8,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -54,15 +57,36 @@ public class ScriptBean implements Serializable {
 		return editableScript.getEntries();
 	}
 	
-	public void addQuestion() throws IllegalQuestionTypeException, IllegalScaleException, IllegalAnswerOptionsException {
+	public void addQuestion() {
 		if (questionType.equals(QuestionType.SCALE)) {
-			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
+			try {
+				editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
+				questionText = null;
+				answers = null;
+			} catch (IllegalScaleException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Illegal scale values");
+			} catch (IllegalQuestionTypeException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
+			}
 		}
 		else if (questionType.equals(QuestionType.MULTIPLE_CHOICE)) {
-			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
+			try {
+				editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
+				questionText = null;
+			} catch (IllegalQuestionTypeException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
+			} catch (IllegalAnswerOptionsException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Illegal answer options");
+			}
 		}
-		else 
-			editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType);
+		else {
+			try {
+				editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType);
+				questionText = null;
+			} catch (IllegalQuestionTypeException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
+			}
+		}
 	}
 	
 	public void deleteQuestion(IScriptEntry entry) {
@@ -79,6 +103,7 @@ public class ScriptBean implements Serializable {
 
 	public String addScript() {
 		editableScript = scriptEjb.createNewScript(scriptTitle);
+		scriptTitle = null;
 		return "editscript.xhtml?faces-redirect=true";
 	}
 	
@@ -99,6 +124,7 @@ public class ScriptBean implements Serializable {
 	public void addAnswer() {
 		if (answers == null) answers = new TreeSet<>();
 		answers.add(answerOption.trim());
+		answerOption = null;
 	}
 	
 	public void deleteAnswer(String answer) {
@@ -200,5 +226,10 @@ public class ScriptBean implements Serializable {
 
 	public void setNewTitle(String newTitle) {
 		this.newTitle = newTitle;
+	}
+	
+	private void addMessage(Severity type, String text) {
+		FacesMessage msg = new FacesMessage(type, text, text);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }
