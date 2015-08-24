@@ -2,7 +2,6 @@ package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,16 +9,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IScript;
-import pt.uc.dei.aor.project.business.model.IScriptEntry;
-import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
-import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ScriptProxy;
-import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
 
 @Stateless
 public class ScriptPersistenceService implements IScriptPersistenceService {

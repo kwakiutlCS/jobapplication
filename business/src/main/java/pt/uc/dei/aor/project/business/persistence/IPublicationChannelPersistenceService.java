@@ -1,11 +1,13 @@
 package pt.uc.dei.aor.project.business.persistence;
 
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+import java.util.List;
+
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 
 public interface IPublicationChannelPersistenceService {
 	
-	IPublicationChanhel save(IPublicationChanhel publicationChannel);
+	IPublicationChannel save(IPublicationChannel publicationChannel);
 	
-	//IPublicationChanhel findAllPublicationChannels();
+	List<IPublicationChannel> findAllPublicationChannels();
 
 }

@@ -1,9 +1,18 @@
 package pt.uc.dei.aor.project.business.service;
 
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+import java.util.List;
+
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 
 public interface IPublicationChannelBusService {
 	
-	IPublicationChanhel createNewPublicationChannel(String channel);
+	IPublicationChannel createNewPublicationChannel(String channel);
+	
+	List<IPublicationChannel> getIPublicationChannels();
+	
+
+	
+	 
+	
 
 }

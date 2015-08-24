@@ -1,10 +1,12 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.persistence.IPublicationChannelPersistenceService;
 
 
@@ -19,14 +21,22 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 	@Inject
 	private IPublicationChannelPersistenceService pcPersistenceService;
 	
-	
 
 	@Override
-	public IPublicationChanhel createNewPublicationChannel(String channel) {
+	public IPublicationChannel createNewPublicationChannel(String channel) {
 		
-		IPublicationChanhel publicationChannel = pcfactory.publicationChannel(channel);
+		IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
 		
 		return pcPersistenceService.save(publicationChannel);
 	}
+
+
+
+	@Override
+	public List<IPublicationChannel> getIPublicationChannels() {
+
+		return pcPersistenceService.findAllPublicationChannels();
+	}
+
 
 }

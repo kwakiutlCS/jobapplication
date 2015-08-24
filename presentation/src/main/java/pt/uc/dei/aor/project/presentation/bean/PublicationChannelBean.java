@@ -1,11 +1,13 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 
 
@@ -24,6 +26,8 @@ public class PublicationChannelBean implements Serializable {
 	
 	
 	private String channel;
+//	private String listedChannel;
+	private List<IPublicationChannel> iPublicationChannels;
 
 
 	public String getChannel() {
@@ -54,7 +58,20 @@ public class PublicationChannelBean implements Serializable {
 		return result;
 		
 	}
-	
+
+	public void setIPublicationChannels(List<IPublicationChannel> ipublicationchannels) {
+		this.iPublicationChannels = ipublicationchannels;
+	}
+
+	public List<IPublicationChannel> getiPublicationChannels() {
+		return publicationChannel.getIPublicationChannels();
+	}
+//	
+//	public String getListedChannel(){
+//		
+//		return publicationChannel.getChannel();
+//		
+//	}
 	
 
 }
