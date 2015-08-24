@@ -16,10 +16,10 @@
 	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
  
 	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
-    	<p:graphicImage value="img/loading.gif" />
+    	<p:graphicImage library="img" name="loading.gif" />
 	</p:dialog>
 	
-	<h:form id="questionListForm" prependId="false">
+	<h:form prependId="false">
 		<h:panelGroup rendered="#{not scriptBean.editScriptTitle}" id="normalTitle">
 			<h2>#{scriptBean.editableScript.title}</h2>
 			<p:commandLink value="edit" action="#{scriptBean.prepareEditTitle()}" 
@@ -30,7 +30,9 @@
 			<p:commandButton value="edit" action="#{scriptBean.editTitle()}" 
 			process="@this newTitle" update="@form" />		
 		</h:panelGroup>
-		
+	</h:form>
+	
+	
 		<p:dataTable styleClass="questionsTable" value="#{scriptBean.entries}" 
 		var="entry" id="scriptQuestionTable" rowIndexVar="row" draggableRows="true">
 			<p:ajax event="rowReorder" listener="#{scriptBean.onRowReorder}" update="scriptQuestionTable" />
@@ -41,42 +43,50 @@
 				</p:inplace>
 				<p:link value="+" styleClass="showExtra" rendered="#{entry.questionType eq 'SCALE' or
 				entry.questionType eq 'MULTIPLE_CHOICE'}" />
+				
 				<h:panelGroup styleClass="extraInfo" 
 				rendered="#{entry.questionType eq 'SCALE'}" layout="block">
 					<p:panelGrid columns="4" styleClass="scaleTable">
-						<p:outputLabel value="Minimum:" for="minimum" />
-						<p:inplace editor="true">
-							<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
-							<p:spinner value="#{entry.min}" id="minimum" />
-						</p:inplace>
-						<p:outputLabel value="Maximum:" for="maximum" />
-						<p:inplace editor="true">
-							<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
-							<p:spinner value="#{entry.max}" id="maximum" />
-						</p:inplace>
+						<h:form>
+							<p:outputLabel value="Minimum:" for="minimum" />
+							<p:inplace editor="true">
+								<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
+								<p:spinner value="#{entry.min}" id="minimum" />
+							</p:inplace>
+							<p:outputLabel value="Maximum:" for="maximum" />
+							<p:inplace editor="true">
+								<p:ajax event="save" listener="#{scriptEntryBean.updateQuestion(entry)}" />
+								<p:spinner value="#{entry.max}" id="maximum" />
+							</p:inplace>
+						</h:form>
 					</p:panelGrid>
 				</h:panelGroup>
-				<h:panelGroup styleClass="extraInfo" 
+				<h:panelGroup styleClass="extraInfo" id="multipleChoiceExtra"
 				rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}" layout="block">
-					<ui:repeat value="#{entry.answers}" var="answer">
-						<h:outputText value="#{answer}" /> 
-						<p:commandLink value="delete" action="#{scriptEntryBean.deleteOption(entry, answer)}"
-						process="@this" update="@form" />
-						<br />				
-					</ui:repeat>
-					<p:outputLabel for="answerOption" value="New answer" />
-					<p:inputText id="answerOption" value="#{scriptEntryBean.option}" />
-					<p:commandButton value="add" action="#{scriptEntryBean.addAnswer(entry)}"
-					process="@this answerOption" update="@form" />	
+					<h:form>
+						<ui:repeat value="#{entry.answers}" var="answer">
+							<h:outputText value="#{answer}" /> 
+							<p:commandLink value="delete" action="#{scriptEntryBean.deleteOption(entry, answer)}"
+							process="@this" update="@form" />
+							<br />
+						</ui:repeat>
+					
+						<p:outputLabel for="answerOption" value="New answer" />
+						<p:inputText id="answerOption" value="#{scriptEntryBean.option}" />
+						<p:commandButton value="add" action="#{scriptEntryBean.addAnswer(entry)}"
+						process="@this answerOption" update="@form" />	
+					</h:form>
 				</h:panelGroup>
 			</p:column>
 			<p:column headerText="Question Type">#{entry.questionType.label}</p:column>
 			<p:column>
-				<p:commandButton action="#{scriptBean.deleteQuestion(entry)}"
-				update="scriptQuestionTable" icon="ui-icon-trash" />
+				<h:form>
+					<p:commandButton action="#{scriptBean.deleteQuestion(entry)}"
+					update="scriptQuestionTable" icon="ui-icon-trash" />
+				</h:form>
 			</p:column>
 		</p:dataTable>
-	</h:form>
+	
 		
 	<h:form id="addQuestionForm" prependId="false">
 	<h2>Add question</h2>

@@ -72,4 +72,12 @@ public class ScriptEntryBusinessServiceTest {
 		ejb.addAnswer(iScriptEntry, option);
 	}
 	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenDeleteOneOfTwoAnswer() throws IllegalAnswerOptionsException {
+		List<String> list = Arrays.asList(new String[]{"option_a","option_b"});
+		when(iScriptEntry.getAnswers()).thenReturn(list);
+		
+		ejb.removeAnswer(iScriptEntry, "option_a");
+	}
+	
 }

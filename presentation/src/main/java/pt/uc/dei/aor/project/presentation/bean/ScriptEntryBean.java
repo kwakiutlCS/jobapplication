@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
@@ -42,13 +43,16 @@ public class ScriptEntryBean implements Serializable {
 		try {
 			ejb.addAnswer(entry, option);
 		} catch (IllegalAnswerOptionsException e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Repeated answer", "Repeated answer");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+			addMessage(FacesMessage.SEVERITY_ERROR, "Repeated message");
 		}
 	}
 	
 	public void deleteOption(IScriptEntry entry, String answer) {
-		ejb.removeAnswer(entry, answer);
+		try {
+			ejb.removeAnswer(entry, answer);
+		} catch (IllegalAnswerOptionsException e) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "At least 2 responses needed");
+		}
 	}
 	
 
@@ -58,6 +62,12 @@ public class ScriptEntryBean implements Serializable {
 
 	public void setOption(String option) {
 		this.option = option;
+	}
+	
+	
+	private void addMessage(Severity type, String text) {
+		FacesMessage msg = new FacesMessage(type, text, text);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 	
 }

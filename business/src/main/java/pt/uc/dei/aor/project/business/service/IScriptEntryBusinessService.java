@@ -11,5 +11,5 @@ public interface IScriptEntryBusinessService {
 
 	public void addAnswer(IScriptEntry entry, String option) throws IllegalAnswerOptionsException;
 
-	public void removeAnswer(IScriptEntry entry, String answer);
+	public void removeAnswer(IScriptEntry entry, String answer) throws IllegalAnswerOptionsException;
 }

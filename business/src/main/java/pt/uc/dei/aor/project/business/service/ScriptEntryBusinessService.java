@@ -31,7 +31,8 @@ public class ScriptEntryBusinessService implements IScriptEntryBusinessService {
 	}
 
 	@Override
-	public void removeAnswer(IScriptEntry entry, String answer) {
+	public void removeAnswer(IScriptEntry entry, String answer) throws IllegalAnswerOptionsException {
+		if (entry.getAnswers().size() == 2) throw new IllegalAnswerOptionsException();
 		entry.removeAnswer(answer);
 		save(entry);
 	}
