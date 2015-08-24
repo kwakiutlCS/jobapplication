@@ -1,10 +1,14 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.persistence.IPublicationChannelPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
@@ -18,8 +22,8 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
     private EntityManager em;
 
 	@Override
-	public IPublicationChanhel save(
-			IPublicationChanhel publicationChannel) {
+	public IPublicationChannel save(
+			IPublicationChannel publicationChannel) {
 		
 		PublicationChannelEntity pcEntity = getEntity(publicationChannel);
 		
@@ -31,13 +35,33 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 	
 	
 	@SuppressWarnings("unchecked")
-	private PublicationChannelEntity getEntity(IPublicationChanhel pcProxy) {
+	private PublicationChannelEntity getEntity(IPublicationChannel pcProxy) {
         if (pcProxy instanceof IProxyToEntity<?>) {
             return ((IProxyToEntity<PublicationChannelEntity>) pcProxy).getEntity();
         }
 
         throw new IllegalStateException();
     }
+
+
+	@Override
+	public List<IPublicationChannel> findAllPublicationChannels() {
+		TypedQuery<PublicationChannelEntity> q =  em.createNamedQuery("publicationChannel.findAll", PublicationChannelEntity.class);
+		
+		List<PublicationChannelEntity> channels = q.getResultList();
+		List<IPublicationChannel> ichannels = new ArrayList<IPublicationChannel>();
+		for(PublicationChannelEntity pce : channels){
+			ichannels.add(new PublicationChannelProxy(pce));
+			
+		}
+		
+		System.out.println(ichannels);
+		
+		return ichannels;
+	}
+
+
+	
 
 
 }

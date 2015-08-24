@@ -77,7 +77,12 @@
 				</p:selectOneMenu>
 
 
-				<p:outputLabel value="Publication Channel" />
+				<p:outputLabel for="chan" value="Publication Channel" />
+				<p:selectManyMenu  id="chan" value="#{positionBean.channels}">
+					<f:selectItems value="#{publicationChannelBean.iPublicationChannels}"
+						var="channel" itemValue="#{channel}"
+						itemLabel="#{channel.channel}" />
+				</p:selectManyMenu>
 
 				<p:commandButton value="Insert"
 					type="button" onclick="PF('dlg3').show();" />

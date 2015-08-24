@@ -1,10 +1,10 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
 
 
-public class PublicationChannelProxy implements IPublicationChanhel,IProxyToEntity<PublicationChannelEntity> {
+public class PublicationChannelProxy implements IPublicationChannel,IProxyToEntity<PublicationChannelEntity> {
 	
 	
 	private PublicationChannelEntity pcEntity;
@@ -25,6 +25,12 @@ public class PublicationChannelProxy implements IPublicationChanhel,IProxyToEnti
 
 	public void setEntity(PublicationChannelEntity pcEntity) {
 		this.pcEntity = pcEntity;
+	}
+
+	@Override
+	public String getChannel() {
+		
+		return pcEntity.getChannel();
 	}
 
 	

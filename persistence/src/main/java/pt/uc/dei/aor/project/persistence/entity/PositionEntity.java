@@ -1,8 +1,11 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -81,15 +84,16 @@ public class PositionEntity {
     private ScriptEntity script;
     
     
-	public PositionEntity(String title, List<Localization> localizations,
+	public PositionEntity(String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, String sla, String contactPerson, String company,
-			List<TechnicalArea> technicalAreas, String description,
-			Set<PublicationChannelEntity> publications, ScriptEntity script) {
+			Collection<TechnicalArea> technicalAreas, String description,
+			Collection<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
 		this.code="1";
 		this.title = title;
-		this.localizations = localizations;
+		this.localizations = new ArrayList<>();
+		this.localizations.addAll(localizations);
 		this.state = state;
 		this.vacancies = vacancies;
 		this.openingDate = openingDate;
@@ -97,9 +101,11 @@ public class PositionEntity {
 		this.sla = sla;
 		this.contactPerson = contactPerson;
 		this.company = company;
-		this.technicalAreas = technicalAreas;
+		this.technicalAreas = new ArrayList<>();
+		this.technicalAreas.addAll(technicalAreas);
 		this.description = description;
-		this.publications = publications;
+		this.publications = new TreeSet<>();
+		this.publications.addAll(publications);
 		this.script = script;
 	}
 

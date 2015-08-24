@@ -1,13 +1,13 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import javax.ejb.Stateless;
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IPublicationChanhel;
+import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -21,16 +21,21 @@ public class ModelFactory implements IModelFactory {
 	public IWorker worker(String login, String email, String password, String name, String surname) {
 		return new WorkerProxy(login, email, password, name, surname);
 	}
-
+	
 	@Override
-	public IPosition position(Date openingDate, String title, List<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
-			String contactPerson, String company ,List<TechnicalArea> technicalAreas, String description, IScript script) {
-		return new PositionProxy(openingDate, title,localizations, state, vacancies,closingDate, sla,
-				contactPerson, company, technicalAreas, description, script);
+	public IPosition position(String code, Date openingDate, String title,
+			Collection<Localization> localizations, PositionState state,
+			int vacancies, Date closingDate, String sla, String contactPerson,
+			String company, Collection<TechnicalArea> technicalAreas,
+			String description, IScript script,
+			Collection<IPublicationChannel> channels) {
+	 
+		return new PositionProxy(code, openingDate, title,localizations, state, vacancies,closingDate, sla,
+				contactPerson, company, technicalAreas, description, script, channels);
 	}
 
 	@Override
-	public IPublicationChanhel publicationChannel(String channel) {	
+	public IPublicationChannel publicationChannel(String channel) {	
 		return new PublicationChannelProxy(channel);
 	}
 
@@ -38,5 +43,7 @@ public class ModelFactory implements IModelFactory {
 	public IScript script() {
 		return new ScriptProxy();
 	}
+
+
 
 }
