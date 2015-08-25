@@ -27,7 +27,7 @@ public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity>, Seria
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable=false, unique=true)
+	@Column(nullable=false, unique=false)
 	private String answer;
 
 	@Override

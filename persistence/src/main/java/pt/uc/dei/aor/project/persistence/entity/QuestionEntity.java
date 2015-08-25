@@ -18,6 +18,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
@@ -47,7 +48,7 @@ public class QuestionEntity implements Serializable {
 	private QuestionTopicEntity topic;
 	
 	@OrderBy("answer ASC")
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private SortedSet<AnswerChoiceEntity> answers;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
