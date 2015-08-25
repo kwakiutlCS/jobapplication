@@ -26,7 +26,7 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 			IPublicationChannel publicationChannel) {
 		
 		PublicationChannelEntity pcEntity = getEntity(publicationChannel);
-		
+		System.out.println(pcEntity);
 		pcEntity = em.merge(pcEntity);
 		
 		

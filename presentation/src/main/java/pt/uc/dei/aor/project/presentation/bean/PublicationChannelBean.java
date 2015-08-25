@@ -52,7 +52,6 @@ public class PublicationChannelBean implements Serializable {
 	public String createNewPublicationChannel(){
 		
 		String result="";
-		
 		publicationChannel.createNewPublicationChannel(channel);
 		
 		return result;

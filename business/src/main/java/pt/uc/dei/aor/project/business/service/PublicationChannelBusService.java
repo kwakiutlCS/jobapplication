@@ -26,7 +26,6 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 	public IPublicationChannel createNewPublicationChannel(String channel) {
 		
 		IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
-		
 		return pcPersistenceService.save(publicationChannel);
 	}
 

@@ -4,110 +4,111 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-<f:view contentType="text/html">
 
-	<h:head>
-		<meta charset="utf-8" />
-		<title>Create Position</title>
-	</h:head>
-	<h:body>
+<h:head>
+	<meta charset="utf-8" />
+	<title>Create Position</title>
+</h:head>
+<h:body>
 
-		<h:form id="newpositionform">
-			<p:growl id="msgs" showDetail="true" />
+	<h:form id="newpositionform">
 
-			<h:panelGrid columns="2" cellpadding="5">
+		<p:growl id="msgs" showDetail="true" />
+		<h:panelGrid columns="2" cellpadding="5">
 
-				<p:outputLabel for="opdate" value="opening date" />
+			<p:outputLabel for="opdate" value="opening date" />
 
-				<p:calendar id="opdate" style="width: 100%;"
-					value="#{positionBean.openingDate}" />
-
-
-				<p:outputLabel for="title" value="Title" />
-				<p:inputText id="title" value="#{positionBean.title}" />
+			<p:calendar id="opdate" style="width: 100%;"
+				value="#{positionBean.openingDate}" />
 
 
-				<p:outputLabel for="vacancies" value="Vacancies" />
-				<p:spinner id="vacancies" value="#{positionBean.vacancies}" />
+			<p:outputLabel for="title" value="Title" />
+			<p:inputText id="title" value="#{positionBean.title}" />
 
 
-				<p:outputLabel for="closdate" value="Closing Date" />
-				<p:calendar id="closdate" style="width: 100%;"
-					value="#{positionBean.closingDate}" />
+			<p:outputLabel for="vacancies" value="Vacancies" />
+			<p:spinner id="vacancies" value="#{positionBean.vacancies}" />
 
 
-				<p:outputLabel for="sla" value="SLA" />
-				<p:inputText id="sla" value="#{positionBean.sla}" />
+			<p:outputLabel for="closdate" value="Closing Date" />
+			<p:calendar id="closdate" style="width: 100%;"
+				value="#{positionBean.closingDate}" />
 
 
-				<p:outputLabel for="contactPerson" value="Contact Person" />
-				<p:inputText id="contactPerson"
-					value="#{positionBean.contactPerson}" />
+			<p:outputLabel for="sla" value="SLA" />
+			<p:inputText id="sla" value="#{positionBean.sla}" />
 
 
-				<p:outputLabel for="company" value="Company" />
-				<p:inputText id="company" value="#{positionBean.company}" />
+			<p:outputLabel for="contactPerson" value="Contact Person" />
+			<p:inputText id="contactPerson" value="#{positionBean.contactPerson}" />
 
 
-				<p:outputLabel for="description" value="Description" />
-				<p:inputText id="description" value="#{positionBean.description}" />
-				
-				<p:outputLabel for="local" value="Localization" />
-				<p:selectCheckboxMenu id="local" value="#{positionBean.localizations}"
-					converter="localizationConverter" >
-					<f:selectItems value="#{positionBean.localizations}"
-						var="localization" itemValue="#{localization}"
-						itemLabel="#{localization.localizationLabel}" />
-				</p:selectCheckboxMenu>
-				
-				<p:outputLabel for="area" value="Technical Area" />
-				<p:selectCheckboxMenu  id="area" value="#{positionBean.technicalAreas}"
-					converter="technicalAreaConverter">
-					<f:selectItems value="#{positionBean.technicalAreas}"
-						var="technicalArea" itemValue="#{technicalArea}"
-						itemLabel="#{technicalArea.technicalAreaLabel}" />
-				</p:selectCheckboxMenu>
-
-				<p:outputLabel for="positionState" value="Position State" />
-				<p:selectOneMenu id="positionState"
-					value="#{positionBean.positionState}">
-					<f:selectItems value="#{positionBean.positionStates}"
-						var="positionState" itemValue="#{positionState}"
-						itemLabel="#{positionState.positionStateLabel}" />
-				</p:selectOneMenu>
+			<p:outputLabel for="company" value="Company" />
+			<p:inputText id="company" value="#{positionBean.company}" />
 
 
-				<p:outputLabel for="chan" value="Publication Channel" />
-				<p:selectManyMenu  id="chan" value="#{positionBean.channels}">
-					<f:selectItems value="#{publicationChannelBean.iPublicationChannels}"
-						var="channel" itemValue="#{channel}"
-						itemLabel="#{channel.channel}" />
-				</p:selectManyMenu>
+			<p:outputLabel for="description" value="Description" />
+			<p:inputText id="description" value="#{positionBean.description}" />
 
-				<p:commandButton value="Insert"
-					type="button" onclick="PF('dlg3').show();" />
+			<p:outputLabel for="local" value="Localization" />
+			<p:selectCheckboxMenu id="local"
+				value="#{positionBean.localizations}"
+				converter="localizationConverter">
+				<f:selectItems value="#{positionBean.localizations}"
+					var="localization" itemValue="#{localization}"
+					itemLabel="#{localization.localizationLabel}" />
+			</p:selectCheckboxMenu>
 
-			</h:panelGrid>
+			<p:outputLabel for="area" value="Technical Area" />
+			<p:selectCheckboxMenu id="area"
+				value="#{positionBean.technicalAreas}"
+				converter="technicalAreaConverter">
+				<f:selectItems value="#{positionBean.technicalAreas}"
+					var="technicalArea" itemValue="#{technicalArea}"
+					itemLabel="#{technicalArea.technicalAreaLabel}" />
+			</p:selectCheckboxMenu>
 
-			<form>
-				<p:dialog header="Insert new channel" widgetVar="dlg3" height="100">
-					<p:inputText value="#{publicationChannelBean.channel}" />
+			<p:outputLabel for="positionState" value="Position State" />
+			<p:selectOneMenu id="positionState"
+				value="#{positionBean.positionState}">
+				<f:selectItems value="#{positionBean.positionStates}"
+					var="positionState" itemValue="#{positionState}"
+					itemLabel="#{positionState.positionStateLabel}" />
+			</p:selectOneMenu>
 
-					<p:commandButton value="Submit" update="msgs"
-						action="#{publicationChannelBean.createNewPublicationChannel()}" />
-				</p:dialog>
-			</form>
+
+			<p:outputLabel for="chan" value="Publication Channel" />
+			<p:selectManyMenu id="chan" value="#{positionBean.channels}">
+				<f:selectItems
+					value="#{publicationChannelBean.iPublicationChannels}"
+					var="channel" itemValue="#{channel}" itemLabel="#{channel.channel}" />
+			</p:selectManyMenu>
+
+			<p:commandButton value="Insert" type="button"
+				onclick="PF('dlg3').show();" />
+
+
 
 
 			<p:commandButton process="@form" value="Submit" update="msgs"
 				action="#{positionBean.createPosition}" icon="ui-icon-check" />
 
 
+
+		</h:panelGrid>
+	</h:form>
+
+	<p:dialog header="Insert new channel" widgetVar="dlg3" height="100">
+		<h:form>
+			<p:inputText value="#{publicationChannelBean.channel}" />
+
+			<p:commandButton value="Submit"
+				update=":newpositionform:msgs :newpositionform:chan"
+				action="#{publicationChannelBean.createNewPublicationChannel()}" />
 		</h:form>
+	</p:dialog>
 
 
+</h:body>
 
-
-	</h:body>
-</f:view>
 </html>
