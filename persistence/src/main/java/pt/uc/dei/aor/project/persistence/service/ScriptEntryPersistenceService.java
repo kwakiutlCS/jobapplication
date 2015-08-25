@@ -20,8 +20,13 @@ public class ScriptEntryPersistenceService implements IScriptEntryPersistenceSer
 	
 	@Override
 	public IScriptEntry save(IScriptEntry entry) {
+		System.out.println("PERSISTENCE");
 		ScriptEntryEntity entity = getEntity(entry);
+		System.out.println("QUESTION: "+entity.getQuestion());
+		System.out.println("ANSWERS: "+entity.getQuestion().getAnswers());
 		entity = em.merge(entity);
+		System.out.println("ANSWERS: "+entity.getQuestion().getAnswers());
+		
 		return new ScriptEntryProxy(entity);
 	}
 	

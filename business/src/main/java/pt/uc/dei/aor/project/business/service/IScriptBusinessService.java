@@ -33,4 +33,8 @@ public interface IScriptBusinessService {
 	public IScript moveQuestion(IScript script, int fromIndex, int toIndex);
 
 	public IScript delete(IScript script, IScriptEntry entry);
+
+	public IScript addAnswerToEntry(IScript script, IScriptEntry entry, String option);
+
+	public IScript removeAnswerFromEntry(IScript script, IScriptEntry entry, String answer);
 }

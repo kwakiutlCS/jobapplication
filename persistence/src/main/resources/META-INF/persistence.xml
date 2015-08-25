@@ -8,7 +8,7 @@
 	<class>pt.uc.dei.aor.project.persistence.entity.WorkerEntity</class>
 	<properties>
 	<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
-	<property name="hibernate.hbm2ddl.auto" value="update" />
+	<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 	<property name = "hibernate.show_sql" value = "true" />
 	</properties>
 	</persistence-unit>

@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="answer_choice")
-public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity> {
+public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity>, Serializable {
 	
+	private static final long serialVersionUID = -7918665450611888841L;
+
 	public AnswerChoiceEntity(String s) {
 		answer = s;
 	}
@@ -23,7 +27,7 @@ public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity> {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
 	private String answer;
 
 	@Override
@@ -64,5 +68,8 @@ public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity> {
 		return answer.compareTo(o.answer);
 	}
 	
-	
+	@Override
+	public String toString() {
+		return id+" -> "+answer;
+	}
 }

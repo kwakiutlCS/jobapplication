@@ -22,6 +22,7 @@ import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.service.IScriptBusinessService;
+import pt.uc.dei.aor.project.business.service.IScriptEntryBusinessService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
 @Named
@@ -33,6 +34,7 @@ public class ScriptBean implements Serializable {
 	@Inject
 	private IScriptBusinessService scriptEjb;
 	
+		
 	private IScript editableScript;
 	private String questionText;
 	private QuestionType questionType;
@@ -43,6 +45,7 @@ public class ScriptBean implements Serializable {
 	private String scriptTitle;
 	private boolean editScriptTitle = false;
 	private String newTitle;
+	private String option;
 	
 	
 	public IScript getEditableScript() {
@@ -54,6 +57,11 @@ public class ScriptBean implements Serializable {
 	}
 			
 	public List<IScriptEntry> getEntries() {
+		for (IScriptEntry se : editableScript.getEntries()) {
+			if (se.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
+				System.out.println(se.getAnswers());
+			}
+		}
 		return editableScript.getEntries();
 	}
 	
@@ -62,7 +70,6 @@ public class ScriptBean implements Serializable {
 			try {
 				editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, minOption, maxOption);
 				questionText = null;
-				answers = null;
 			} catch (IllegalScaleException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Illegal scale values");
 			} catch (IllegalQuestionTypeException e) {
@@ -73,10 +80,13 @@ public class ScriptBean implements Serializable {
 			try {
 				editableScript = scriptEjb.addQuestion(editableScript, questionText, questionType, answers);
 				questionText = null;
+				answers = null;
 			} catch (IllegalQuestionTypeException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
 			} catch (IllegalAnswerOptionsException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Illegal answer options");
+			} catch (Exception e) {
+				System.out.println("FINALEXCEPTION: "+e.getMessage());
 			}
 		}
 		else {
@@ -155,6 +165,23 @@ public class ScriptBean implements Serializable {
 		setEditScriptTitle(false);
 	}
 	
+	
+	public void addAnswerToEntry(IScriptEntry entry) {
+		//try {
+			editableScript = scriptEjb.addAnswerToEntry(editableScript, entry, option);
+		//} catch (IllegalAnswerOptionsException e) {
+		//	addMessage(FacesMessage.SEVERITY_ERROR, "Repeated message");
+		//}
+	}
+	
+	public void deleteAnswerFromEntry(IScriptEntry entry, String answer) {
+		//try {
+			editableScript = scriptEjb.removeAnswerFromEntry(editableScript, entry, answer);
+		//} catch (IllegalAnswerOptionsException e) {
+		//	addMessage(FacesMessage.SEVERITY_ERROR, "At least 2 responses needed");
+		//}
+	}
+	
 	// getters and setters
 	public String getQuestionText() {
 		return questionText;
@@ -231,5 +258,13 @@ public class ScriptBean implements Serializable {
 	private void addMessage(Severity type, String text) {
 		FacesMessage msg = new FacesMessage(type, text, text);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public String getOption() {
+		return option;
+	}
+
+	public void setOption(String option) {
+		this.option = option;
 	}
 }

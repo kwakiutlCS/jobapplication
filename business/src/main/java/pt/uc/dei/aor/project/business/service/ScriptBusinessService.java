@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
+import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -72,17 +73,15 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		if (!QuestionType.MULTIPLE_CHOICE.equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
 		
-		List<String> trimmed = new ArrayList<>();
-		Set<String> set = new HashSet<>();
+		List<IAnswerChoice> answerChoices = new ArrayList<>();
 		
 		for (String s : options) {
 			if (s == null || s.equals("")) throw new IllegalAnswerOptionsException();
-			trimmed.add(s.trim());
-			set.add(s.trim());
+			answerChoices.add(factory.answerChoice(s.trim()));
 		}
-		if (set.size() < trimmed.size()) throw new IllegalAnswerOptionsException();
+		if (answerChoices.size() < options.size()) throw new IllegalAnswerOptionsException();
 		
-		script.addQuestion(questionText, questionType, trimmed);
+		script.addQuestion(questionText, questionType, answerChoices);
 		return update(script);
 	}
 
@@ -100,6 +99,18 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	@Override
 	public IScript delete(IScript script, IScriptEntry entry) {
 		script.deleteQuestion(entry);
+		return update(script);
+	}
+
+	@Override
+	public IScript addAnswerToEntry(IScript script, IScriptEntry entry, String option) {
+		script.addAnswerToEntry(entry, factory.answerChoice(option));
+		return update(script);
+	}
+
+	@Override
+	public IScript removeAnswerFromEntry(IScript script, IScriptEntry entry, String answer) {
+		script.removeAnswerFromEntry(entry, factory.answerChoice(answer));
 		return update(script);
 	}
 
