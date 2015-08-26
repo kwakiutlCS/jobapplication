@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.persistence.entity.AnswerChoiceEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
@@ -63,11 +65,12 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 				min, max));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void addQuestion(String questionText, QuestionType questionType, Collection<String> options) {
-		List<String> list = new ArrayList<>();
-		for (String s : options) {
-			list.add(s);
+	public void addQuestion(String questionText, QuestionType questionType, Collection<IAnswerChoice> options) {
+		List<AnswerChoiceEntity> list = new ArrayList<>();
+		for (IAnswerChoice ac : options) {
+			list.add(((IProxyToEntity<AnswerChoiceEntity>) ac).getEntity());
 		}
 		
 		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition(),
@@ -147,6 +150,16 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 	@Override
 	public void setTitle(String title) {
 		entity.setTitle(title);
+	}
+
+	@Override
+	public void addAnswerToEntry(IScriptEntry entry, IAnswerChoice answerChoice) {
+		entry.addAnswer(answerChoice);
+	}
+
+	@Override
+	public void removeAnswerFromEntry(IScriptEntry entry, IAnswerChoice answerChoice) {
+		entry.removeAnswer(answerChoice);
 	}
 
 }

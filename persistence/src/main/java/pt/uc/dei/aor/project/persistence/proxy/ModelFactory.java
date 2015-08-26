@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.ejb.Stateless;
 
+import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
@@ -46,6 +47,10 @@ public class ModelFactory implements IModelFactory {
 		return new ScriptProxy(title);
 	}
 
+    @Override
+	public IAnswerChoice answerChoice(String answer) {
+		return new AnswerChoiceProxy(answer);
+	}
 
 
 }

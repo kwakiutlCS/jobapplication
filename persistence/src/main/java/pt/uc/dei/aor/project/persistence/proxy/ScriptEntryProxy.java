@@ -1,12 +1,16 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
+import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.persistence.entity.AnswerChoiceEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
 public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntryEntity> {
@@ -52,8 +56,12 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 
 
 	@Override
-	public Collection<String> getAnswers() {
-		return entity.getQuestion().getAnswers();
+	public Collection<IAnswerChoice> getAnswers() {
+		List<IAnswerChoice> list = new ArrayList<>();
+		for (AnswerChoiceEntity ace : entity.getQuestion().getAnswers())
+			list.add(new AnswerChoiceProxy(ace));
+		
+		return list;
 	}
 
 
@@ -101,14 +109,16 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		return entity.getId();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void addAnswer(String option) {
-		entity.addAnswer(option);
+	public void addAnswer(IAnswerChoice option) {
+		entity.addAnswer(((IProxyToEntity<AnswerChoiceEntity>) option).getEntity());
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void removeAnswer(String answer) {
-		entity.removeAnswer(answer);
+	public void removeAnswer(IAnswerChoice answer) {
+		entity.removeAnswer(((IProxyToEntity<AnswerChoiceEntity>) answer).getEntity());
 	}
 
 }

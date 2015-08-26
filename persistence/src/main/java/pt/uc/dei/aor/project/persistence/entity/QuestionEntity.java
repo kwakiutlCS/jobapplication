@@ -1,10 +1,9 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -17,12 +16,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
@@ -30,8 +29,10 @@ import pt.uc.dei.aor.project.business.util.QuestionType;
 
 @Entity
 @Table(name="question")
-public class QuestionEntity {
+public class QuestionEntity implements Serializable {
 	
+	private static final long serialVersionUID = -5439985035795769733L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -50,7 +51,7 @@ public class QuestionEntity {
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private SortedSet<AnswerChoiceEntity> answers;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private QuestionScaleEntity scale;
 
 	public QuestionEntity(String questionText, QuestionType questionType) {
@@ -68,13 +69,11 @@ public class QuestionEntity {
 		scale = new QuestionScaleEntity(min, max);
 	}
 
-	public QuestionEntity(String questionText, QuestionType questionType, List<String> options) {
+	public QuestionEntity(String questionText, QuestionType questionType, List<AnswerChoiceEntity> list) {
 		text = questionText;
 		this.questionType = questionType;
 		answers = new TreeSet<>();
-		for (String s : options) {
-			answers.add(new AnswerChoiceEntity(s));
-		}
+		answers.addAll(list);
 	}
 
 	public String getText() {
@@ -93,11 +92,9 @@ public class QuestionEntity {
 		return scale.getMax();
 	}
 
-	public Collection<String> getAnswers() {
-		List<String> list = new ArrayList<>();
-		for (AnswerChoiceEntity a : answers) {
-			list.add(a.getAnswer());
-		}
+	public Collection<AnswerChoiceEntity> getAnswers() {
+		List<AnswerChoiceEntity> list = new ArrayList<>();
+		list.addAll(answers);
 		return list;
 	}
 
@@ -113,14 +110,19 @@ public class QuestionEntity {
 		scale.setMax(max);
 	}
 
-	public void addAnswer(String option) {
-		answers.add(new AnswerChoiceEntity(option));
+	public void addAnswer(AnswerChoiceEntity option) {
+		answers.add(option);
 	}
 
-	public void removeAnswer(String answer) {
-		answers.remove(new AnswerChoiceEntity(answer));
+	public void removeAnswer(AnswerChoiceEntity answer) {
+		answers.remove(answer);
+		
 	}
 	
+	@Override
+	public String toString() {
+		return id+" -> "+text;
+	}
 	
 	// add connection to ScriptEntryEntity???
 }

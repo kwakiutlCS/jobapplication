@@ -22,6 +22,7 @@ public class ScriptEntryPersistenceService implements IScriptEntryPersistenceSer
 	public IScriptEntry save(IScriptEntry entry) {
 		ScriptEntryEntity entity = getEntity(entry);
 		entity = em.merge(entity);
+		
 		return new ScriptEntryProxy(entity);
 	}
 	

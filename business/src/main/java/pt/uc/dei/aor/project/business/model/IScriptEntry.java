@@ -21,11 +21,11 @@ public interface IScriptEntry {
 	
 	public void setMax(String max) throws IllegalScaleException;
 	
-	public Collection<String> getAnswers();
+	public Collection<IAnswerChoice> getAnswers();
 	
 	public long getId();
 
-	public void addAnswer(String option);
+	public void addAnswer(IAnswerChoice option);
 
-	public void removeAnswer(String answer);
+	public void removeAnswer(IAnswerChoice answer);
 }

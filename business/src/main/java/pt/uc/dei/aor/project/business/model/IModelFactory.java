@@ -21,5 +21,5 @@ public interface IModelFactory {
 
 	IScript script(String title);	
 
-
+	IAnswerChoice answerChoice(String answer);
 }
