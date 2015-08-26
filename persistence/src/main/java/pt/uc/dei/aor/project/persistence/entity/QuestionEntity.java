@@ -74,8 +74,6 @@ public class QuestionEntity implements Serializable {
 		this.questionType = questionType;
 		answers = new TreeSet<>();
 		answers.addAll(list);
-		
-		System.out.println(answers);
 	}
 
 	public String getText() {
@@ -113,30 +111,12 @@ public class QuestionEntity implements Serializable {
 	}
 
 	public void addAnswer(AnswerChoiceEntity option) {
-		System.out.println("OPTION ADD: "+option);
-		for (AnswerChoiceEntity ace : answers) {
-			System.out.println(ace+" -> "+ace.equals(option));
-		}
 		answers.add(option);
-		
-		System.out.println("OPTION AFTER: ");
-		for (AnswerChoiceEntity ace : answers) {
-			System.out.println(ace+" -> "+ace.equals(option));
-		}
 	}
 
 	public void removeAnswer(AnswerChoiceEntity answer) {
-		System.out.println("OPTION REMOVE: "+answer);
-		for (AnswerChoiceEntity ace : answers) {
-			System.out.println(ace+" -> "+ace.equals(answer));
-		}
-		
 		answers.remove(answer);
 		
-		System.out.println("OPTION AFTER: ");
-		for (AnswerChoiceEntity ace : answers) {
-			System.out.println(ace+" -> "+ace.equals(answer));
-		}
 	}
 	
 	@Override

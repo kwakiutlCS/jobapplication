@@ -7,20 +7,25 @@ import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
+import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IScript;
+import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
@@ -90,14 +95,27 @@ public class ScriptBusinessServiceTest {
 		ejb.addQuestion(iScript, questionText, questionType, min, max);
 	}
 	
-	@Ignore
 	@Test
 	public void shouldCallMethodWhenAddQuestionToScriptWithMultipleChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Noite"});
+		
+		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac3 = Mockito.mock(IAnswerChoice.class);
+		
+		Set<IAnswerChoice> set = new HashSet<>();
+		set.add(ac1);
+		set.add(ac2);
+		set.add(ac3);
+		
+		Mockito.when(factory.answerChoice("Manhã")).thenReturn(ac1);
+		Mockito.when(factory.answerChoice("Tarde")).thenReturn(ac2);
+		Mockito.when(factory.answerChoice("Noite")).thenReturn(ac3);
+		
 		ejb.addQuestion(iScript, questionText, questionType, options);
-		//verify(iScript).addQuestion(questionText, questionType, options);
+		verify(iScript).addQuestion(questionText, questionType, set);
 	}
 	
 	@Test(expected=IllegalQuestionTypeException.class)
@@ -124,7 +142,6 @@ public class ScriptBusinessServiceTest {
 		ejb.addQuestion(iScript, questionText, questionType, options);
 	}
 	
-	@Ignore
 	@Test(expected=IllegalAnswerOptionsException.class)
 	public void shouldThrowExceptionWhenAddQuestionWithRepeatedChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		String questionText = "a question text";
@@ -149,27 +166,51 @@ public class ScriptBusinessServiceTest {
 		ejb.addQuestion(iScript, questionText, questionType, options);
 	}
 	
-	@Ignore
 	@Test
 	public void shouldNotThrowExceptionWhenAddQuestionWithRepeatedChoice2() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "manhã"});
+		
+		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac3 = Mockito.mock(IAnswerChoice.class);
+		
+		Set<IAnswerChoice> set = new HashSet<>();
+		set.add(ac1);
+		set.add(ac2);
+		set.add(ac3);
+		
+		Mockito.when(factory.answerChoice(options.get(0).trim())).thenReturn(ac1);
+		Mockito.when(factory.answerChoice(options.get(1).trim())).thenReturn(ac2);
+		Mockito.when(factory.answerChoice(options.get(2).trim())).thenReturn(ac3);
+		
 		ejb.addQuestion(iScript, questionText, questionType, options);
+		verify(iScript).addQuestion(questionText, questionType, set);
 	}
 	
 	
-	@Ignore
 	@Test
 	public void shouldTrimAnswersWhenAddQuestion() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"  Manhã", "Tarde  ", " Noite  "});
-		ejb.addQuestion(iScript, questionText, questionType, options);
-		List<String> trimmed = new ArrayList<>();
 		
-		for (String o : options) trimmed.add(o.trim());
-		//verify(iScript).addQuestion(questionText, questionType, trimmed);
+		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac3 = Mockito.mock(IAnswerChoice.class);
+		
+		Set<IAnswerChoice> set = new HashSet<>();
+		set.add(ac1);
+		set.add(ac2);
+		set.add(ac3);
+		
+		Mockito.when(factory.answerChoice(options.get(0).trim())).thenReturn(ac1);
+		Mockito.when(factory.answerChoice(options.get(1).trim())).thenReturn(ac2);
+		Mockito.when(factory.answerChoice(options.get(2).trim())).thenReturn(ac3);
+		
+		ejb.addQuestion(iScript, questionText, questionType, options);
+		verify(iScript).addQuestion(questionText, questionType, set);
 	}
 	
 	
@@ -211,5 +252,119 @@ public class ScriptBusinessServiceTest {
 		ejb.moveQuestion(iScript, 2, 0);
 		
 		verify(iScript).moveQuestion(2, 0);
+	}
+	
+	@Test
+	public void shouldAddQuestionCorrectly() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		IAnswerChoice ac = Mockito.mock(IAnswerChoice.class);
+		String option = "a";
+		
+		Mockito.when(factory.answerChoice(option.trim())).thenReturn(ac);
+		
+		ejb.addAnswerToEntry(iScript, entry, option);
+		verify(iScript).addAnswerToEntry(entry, ac);
+	}
+	
+	@Test
+	public void shouldAddQuestionCorrectlyTrimmed() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		IAnswerChoice ac = Mockito.mock(IAnswerChoice.class);
+		String option = "  a  ";
+		
+		Mockito.when(factory.answerChoice(option.trim())).thenReturn(ac);
+		
+		ejb.addAnswerToEntry(iScript, entry, option);
+		verify(iScript).addAnswerToEntry(entry, ac);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddEmptyOption() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		String option = "";
+		
+		ejb.addAnswerToEntry(iScript, entry, option);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddNullOption() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		String option = null;
+		
+		ejb.addAnswerToEntry(iScript, entry, option);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenAddRepeatedOption() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
+		List<IAnswerChoice> set = new ArrayList<>();
+		set.add(ac2);
+		set.add(ac1);
+		
+		String option = "repeated answer";
+
+		Mockito.when(entry.getAnswers()).thenReturn(set);
+		Mockito.when(factory.answerChoice(option)).thenReturn(ac2);
+		Mockito.when(ac2.getText()).thenReturn(option);
+		Mockito.when(ac1.getText()).thenReturn("something");
+		
+		ejb.addAnswerToEntry(iScript, entry, option);
+	}
+	
+	@Test
+	public void shouldRemoveQuestionCorrectly() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		IAnswerChoice ac = Mockito.mock(IAnswerChoice.class);
+		String option = "a";
+		
+		Mockito.when(factory.answerChoice(option.trim())).thenReturn(ac);
+		
+		ejb.removeAnswerFromEntry(iScript, entry, option);
+		verify(iScript).removeAnswerFromEntry(entry, ac);
+	}
+	
+	@Test
+	public void shouldRemoveQuestionCorrectlyTrimmed() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		IAnswerChoice ac = Mockito.mock(IAnswerChoice.class);
+		String option = "  a  ";
+		
+		Mockito.when(factory.answerChoice(option.trim())).thenReturn(ac);
+		
+		ejb.removeAnswerFromEntry(iScript, entry, option);
+		verify(iScript).removeAnswerFromEntry(entry, ac);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenRemoveEmptyOption() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		String option = "";
+		
+		ejb.removeAnswerFromEntry(iScript, entry, option);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenRemoveNullOption() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		String option = null;
+		
+		ejb.removeAnswerFromEntry(iScript, entry, option);
+	}
+	
+	@Test(expected=IllegalAnswerOptionsException.class)
+	public void shouldThrowExceptionWhenRemoveOneOfTwoOptions() throws IllegalAnswerOptionsException {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
+		List<IAnswerChoice> set = new ArrayList<>();
+		set.add(ac1);
+		set.add(ac2);
+		
+		Mockito.when(entry.getAnswers()).thenReturn(set);
+		String option = "valid answer";
+		
+		ejb.removeAnswerFromEntry(iScript, entry, option);
 	}
 }

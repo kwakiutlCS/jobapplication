@@ -73,7 +73,7 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		if (!QuestionType.MULTIPLE_CHOICE.equals(questionType)) throw new IllegalQuestionTypeException();
 		if (options == null || options.size() <= 1) throw new IllegalAnswerOptionsException();
 		
-		List<IAnswerChoice> answerChoices = new ArrayList<>();
+		Set<IAnswerChoice> answerChoices = new HashSet<>();
 		
 		for (String s : options) {
 			if (s == null || s.equals("")) throw new IllegalAnswerOptionsException();
@@ -103,14 +103,27 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	}
 
 	@Override
-	public IScript addAnswerToEntry(IScript script, IScriptEntry entry, String option) {
-		script.addAnswerToEntry(entry, factory.answerChoice(option));
+	public IScript addAnswerToEntry(IScript script, IScriptEntry entry, String option) throws IllegalAnswerOptionsException {
+		if (option == null || option.equals("")) throw new IllegalAnswerOptionsException();
+		
+		IAnswerChoice answer = factory.answerChoice(option.trim());
+		for (IAnswerChoice ac : entry.getAnswers()) {
+			if (answer.getText().equals(ac.getText())) throw new IllegalAnswerOptionsException();
+		}
+		
+		script.addAnswerToEntry(entry, answer);
 		return update(script);
 	}
 
 	@Override
-	public IScript removeAnswerFromEntry(IScript script, IScriptEntry entry, String answer) {
-		script.removeAnswerFromEntry(entry, factory.answerChoice(answer));
+	public IScript removeAnswerFromEntry(IScript script, IScriptEntry entry, String answer) throws IllegalAnswerOptionsException {
+		if (answer == null || answer.equals("")) throw new IllegalAnswerOptionsException();
+		String trimmed = answer.trim();
+		
+		int numAnswer = entry.getAnswers().size();
+		if (numAnswer == 2) throw new IllegalAnswerOptionsException();
+		
+		script.removeAnswerFromEntry(entry, factory.answerChoice(trimmed));
 		return update(script);
 	}
 

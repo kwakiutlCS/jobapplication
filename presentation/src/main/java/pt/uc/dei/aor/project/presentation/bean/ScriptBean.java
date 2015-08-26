@@ -57,11 +57,6 @@ public class ScriptBean implements Serializable {
 	}
 			
 	public List<IScriptEntry> getEntries() {
-		for (IScriptEntry se : editableScript.getEntries()) {
-			if (se.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
-				System.out.println(se.getAnswers());
-			}
-		}
 		return editableScript.getEntries();
 	}
 	
@@ -167,19 +162,20 @@ public class ScriptBean implements Serializable {
 	
 	
 	public void addAnswerToEntry(IScriptEntry entry) {
-		//try {
+		try {
 			editableScript = scriptEjb.addAnswerToEntry(editableScript, entry, option);
-		//} catch (IllegalAnswerOptionsException e) {
-		//	addMessage(FacesMessage.SEVERITY_ERROR, "Repeated message");
-		//}
+			option = null;
+		} catch (IllegalAnswerOptionsException e) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "TODO");
+		}
 	}
 	
 	public void deleteAnswerFromEntry(IScriptEntry entry, String answer) {
-		//try {
+		try {
 			editableScript = scriptEjb.removeAnswerFromEntry(editableScript, entry, answer);
-		//} catch (IllegalAnswerOptionsException e) {
-		//	addMessage(FacesMessage.SEVERITY_ERROR, "At least 2 responses needed");
-		//}
+		} catch (IllegalAnswerOptionsException e) {
+			addMessage(FacesMessage.SEVERITY_ERROR, "At least 2 responses needed");
+		}
 	}
 	
 	// getters and setters
