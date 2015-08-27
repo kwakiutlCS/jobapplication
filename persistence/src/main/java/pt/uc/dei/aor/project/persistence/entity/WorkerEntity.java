@@ -12,6 +12,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -43,6 +44,11 @@ public class WorkerEntity extends User {
 	@Column(name="role")
 	private Set<Role> roles;
 
+	
+	@ManyToMany
+	private Set<InterviewEntity> interviews;
+	
+	
 	public Set<Role> getRoles() {
 		return roles;
 	}
