@@ -299,8 +299,8 @@ public class ScriptBusinessServiceTest {
 		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
 		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
 		List<IAnswerChoice> set = new ArrayList<>();
-		set.add(ac2);
 		set.add(ac1);
+		set.add(ac2);
 		
 		String option = "repeated answer";
 
@@ -365,5 +365,20 @@ public class ScriptBusinessServiceTest {
 		String option = "valid answer";
 		
 		ejb.removeAnswerFromEntry(iScript, entry, option);
+	}
+	
+	@Test
+	public void shouldCallCorrectFunctionWhenDeleteScript() {
+		ejb.deleteScript(iScript);
+		verify(scriptEjb).delete(iScript);
+	}
+	
+	@Test
+	public void shouldCallCorrectFunctionWhenDeleteEntry() {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		
+		ejb.delete(iScript, entry);
+		verify(iScript).deleteQuestion(entry);
+		verify(scriptEjb).save(iScript);
 	}
 }

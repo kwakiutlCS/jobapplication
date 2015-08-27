@@ -1,21 +1,22 @@
 package pt.uc.dei.aor.project.business.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.InstanceOf;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
-import org.hamcrest.core.IsInstanceOf;
 
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -89,5 +90,17 @@ public class WorkerBusinessServiceTest {
 		assertThat(ejb.getWorkerByLogin(login), is(equalTo(null)));
 		
 		ejb.createNewWorker(login, name, surname, email, password, roles);
+	}
+	
+	@Test
+	public void shouldCallCorrectMethodWhenListingUsers() {
+		ejb.findAllUsers();
+		verify(workerEjb).findAllUsers();
+	}
+	
+	@Test
+	public void shouldReturnListRoles() {
+		List<Role> roles = ejb.getRoles();
+		assertThat(roles.size(), is(equalTo(3)));
 	}
 }

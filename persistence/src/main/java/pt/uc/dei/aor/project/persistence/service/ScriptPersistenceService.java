@@ -8,11 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
-import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ScriptProxy;
 
