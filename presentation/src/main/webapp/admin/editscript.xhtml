@@ -12,7 +12,10 @@
 	<h:outputScript library="js" name="editScript.js" />
 </h:head>
 <h:body>
-
+	
+	<ui:composition template="/resources/layouts/template.xhtml">
+	
+	<ui:define name="content">
 	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
  
 	<p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
@@ -132,5 +135,8 @@
 	
 	<p:link value="voltar" outcome="scripts?faces-redirect=true" />
 	
+	</ui:define>
+	
+	</ui:composition>
 </h:body>
 </html>

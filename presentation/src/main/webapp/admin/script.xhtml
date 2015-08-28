@@ -10,6 +10,11 @@
 	<title>index </title>
 </h:head>
 <h:body>
+
+	<ui:composition template="/resources/layouts/template.xhtml">
+	
+	<ui:define name="content">
+	
 	<h2>#{scriptBean.editableScript.title}</h2>
 	
 	<p:panelGrid columns="1">
@@ -38,5 +43,8 @@
 	</p:panelGrid>
 	
 	<h:link value="back" outcome="scripts" />
+	
+	</ui:define>
+	</ui:composition>
 </h:body>
 </html>
