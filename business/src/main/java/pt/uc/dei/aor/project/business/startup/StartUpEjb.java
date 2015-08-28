@@ -21,14 +21,32 @@ public class StartUpEjb {
 	
 	@PostConstruct
 	public void init() {
+		
+		System.out.println();
+		System.out.println();
+		System.out.println("Initializing startup script");
+		System.out.println();
+		
+		
+		// Admin user
+		System.out.println("Adding admin user");
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		try {
-			if (workerEjb.getWorkerByLogin("admin") == null)
+			if (workerEjb.getWorkerByLogin("admin") == null) {
 				workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
 					Encryptor.encrypt("admin"), roles);
+				System.out.println("Admin added with sucess.");
+			}
+			else {
+				System.out.println("Admin already exists. Nothing to be done here.");
+			}
 		} catch (NoRoleException e) {
-		
+			System.out.println("An error occurred adding admin user.");
 		}
+		System.out.println();
+		
+		
+		// publication channels
 	}
 }

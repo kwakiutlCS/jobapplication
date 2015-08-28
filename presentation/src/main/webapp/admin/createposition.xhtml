@@ -75,16 +75,18 @@
 					var="positionState" itemValue="#{positionState}"
 					itemLabel="#{positionState.positionStateLabel}" />
 			</p:selectOneMenu>
-			
-						<p:outputLabel for="chan" value="Publication Channel" />
-			<p:selectManyMenu id="chan" value="#{positionBean.channels}">
+
+			<p:outputLabel for="chan" value="Publication Channel" />
+			<p:selectManyMenu id="chan" value="#{positionBean.channels}"
+				converter="omnifaces.SelectItemsConverter">
 				<f:selectItems
 					value="#{publicationChannelBean.iPublicationChannels}"
 					var="channel" itemValue="#{channel}" itemLabel="#{channel}" />
 			</p:selectManyMenu>
 
+			<p:button outcome="insertpublicationchannel.xhtml?faces-redirect=true" value="New Channel" />
 			<p:button outcome="index.xhtml?faces-redirect=true" value="back" />
-			<p:commandButton process="@form" value="next" update="msgs"
+			<p:commandButton process="@form" value="submit" update="msgs"
 				action="#{positionBean.createPosition}" />
 
 		</h:panelGrid>

@@ -60,11 +60,11 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 	}
 
 	@Override
-	public IPublicationChannel getIPublicationChannel(String channel) {
+	public List<IPublicationChannel> getIPublicationChannel(String channel) {
 		
 		TypedQuery<PublicationChannelEntity> q = em.createNamedQuery("publicationChannel.findByString", PublicationChannelEntity.class);
 		
-		q.setParameter("name", channel);
+		q.setParameter("i", channel);
 		
 		List<PublicationChannelEntity> channels = q.getResultList();
 		
@@ -74,7 +74,7 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 			ichannels.add(new PublicationChannelProxy(pce));
 		}
 				
-		return ichannels.get(0);
+		return ichannels;
 	}
 
 }

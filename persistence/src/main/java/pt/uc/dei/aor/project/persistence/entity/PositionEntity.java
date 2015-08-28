@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,8 +19,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -84,8 +83,8 @@ public class PositionEntity {
 	@Column
 	private String description;
 	
-	@ManyToMany
-	@JoinTable(name="position_has_channels", joinColumns={@JoinColumn(name="position_id")}, inverseJoinColumns={@JoinColumn(name="publicationchannel_id")})
+
+	@ManyToMany(cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
     @ManyToOne

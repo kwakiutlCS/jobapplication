@@ -31,7 +31,7 @@
 				</p:selectOneMenu>
 				<p:selectOneRadio rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}"
 				layout="grid" columns="3">
-					<f:selectItems value="#{entry.answers}" />
+					<f:selectItems value="#{entry.answers}" var="answer" itemLabel="#{answer.text}" />
 				</p:selectOneRadio>
 			</h:panelGroup>
 		</ui:repeat>

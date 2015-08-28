@@ -13,9 +13,9 @@ import javax.persistence.Table;
 @Table(name="publication_channel")
 @NamedQueries({
 	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u"),
-	@NamedQuery(name="publicationChannel.findByString", query="SELECT c FROM PublicChannelEntity c WHERE c.name LIKE :name")
+	@NamedQuery(name="publicationChannel.findByString", query="SELECT c FROM PublicationChannelEntity c WHERE c.channel LIKE :i")
 })
-public class PublicationChannelEntity {
+public class PublicationChannelEntity implements Comparable<PublicationChannelEntity> {
 	
 
 	@Id
@@ -25,7 +25,6 @@ public class PublicationChannelEntity {
 	@Column(nullable=false)
 	private String channel;
 	
-
 	
 	public PublicationChannelEntity(String channel) {
 		this.channel = channel;
@@ -55,6 +54,44 @@ public class PublicationChannelEntity {
 		this.channel = channel;
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((channel == null) ? 0 : channel.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PublicationChannelEntity other = (PublicationChannelEntity) obj;
+		if (channel == null) {
+			if (other.channel != null)
+				return false;
+		} else if (!channel.equals(other.channel))
+			return false;
+		return true;
+	}
+
+
+	@Override
+	public String toString() {
+		return "PublicationChannelEntity [channel=" + channel + "]";
+	}
+
+
+	@Override
+	public int compareTo(PublicationChannelEntity o) {
+		return channel.compareTo(o.channel);
+	}
 	
 	
 }

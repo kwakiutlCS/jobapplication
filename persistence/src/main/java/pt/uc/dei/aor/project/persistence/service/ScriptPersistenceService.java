@@ -11,7 +11,6 @@ import javax.persistence.TypedQuery;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
-import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ScriptProxy;
 
@@ -51,7 +50,7 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 		return proxies;
 	}
 	
-		
+	
 	@SuppressWarnings("unchecked")
     private ScriptEntity getEntity(IScript scriptProxy) {
         if (scriptProxy instanceof IProxyToEntity<?>) {
@@ -60,6 +59,8 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 
         throw new IllegalStateException();
     }
+
+	
 
 	
 }

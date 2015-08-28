@@ -1,10 +1,12 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,14 +15,18 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 
 @Entity
 @Table(name="script_entry")
 @NamedQueries({
 	@NamedQuery(name = "ScriptEntry.findAnswer",query="from ScriptEntity u where id = :id"),
 })
-public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
+public class ScriptEntryEntity implements Comparable<ScriptEntryEntity>, Serializable {
+
+	private static final long serialVersionUID = 8782324129568358490L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -29,7 +35,7 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	@Column(nullable=false)
 	private int position;
 	
-	@OneToOne(cascade={CascadeType.ALL})
+	@OneToOne(cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	private QuestionEntity question;
 	
 	public ScriptEntryEntity(String questionText, QuestionType questionType, int position) {
@@ -45,9 +51,9 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 	public ScriptEntryEntity() {
 	}
 
-	public ScriptEntryEntity(String questionText, QuestionType questionType, int position, List<String> options) {
+	public ScriptEntryEntity(String questionText, QuestionType questionType, int position, List<AnswerChoiceEntity> list) {
 		this.position = position;
-		question = new QuestionEntity(questionText, questionType, options);
+		question = new QuestionEntity(questionText, questionType, list);
 	}
 
 	public QuestionEntity getQuestion() {
@@ -77,11 +83,11 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity> {
 		return id;
 	}
 
-	public void addAnswer(String option) {
+	public void addAnswer(AnswerChoiceEntity option) {
 		question.addAnswer(option);
 	}
 
-	public void removeAnswer(String answer) {
+	public void removeAnswer(AnswerChoiceEntity answer) {
 		question.removeAnswer(answer);
 	}
 }

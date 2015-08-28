@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.io.Serializable;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -19,9 +20,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name="script")
 @NamedQueries({
-	@NamedQuery(name = "Script.findAllScripts",query="from ScriptEntity u"),
+	@NamedQuery(name = "Script.findAllScripts", query="from ScriptEntity u"),
 })
-public class ScriptEntity {
+public class ScriptEntity implements Serializable {
+
+	private static final long serialVersionUID = -5877196134761879608L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

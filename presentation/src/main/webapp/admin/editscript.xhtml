@@ -65,15 +65,15 @@
 				rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}" layout="block">
 					<h:form>
 						<ui:repeat value="#{entry.answers}" var="answer">
-							<h:outputText value="#{answer}" /> 
-							<p:commandLink value="delete" action="#{scriptEntryBean.deleteOption(entry, answer)}"
+							<h:outputText value="#{answer.text}" /> 
+							<p:commandLink value="delete" action="#{scriptBean.deleteAnswerFromEntry(entry, answer.text)}"
 							process="@this" update="@form" />
 							<br />
 						</ui:repeat>
 					
 						<p:outputLabel for="answerOption" value="New answer" />
-						<p:inputText id="answerOption" value="#{scriptEntryBean.option}" />
-						<p:commandButton value="add" action="#{scriptEntryBean.addAnswer(entry)}"
+						<p:inputText id="answerOption" value="#{scriptBean.option}" />
+						<p:commandButton value="add" action="#{scriptBean.addAnswerToEntry(entry)}"
 						process="@this answerOption" update="@form" />	
 					</h:form>
 				</h:panelGroup>
@@ -127,7 +127,7 @@
 		</h:panelGroup>
 		
 		<p:commandButton value="Adicionar" action="#{scriptBean.addQuestion}"
-		update="questionTextField scriptQuestionTable" />
+		update="questionTextField scriptQuestionTable multipleOptions" />
 	</h:form>
 	
 	<p:link value="voltar" outcome="scripts?faces-redirect=true" />

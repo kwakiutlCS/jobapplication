@@ -203,13 +203,10 @@ public class PositionBean implements Serializable {
 	public String createPosition() {
 		
 		
-		PublicationChannelBean pcb = new PublicationChannelBean();
-		channels.add(pcb.getPublicationChannel().getIPublicationChannel("Linkedin"));
-		
 		position.createNewPosition(code, openingDate, title, localizations, state, vacancies, closingDate, sla, contactPerson,
 				company, technicalAreas, description, script, channels);
 		
-		String result="createposition2.xhtml?faces-redirect=true";
+		String result="";
 		
 		return  result;
 	}

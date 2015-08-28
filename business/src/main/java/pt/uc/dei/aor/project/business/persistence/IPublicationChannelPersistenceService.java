@@ -10,7 +10,7 @@ public interface IPublicationChannelPersistenceService {
 	
 	List<IPublicationChannel> findAllPublicationChannels();
 	
-	IPublicationChannel getIPublicationChannel(String channel);
+	List<IPublicationChannel> getIPublicationChannel(String channel);
 	
 	
 	
