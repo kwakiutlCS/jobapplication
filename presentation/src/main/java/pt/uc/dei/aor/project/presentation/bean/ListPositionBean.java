@@ -25,29 +25,8 @@ public class ListPositionBean implements Serializable{
 	private IPositionBusinessService iposition;
 	
 	
-	private List<IPosition> positions;
-
-
-	public IPositionBusinessService getIposition() {
-		return iposition;
-	}
-
-
-	public void setIposition(IPositionBusinessService iposition) {
-		this.iposition = iposition;
-	}
-
-
 	public List<IPosition> getPositions() {
 		return iposition.getIPositions();
 	}
-
-
-	public void setPositions(List<IPosition> positions) {
-		this.positions = positions;
-	}
-	
-	
-	
 
 }

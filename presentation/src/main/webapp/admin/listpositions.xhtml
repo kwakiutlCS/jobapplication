@@ -15,7 +15,7 @@
 
 		<p:dataTable var="position" value="#{listPositionBean.positions}">
 			<p:column headerText="Closing Date">
-			<h:outputText value="#{value.closingDate}" />
+			<h:outputText value="#{position.closingDate}" />
 			</p:column>
 			<p:column headerText="Code">
 				<h:outputText value="#{position.code}" />

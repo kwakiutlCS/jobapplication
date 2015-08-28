@@ -1,7 +1,9 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -56,6 +58,161 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	public PositionEntity getEntity() {
 		return entity;
 	}
+
+	@Override
+	public Date getOpeningDate() {
+		
+		return entity.getOpeningDate();
+	}
+
+	@Override
+	public String getCode() {
+		
+		return entity.getCode();
+	}
+
+	@Override
+	public String getTitle() {
+		
+		return entity.getTitle();
+	}
+
+	@Override
+	public void setTitle(String title) {
+		
+		entity.setTitle(title);
+	}
+
+	@Override
+	public List<Localization> getLocalizations() {
+		
+		return entity.getLocalizations();
+	}
+
+	@Override
+	public void setLocalizations(List<Localization> localizations) {
+		
+		entity.setLocalizations(localizations);
+	}
+
+	@Override
+	public PositionState getState() {
+		
+		return entity.getState();
+	}
+
+	@Override
+	public void setState(PositionState state) {
+		
+		entity.setState(state);
+	}
+
+	@Override
+	public int getVacancies() {
+		
+		return entity.getVacancies();
+	}
+
+	@Override
+	public void setVacancies(int vacancies) {
+		
+		entity.setVacancies(vacancies);
+	}
+
+	@Override
+	public Date getClosingDate() {
+		
+		return entity.getClosingDate();
+	}
+
+	@Override
+	public void setClosingDate(Date closingDate) {
+		
+		entity.setClosingDate(closingDate);
+	}
+
+	@Override
+	public String getSla() {
+		
+		return entity.getSla();
+	}
+
+	@Override
+	public void setSLA(String sla) {
+		
+		entity.setSla(sla);
+	}
+
+	@Override
+	public String getCompany() {
+		
+		return entity.getCompany();
+	}
+
+	@Override
+	public void setCompany(String company) {
+		
+		entity.setCompany(company);
+	}
+
+	@Override
+	public String getContactPerson() {
+		
+		return entity.getContactPerson();
+	}
+
+	@Override
+	public void setContactPerson(String contactPerson) {
+		
+		entity.setContactPerson(contactPerson);
+	}
+
+	@Override
+	public Collection<TechnicalArea> getTechnicalAreas() {
+		
+		return entity.getTechnicalAreas();
+	}
+
+	@Override
+	public void setTechnicalAreas(Collection<TechnicalArea> technicalAreas) {
+		
+		entity.setTechnicalAreas(technicalAreas);
+	}
+
+	@Override
+	public String getDescription() {
+		
+		return entity.getDescription();
+	}
+
+	@Override
+	public void setDescription(String description) {
+		
+		entity.setDescription(description);	
+	}
+
+	@Override
+	public List<IPublicationChannel> getIPublicationChannels() {
+		
+		List<IPublicationChannel> ichannels  = new ArrayList<IPublicationChannel>();
+		Set<PublicationChannelEntity> channels = entity.getPublications();
+		for(PublicationChannelEntity pce : channels)
+			ichannels.add( new PublicationChannelProxy (pce) );
+		
+		return ichannels;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void setIPublicationChannels(
+			List<IPublicationChannel> ipublicationChannels) {
+
+		Set<PublicationChannelEntity> channels = new TreeSet<PublicationChannelEntity>(); 
+		for(IPublicationChannel ipc : ipublicationChannels)
+			channels.add(((IProxyToEntity<PublicationChannelEntity>) ipc).getEntity());
+	}
+
+
 
 
 }

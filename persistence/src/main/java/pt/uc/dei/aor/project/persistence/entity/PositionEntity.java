@@ -144,11 +144,11 @@ public class PositionEntity {
 	}
 
 	public List<Localization> getLocalizations() {
-		return localizations;
+		return new ArrayList<>(localizations);
 	}
 
 	public void setLocalizations(List<Localization> localizations) {
-		this.localizations = localizations;
+		this.localizations.addAll(localizations);
 	}
 
 	public PositionState getState() {
@@ -207,12 +207,12 @@ public class PositionEntity {
 		this.company = company;
 	}
 
-	public List<TechnicalArea> getTechnicalAreas() {
-		return technicalAreas;
+	public Collection<TechnicalArea> getTechnicalAreas() {
+		return new ArrayList<>(technicalAreas);
 	}
 
-	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
-		this.technicalAreas = technicalAreas;
+	public void setTechnicalAreas(Collection<TechnicalArea> technicalAreas) {
+		this.technicalAreas.addAll(technicalAreas);
 	}
 
 	public String getDescription() {
@@ -224,11 +224,11 @@ public class PositionEntity {
 	}
 
 	public Set<PublicationChannelEntity> getPublications() {
-		return publications;
+		return new TreeSet<>(publications);
 	}
 
 	public void setPublications(Set<PublicationChannelEntity> publications) {
-		this.publications = publications;
+		this.publications.addAll(publications);
 	}
 
 	public ScriptEntity getScript() {

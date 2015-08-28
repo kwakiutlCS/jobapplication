@@ -81,16 +81,30 @@
 				converter="omnifaces.SelectItemsConverter">
 				<f:selectItems
 					value="#{publicationChannelBean.iPublicationChannels}"
-					var="channel" itemValue="#{channel}" itemLabel="#{channel}" />
+					var="channel" itemValue="#{channel}" itemLabel="#{channel.channel}" />
 			</p:selectManyMenu>
 
-			<p:button outcome="insertpublicationchannel.xhtml?faces-redirect=true" value="New Channel" />
-			<p:button outcome="index.xhtml?faces-redirect=true" value="back" />
-			<p:commandButton process="@form" value="submit" update="msgs"
+			<p:commandButton onclick="PF('dlg1').show();" type="button"
+				value="New Channel" />
+			<p:commandButton process="@form" value="Submit" update="msgs"
 				action="#{positionBean.createPosition}" />
-
 		</h:panelGrid>
 	</h:form>
+
+
+
+	<p:dialog header="Insert new channel" widgetVar="dlg1" height="100">
+		<h:form>
+			<p:outputLabel for="newChannel" value="New Channel" />
+			<p:inputText id="newChannel"
+					value="#{publicationChannelBean.channel}" />
+					
+				<p:commandButton value="Submit"
+				action="#{publicationChannelBean.createNewPublicationChannel()}" />
+
+
+		</h:form>
+	</p:dialog>
 </h:body>
 
 </html>
