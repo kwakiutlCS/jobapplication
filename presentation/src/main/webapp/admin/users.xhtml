@@ -10,6 +10,11 @@
 	<title>index </title>
 </h:head>
 <h:body>
+
+	<ui:composition template="/resources/layouts/template.xhtml">
+	
+	<ui:define name="content">
+	
 	<h2>users page</h2>
 	
 	
@@ -49,5 +54,8 @@
 				<p:commandButton value="Create User" action="#{workerBean.register}" update="userTable userFormTable" />
 			</p:panelGrid>
 		</h:form>
+		
+		</ui:define>
+		</ui:composition>
 </h:body>
 </html>

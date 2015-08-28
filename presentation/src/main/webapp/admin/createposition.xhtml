@@ -10,7 +10,10 @@
 	<title>Create Position</title>
 </h:head>
 <h:body>
-
+	
+	<ui:composition template="/resources/layouts/template.xhtml">
+	
+	<ui:define name="content">
 	<h:form id="newpositionform">
 
 		<p:growl id="msgs" showDetail="true" />
@@ -98,6 +101,9 @@
 		</h:panelGrid>
 	</h:form>
 
+	</ui:define>
+	</ui:composition>
+	
 	<p:dialog header="Insert new channel" widgetVar="dlg3" height="100">
 		<h:form>
 			<p:inputText value="#{publicationChannelBean.channel}" />

@@ -9,7 +9,13 @@
 	<meta charset="utf-8" />
 	<title>index </title>
 </h:head>
+
 <h:body>
+
+	<ui:composition template="/resources/layouts/template.xhtml">
+	
+	<ui:define name="content">
+	
 	<h2>scripts page</h2>
 	
 	<h:form id="addScriptForm">
@@ -31,6 +37,8 @@
 			
 		</p:dataTable>
 	</h:form>
-
+	
+	</ui:define>
+	</ui:composition>
 </h:body>
 </html>

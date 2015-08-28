@@ -12,22 +12,16 @@
 </h:head>
 
 <h:body>
+
+	<ui:composition template="/resources/layouts/template.xhtml">
+	
+	<ui:define name="content">
 	<h2>admin page</h2>
 	<h3>#{loginBean.name}</h3>
-	<h:form>
-		<h:messages />
-		<h:button outcome="createposition.xhtml?faces-redirect=true"
-			value="criar posição" />
-		<h:commandButton value="sair" action="#{loginBean.logout()}" />
-
-	</h:form>
-
-	<p:menu>
-		<p:submenu>
-			<p:menuitem value="Scripts" outcome="/admin/scripts" />
-			<p:menuitem value="Users" outcome="/admin/users" />
-		</p:submenu>
-	</p:menu>
+	
+	</ui:define>
+	
+	</ui:composition>
 
 </h:body>
 
