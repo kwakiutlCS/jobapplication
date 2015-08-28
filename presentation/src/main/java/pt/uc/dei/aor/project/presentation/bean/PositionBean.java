@@ -1,4 +1,4 @@
- package pt.uc.dei.aor.project.presentation.bean;
+package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 import java.util.ArrayList;

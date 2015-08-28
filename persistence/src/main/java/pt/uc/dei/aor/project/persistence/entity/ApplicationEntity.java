@@ -30,10 +30,13 @@ public class ApplicationEntity {
 	
 	@ManyToOne
 	private CandidateEntity candidate;
+	
 	@ManyToOne
 	private PositionEntity position;
+	
 	@OneToMany(mappedBy="application")
 	private List<InterviewEntity> interviews;
+	
 	@OneToOne
 	private JobProposalEntity proposal;
 	

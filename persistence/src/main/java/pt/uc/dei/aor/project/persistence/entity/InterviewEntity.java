@@ -20,14 +20,13 @@ public class InterviewEntity {
 	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column
 	private int id_interview;
 
 	
 	@ManyToOne
 	private ApplicationEntity application;
+	
 	@Column
-	private int classification;
-
+	private String classification;
 
 }

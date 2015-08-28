@@ -50,4 +50,5 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	public List<Role> getRoles() {
 		return new ArrayList<>(EnumSet.allOf(Role.class));
 	}
+	
 }

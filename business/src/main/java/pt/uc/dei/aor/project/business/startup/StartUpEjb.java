@@ -9,6 +9,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -18,6 +19,9 @@ public class StartUpEjb {
 
 	@Inject
 	private IWorkerBusinessService workerEjb;
+	
+	@Inject
+	private IPublicationChannelBusService channelEjb;
 	
 	@PostConstruct
 	public void init() {
@@ -48,5 +52,7 @@ public class StartUpEjb {
 		
 		
 		// publication channels
+		//channelEjb.createNewPublicationChannel("sadfdadsf");
+		//System.out.println("Created channel qq coisa");
 	}
 }
