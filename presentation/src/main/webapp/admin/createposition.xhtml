@@ -78,7 +78,7 @@
 
 
 			<p:outputLabel for="chan" value="Publication Channel" />
-			<p:selectManyMenu id="chan" value="#{positionBean.channels}">
+			<p:selectManyMenu id="chan" value="#{positionBean.channels}" converter="omnifaces.SelectItemsConverter">
 				<f:selectItems
 					value="#{publicationChannelBean.iPublicationChannels}"
 					var="channel" itemValue="#{channel}" itemLabel="#{channel.channel}" />

@@ -33,8 +33,19 @@ public class PublicationChannelProxy implements IPublicationChannel,IProxyToEnti
 		return pcEntity.getChannel();
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return pcEntity.toString();
+	}
 
+	@Override
+	public int hashCode() {
+		return pcEntity.hashCode();
+	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object o) {
+		return pcEntity.equals(((IProxyToEntity<PublicationChannelEntity>)o).getEntity());
+	}
 }

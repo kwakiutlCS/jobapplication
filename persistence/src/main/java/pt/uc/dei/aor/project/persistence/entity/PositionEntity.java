@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -77,7 +78,7 @@ public class PositionEntity {
 	@Column
 	private String description;
 	
-	@ManyToMany(mappedBy = "positions")
+	@ManyToMany(cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
     @ManyToOne
