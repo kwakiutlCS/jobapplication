@@ -10,6 +10,8 @@ public interface IPublicationChannelBusService {
 	
 	List<IPublicationChannel> getIPublicationChannels();
 	
+	IPublicationChannel getIPublicationChannel(String channel);
+	
 
 	
 	 

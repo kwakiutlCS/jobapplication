@@ -1,13 +1,10 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -15,7 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="publication_channel")
 @NamedQueries({
-	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u")
+	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u"),
+	@NamedQuery(name="publicationChannel.findByString", query="SELECT c FROM PublicChannelEntity c WHERE c.name LIKE :name")
 })
 public class PublicationChannelEntity {
 	
@@ -26,10 +24,6 @@ public class PublicationChannelEntity {
 	
 	@Column(nullable=false)
 	private String channel;
-	
-	@ManyToMany
-	private List<PositionEntity> positions;
-	
 	
 
 	
@@ -61,16 +55,6 @@ public class PublicationChannelEntity {
 		this.channel = channel;
 	}
 
-
-	public List<PositionEntity> getPositions() {
-		return positions;
-	}
-
-
-	public void setPositions(List<PositionEntity> positions) {
-		this.positions = positions;
-	}
-	
 	
 	
 }

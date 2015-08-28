@@ -9,5 +9,11 @@ public interface IPublicationChannelPersistenceService {
 	IPublicationChannel save(IPublicationChannel publicationChannel);
 	
 	List<IPublicationChannel> findAllPublicationChannels();
+	
+	IPublicationChannel getIPublicationChannel(String channel);
+	
+	
+	
+	
 
 }

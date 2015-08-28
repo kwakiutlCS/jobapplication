@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<title>createPosition2</title>
+</h:head>
+<h:body>
+
+	<h:form id="channelform">
+
+		<p:growl id="msgs" showDetail="true" />
+		<h:panelGrid columns="2" cellpadding="5">
+
+			<p:outputLabel for="chan" value="Publication Channel" />
+			<p:selectManyMenu id="chan" value="#{positionBean.channels}">
+				<f:selectItems
+					value="#{publicationChannelBean.iPublicationChannels}"
+					var="channel" itemValue="#{channel}" itemLabel="#{channel.channel}" />
+			</p:selectManyMenu>
+
+	<h:button outcome="insertPublicationChannel.xhtml?faces-redirect=true"
+				value="New Channel" />
+				
+				<h:button outcome="createposition.xhtml?faces-redirect=true"
+				value="back" />
+				
+
+
+
+		</h:panelGrid>
+	</h:form>
+</h:body>
+
+
+</html>

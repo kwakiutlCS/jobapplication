@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.business.service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -39,6 +40,13 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 		return positionPersistence.save(position);
 
+	}
+
+
+	@Override
+	public List<IPosition> getIPositions() {
+		
+		return positionPersistence.findAllPositions();
 	}
 
 

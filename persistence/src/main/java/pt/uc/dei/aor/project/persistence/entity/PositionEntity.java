@@ -18,8 +18,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -29,6 +33,9 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 @Entity
 @Table(name="position")
+@NamedQueries({
+	@NamedQuery(name="position.findAll", query="from PositionEntity u")
+})
 public class PositionEntity {
 	
 	
@@ -77,7 +84,8 @@ public class PositionEntity {
 	@Column
 	private String description;
 	
-	@ManyToMany(mappedBy = "positions")
+	@ManyToMany
+	@JoinTable(name="position_has_channels", joinColumns={@JoinColumn(name="position_id")}, inverseJoinColumns={@JoinColumn(name="publicationchannel_id")})
 	private Set<PublicationChannelEntity> publications;
 	
     @ManyToOne

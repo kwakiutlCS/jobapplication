@@ -7,7 +7,7 @@
 
 <h:head>
 	<meta charset="utf-8" />
-	<title>Create Position</title>
+	<title>createPosition</title>
 </h:head>
 <h:body>
 
@@ -75,40 +75,20 @@
 					var="positionState" itemValue="#{positionState}"
 					itemLabel="#{positionState.positionStateLabel}" />
 			</p:selectOneMenu>
-
-
-			<p:outputLabel for="chan" value="Publication Channel" />
+			
+						<p:outputLabel for="chan" value="Publication Channel" />
 			<p:selectManyMenu id="chan" value="#{positionBean.channels}">
 				<f:selectItems
 					value="#{publicationChannelBean.iPublicationChannels}"
-					var="channel" itemValue="#{channel}" itemLabel="#{channel.channel}" />
+					var="channel" itemValue="#{channel}" itemLabel="#{channel}" />
 			</p:selectManyMenu>
 
-			<p:commandButton value="Insert" type="button"
-				onclick="PF('dlg3').show();" />
-
-
-
-
-			<p:commandButton process="@form" value="Submit" update="msgs"
-				action="#{positionBean.createPosition}" icon="ui-icon-check" />
-
-
+			<p:button outcome="index.xhtml?faces-redirect=true" value="back" />
+			<p:commandButton process="@form" value="next" update="msgs"
+				action="#{positionBean.createPosition}" />
 
 		</h:panelGrid>
 	</h:form>
-
-	<p:dialog header="Insert new channel" widgetVar="dlg3" height="100">
-		<h:form>
-			<p:inputText value="#{publicationChannelBean.channel}" />
-
-			<p:commandButton value="Submit"
-				update=":newpositionform:msgs :newpositionform:chan"
-				action="#{publicationChannelBean.createNewPublicationChannel()}" />
-		</h:form>
-	</p:dialog>
-
-
 </h:body>
 
 </html>
