@@ -51,7 +51,7 @@ public class LoginBean {
 			request.login(username, password);
 			
 			IWorker worker = workerService.getWorkerByLogin(username);
-			request.getSession().setAttribute("full_name", worker.getFullName());
+			request.getSession().setAttribute("user", worker);
 			
 			List<String> roles = worker.getRoles();
 			
@@ -85,9 +85,9 @@ public class LoginBean {
 		return null;
 	}
 	
-	public String getName() {
+	public IWorker getUser() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (String) request.getSession().getAttribute("full_name");
+		return (IWorker) request.getSession().getAttribute("user");	
 	}
 }

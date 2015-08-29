@@ -18,6 +18,7 @@ import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
+import pt.uc.dei.aor.project.business.persistence.IScriptEntryPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
@@ -27,6 +28,9 @@ public class ScriptBusinessService implements IScriptBusinessService {
 
 	@Inject
 	private IScriptPersistenceService scriptPersistence;
+	
+	@Inject
+	private IScriptEntryPersistenceService entryPersistence;
 	
 	@Inject IModelFactory factory;
 	
@@ -127,5 +131,10 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		return update(script);
 	}
 
+	@Override
+	public void updateEntry(IScriptEntry entry) {
+		entryPersistence.save(entry);
+	}
 
+	
 }

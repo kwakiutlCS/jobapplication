@@ -5,12 +5,9 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-			<h:form>
-	<p:menubar>
-		<p:submenu label="#{loginBean.user.name}">
-				<p:menuitem value="quit" action="#{loginBean.logout}" />
-		</p:submenu>
-	</p:menubar>
-			</h:form>
+	<p:menu>
+		<p:menuitem value="Interviews" outcome="/interview/interviews" />
+	
+	</p:menu>
 
 </ui:composition>

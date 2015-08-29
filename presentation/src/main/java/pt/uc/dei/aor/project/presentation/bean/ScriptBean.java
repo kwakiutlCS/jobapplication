@@ -11,6 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -99,6 +100,7 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void updateScript() {
+		System.out.println("WEB updating");
 		editableScript = scriptEjb.update(editableScript);
 	}
 	
@@ -177,6 +179,11 @@ public class ScriptBean implements Serializable {
 			addMessage(FacesMessage.SEVERITY_ERROR, "At least 2 responses needed");
 		}
 	}
+	
+	public void updateEntry(IScriptEntry entry) {
+		scriptEjb.updateEntry(entry);
+	}
+	
 	
 	// getters and setters
 	public String getQuestionText() {

@@ -37,4 +37,8 @@ public interface IScriptBusinessService {
 	public IScript addAnswerToEntry(IScript script, IScriptEntry entry, String option) throws IllegalAnswerOptionsException;
 
 	public IScript removeAnswerFromEntry(IScript script, IScriptEntry entry, String answer) throws IllegalAnswerOptionsException;
+
+	public void updateEntry(IScriptEntry entry);
+
+	
 }
