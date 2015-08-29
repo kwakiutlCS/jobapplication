@@ -10,42 +10,42 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 public interface IPosition  {
 	
-	Date getOpeningDate();
+	public Date getOpeningDate();
 	
-	String getCode();
+	public String getCode();
 	
-	String getTitle();
-	void setTitle(String title);
+	public String getTitle();
+	public void setTitle(String title);
 	
-	List<Localization> getLocalizations();
-	void setLocalizations(List<Localization> localizations);
+	public List<Localization> getLocalizations();
+	public void setLocalizations(List<Localization> localizations);
 	
-	PositionState getState();
-	void setState(PositionState state);
+	public PositionState getState();
+	public void setState(PositionState state);
 	
-	int getVacancies();
-	void setVacancies(int vacancies);
+	public int getVacancies();
+	public void setVacancies(int vacancies);
 	
-	Date getClosingDate();
-	void setClosingDate(Date closingDate);
+	public Date getClosingDate();
+	public void setClosingDate(Date closingDate);
 	
-	String getSla();
-	void setSLA(String Sla);
+	public String getSla();
+	public void setSLA(String Sla);
 	
-	String getCompany();
-	void setCompany(String company);
+	public String getCompany();
+	public void setCompany(String company);
 	
-	String getContactPerson();
-	void setContactPerson(String contactPerson);
+	public String getContactPerson();
+	public void setContactPerson(String contactPerson);
 	
-	Collection<TechnicalArea> getTechnicalAreas();
-	void setTechnicalAreas(Collection<TechnicalArea> technicalAreas);
+	public Collection<TechnicalArea> getTechnicalAreas();
+	public void setTechnicalAreas(Collection<TechnicalArea> technicalAreas);
 	
-	String getDescription();
-	void setDescription(String description);
+	public String getDescription();
+	public void setDescription(String description);
 	
-	List<IPublicationChannel> getIPublicationChannels();
-	void setIPublicationChannels(List<IPublicationChannel> ipublicationChannels);
+	public List<IPublicationChannel> getIPublicationChannels();
+	public void setIPublicationChannels(List<IPublicationChannel> ipublicationChannels);
 	
 	
 	

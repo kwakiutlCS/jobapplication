@@ -81,14 +81,6 @@ public class PositionBean implements Serializable {
 				
 	}
 	
-	public IPositionBusinessService getPosition() {
-		return position;
-	}
-
-	public void setPosition(IPositionBusinessService position) {
-		this.position = position;
-	}
-
 	
 	public String getCode() {
 		return code;

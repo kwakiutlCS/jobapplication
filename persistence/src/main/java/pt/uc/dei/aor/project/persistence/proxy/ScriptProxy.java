@@ -2,7 +2,6 @@ package pt.uc.dei.aor.project.persistence.proxy;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;

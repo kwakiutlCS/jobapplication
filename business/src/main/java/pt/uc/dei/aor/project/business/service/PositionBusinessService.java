@@ -45,6 +45,9 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 	@Override
 	public List<IPosition> getIPositions() {
+	
+		System.out.println("position business: findAll");
+		System.out.println(positionPersistence.findAllPositions().toString());
 		
 		return positionPersistence.findAllPositions();
 	}

@@ -62,17 +62,23 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	@Override
 	public Date getOpeningDate() {
 		
+		System.out.println("position Porxy: getting values");
+		
 		return entity.getOpeningDate();
 	}
 
 	@Override
 	public String getCode() {
 		
+		System.out.println("position Porxy: getting values");
+		
 		return entity.getCode();
 	}
 
 	@Override
 	public String getTitle() {
+		
+		System.out.println("position Porxy: getting values");
 		
 		return entity.getTitle();
 	}

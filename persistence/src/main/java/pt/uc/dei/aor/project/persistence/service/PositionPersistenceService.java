@@ -52,7 +52,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 		}
 
-		return null;
+		return ipositions;
 	}
 
 
