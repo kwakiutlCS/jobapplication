@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 
+import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -28,7 +29,13 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 			Collection<Role> roles) throws NoRoleException {
 		if (roles.isEmpty()) throw new NoRoleException();
 		IWorker worker = factory.worker(login, email, password, name, surname, roles);
-		return workerPersistence.save(worker);
+		
+		try {
+			return workerPersistence.save(worker);
+		}
+		catch(EJBException e) {
+			return null;
+		}
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
@@ -37,15 +38,13 @@ public class StartUpEjb {
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		try {
-			if (workerEjb.getWorkerByLogin("admin") == null) {
-				workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
+			IWorker worker = workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
 					Encryptor.encrypt("admin"), roles);
-				System.out.println("Admin added with sucess.");
-			}
-			else {
-				System.out.println("Admin already exists. Nothing to be done here.");
-			}
-		} catch (NoRoleException e) {
+				
+			if (worker != null) System.out.println("Admin added with sucess.");
+			else System.out.println("Admin already exists. Nothing to be done here.");
+			
+		} catch (Exception e) {
 			System.out.println("An error occurred adding admin user.");
 		}
 		System.out.println();
