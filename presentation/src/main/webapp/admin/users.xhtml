@@ -1,68 +1,60 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<meta charset="utf-8" />
-	<title>index </title>
-</h:head>
-<h:body>
-
-	<ui:composition template="/resources/layouts/template.xhtml">
-	
 	<ui:define name="content">
-	
-	<h2>users page</h2>
-	
-	
+
+		<h2>users page</h2>
+
+
 		<p:dataTable value="#{workerBean.users}" var="user" id="userTable">
 			<p:column>#{user.name}</p:column>
 			<p:column>#{user.surname}</p:column>
 			<p:column>#{user.email}</p:column>
 		</p:dataTable>
-	
+
 		<h:form id="addUserForm">
 			<p:messages autoUpdate="true" />
 			<p:panelGrid columns="2" id="userFormTable">
 				<p:outputLabel for="login" value="Login" />
-				<p:inputText id="login" value="#{workerBean.login}" 
-				validator="#{loginValidator.validate}" required="true" />
-				
+				<p:inputText id="login" value="#{workerBean.login}"
+					validator="#{loginValidator.validate}" required="true" />
+
 				<p:outputLabel for="name" value="Name" />
-				<p:inputText id="name" value="#{workerBean.name}" 
-				immediate="true" required="true" />
-				
+				<p:inputText id="name" value="#{workerBean.name}" immediate="true"
+					required="true" />
+
 				<p:outputLabel for="surname" value="Surname" />
-				<p:inputText id="surname" value="#{workerBean.surname}" 
-				immediate="true" required="true" />
-				
+				<p:inputText id="surname" value="#{workerBean.surname}"
+					immediate="true" required="true" />
+
 				<p:outputLabel for="email" value="Email" />
-				<p:inputText id="email" value="#{workerBean.email}" 
-				validator="#{emailValidator.validate}" required="true" />
-				
+				<p:inputText id="email" value="#{workerBean.email}"
+					validator="#{emailValidator.validate}" required="true" />
+
 				<p:outputLabel for="password" value="Password" />
-				<p:password id="password" value="#{workerBean.password}" 
-				match="confirm" required="true" />
-				
+				<p:password id="password" value="#{workerBean.password}"
+					match="confirm" required="true" />
+
 				<p:outputLabel for="confirm" value="Confirm Password" />
-				<p:password id="confirm" value="#{workerBean.password}" 
-				required="true" />
-				
-				<p:selectManyCheckbox value="#{workerBean.roles}" converter="roleConverter" 
-				label="Roles" required="true">
-					<f:selectItems value="#{workerBean.possibleRoles}" 
-					var="role" itemLabel="#{role.label}"/>
+				<p:password id="confirm" value="#{workerBean.password}"
+					required="true" />
+
+				<p:selectManyCheckbox value="#{workerBean.roles}"
+					converter="roleConverter" label="Roles" required="true">
+					<f:selectItems value="#{workerBean.possibleRoles}" var="role"
+						itemLabel="#{role.label}" />
 				</p:selectManyCheckbox>
 				<p:spacer />
-				
-				<p:commandButton value="Create User" action="#{workerBean.register}" update="userTable userFormTable" />
+
+				<p:commandButton value="Create User" action="#{workerBean.register}"
+					update="userTable userFormTable" />
 			</p:panelGrid>
 		</h:form>
-		
-		</ui:define>
-		</ui:composition>
-</h:body>
-</html>
+
+	</ui:define>
+</ui:composition>
+
