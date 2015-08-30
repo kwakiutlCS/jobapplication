@@ -5,37 +5,5 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="content">
-		<h2>admin page</h2>
-		<h3>#{loginBean.user.name}</h3>
 
-	</ui:define>
-
-<<<<<<< HEAD
 </ui:composition>
-=======
-<h:body>
-	<h2>admin page</h2>
-	<h3>#{loginBean.name}</h3>
-	<h:form>
-	<h:panelGrid columns="1" cellpadding="5">
-	
-		<h:messages />
-		<h:button outcome="createposition.xhtml?faces-redirect=true"
-			value="create position" />
-			<h:button outcome="listpositions.xhtml?faces-redirect=true" value="list positions"/>
-		<h:commandButton value="exit" action="#{loginBean.logout()}" />
-</h:panelGrid>
-	</h:form>
-
-	<p:menu>
-		<p:submenu>
-			<p:menuitem value="Scripts" outcome="/admin/scripts" />
-			<p:menuitem value="Users" outcome="/admin/users" />
-		</p:submenu>
-	</p:menu>
-
-</h:body>
-
-</html>
->>>>>>> refs/heads/temp
