@@ -174,13 +174,13 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public Collection<TechnicalArea> getTechnicalAreas() {
+	public List<TechnicalArea> getTechnicalAreas() {
 		
 		return entity.getTechnicalAreas();
 	}
 
 	@Override
-	public void setTechnicalAreas(Collection<TechnicalArea> technicalAreas) {
+	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
 		
 		entity.setTechnicalAreas(technicalAreas);
 	}

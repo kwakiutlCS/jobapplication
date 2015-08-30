@@ -1,6 +1,5 @@
 package pt.uc.dei.aor.project.business.model;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -38,8 +37,8 @@ public interface IPosition  {
 	public String getContactPerson();
 	public void setContactPerson(String contactPerson);
 	
-	public Collection<TechnicalArea> getTechnicalAreas();
-	public void setTechnicalAreas(Collection<TechnicalArea> technicalAreas);
+	public List<TechnicalArea> getTechnicalAreas();
+	public void setTechnicalAreas(List<TechnicalArea> technicalAreas);
 	
 	public String getDescription();
 	public void setDescription(String description);

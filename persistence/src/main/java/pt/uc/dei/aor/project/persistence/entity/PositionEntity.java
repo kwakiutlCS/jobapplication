@@ -207,11 +207,11 @@ public class PositionEntity {
 		this.company = company;
 	}
 
-	public Collection<TechnicalArea> getTechnicalAreas() {
+	public List<TechnicalArea> getTechnicalAreas() {
 		return new ArrayList<>(technicalAreas);
 	}
 
-	public void setTechnicalAreas(Collection<TechnicalArea> technicalAreas) {
+	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
 		this.technicalAreas.addAll(technicalAreas);
 	}
 

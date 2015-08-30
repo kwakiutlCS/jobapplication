@@ -23,11 +23,7 @@ public class ListPositionBean implements Serializable{
 	private IPositionBusinessService iposition;
 	
 	public List<IPosition> getPositions() {
-		
-//		List<IPosition> positions = new ArrayList<IPosition>();
-//		positions.addAll(iposition.getIPositions());
-//		System.out.println("primeito da lista"+positions.get(0));
-		
+			
 		return iposition.getIPositions();
 	}
 

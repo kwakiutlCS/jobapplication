@@ -14,28 +14,41 @@
 	<h:form id="listpositionform">
 
 		<p:dataTable var="position" value="#{listPositionBean.positions}">
-		
+
 			<p:column headerText="Closing Date">
 				<h:outputText value="#{position.closingDate}" />
 			</p:column>
-			
+
 			<p:column headerText="Code">
 				<h:outputText value="#{position.code}" />
 			</p:column>
-			
+
 			<p:column headerText="Title">
 				<h:outputText value="#{position.title}" />
 			</p:column>
-			
-			<p:column headerText="Location">
-			<h:outputText value="#{position.localizations}" />
+
+			<p:column headerText="Situation">
+				<h:outputText value="#{position.state}" />
 			</p:column>
-			
+
+
+			<p:column headerText="Location">
+				<h:outputText value="#{position.localizations}" />
+			</p:column>
+
+			<p:column headerText="Technical Area">
+				<h:outputText value="#{position.technicalAreas}" />
+			</p:column>
+
+
+
 			<p:column headerText="Company">
 				<h:outputText value="#{position.company}" />
 			</p:column>
-			
-			
+
+
+
+
 		</p:dataTable>
 
 	</h:form>
