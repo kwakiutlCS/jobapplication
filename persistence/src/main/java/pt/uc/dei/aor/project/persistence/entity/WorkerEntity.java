@@ -23,6 +23,7 @@ import pt.uc.dei.aor.project.business.util.Role;
 @Table(name="worker")
 @NamedQueries({
 	@NamedQuery(name = "Worker.findWorkerByLogin",query="from WorkerEntity u where u.login = :login"),
+	@NamedQuery(name = "Worker.findWorkerByEmail",query="from WorkerEntity u where u.email = :email"),
 	@NamedQuery(name = "Worker.findAllWorkers",query="from WorkerEntity u"),
 })
 public class WorkerEntity extends User {

@@ -20,5 +20,6 @@ public interface IWorkerBusinessService {
 
 	public List<Role> getRoles();
 	
+	IWorker getWorkerByEmail(String email);
 	
 }

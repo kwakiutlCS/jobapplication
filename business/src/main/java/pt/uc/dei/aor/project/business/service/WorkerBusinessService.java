@@ -37,6 +37,12 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
+	public IWorker getWorkerByEmail(String email) {
+		return workerPersistence.getWorkerByEmail(email);
+	}
+
+	
+	@Override
 	public void deleteWorker(IWorker worker) {
 		workerPersistence.delete(worker);
 	}

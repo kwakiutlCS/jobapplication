@@ -52,6 +52,20 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	}
 	
 	@Override
+	public IWorker getWorkerByEmail(String email) {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findWorkerByEmail", WorkerEntity.class);
+		query.setParameter("email", email);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		
+		if (!entities.isEmpty()) {
+			return new WorkerProxy(entities.get(0));
+		}
+		
+		return null;
+	}
+	
+	@Override
 	public List<IWorker> findAllUsers() {
 		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findAllWorkers", WorkerEntity.class);
 		

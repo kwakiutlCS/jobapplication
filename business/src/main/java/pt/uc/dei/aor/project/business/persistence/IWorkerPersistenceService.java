@@ -14,4 +14,6 @@ public interface IWorkerPersistenceService {
 
 	List<IWorker> findAllUsers();
 
+	IWorker getWorkerByEmail(String email);
+
 }
