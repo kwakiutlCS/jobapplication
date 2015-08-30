@@ -20,13 +20,12 @@ public class PublicationChannelBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private IPublicationChannelBusService publicationChannel;
-	
-	
+
+
 	private String channel;
-//	private String listedChannel;
 	private List<IPublicationChannel> iPublicationChannels;
 
 
@@ -48,14 +47,14 @@ public class PublicationChannelBean implements Serializable {
 		this.publicationChannel = publicationChannel;
 	}
 
-	
+
 	public String createNewPublicationChannel(){
-		
+
 		String result="";
 		publicationChannel.createNewPublicationChannel(channel);
-		
+
 		return result;
-		
+
 	}
 
 	public void setIPublicationChannels(List<IPublicationChannel> ipublicationchannels) {
@@ -65,12 +64,7 @@ public class PublicationChannelBean implements Serializable {
 	public List<IPublicationChannel> getiPublicationChannels() {
 		return publicationChannel.getIPublicationChannels();
 	}
-//	
-//	public String getListedChannel(){
-//		
-//		return publicationChannel.getChannel();
-//		
-//	}
-	
+
+
 
 }

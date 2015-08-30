@@ -26,9 +26,7 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 			IPublicationChannel publicationChannel) {
 		
 		PublicationChannelEntity pcEntity = getEntity(publicationChannel);
-		System.out.println(pcEntity);
 		pcEntity = em.merge(pcEntity);
-		
 		
 		return new PublicationChannelProxy(pcEntity);
 	}
@@ -46,22 +44,37 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 
 	@Override
 	public List<IPublicationChannel> findAllPublicationChannels() {
+		
 		TypedQuery<PublicationChannelEntity> q =  em.createNamedQuery("publicationChannel.findAll", PublicationChannelEntity.class);
 		
 		List<PublicationChannelEntity> channels = q.getResultList();
+		
 		List<IPublicationChannel> ichannels = new ArrayList<IPublicationChannel>();
+		
 		for(PublicationChannelEntity pce : channels){
 			ichannels.add(new PublicationChannelProxy(pce));
 			
 		}
 		
-		System.out.println(ichannels);
-		
 		return ichannels;
 	}
 
-
-	
-
+	@Override
+	public List<IPublicationChannel> getIPublicationChannel(String channel) {
+		
+		TypedQuery<PublicationChannelEntity> q = em.createNamedQuery("publicationChannel.findByString", PublicationChannelEntity.class);
+		
+		q.setParameter("i", channel);
+		
+		List<PublicationChannelEntity> channels = q.getResultList();
+		
+		List<IPublicationChannel> ichannels = new ArrayList<IPublicationChannel>();
+		
+		for(PublicationChannelEntity pce : channels){
+			ichannels.add(new PublicationChannelProxy(pce));
+		}
+				
+		return ichannels;
+	}
 
 }

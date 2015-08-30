@@ -38,4 +38,12 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 	}
 
 
+
+	@Override
+	public List<IPublicationChannel> getIPublicationChannel(String channel) {
+		
+		return pcPersistenceService.getIPublicationChannel(channel);
+	}
+
+
 }

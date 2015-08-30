@@ -1,13 +1,10 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -15,7 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="publication_channel")
 @NamedQueries({
-	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u")
+	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u"),
+	@NamedQuery(name="publicationChannel.findByString", query="SELECT c FROM PublicationChannelEntity c WHERE c.channel LIKE :i")
 })
 public class PublicationChannelEntity implements Comparable<PublicationChannelEntity> {
 	
@@ -94,7 +92,6 @@ public class PublicationChannelEntity implements Comparable<PublicationChannelEn
 	public int compareTo(PublicationChannelEntity o) {
 		return channel.compareTo(o.channel);
 	}
-	
 	
 	
 }

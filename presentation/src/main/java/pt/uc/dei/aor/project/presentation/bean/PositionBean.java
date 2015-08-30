@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,7 +19,7 @@ import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 @Named
-@SessionScoped
+@RequestScoped
 public class PositionBean implements Serializable {
 	
 	/**
@@ -29,6 +29,7 @@ public class PositionBean implements Serializable {
 
 	@Inject
 	private IPositionBusinessService position;
+	
 	
 	private String code;
 	private Date openingDate;
@@ -48,7 +49,6 @@ public class PositionBean implements Serializable {
 	public PositionBean() {
 	}
 
-	
 	public List<Localization> getLocalizations(){
 		
 		List<Localization> localizations = new ArrayList<Localization>(EnumSet.allOf(Localization.class));
@@ -81,14 +81,6 @@ public class PositionBean implements Serializable {
 				
 	}
 	
-	public IPositionBusinessService getPosition() {
-		return position;
-	}
-
-	public void setPosition(IPositionBusinessService position) {
-		this.position = position;
-	}
-
 	
 	public String getCode() {
 		return code;
@@ -202,10 +194,11 @@ public class PositionBean implements Serializable {
 
 	public String createPosition() {
 		
+		
 		position.createNewPosition(code, openingDate, title, localizations, state, vacancies, closingDate, sla, contactPerson,
 				company, technicalAreas, description, script, channels);
 		
-		String result="new position";
+		String result="";
 		
 		return  result;
 	}

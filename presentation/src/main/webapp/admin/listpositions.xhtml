@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<title>listposition</title>
+</h:head>
+<h:body>
+
+	<h:form id="listpositionform">
+
+		<p:dataTable var="position" value="#{listPositionBean.positions}">
+
+			<p:column headerText="Closing Date">
+				<h:outputText value="#{position.closingDate}" />
+			</p:column>
+
+			<p:column headerText="Code">
+				<h:outputText value="#{position.code}" />
+			</p:column>
+
+			<p:column headerText="Title">
+				<h:outputText value="#{position.title}" />
+			</p:column>
+
+			<p:column headerText="Situation">
+				<h:outputText value="#{position.state}" />
+			</p:column>
+
+			<p:column headerText="Location">
+				<h:outputText value="#{position.localizations}" />
+			</p:column>
+
+			<p:column headerText="Technical Area">
+				<h:outputText value="#{position.technicalAreas}" />
+			</p:column>
+
+			<p:column headerText="Company">
+				<h:outputText value="#{position.company}" />
+			</p:column>
+
+		</p:dataTable>
+
+	</h:form>
+
+</h:body>
+</html>

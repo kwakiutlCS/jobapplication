@@ -21,6 +21,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -30,6 +32,9 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 @Entity
 @Table(name="position")
+@NamedQueries({
+	@NamedQuery(name="position.findAll", query="from PositionEntity u")
+})
 public class PositionEntity {
 	
 	
@@ -78,6 +83,7 @@ public class PositionEntity {
 	@Column
 	private String description;
 	
+
 	@ManyToMany(cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
@@ -138,11 +144,11 @@ public class PositionEntity {
 	}
 
 	public List<Localization> getLocalizations() {
-		return localizations;
+		return new ArrayList<>(localizations);
 	}
 
 	public void setLocalizations(List<Localization> localizations) {
-		this.localizations = localizations;
+		this.localizations.addAll(localizations);
 	}
 
 	public PositionState getState() {
@@ -202,11 +208,11 @@ public class PositionEntity {
 	}
 
 	public List<TechnicalArea> getTechnicalAreas() {
-		return technicalAreas;
+		return new ArrayList<>(technicalAreas);
 	}
 
 	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
-		this.technicalAreas = technicalAreas;
+		this.technicalAreas.addAll(technicalAreas);
 	}
 
 	public String getDescription() {
@@ -218,11 +224,11 @@ public class PositionEntity {
 	}
 
 	public Set<PublicationChannelEntity> getPublications() {
-		return publications;
+		return new TreeSet<>(publications);
 	}
 
 	public void setPublications(Set<PublicationChannelEntity> publications) {
-		this.publications = publications;
+		this.publications.addAll(publications);
 	}
 
 	public ScriptEntity getScript() {

@@ -18,32 +18,25 @@
 				<p:calendar id="opdate" style="width: 100%;"
 					value="#{positionBean.openingDate}" />
 
-
 				<p:outputLabel for="title" value="Title" />
 				<p:inputText id="title" value="#{positionBean.title}" />
 
-
 				<p:outputLabel for="vacancies" value="Vacancies" />
 				<p:spinner id="vacancies" value="#{positionBean.vacancies}" />
-
 
 				<p:outputLabel for="closdate" value="Closing Date" />
 				<p:calendar id="closdate" style="width: 100%;"
 					value="#{positionBean.closingDate}" />
 
-
 				<p:outputLabel for="sla" value="SLA" />
 				<p:inputText id="sla" value="#{positionBean.sla}" />
-
 
 				<p:outputLabel for="contactPerson" value="Contact Person" />
 				<p:inputText id="contactPerson"
 					value="#{positionBean.contactPerson}" />
 
-
 				<p:outputLabel for="company" value="Company" />
 				<p:inputText id="company" value="#{positionBean.company}" />
-
 
 				<p:outputLabel for="description" value="Description" />
 				<p:inputText id="description" value="#{positionBean.description}" />
@@ -74,7 +67,6 @@
 						itemLabel="#{positionState.positionStateLabel}" />
 				</p:selectOneMenu>
 
-
 				<p:outputLabel for="chan" value="Publication Channel" />
 				<p:selectManyMenu id="chan" value="#{positionBean.channels}"
 					converter="omnifaces.SelectItemsConverter">
@@ -84,30 +76,23 @@
 						itemLabel="#{channel.channel}" />
 				</p:selectManyMenu>
 
-				<p:commandButton value="Insert" type="button"
-					onclick="PF('dlg3').show();" />
-
-
-
-
+				<p:commandButton onclick="PF('dlg1').show();" type="button"
+					value="New Channel" />
 				<p:commandButton process="@form" value="Submit" update="msgs"
-					action="#{positionBean.createPosition}" icon="ui-icon-check" />
-
-
-
+					action="#{positionBean.createPosition}" />
 			</h:panelGrid>
 		</h:form>
 
-		<p:dialog header="Insert new channel" widgetVar="dlg3" height="100">
+		<p:dialog header="Insert new channel" widgetVar="dlg1" height="100">
 			<h:form>
-				<p:inputText value="#{publicationChannelBean.channel}" />
-
+				<p:outputLabel for="newChannel" value="New Channel" />
+				<p:inputText id="newChannel"
+					value="#{publicationChannelBean.channel}" />
 				<p:commandButton value="Submit"
-					update=":newpositionform:msgs :newpositionform:chan"
 					action="#{publicationChannelBean.createNewPublicationChannel()}" />
 			</h:form>
 		</p:dialog>
 
 	</ui:define>
-
 </ui:composition>
+</html>
