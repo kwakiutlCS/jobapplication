@@ -13,6 +13,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Index;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -28,7 +30,12 @@ import pt.uc.dei.aor.project.business.util.Role;
 	@NamedQuery(name = "Worker.findAllAdmins", query="from WorkerEntity u where 'ADMIN' in u.roles"),
 	@NamedQuery(name = "Worker.findAllManagers", query="from WorkerEntity u where 'MANAGER' in u.roles"),
 	@NamedQuery(name = "Worker.findAllInterviewers", query="from WorkerEntity u where 'INTERVIEWER' in u.roles"),
-	
+})
+@NamedNativeQueries({
+	@NamedNativeQuery(name = "Worker.createSuperUser", 
+	query="insert into worker values (0, 'SU', 'SU', 'SU', 'SU', 'SU')"),
+	@NamedNativeQuery(name = "Worker.createSuperUserRole", 
+	query="insert into role values (0, 'CANDIDATE')")
 })
 public class WorkerEntity extends User {
 	

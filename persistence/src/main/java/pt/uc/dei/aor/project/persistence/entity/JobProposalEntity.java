@@ -24,10 +24,12 @@ public class JobProposalEntity {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
-	private int id_proposal;
+	private int id;
+	
 	@Enumerated(EnumType.STRING)
 	@Column
 	private ProposalSituation situation;
+	
 	@Column
 	private LocalDate date;
 	

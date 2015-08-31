@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -19,19 +20,23 @@ public class ApplicationEntity {
 	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(nullable=false, unique=true)
-	private int id_application;
-	@Column
+	private int id;
+	
+	@Column(nullable=false)
 	private String cv;
-	@Column
+	
+	@Column(nullable=false)
 	private String coverLetter;
-	@Column
+	
+	@Column(nullable=false)
 	private String sourceInfo; 
 	
 	@ManyToOne
+	@JoinColumn(nullable=false)
 	private CandidateEntity candidate;
 	
 	@ManyToOne
+	@JoinColumn(nullable=false)
 	private PositionEntity position;
 	
 	@OneToMany(mappedBy="application")

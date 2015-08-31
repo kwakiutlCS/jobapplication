@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.persistence.service;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,5 +79,14 @@ public class WorkerPersistenceServiceTest {
     	
     	workerEjb.delete(worker);
     	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
+    }
+    
+    @Test
+    public void findAllUsersShouldntReturnSuperUser() {
+    	List<IWorker> users = workerEjb.findAllUsers();
+    	
+    	for (IWorker w : users) {
+    		assertThat(w.getName(), is(not(equalTo("SU"))));
+    	}
     }
 }

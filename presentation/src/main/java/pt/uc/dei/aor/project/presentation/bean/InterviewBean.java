@@ -21,6 +21,8 @@ public class InterviewBean {
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
+	private IInterview selected;
+	
 	
 	public Collection<IInterview> getActiveInterviews() {
 		IWorker user = (IWorker) getSession().getAttribute("user");
@@ -28,6 +30,10 @@ public class InterviewBean {
 	}
 	
 	
+	public String selectInterview(IInterview interview) {
+		selected = interview;
+		return "interview.xhtml?faces-redirect=true";
+	}
 	
 	
 	

@@ -61,7 +61,14 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 
 	@Override
 	public List<Role> getRoles() {
-		return new ArrayList<>(EnumSet.allOf(Role.class));
+		List<Role> roles = new ArrayList<>(EnumSet.allOf(Role.class));
+		roles.remove(Role.CANDIDATE);
+		return roles;
+	}
+
+	@Override
+	public IWorker createSuperUser() {
+		return workerPersistence.createSuperUser();
 	}
 	
 }

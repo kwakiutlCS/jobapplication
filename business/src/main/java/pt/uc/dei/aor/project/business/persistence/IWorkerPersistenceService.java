@@ -23,4 +23,6 @@ public interface IWorkerPersistenceService {
 	
 	Collection<IWorker> findAllInterviewers();
 
+	IWorker createSuperUser();
+
 }
