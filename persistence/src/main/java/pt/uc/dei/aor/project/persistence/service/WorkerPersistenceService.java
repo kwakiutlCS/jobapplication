@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -74,7 +75,8 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		List<IWorker> proxies = new ArrayList<>();
 		
 		for (WorkerEntity we : entities) {
-			proxies.add(new WorkerProxy(we));
+			if (!we.getName().equals("SU"))
+				proxies.add(new WorkerProxy(we));
 		}
 		
 		return proxies;
@@ -133,5 +135,18 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 
         throw new IllegalStateException();
     }
+
+	@Override
+	public IWorker createSuperUser() {
+		IWorker su = getWorkerByLogin("SU");
+		if (su != null) return null;
+		
+		Query query = em.createNamedQuery("Worker.createSuperUser");
+		query.executeUpdate();
+		query = em.createNamedQuery("Worker.createSuperUserRole");
+		query.executeUpdate();
+		
+		return getWorkerByLogin("SU");
+	}
 
 }

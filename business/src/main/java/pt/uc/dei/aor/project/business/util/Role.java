@@ -1,7 +1,7 @@
 package pt.uc.dei.aor.project.business.util;
 
 public enum Role {
-	ADMIN("Admin"), MANAGER("Manager"), INTERVIEWER("Interviewer");
+	ADMIN("Admin"), MANAGER("Manager"), INTERVIEWER("Interviewer"), CANDIDATE("Candidate");
 	
 	private String label;
 	
