@@ -61,67 +61,51 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 
 	@Override
 	public Date getOpeningDate() {
-		
-		System.out.println("position Porxy: getting values");
-		
 		return entity.getOpeningDate();
 	}
 
 	@Override
 	public String getCode() {
-		
-		System.out.println("position Porxy: getting values");
-		
 		return entity.getCode();
 	}
 
 	@Override
 	public String getTitle() {
-		
-		System.out.println("position Porxy: getting values");
-		
 		return entity.getTitle();
 	}
 
 	@Override
 	public void setTitle(String title) {
-		
 		entity.setTitle(title);
 	}
 
 	@Override
 	public List<Localization> getLocalizations() {
-		
 		return entity.getLocalizations();
 	}
 
 	@Override
 	public void setLocalizations(List<Localization> localizations) {
-		
 		entity.setLocalizations(localizations);
 	}
 
 	@Override
 	public PositionState getState() {
-		
 		return entity.getState();
 	}
 
 	@Override
 	public void setState(PositionState state) {
-		
 		entity.setState(state);
 	}
 
 	@Override
 	public int getVacancies() {
-		
 		return entity.getVacancies();
 	}
 
 	@Override
 	public void setVacancies(int vacancies) {
-		
 		entity.setVacancies(vacancies);
 	}
 

@@ -5,18 +5,19 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="title">Create Position</ui:define>
 
 	<ui:define name="content">
-		<h:form id="newpositionform">
 
-			<p:growl id="msgs" showDetail="true" />
+		<h2>Insert new position page</h2>
+
+		<h:form id="newpositionform">
 			<h:panelGrid columns="2" cellpadding="5">
 
-				<p:outputLabel for="opdate" value="opening date" />
-
+				<p:outputLabel for="opdate" value="Opening date" />
 				<p:calendar id="opdate" style="width: 100%;"
 					value="#{positionBean.openingDate}" />
+				<p:outputLabel for="code" value="Code" />
+				<h:outputLabel id="code" value="positionBeancode" />
 
 				<p:outputLabel for="title" value="Title" />
 				<p:inputText id="title" value="#{positionBean.title}" />
@@ -38,26 +39,27 @@
 				<p:outputLabel for="company" value="Company" />
 				<p:inputText id="company" value="#{positionBean.company}" />
 
-				<p:outputLabel for="description" value="Description" />
-				<p:inputText id="description" value="#{positionBean.description}" />
-
-				<p:outputLabel for="local" value="Localization" />
-				<p:selectCheckboxMenu id="local"
+				<p:outputLabel for="local" value="Location" />
+				<p:selectManyCheckbox id="local"
 					value="#{positionBean.localizations}"
 					converter="localizationConverter">
 					<f:selectItems value="#{positionBean.localizations}"
 						var="localization" itemValue="#{localization}"
 						itemLabel="#{localization.localizationLabel}" />
-				</p:selectCheckboxMenu>
+				</p:selectManyCheckbox>
+
+				<p:outputLabel for="description" value="Description" />
+				<p:inputTextarea id="description"
+					value="#{positionBean.description}" rows="5" cols="30" />
 
 				<p:outputLabel for="area" value="Technical Area" />
-				<p:selectCheckboxMenu id="area"
+				<p:selectManyCheckbox id="area"
 					value="#{positionBean.technicalAreas}"
 					converter="technicalAreaConverter">
 					<f:selectItems value="#{positionBean.technicalAreas}"
 						var="technicalArea" itemValue="#{technicalArea}"
 						itemLabel="#{technicalArea.technicalAreaLabel}" />
-				</p:selectCheckboxMenu>
+				</p:selectManyCheckbox>
 
 				<p:outputLabel for="positionState" value="Position State" />
 				<p:selectOneMenu id="positionState"
@@ -66,21 +68,32 @@
 						var="positionState" itemValue="#{positionState}"
 						itemLabel="#{positionState.positionStateLabel}" />
 				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:form>
 
+		<h:form id="channelform">
+			<h:panelGrid columns="2" cellpadding="5">
 				<p:outputLabel for="chan" value="Publication Channel" />
-				<p:selectManyMenu id="chan" value="#{positionBean.channels}"
+				<p:selectCheckboxMenu id="chan" value="#{positionBean.channels}"
 					converter="omnifaces.SelectItemsConverter">
 					<f:selectItems
 						value="#{publicationChannelBean.iPublicationChannels}"
 						var="channel" itemValue="#{channel}"
 						itemLabel="#{channel.channel}" />
-				</p:selectManyMenu>
-
-				<p:commandButton onclick="PF('dlg1').show();" type="button"
-					value="New Channel" />
-				<p:commandButton process="@form" value="Submit" update="msgs"
-					action="#{positionBean.createPosition}" />
+				</p:selectCheckboxMenu>
 			</h:panelGrid>
+		</h:form>
+
+
+
+		<h:form>
+			<p:commandButton onclick="PF('dlg1').show();" type="button"
+				value="New Channel" />
+			<br />
+
+			<p:commandButton value="Submit"
+				action="#{positionBean.createPosition}"
+				update="newpositionform channelform" />
 		</h:form>
 
 		<p:dialog header="Insert new channel" widgetVar="dlg1" height="100">
@@ -89,9 +102,11 @@
 				<p:inputText id="newChannel"
 					value="#{publicationChannelBean.channel}" />
 				<p:commandButton value="Submit"
-					action="#{publicationChannelBean.createNewPublicationChannel()}" />
+					action="#{publicationChannelBean.createNewPublicationChannel()}"
+					update="channelform" />
 			</h:form>
 		</p:dialog>
+
 
 	</ui:define>
 </ui:composition>
