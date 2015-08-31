@@ -1,0 +1,24 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Job Application</ui:define>
+	
+	<ui:define name="content">
+		<p>
+		Esta página é para ser preenchida. Da minha parte só preciso de um link para abrir um dialog 
+		para marcar a entrevista e o dialog em si mesmo que fiz.
+		</p>
+		
+		<p:button value="Add interview" type="button" onclick="PF('dlg').show();" />
+		
+		<p:dialog header="Add interview" widgetVar="dlg" modal="true" height="100">
+    		<h:outputText value="Interview" />
+		</p:dialog>  
+
+	</ui:define>
+</ui:composition>
+

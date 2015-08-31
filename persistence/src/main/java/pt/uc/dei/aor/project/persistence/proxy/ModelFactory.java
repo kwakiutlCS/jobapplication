@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.ejb.Stateless;
 
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
+import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
@@ -57,6 +58,11 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public ICandidate candidate(String login, String name, String surname, String email, String encrypt) {
 		return new CandidateProxy(login, email, encrypt, name, surname);
+	}
+
+	@Override
+	public IApplication application() {
+		return new ApplicationProxy();
 	}
 
 }

@@ -1,0 +1,28 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Job Applications</ui:define>
+	
+	<ui:define name="content">
+		<p>
+		Esta página é para ser alterada. Da minha parte só preciso de um link em cada entrada da candidatura
+		para os detalhes da candidatura
+		</p>
+		
+		<p:dataTable value="#{jobApplicationBean.activeApplications}" var="application">
+			<p:column headerText="Position">#{application.position}</p:column>
+			<p:column headerText="Candidate">#{application.candidate}</p:column>
+			<p:column>
+				<h:form>
+					<p:commandLink value="details" action="#{applicationBean.showDetails}" />
+				</h:form>
+			</p:column>
+		</p:dataTable>
+
+	</ui:define>
+</ui:composition>
+
