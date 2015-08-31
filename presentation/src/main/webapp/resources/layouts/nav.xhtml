@@ -1,15 +1,26 @@
-<ui:composition
-	xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-	<p:menu>
-		<p:menuitem value="Scripts" outcome="/admin/scripts" />
-			<p:menuitem value="Users" outcome="/admin/users" />
-			<p:menuitem value="Positions" outcome="/admin/createposition" />
-	
-	</p:menu>
 
+	<h:form>
+		<p:growl id="messages" showDetail="true" />
+
+		<p:tieredMenu style="width:200px">
+			<p:submenu label="Scripts">
+				<p:menuitem value="Scripts" outcome="/admin/scripts"
+					update="messages" />
+			</p:submenu>
+			<p:submenu label="Users">
+				<p:menuitem value="Users" outcome="/admin/users" />
+			</p:submenu>
+			<p:submenu label="Positions">
+				<p:menuitem value="New Position" outcome="/admin/createposition" />
+				<p:menuitem value="List Positions" outcome="/admin/listpositions" />
+			</p:submenu>
+		</p:tieredMenu>
+
+	</h:form>
 </ui:composition>

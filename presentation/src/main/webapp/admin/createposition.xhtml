@@ -6,18 +6,14 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
+<ui:define name="title">Create Position</ui:define>
+
 	<ui:define name="content">
 
 		<h2>Insert new position page</h2>
 
 		<h:form id="newpositionform">
 			<h:panelGrid columns="2" cellpadding="5">
-
-				<p:outputLabel for="opdate" value="Opening date" />
-				<p:calendar id="opdate" style="width: 100%;"
-					value="#{positionBean.openingDate}" />
-				<p:outputLabel for="code" value="Code" />
-				<h:outputLabel id="code" value="positionBeancode" />
 
 				<p:outputLabel for="title" value="Title" />
 				<p:inputText id="title" value="#{positionBean.title}" />
@@ -68,11 +64,7 @@
 						var="positionState" itemValue="#{positionState}"
 						itemLabel="#{positionState.positionStateLabel}" />
 				</p:selectOneMenu>
-			</h:panelGrid>
-		</h:form>
-
-		<h:form id="channelform">
-			<h:panelGrid columns="2" cellpadding="5">
+				
 				<p:outputLabel for="chan" value="Publication Channel" />
 				<p:selectCheckboxMenu id="chan" value="#{positionBean.channels}"
 					converter="omnifaces.SelectItemsConverter">
@@ -81,19 +73,15 @@
 						var="channel" itemValue="#{channel}"
 						itemLabel="#{channel.channel}" />
 				</p:selectCheckboxMenu>
-			</h:panelGrid>
-		</h:form>
 
-
-
-		<h:form>
 			<p:commandButton onclick="PF('dlg1').show();" type="button"
 				value="New Channel" />
 			<br />
 
 			<p:commandButton value="Submit"
 				action="#{positionBean.createPosition}"
-				update="newpositionform channelform" />
+				update="newpositionform" />
+			</h:panelGrid>	
 		</h:form>
 
 		<p:dialog header="Insert new channel" widgetVar="dlg1" height="100">
@@ -103,7 +91,7 @@
 					value="#{publicationChannelBean.channel}" />
 				<p:commandButton value="Submit"
 					action="#{publicationChannelBean.createNewPublicationChannel()}"
-					update="channelform" />
+					update="newpositionform" />
 			</h:form>
 		</p:dialog>
 

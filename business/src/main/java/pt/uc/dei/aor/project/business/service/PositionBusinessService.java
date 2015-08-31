@@ -28,12 +28,14 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 
 	@Override
-	public IPosition createNewPosition(String code, Date openingDate,
+	public IPosition createNewPosition(String code,
 			String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date closingDate, String sla,
 			String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			IScript script, Collection<IPublicationChannel> channels) {
+		
+		Date openingDate = new Date();		
 
 		IPosition position = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, sla, 
 				contactPerson, company, technicalAreas, description, script, channels);
