@@ -1,7 +1,9 @@
  package pt.uc.dei.aor.project.persistence.entity;
 
+
 import java.util.Collection;
 import java.util.HashSet;
+
 import java.util.Set;
 
 import javax.persistence.CollectionTable;

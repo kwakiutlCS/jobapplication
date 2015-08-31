@@ -10,6 +10,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 public interface IModelFactory {
 
+	ICandidate candidate(String login, String name, String surname, String email, String encrypt);	
 
 	IWorker worker(String login, String email, String password, String name, 
 			String surname, Collection<Role> roles);	

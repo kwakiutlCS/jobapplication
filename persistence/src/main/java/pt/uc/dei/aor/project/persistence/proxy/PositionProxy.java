@@ -153,7 +153,6 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 
 	@Override
 	public void setContactPerson(String contactPerson) {
-		
 		entity.setContactPerson(contactPerson);
 	}
 

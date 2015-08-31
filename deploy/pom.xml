@@ -38,6 +38,13 @@
 			<version>${project.version}</version>
 			<type>war</type>
 		</dependency>
+
+			<dependency>
+			<groupId>pt.uc.dei.aor.project.alberto_ricardo</groupId>
+			<artifactId>presentation-public</artifactId>
+			<version>${project.version}</version>
+			<type>war</type>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -69,6 +76,11 @@
 						<webModule>
 							<groupId>pt.uc.dei.aor.project.alberto_ricardo</groupId>
 							<artifactId>presentation</artifactId>
+							<contextRoot>/jobmanagement</contextRoot>
+						</webModule>
+						<webModule>
+							<groupId>pt.uc.dei.aor.project.alberto_ricardo</groupId>
+							<artifactId>presentation-public</artifactId>
 							<contextRoot>/jobapplication</contextRoot>
 						</webModule>
 					</modules>

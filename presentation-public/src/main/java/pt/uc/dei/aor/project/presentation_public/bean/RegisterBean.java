@@ -1,34 +1,27 @@
-package pt.uc.dei.aor.project.presentation.bean;
-
-
-import java.util.List;
+package pt.uc.dei.aor.project.presentation_public.bean;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-
-import pt.uc.dei.aor.project.business.exception.NoRoleException;
-
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
-import pt.uc.dei.aor.project.business.util.Role;
-import pt.uc.dei.aor.project.presentation.security.Encryptor;
+import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
+import pt.uc.dei.aor.project.presentation_public.security.Encryptor;
 
 @Named
 @RequestScoped
 public class RegisterBean {
 	
 	@Inject
-	private IWorkerBusinessService workerService;
+	private ICandidateBusinessService candidateService;
 	
 	private String login;
 	private String password;
 	private String email;
 	private String name;
 	private String surname;
-	private List<Role> roles;
+	
+	public RegisterBean() {
+	}
 	
 	public String getLogin() {
 		return login;
@@ -74,21 +67,7 @@ public class RegisterBean {
 	
 
 	public String register() {
-		try {
-			workerService.createNewWorker(login, name, surname, email, Encryptor.encrypt(password), roles);
-		} catch (NoRoleException e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Missing role", "At least one role should be selected");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
+		candidateService.createNewCandidate(login, name, surname, email, Encryptor.encrypt(password));
 		return "index.xhtml";
-	}
-
-	public List<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
 	}
 }

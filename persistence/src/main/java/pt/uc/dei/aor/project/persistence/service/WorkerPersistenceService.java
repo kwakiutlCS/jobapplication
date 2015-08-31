@@ -53,6 +53,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return null;
 	}
 	
+
 	@Override
 	public IWorker getWorkerByEmail(String email) {
 		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findWorkerByEmail", WorkerEntity.class);

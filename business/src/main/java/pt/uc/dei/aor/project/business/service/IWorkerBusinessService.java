@@ -23,4 +23,5 @@ public interface IWorkerBusinessService {
 	IWorker getWorkerByEmail(String email);
 	
 	IWorker createSuperUser();
+
 }

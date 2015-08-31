@@ -13,6 +13,7 @@
 		<module>business</module>
 		<module>persistence</module>
 		<module>presentation</module>
+		<module>presentation-public</module>
 		<module>deploy</module>
 	</modules>
 
