@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.Date;
+
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 
@@ -15,6 +17,12 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 	@Override
 	public InterviewEntity getEntity() {
 		return entity;
+	}
+
+
+	@Override
+	public Date getDate() {
+		return entity.getDate();
 	}
 
 	

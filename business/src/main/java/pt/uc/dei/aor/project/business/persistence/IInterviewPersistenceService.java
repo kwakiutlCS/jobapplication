@@ -1,8 +1,9 @@
 package pt.uc.dei.aor.project.business.persistence;
 
-import java.util.List;
+import java.util.Collection;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
+import pt.uc.dei.aor.project.business.model.IWorker;
 
 public interface IInterviewPersistenceService {
 
@@ -10,6 +11,7 @@ public interface IInterviewPersistenceService {
 
 	void delete(IInterview interview);
 
-	List<IInterview> findAllInterviews();
+	Collection<IInterview> findAllInterviews();
 
+	Collection<IInterview> findActiveInterviewsByUser(IWorker user);
 }
