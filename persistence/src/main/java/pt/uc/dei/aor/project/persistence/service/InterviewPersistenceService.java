@@ -1,6 +1,8 @@
 package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,8 +11,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
+import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
 
@@ -52,6 +56,34 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		return proxies;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<IInterview> findActiveInterviewsByUser(IWorker user) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findActiveInterviewsByInterviewer", 
+				InterviewEntity.class);
+		
+		WorkerEntity userEntity = null;
+		if (user instanceof IProxyToEntity<?>) {
+			userEntity = ((IProxyToEntity<WorkerEntity>) user).getEntity();
+		}
+		else {
+			 throw new IllegalStateException();
+		}
+		
+		query.setParameter("user", userEntity);
+		query.setParameter("date", new Date());
+		
+		List<InterviewEntity> entities = query.getResultList();
+		List<IInterview> proxies = new ArrayList<>();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
+	}
+
+
 	
 	@SuppressWarnings("unchecked")
     private InterviewEntity getEntity(IInterview interviewProxy) {
@@ -61,6 +93,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
         throw new IllegalStateException();
     }
+
 
 
 }
