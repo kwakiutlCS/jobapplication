@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -79,6 +80,48 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return proxies;
 	}
 
+	@Override
+	public Collection<IWorker> findAllAdmins() {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findAllAdmins", WorkerEntity.class);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		List<IWorker> proxies = new ArrayList<>();
+		
+		for (WorkerEntity we : entities) {
+			proxies.add(new WorkerProxy(we));
+		}
+		
+		return proxies;
+	}
+
+	@Override
+	public Collection<IWorker> findAllManagers() {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findAllManagers", WorkerEntity.class);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		List<IWorker> proxies = new ArrayList<>();
+		
+		for (WorkerEntity we : entities) {
+			proxies.add(new WorkerProxy(we));
+		}
+		
+		return proxies;
+	}
+
+	@Override
+	public Collection<IWorker> findAllInterviewers() {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.findAllInterviewers", WorkerEntity.class);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		List<IWorker> proxies = new ArrayList<>();
+		
+		for (WorkerEntity we : entities) {
+			proxies.add(new WorkerProxy(we));
+		}
+		
+		return proxies;
+	}
+
 	
 	
 	
@@ -90,7 +133,5 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 
         throw new IllegalStateException();
     }
-
-	
 
 }

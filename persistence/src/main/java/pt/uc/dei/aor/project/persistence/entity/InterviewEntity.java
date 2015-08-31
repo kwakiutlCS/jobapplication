@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,11 +24,13 @@ public class InterviewEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id_interview;
 
-	
 	@ManyToOne
 	private ApplicationEntity application;
 	
 	@Column
 	private String classification;
+	
+	@Column(nullable=false)
+	private Date date;
 
 }
