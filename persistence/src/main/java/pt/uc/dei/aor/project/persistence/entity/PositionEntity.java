@@ -35,7 +35,8 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 @Entity
 @Table(name="position")
 @NamedQueries({
-	@NamedQuery(name="position.findAll", query="from PositionEntity u")
+	@NamedQuery(name="position.findAll", query="from PositionEntity u"),
+	@NamedQuery(name="position.findMaxCode", query="SELECT max(u.code) FROM PositionEntity u")
 })
 public class PositionEntity {
 	
@@ -45,7 +46,7 @@ public class PositionEntity {
 	private int id;
 	
 	@Column(nullable=false)
-	private String code;
+	private long code;
 	
 	@Column(nullable=false)
 	private String title;
@@ -93,13 +94,13 @@ public class PositionEntity {
     private ScriptEntity script;
     
     
-	public PositionEntity(String title, Collection<Localization> localizations,
+	public PositionEntity(long code,String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, String sla, String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			Collection<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
-		this.code="1";
+		this.code=code;
 		this.title = title;
 		this.localizations = new ArrayList<>();
 		this.localizations.addAll(localizations);
@@ -121,7 +122,7 @@ public class PositionEntity {
 	public PositionEntity() {
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -129,11 +130,11 @@ public class PositionEntity {
 		this.id = id;
 	}
 
-	public String getCode() {
+	public long getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(long code) {
 		this.code = code;
 	}
 

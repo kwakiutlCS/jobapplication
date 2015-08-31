@@ -27,7 +27,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@SuppressWarnings("unchecked")
-	public PositionProxy(String code, Date openingDate, String title,
+	public PositionProxy(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
 			int vacancies, Date closingDate, String sla, String contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
@@ -48,7 +48,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 			scriptEntity = ((IProxyToEntity<ScriptEntity>) script).getEntity();
 		}
 
-		entity = new PositionEntity(title, localizations,
+		entity = new PositionEntity(code,title, localizations,
 				state,  vacancies, openingDate,
 				closingDate,  sla,  contactPerson, company,
 				technicalAreas,  description, publicationChannelEntities, scriptEntity);
@@ -65,7 +65,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public String getCode() {
+	public long getCode() {
 		return entity.getCode();
 	}
 

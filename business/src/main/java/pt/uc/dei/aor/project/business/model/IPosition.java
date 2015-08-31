@@ -11,7 +11,7 @@ public interface IPosition  {
 	
 	public Date getOpeningDate();
 	
-	public String getCode();
+	public long getCode();
 	
 	public String getTitle();
 	public void setTitle(String title);

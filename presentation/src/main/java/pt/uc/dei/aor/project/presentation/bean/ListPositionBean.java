@@ -22,9 +22,24 @@ public class ListPositionBean implements Serializable{
 	@Inject
 	private IPositionBusinessService iposition;
 	
+	private List<IPosition> filteredPositions;
+	
+	
+	
+	
 	public List<IPosition> getPositions() {
 			
 		return iposition.getIPositions();
+	}
+
+
+	public List<IPosition> getFilteredPositions() {
+		return filteredPositions;
+	}
+
+	
+	public void setFilteredPositions(List<IPosition> filteredPositions) {
+		this.filteredPositions = filteredPositions;
 	}
 
 }

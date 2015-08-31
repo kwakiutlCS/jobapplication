@@ -194,7 +194,7 @@ public class PositionBean implements Serializable {
 
 	public String createPosition() {
 		
-		position.createNewPosition(code, title, localizations, state, vacancies, closingDate, sla, contactPerson,
+		position.createNewPosition(title, localizations, state, vacancies, closingDate, sla, contactPerson,
 				company, technicalAreas, description, script, channels);
 		
 		String result="";

@@ -26,16 +26,20 @@ public class PositionBusinessService implements IPositionBusinessService {
 	@Inject
 	private IPositionPersistenceService positionPersistence;
 
+	private long code;
+	private Date openingDate;
 
 	@Override
-	public IPosition createNewPosition(String code,
-			String title, Collection<Localization> localizations,
+	public IPosition createNewPosition(String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date closingDate, String sla,
 			String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			IScript script, Collection<IPublicationChannel> channels) {
 		
-		Date openingDate = new Date();		
+		openingDate = new Date();		
+		
+		code = codeDefiningMethod(); 
+
 
 		IPosition position = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, sla, 
 				contactPerson, company, technicalAreas, description, script, channels);
@@ -49,6 +53,15 @@ public class PositionBusinessService implements IPositionBusinessService {
 	public List<IPosition> getIPositions() {
 	
 		return positionPersistence.findAllPositions();
+	}
+
+
+	@Override
+	public long codeDefiningMethod() {
+
+		code =positionPersistence.findBiggestCode()+1;
+		
+		return code;
 	}
 
 

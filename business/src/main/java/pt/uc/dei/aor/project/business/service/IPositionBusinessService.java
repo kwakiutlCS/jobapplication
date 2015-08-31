@@ -13,10 +13,12 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 public interface IPositionBusinessService {
 
-	IPosition createNewPosition(String code, String title, Collection<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
+	IPosition createNewPosition(String title, Collection<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
 			String contactPerson, String company , Collection<TechnicalArea> technicalAreas, String description, IScript script, Collection<IPublicationChannel> channels);
 
 	List<IPosition> getIPositions();
+	
+	long codeDefiningMethod();
 	
 	
 	

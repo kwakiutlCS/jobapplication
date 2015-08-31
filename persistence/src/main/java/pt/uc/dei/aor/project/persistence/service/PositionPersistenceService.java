@@ -56,6 +56,17 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	}
 
 
+	@Override
+	public long findBiggestCode() {
+		
+		TypedQuery<Long> q = em.createNamedQuery("position.findMaxCode", Long.class);
+		
+		List<Long> codes = q.getResultList();
+		
+		return codes.get(0);
+	}
+
+
 
 
 
