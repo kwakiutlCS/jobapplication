@@ -10,5 +10,7 @@ public interface IPositionPersistenceService {
 	IPosition save(IPosition position);
 	
 	List<IPosition> findAllPositions();
+	
+	long findBiggestCode();
 
 }
