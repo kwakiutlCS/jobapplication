@@ -87,7 +87,7 @@ public class PositionPersistenceServiceTest {
     }
    
     
-    
+    @Ignore
     @Test
     public void shouldStartCodesWithZero() {
     	assertThat(ejb.findBiggestCode(), is(equalTo(0L)));
