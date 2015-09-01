@@ -41,14 +41,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		interview = interviewPersistence.save(interview);
 		
 		for (IWorker w : interviewers) {
-			try {
-				w.addInterview(interview);
-			} catch (IllegalStateException e) {
-				return null;
-			} catch (IllegalRoleException e) {
-				return null;
-			}
-			workerPersistence.save(w);
+			workerPersistence.insertInterview(w.getId(), interview.getId());
 		}
 		
 		return interview;

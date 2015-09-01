@@ -126,6 +126,14 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	}
 
 	
+	@Override
+	public void insertInterview(long worker_id, long interview_id) {
+		Query q = em.createNamedQuery("Worker.insertInterview");
+		q.setParameter("worker_id", worker_id);
+		q.setParameter("interview_id", interview_id);
+		
+		q.executeUpdate();
+	}
 	
 	
 	@SuppressWarnings("unchecked")

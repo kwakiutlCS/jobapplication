@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +28,6 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 	@NamedQuery(name = "Interview.findAllInterviews", query="from InterviewEntity u"),
 	@NamedQuery(name = "Interview.findActiveInterviewsByInterviewer", 
 	query="from InterviewEntity u where :user member of u.interviewers and u.date >= :date"),
-	
 })
 public class InterviewEntity {
 	
@@ -44,7 +44,7 @@ public class InterviewEntity {
 
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	@ManyToOne
 	@JoinColumn(nullable=false)
@@ -75,6 +75,10 @@ public class InterviewEntity {
 	
 	public ApplicationEntity getApplication() {
 		return application;
+	}
+
+	public long getId() {
+		return id;
 	}
 
 }

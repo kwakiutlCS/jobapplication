@@ -22,6 +22,7 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public InterviewProxy(IApplication application, Date date, Collection<IWorker> interviewers) {
 		ApplicationEntity applicationEntity = null;
 		List<WorkerEntity> workerEntities = new ArrayList<>();
@@ -73,6 +74,12 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 			proxies.add(new WorkerProxy(we));
 		
 		return proxies;
+	}
+
+
+	@Override
+	public long getId() {
+		return entity.getId();
 	}
 
 	

@@ -12,4 +12,6 @@ public interface IInterview {
 	public ICandidate getCandidate();
 	
 	public Collection<IWorker> getInterviewers();
+
+	public long getId();
 }

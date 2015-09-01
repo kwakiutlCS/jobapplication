@@ -25,4 +25,6 @@ public interface IWorkerPersistenceService {
 
 	IWorker createSuperUser();
 
+	void insertInterview(long worker_id, long interview_id);
+
 }
