@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -20,6 +21,8 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -38,7 +41,9 @@ import pt.uc.dei.aor.project.business.util.Role;
 	@NamedNativeQuery(name = "Worker.createSuperUser", 
 	query="insert into worker values (0, 'SU', 'SU', 'SU', 'SU', 'SU')"),
 	@NamedNativeQuery(name = "Worker.createSuperUserRole", 
-	query="insert into role values (0, 'CANDIDATE')")
+	query="insert into role values (0, 'CANDIDATE')"),
+	@NamedNativeQuery(name = "Worker.insertInterview", 
+	query = "insert into worker_interview values (:worker_id, :interview_id)"),
 })
 public class WorkerEntity extends User {
 	
@@ -66,5 +71,23 @@ public class WorkerEntity extends User {
 	
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	public void addInterview(InterviewEntity interviewEntity) {
+		if (interviews == null) interviews = new HashSet<>();
+		
+		interviews.add(interviewEntity);
+	}
+	
+	public boolean isInterviewer() {
+		return roles.contains(Role.INTERVIEWER);
+	}
+	
+	public boolean isManager() {
+		return roles.contains(Role.MANAGER);
+	}
+	
+	public boolean isAdmin() {
+		return roles.contains(Role.ADMIN);
 	}
 }

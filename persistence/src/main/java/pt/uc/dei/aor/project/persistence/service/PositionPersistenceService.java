@@ -30,6 +30,13 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	}
 
 
+	@Override
+	public void delete(IPosition position) {
+		PositionEntity entity = getEntity(position);
+		em.remove(em.merge(entity));
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	private PositionEntity getEntity(IPosition positionProxy) {
 		if (positionProxy instanceof IProxyToEntity<?>) {
@@ -56,11 +63,8 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@Override
 	public long findBiggestCode() {
-
 		long code = 0;
 		TypedQuery<Long> q = em.createNamedQuery("position.findMaxCode", Long.class);
-
-
 
 		try
 		{
@@ -73,12 +77,6 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		}
 
 		return code;
+
 	}
-
-
-
-
-
-
-
 }

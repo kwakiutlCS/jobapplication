@@ -2,15 +2,20 @@ package pt.uc.dei.aor.project.business.service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.resource.spi.IllegalStateException;
 
+import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 
 
 @Stateless
@@ -18,6 +23,12 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 	@Inject
 	private IInterviewPersistenceService interviewPersistence;
+	
+	@Inject
+	private IWorkerPersistenceService workerPersistence;
+	
+	@Inject
+	private IApplicationPersistenceService applicationPersistence;
 	
 	@Inject
 	private IModelFactory factory;
@@ -32,7 +43,19 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Override
 	public IInterview addInterview(IApplication application, Date date, Collection<IWorker> interviewers) {
 		IInterview interview = factory.interview(application, date, interviewers);
-		return interviewPersistence.save(interview);
+		interview = interviewPersistence.save(interview);
+		
+		for (IWorker w : interviewers) {
+			workerPersistence.insertInterview(w.getId(), interview.getId());
+		}
+		
+		return interview;
+	}
+
+
+	@Override
+	public List<IInterview> findInterviewsByApplication(IApplication selected) {
+		return applicationPersistence.find(selected.getId()).getInterviews();
 	}
 	
 }

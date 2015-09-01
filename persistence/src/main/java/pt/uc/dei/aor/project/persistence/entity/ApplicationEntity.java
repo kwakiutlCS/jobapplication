@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ public class ApplicationEntity {
 	
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	
 	@Column(nullable=false)
 	private String cv;
@@ -44,11 +45,19 @@ public class ApplicationEntity {
 	@JoinColumn(nullable=false)
 	private PositionEntity position;
 	
-	@OneToMany(mappedBy="application")
+	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
 	private List<InterviewEntity> interviews;
 	
 	@OneToOne
 	private JobProposalEntity proposal;
+
+	public List<InterviewEntity> getInterviews() {
+		return interviews;
+	}
+
+	public long getId() {
+		return id;
+	}
 	
 
 }

@@ -26,7 +26,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	public IWorker save(IWorker worker) {
 		WorkerEntity entity = getEntity(worker);
 		
-		em.persist(entity);
+		entity = em.merge(entity);
 		
 		return new WorkerProxy(entity);
 	}
@@ -76,7 +76,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		List<IWorker> proxies = new ArrayList<>();
 		
 		for (WorkerEntity we : entities) {
-			if (!we.getName().equals("SU"))
+			if (!we.getEmail().equals("SU"))
 				proxies.add(new WorkerProxy(we));
 		}
 		
@@ -126,6 +126,14 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	}
 
 	
+	@Override
+	public void insertInterview(long worker_id, long interview_id) {
+		Query q = em.createNamedQuery("Worker.insertInterview");
+		q.setParameter("worker_id", worker_id);
+		q.setParameter("interview_id", interview_id);
+		
+		q.executeUpdate();
+	}
 	
 	
 	@SuppressWarnings("unchecked")
