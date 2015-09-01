@@ -35,7 +35,6 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		if (positionProxy instanceof IProxyToEntity<?>) {
 			return ((IProxyToEntity<PositionEntity>) positionProxy).getEntity();
 		}
-
 		throw new IllegalStateException();
 	}
 
@@ -49,7 +48,6 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		List<IPosition> ipositions = new ArrayList<IPosition>();
 		for(PositionEntity pos : positions){
 			ipositions.add(new PositionProxy(pos));
-
 		}
 
 		return ipositions;
@@ -58,12 +56,23 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@Override
 	public long findBiggestCode() {
-		
+
+		long code = 0;
 		TypedQuery<Long> q = em.createNamedQuery("position.findMaxCode", Long.class);
-		
-		List<Long> codes = q.getResultList();
-		
-		return codes.get(0);
+
+
+
+		try
+		{
+			List<Long> codes = q.getResultList();
+			code = codes.get(0);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return code;
 	}
 
 

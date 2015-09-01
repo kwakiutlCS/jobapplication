@@ -17,13 +17,14 @@
 			<p:dataTable var="position" value="#{listPositionBean.positions}"
 				widgetVar="positionsTable"
 				emptymessage="No positions found for given criteria"
-				filteredValue="#{listPositionBean.filteredPositions}">
+				filteredValue="#{listPositionBean.filteredPositions}"
+				style="text-align: center" >
 
 				<f:facet name="header">
 					<p:outputPanel>
 						<h:outputText value="Search all fields:" />
 						<p:inputText id="globalFilter"
-							onkeyup="PF('positionsTable').filter()" style="width:150px"
+							onkeyup="PF('positionsTable').filter()"
 							placeholder="Enter keyword" />
 					</p:outputPanel>
 				</f:facet>
@@ -48,21 +49,21 @@
 
 				<p:column filterBy="#{position.state}" headerText="Situation"
 					filterMatchMode="contains">
-					<h:outputText value="#{position.state}" />
+					<h:outputText value="#{position.state.positionStateLabel}" />
 				</p:column>
 
 
 				<p:column filterBy="#{position.localizations}" headerText="Location"
 					filterMatchMode="contains">
 					<ui:repeat value="#{position.localizations}" var="l">
-  						    #{l}
+  						    #{l.localizationLabel}
 					</ui:repeat>
 				</p:column>
 
 				<p:column filterBy="#{position.technicalAreas}"
-					headerText="Technical Area" filterMatchMode="contains">
+					headerText="Technical Area" filterMatchMode="contains" style="width:200px">
 					<ui:repeat value="#{position.technicalAreas}" var="t">
-  						    #{t}
+  						    #{t.technicalAreaLabel}
 					</ui:repeat>
 				</p:column>
 
