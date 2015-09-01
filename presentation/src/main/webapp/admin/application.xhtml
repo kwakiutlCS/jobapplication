@@ -9,15 +9,40 @@
 	
 	<ui:define name="content">
 		<p>
-		Esta página é para ser preenchida. Da minha parte só preciso de um link para abrir um dialog 
-		para marcar a entrevista e o dialog em si mesmo que fiz.
+		Esta página é para ser preenchida talvez com os detalhes da application. 
+		Da minha parte só preciso de uma secção para
+		 marcar a entrevista que é o que eu estou a fazer neste momento.
 		</p>
-		
-		<p:button value="Add interview" type="button" onclick="PF('dlg').show();" />
-		
-		<p:dialog header="Add interview" widgetVar="dlg" modal="true" height="100">
-    		<h:outputText value="Interview" />
-		</p:dialog>  
+
+		<h:form id="addInterviewForm">
+			<p:messages autoUpdate="true" />
+			
+			<p:panelGrid columns="2">
+				<p:outputLabel for="dateSelector" value="Date" />
+				<p:calendar id="dateSelector" value="#{interviewBean.interviewDate}"
+					mindate="#{interviewBean.tommorrow}" pattern="dd/MM/yyyy"
+					locale="pt" required="true" />
+
+				<p:outputLabel for="interviewerSelector" value="Interviewer" />
+				<p:selectOneMenu id="interviewerSelector" value="#{interviewBean.interviewer}"
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{interviewBean.allInterviewers}"
+						var="interviewer" itemLabel="#{interviewer.fullName}" />
+				</p:selectOneMenu>
+				
+				<p:commandButton value="Add interviewer" action="#{interviewBean.addInterviewer()}"
+					update="interviewersList" process="@this interviewerSelector" />				
+			</p:panelGrid>
+			
+			<h:panelGroup id="interviewersList">
+				<ui:repeat value="#{interviewBean.selectedInterviewers}" var="interviewer">
+					#{interviewer}
+				</ui:repeat>
+			</h:panelGroup>
+			
+			<p:commandButton value="Schedule interview"
+				action="#{interviewBean.addInterview}" update="@form" />
+		</h:form>
 
 	</ui:define>
 </ui:composition>

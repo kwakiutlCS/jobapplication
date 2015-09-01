@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +17,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.IWorker;
+
 
 @Entity
 @Table(name="interview")
@@ -26,6 +31,17 @@ import javax.persistence.Table;
 })
 public class InterviewEntity {
 	
+	public InterviewEntity(ApplicationEntity application, Date date, Collection<WorkerEntity> interviewers) {
+		this.application = application;
+		this.interviewers = new ArrayList<>();
+		this.interviewers.addAll(interviewers);
+		this.date = date;
+	}
+
+	public InterviewEntity() {
+		
+	}
+
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -49,6 +65,16 @@ public class InterviewEntity {
 	
 	public Date getDate() {
 		return date;
+	}
+
+
+
+	public Collection<WorkerEntity> getInterviewers() {
+		return interviewers;
+	}
+	
+	public ApplicationEntity getApplication() {
+		return application;
 	}
 
 }

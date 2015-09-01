@@ -2,7 +2,9 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -25,15 +27,26 @@ public class ApplicationBean implements Serializable {
 	@Inject
 	private IApplicationBusinessService applicationService;
 	
+	@PostConstruct
+	public void init() {
+		selected = applicationService.findActiveApplications().get(0);
+		System.out.println("Selected");
+		System.out.println(selected);
+	}
 	
-	public Collection<IApplication> getActiveApplications() {
-		return applicationService.findActiveApplications();
+	public List<IApplication> getActiveApplications() {
+		List<IApplication> list = applicationService.findActiveApplications();
+		System.out.println(list.get(0));
+		return list;
 	}
 	
 	public String showDetails(IApplication application) {
-		selected = application;
+		setSelected(application);
 		return "application.xhtml?faces-redirect=true";
 	}
+	
+	
+	
 	
 	// helper methods
 	
@@ -41,6 +54,18 @@ public class ApplicationBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return request.getSession();
+	}
+
+	
+	
+	// getters and setters
+	
+	public IApplication getSelected() {
+		return selected;
+	}
+
+	public void setSelected(IApplication selected) {
+		this.selected = selected;
 	}
 }
 

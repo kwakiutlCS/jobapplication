@@ -20,6 +20,10 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 			String surname, Collection<Role> roles) {
 		entity = new WorkerEntity(login, email, password, name, surname, roles);
 	}
+	
+	public WorkerProxy() {
+		this(null);
+	}
 
 	@Override
 	public WorkerEntity getEntity() {
@@ -65,4 +69,25 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return entity.getEmail();
 	}
 
+	@Override
+	public String toString() {
+		return entity.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		return entity.hashCode();
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object o) {
+		WorkerEntity oe = null;
+		
+		if (o instanceof IProxyToEntity<?>)
+			oe = ((IProxyToEntity<WorkerEntity>) o).getEntity();
+		else return false;
+		
+		return entity.equals(oe);
+	}
 }

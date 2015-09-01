@@ -24,4 +24,9 @@ public interface IWorkerBusinessService {
 	
 	IWorker createSuperUser();
 
+	Collection<IWorker> findAllInterviewers();
+	
+	Collection<IWorker> findAllManagers();
+
+
 }

@@ -1,11 +1,14 @@
 package pt.uc.dei.aor.project.business.service;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
+import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 
@@ -16,10 +19,20 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Inject
 	private IInterviewPersistenceService interviewPersistence;
 	
+	@Inject
+	private IModelFactory factory;
+	
 	
 	@Override
 	public Collection<IInterview> findActiveInterviewsByUser(IWorker user) {
 		return interviewPersistence.findActiveInterviewsByUser(user);
+	}
+
+
+	@Override
+	public IInterview addInterview(IApplication application, Date date, Collection<IWorker> interviewers) {
+		IInterview interview = factory.interview(application, date, interviewers);
+		return interviewPersistence.save(interview);
 	}
 	
 }

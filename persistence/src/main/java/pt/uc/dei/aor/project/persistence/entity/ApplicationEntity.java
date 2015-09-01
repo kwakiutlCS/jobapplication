@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,6 +18,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="application")
+@NamedQueries({
+	@NamedQuery(name = "Application.dummyQuery", query="from ApplicationEntity u"),
+})
 public class ApplicationEntity {
 	
 	@Id 

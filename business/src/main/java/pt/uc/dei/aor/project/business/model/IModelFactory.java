@@ -25,4 +25,6 @@ public interface IModelFactory {
 	IAnswerChoice answerChoice(String answer);
 
 	IApplication application();
+
+	IInterview interview(IApplication application, Date date, Collection<IWorker> interviewers);
 }
