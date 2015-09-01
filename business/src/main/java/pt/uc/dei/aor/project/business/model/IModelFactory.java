@@ -23,4 +23,8 @@ public interface IModelFactory {
 	IScript script(String title);	
 
 	IAnswerChoice answerChoice(String answer);
+
+	IApplication application();
+
+	IInterview interview(IApplication application, Date date, Collection<IWorker> interviewers);
 }

@@ -70,5 +70,15 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	public IWorker createSuperUser() {
 		return workerPersistence.createSuperUser();
 	}
+
+	@Override
+	public Collection<IWorker> findAllInterviewers() {
+		return workerPersistence.findAllInterviewers();
+	}
+
+	@Override
+	public Collection<IWorker> findAllManagers() {
+		return workerPersistence.findAllManagers();
+	}
 	
 }

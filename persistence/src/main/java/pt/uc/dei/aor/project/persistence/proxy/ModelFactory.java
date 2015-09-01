@@ -6,7 +6,9 @@ import java.util.Date;
 import javax.ejb.Stateless;
 
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
+import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
@@ -59,4 +61,15 @@ public class ModelFactory implements IModelFactory {
 		return new CandidateProxy(login, email, encrypt, name, surname);
 	}
 
+	@Override
+	public IInterview interview(IApplication application, Date date, Collection<IWorker> interviewers) {
+		return new InterviewProxy(application, date, interviewers);
+	}
+
+	@Override
+	public IApplication application() {
+		return new ApplicationProxy();
+	}
+
+	
 }
