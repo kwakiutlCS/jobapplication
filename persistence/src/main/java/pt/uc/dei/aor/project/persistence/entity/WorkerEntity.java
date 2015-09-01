@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -20,6 +21,8 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Cascade;
 
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -60,11 +63,29 @@ public class WorkerEntity extends User {
 	private Set<Role> roles;
 
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private Set<InterviewEntity> interviews;
 	
 	
 	public Set<Role> getRoles() {
 		return roles;
+	}
+
+	public void addInterview(InterviewEntity interviewEntity) {
+		if (interviews == null) interviews = new HashSet<>();
+		
+		interviews.add(interviewEntity);
+	}
+	
+	public boolean isInterviewer() {
+		return roles.contains(Role.INTERVIEWER);
+	}
+	
+	public boolean isManager() {
+		return roles.contains(Role.MANAGER);
+	}
+	
+	public boolean isAdmin() {
+		return roles.contains(Role.ADMIN);
 	}
 }

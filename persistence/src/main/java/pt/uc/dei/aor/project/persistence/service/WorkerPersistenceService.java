@@ -26,7 +26,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	public IWorker save(IWorker worker) {
 		WorkerEntity entity = getEntity(worker);
 		
-		em.persist(entity);
+		entity = em.merge(entity);
 		
 		return new WorkerProxy(entity);
 	}
@@ -76,7 +76,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		List<IWorker> proxies = new ArrayList<>();
 		
 		for (WorkerEntity we : entities) {
-			if (!we.getName().equals("SU"))
+			if (!we.getEmail().equals("SU"))
 				proxies.add(new WorkerProxy(we));
 		}
 		

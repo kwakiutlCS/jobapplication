@@ -4,8 +4,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.resource.spi.IllegalStateException;
+
+import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
+import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 
 public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
@@ -89,5 +94,25 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		else return false;
 		
 		return entity.equals(oe);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void addInterview(IInterview interview) throws IllegalRoleException, IllegalStateException {
+		if (!isInterviewer()) throw new IllegalRoleException();
+		
+		InterviewEntity interviewEntity = null;
+		if (interview instanceof IProxyToEntity<?>) 
+			interviewEntity = ((IProxyToEntity<InterviewEntity>) interview).getEntity();
+		else throw new IllegalStateException();
+		
+		entity.addInterview(interviewEntity);
+	}
+	
+	
+	
+	// helper methods
+	private boolean isInterviewer() {
+		return entity.isInterviewer();
 	}
 }
