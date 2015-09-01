@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.business.service;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -12,6 +13,7 @@ import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 
@@ -24,6 +26,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	
 	@Inject
 	private IWorkerPersistenceService workerPersistence;
+	
+	@Inject
+	private IApplicationPersistenceService applicationPersistence;
 	
 	@Inject
 	private IModelFactory factory;
@@ -45,6 +50,12 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		}
 		
 		return interview;
+	}
+
+
+	@Override
+	public List<IInterview> findInterviewsByApplication(IApplication selected) {
+		return applicationPersistence.find(selected.getId()).getInterviews();
 	}
 	
 }

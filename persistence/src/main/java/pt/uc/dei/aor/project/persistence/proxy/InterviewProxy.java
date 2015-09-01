@@ -1,6 +1,8 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -48,8 +50,10 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 
 
 	@Override
-	public Date getDate() {
-		return entity.getDate();
+	public String getDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		return sdf.format(entity.getDate());
 	}
 
 
@@ -80,6 +84,28 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 	@Override
 	public long getId() {
 		return entity.getId();
+	}
+
+
+	@Override
+	public boolean isEditable() {
+		Calendar today = Calendar.getInstance();
+		Calendar interviewDate = Calendar.getInstance();
+		interviewDate.setTime(entity.getDate());
+		
+		return interviewDate.after(today);
+	}
+
+
+	@Override
+	public String getInterviewersFormatted() {
+		StringBuilder s = new StringBuilder("");
+		for (IWorker interviewer : getInterviewers()) {
+			if (s.length() > 0) s.append(", ");
+			s.append(interviewer.getFullName());
+		}
+		
+		return s.toString();
 	}
 
 	

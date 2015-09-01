@@ -5,7 +5,7 @@ import java.util.Date;
 
 public interface IInterview {
 
-	public Date getDate();
+	public String getDate();
 	
 	public IApplication getApplication();
 	
@@ -14,4 +14,8 @@ public interface IInterview {
 	public Collection<IWorker> getInterviewers();
 
 	public long getId();
+	
+	public boolean isEditable();
+	
+	public String getInterviewersFormatted();
 }

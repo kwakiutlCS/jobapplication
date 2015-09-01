@@ -1,7 +1,6 @@
 package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,13 +9,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
-import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ApplicationProxy;
-import pt.uc.dei.aor.project.persistence.proxy.CandidateProxy;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 
 @Stateless
@@ -25,6 +20,7 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 	@PersistenceContext(unitName = "jobs")
     private EntityManager em;
 
+	// query provisoria - para ser apagada
 	@Override
 	public List<IApplication> dummyQuery() {
 		TypedQuery<ApplicationEntity> q = em.createNamedQuery("Application.dummyQuery", 
@@ -35,13 +31,37 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		
 		for (ApplicationEntity ae : entities) {
 			proxies.add(new ApplicationProxy(ae));
+			System.out.println("id: "+ae.getId());
 		}
 		
 		return proxies;
 	}
-	
-	
-	
-	
 
+	@Override
+	public IApplication save(IApplication application) {
+		ApplicationEntity entity = getEntity(application);
+		
+		entity = em.merge(entity);
+		
+		return new ApplicationProxy(entity);
+	}
+	
+	
+	@Override
+	public IApplication find(long id) {
+		return new ApplicationProxy(em.find(ApplicationEntity.class, id));
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+    private ApplicationEntity getEntity(IApplication applicationProxy) {
+        if (applicationProxy instanceof IProxyToEntity<?>) {
+            return ((IProxyToEntity<ApplicationEntity>) applicationProxy).getEntity();
+        }
+
+        throw new IllegalStateException();
+    }
+
+	
 }

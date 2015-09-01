@@ -4,12 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
-import org.hamcrest.core.IsInstanceOf;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -26,7 +22,6 @@ import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.User;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
-import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
 
 @RunWith(Arquillian.class)
 public class ScriptPersistenceServiceTest {

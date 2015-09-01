@@ -11,9 +11,18 @@
 		<p>
 		Esta página é para ser preenchida talvez com os detalhes da application. 
 		Da minha parte só preciso de uma secção para
-		 marcar a entrevista que é o que eu estou a fazer neste momento.
+		 marcar/editar a entrevista que é o que eu estou a fazer neste momento.
 		</p>
 
+		<p:dataTable id="interviewList" value="#{applicationBean.selected.interviews}" var="interview">
+			<p:column>
+				#{interview.date}
+			</p:column>
+			<p:column>
+				#{interview.interviewersFormatted}
+			</p:column>
+		</p:dataTable>
+		
 		<h:form id="addInterviewForm">
 			<p:messages autoUpdate="true" />
 			
@@ -23,6 +32,10 @@
 					mindate="#{interviewBean.tommorrow}" pattern="dd/MM/yyyy"
 					locale="pt" required="true" />
 
+				<p:outputLabel for="timeSelector" value="Time" />
+				<p:inputMask id="timeSelector" value="#{interviewBean.interviewTime}"
+					mask="99h99" required="true" />
+				
 				<p:outputLabel for="interviewerSelector" value="Interviewer" />
 				<p:selectOneMenu id="interviewerSelector" value="#{interviewBean.interviewer}"
 				converter="omnifaces.SelectItemsConverter">
@@ -36,12 +49,18 @@
 			
 			<h:panelGroup id="interviewersList">
 				<ui:repeat value="#{interviewBean.selectedInterviewers}" var="interviewer">
-					#{interviewer}
+					<div>
+						<span id="selectedInterviewer">#{interviewer.fullName}</span>
+						<span>
+							<p:commandLink value="x" action="#{interviewBean.removeInterviewer(interviewer)}"
+							process="@this" update=":addInterviewForm:interviewersList" />
+						</span>
+					</div>
 				</ui:repeat>
 			</h:panelGroup>
 			
 			<p:commandButton value="Schedule interview"
-				action="#{interviewBean.addInterview}" update="@form" />
+				action="#{interviewBean.addInterview}" update="@form :interviewList" />
 		</h:form>
 
 	</ui:define>

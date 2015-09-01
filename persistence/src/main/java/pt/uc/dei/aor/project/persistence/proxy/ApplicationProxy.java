@@ -1,9 +1,14 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
+import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 
 public class ApplicationProxy implements IApplication, IProxyToEntity<ApplicationEntity> {
 
@@ -42,6 +47,25 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		
 		// neste momento devolve null
 		return null;
+	}
+
+
+	@Override
+	public List<IInterview> getInterviews() {
+		List<IInterview> proxies = new ArrayList<>();
+		List<InterviewEntity> entities = entity.getInterviews();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
+	}
+
+
+	@Override
+	public long getId() {
+		return entity.getId();
 	}
 	
 }

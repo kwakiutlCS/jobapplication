@@ -7,9 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -44,6 +42,7 @@ public class InterviewBean implements Serializable {
 	private Collection<IWorker> selectedInterviewers;
 	private IWorker interviewer;
 	private Date interviewDate;
+	private String interviewTime;
 	private Date tommorrow;
 	
 	
@@ -58,6 +57,9 @@ public class InterviewBean implements Serializable {
 		return interviewService.findActiveInterviewsByUser(user);
 	}
 	
+	public List<IInterview> getInterviewsByApplication() {
+		return interviewService.findInterviewsByApplication(applicationBean.getSelected());
+	}
 	
 	public String selectInterview(IInterview interview) {
 		selected = interview;
@@ -71,13 +73,31 @@ public class InterviewBean implements Serializable {
 	public void addInterviewer() {
 		if (selectedInterviewers == null) selectedInterviewers = new HashSet<>();
 		selectedInterviewers.add(interviewer);
-		System.out.println(selectedInterviewers);
+	}
+	
+	public void removeInterviewer(IWorker interviewer) {
+		selectedInterviewers.remove(interviewer);
 	}
 	
 	
 	public void addInterview() {
-		if (selectedInterviewers.isEmpty()) return;
-		interviewService.addInterview(applicationBean.getSelected(), interviewDate, selectedInterviewers);
+		System.out.println("Add interview");
+		System.out.println(getInterviewsByApplication());
+		if (selectedInterviewers == null || selectedInterviewers.isEmpty()) return;
+		
+		String[] hours = interviewTime.split("h");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(interviewDate);
+		calendar.set(Calendar.HOUR, Integer.parseInt(hours[0]));
+		calendar.set(Calendar.MINUTE, Integer.parseInt(hours[1]));
+		
+		interviewService.addInterview(applicationBean.getSelected(), calendar.getTime(), selectedInterviewers);
+	
+		selectedInterviewers.clear();
+		interviewDate = null;
+		interviewTime = null;
+		System.out.println(applicationBean.getSelected().getInterviews());
+		System.out.println(getInterviewsByApplication());
 	}
 	
 	
@@ -122,6 +142,14 @@ public class InterviewBean implements Serializable {
 		
 		List<IWorker> list = new ArrayList<>(selectedInterviewers);
 		return list;
+	}
+
+	public String getInterviewTime() {
+		return interviewTime;
+	}
+
+	public void setInterviewTime(String interviewTime) {
+		this.interviewTime = interviewTime;
 	}
 }
 

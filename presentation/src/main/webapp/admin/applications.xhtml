@@ -13,15 +13,16 @@
 		para os detalhes da candidatura
 		</p>
 		
-		<p:dataTable value="#{applicationBean.getActiveApplications()}" var="application">
-			<p:column headerText="Position">#{application.position}</p:column>
-			<p:column headerText="Candidate">#{application.candidate}</p:column>
-			<p:column>
-				<h:form>
-					<p:commandLink value="details" action="#{applicationBean.showDetails(application)}" />
-				</h:form>
-			</p:column>
+		<p:dataTable value="#{applicationBean.activeApplications}" var="application">
+			<p:column>#{application}</p:column>
 		</p:dataTable>
+		
+		
+		<ui:repeat value="#{applicationBean.activeApplications}" var="application">
+			<div>
+				<span>#{application}</span>
+			</div>
+		</ui:repeat>
 
 	</ui:define>
 </ui:composition>

@@ -27,16 +27,15 @@ public class ApplicationBean implements Serializable {
 	@Inject
 	private IApplicationBusinessService applicationService;
 	
-	@PostConstruct
+	@PostConstruct // isto é provisório para fazer as interviews
 	public void init() {
 		selected = applicationService.findActiveApplications().get(0);
-		System.out.println("Selected");
-		System.out.println(selected);
 	}
 	
 	public List<IApplication> getActiveApplications() {
+		System.out.println("Application bean web");
 		List<IApplication> list = applicationService.findActiveApplications();
-		System.out.println(list.get(0));
+		System.out.println(list);
 		return list;
 	}
 	
@@ -47,17 +46,7 @@ public class ApplicationBean implements Serializable {
 	
 	
 	
-	
-	// helper methods
-	
-	private HttpSession getSession() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return request.getSession();
-	}
-
-	
-	
+			
 	// getters and setters
 	
 	public IApplication getSelected() {
