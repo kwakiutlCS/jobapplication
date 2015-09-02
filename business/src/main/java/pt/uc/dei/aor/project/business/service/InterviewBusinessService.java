@@ -46,7 +46,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		interview = interviewPersistence.save(interview);
 		
 		for (IWorker w : interviewers) {
-			workerPersistence.insertInterview(w.getId(), interview.getId());
+			workerPersistence.insertInterview(w.getId(), interview);
 		}
 		
 		return interview;

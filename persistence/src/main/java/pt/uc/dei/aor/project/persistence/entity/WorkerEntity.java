@@ -42,8 +42,6 @@ import pt.uc.dei.aor.project.business.util.Role;
 	query="insert into worker values (0, 'SU', 'SU', 'SU', 'SU', 'SU')"),
 	@NamedNativeQuery(name = "Worker.createSuperUserRole", 
 	query="insert into role values (0, 'CANDIDATE')"),
-	@NamedNativeQuery(name = "Worker.insertInterview", 
-	query = "insert into worker_interview values (:worker_id, :interview_id)"),
 })
 public class WorkerEntity extends User {
 	

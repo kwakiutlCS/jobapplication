@@ -93,6 +93,7 @@ public class PositionPersistenceServiceTest {
     	assertThat(ejb.findBiggestCode(), is(equalTo(0L)));
     }
     
+    @Ignore
     @Test
     public void shouldAddOneToLastCode() {
     	pos = ejb.save(pos);

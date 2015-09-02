@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.business.persistence;
 import java.util.Collection;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 
 public interface IWorkerPersistenceService {
@@ -25,6 +26,6 @@ public interface IWorkerPersistenceService {
 
 	IWorker createSuperUser();
 
-	void insertInterview(long worker_id, long interview_id);
+	void insertInterview(long worker_id, IInterview interview);
 
 }

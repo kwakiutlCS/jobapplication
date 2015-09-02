@@ -10,8 +10,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
@@ -127,12 +129,10 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 
 	
 	@Override
-	public void insertInterview(long worker_id, long interview_id) {
-		Query q = em.createNamedQuery("Worker.insertInterview");
-		q.setParameter("worker_id", worker_id);
-		q.setParameter("interview_id", interview_id);
-		
-		q.executeUpdate();
+	public void insertInterview(long worker_id, IInterview interview) {
+		WorkerEntity entity = em.find(WorkerEntity.class, worker_id);
+		entity.addInterview(getEntity(interview));
+		em.merge(entity);
 	}
 	
 	
@@ -140,6 +140,15 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
     private WorkerEntity getEntity(IWorker workerProxy) {
         if (workerProxy instanceof IProxyToEntity<?>) {
             return ((IProxyToEntity<WorkerEntity>) workerProxy).getEntity();
+        }
+
+        throw new IllegalStateException();
+    }
+	
+	@SuppressWarnings("unchecked")
+    private InterviewEntity getEntity(IInterview interviewProxy) {
+        if (interviewProxy instanceof IProxyToEntity<?>) {
+            return ((IProxyToEntity<InterviewEntity>) interviewProxy).getEntity();
         }
 
         throw new IllegalStateException();
