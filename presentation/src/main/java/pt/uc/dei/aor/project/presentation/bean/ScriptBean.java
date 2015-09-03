@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +48,8 @@ public class ScriptBean implements Serializable {
 	private String option;
 	
 	
+	
+	
 	public IScript getEditableScript() {
 		return editableScript;
 	}
@@ -56,7 +59,16 @@ public class ScriptBean implements Serializable {
 	}
 			
 	public List<IScriptEntry> getEntries() {
-		return editableScript.getEntries();
+		try {
+			return editableScript.getEntries();
+		}
+		catch(Exception e) {
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("scripts.xhtml");
+			} catch (IOException e1) {
+			}
+			return null;
+		}
 	}
 	
 	public void addQuestion() {
@@ -108,12 +120,13 @@ public class ScriptBean implements Serializable {
 
 	public String addScript() {
 		editableScript = scriptEjb.createNewScript(scriptTitle);
-		scriptTitle = null;
+		clear();
 		return "editscript.xhtml?faces-redirect=true";
 	}
 	
 	public String edit(IScript script) {
 		editableScript = script;
+		clear();
 		return "editscript.xhtml?faces-redirect=true";
 	}
 	
@@ -267,5 +280,14 @@ public class ScriptBean implements Serializable {
 
 	public void setOption(String option) {
 		this.option = option;
+	}
+	
+	
+	// helper methods
+	
+	private void clear() {
+		questionText = null;
+		answers = new TreeSet<>();
+		scriptTitle = null;
 	}
 }

@@ -5,6 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+	
+	
 	<ui:define name="content">
 
 		<h2>scripts page</h2>
@@ -24,7 +26,9 @@
 				<p:column>
 					<p:commandButton value="view" action="#{scriptBean.view(script)}" />
 					<p:commandButton value="edit" icon="ui-icon-pencil"
-						action="#{scriptBean.edit(script)}" />
+						action="#{scriptBean.edit(script)}">
+						<f:param name="scpt" value="#{script.id}" />
+					</p:commandButton>
 					<p:commandButton value="delete" icon="ui-icon-trash"
 						action="#{scriptBean.delete(script)}" update="@form" />
 				</p:column>
