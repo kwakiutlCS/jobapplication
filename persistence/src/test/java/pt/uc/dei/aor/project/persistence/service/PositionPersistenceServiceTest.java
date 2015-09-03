@@ -5,16 +5,21 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
+import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
@@ -82,8 +87,7 @@ public class PositionPersistenceServiceTest {
    
     @Test
     public void shouldStartCodesWithZero() {
-    	
-    	assertThat(ejb.findBiggestCode(), is.EqualTo(0L));
+    	assertThat(ejb.findBiggestCode(), is(equalTo(0L)));
     }
     
     
@@ -114,7 +118,7 @@ public class PositionPersistenceServiceTest {
     	ejb.save(otherPos);
     	Long expected = Math.max(pos.getCode(), otherPos.getCode());
     	
-    	assertThat(ejb.findBiggestCode(), is(equals(expected)));
+    	assertThat(ejb.findBiggestCode(), is(equalTo(expected)));
     }
 
 	
