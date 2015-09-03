@@ -1,19 +1,20 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.mockito.Mockito.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.Role;
-import pt.uc.dei.aor.project.presentation.security.Encryptor;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegisterBeanTest {

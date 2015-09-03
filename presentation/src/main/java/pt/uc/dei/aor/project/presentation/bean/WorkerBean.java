@@ -12,8 +12,8 @@ import javax.inject.Named;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.Role;
-import pt.uc.dei.aor.project.presentation.security.Encryptor;
 
 @Named
 @RequestScoped
