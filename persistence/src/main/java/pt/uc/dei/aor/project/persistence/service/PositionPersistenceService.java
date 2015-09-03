@@ -29,13 +29,6 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		return new PositionProxy(entity);
 	}
 
-
-	@Override
-	public void delete(IPosition position) {
-		PositionEntity entity = getEntity(position);
-		em.remove(em.merge(entity));
-	}
-	
 	
 	@SuppressWarnings("unchecked")
 	private PositionEntity getEntity(IPosition positionProxy) {

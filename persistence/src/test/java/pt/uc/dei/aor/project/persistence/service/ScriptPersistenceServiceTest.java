@@ -8,13 +8,14 @@ import javax.inject.Inject;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
+import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -48,21 +49,17 @@ public class ScriptPersistenceServiceTest {
     
 
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldReturnListOfScripts() {
     	String title1 = "nonExistingScriptNumber1";
     	String title2 = "nonExistingScriptNumber1";
     	
     	int size = ejb.findAllScripts().size();
-    	IScript script1 = ejb.save(factory.script(title1));
-    	IScript script2 = ejb.save(factory.script(title2));
+    	ejb.save(factory.script(title1));
+    	ejb.save(factory.script(title2));
     	
     	assertThat(ejb.findAllScripts().size(), is(equalTo(size+2)));
     	
-    	ejb.delete(script1);
-    	ejb.delete(script2);
-    	
-    	assertThat(ejb.findAllScripts().size(), is(equalTo(size)));
     }
-    
    
 }

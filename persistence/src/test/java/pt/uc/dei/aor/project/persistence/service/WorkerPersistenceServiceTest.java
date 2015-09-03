@@ -13,6 +13,8 @@ import javax.inject.Inject;
 import org.hamcrest.core.IsInstanceOf;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
+import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Ignore;
@@ -62,6 +64,7 @@ public class WorkerPersistenceServiceTest {
     }
     
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldCreateANonExistentWorker() {
     	String login = "inexistentUser";
     	String email = "email";
@@ -79,12 +82,25 @@ public class WorkerPersistenceServiceTest {
     	worker = workerEjb.getWorkerByLogin(login);
     	assertThat(worker, is(IsInstanceOf.instanceOf(WorkerProxy.class)));
     	
-    	workerEjb.delete(worker);
-    	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
     }
     
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void findAllUsersShouldntReturnSuperUser() {
+    	workerEjb.createSuperUser();
+    	String login = "inexistentUser";
+    	String email = "email";
+    	String password = "password";
+    	String name = "name";
+    	String surname = "surname";
+    	List<Role> roles = new ArrayList<>();
+    	roles.add(Role.ADMIN);
+    	
+    	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
+    	
+    	IWorker worker = factory.worker(login, email, password, name, surname, roles);
+    	workerEjb.save(worker);
+    	
     	List<IWorker> users = workerEjb.findAllUsers();
     	
     	for (IWorker w : users) {

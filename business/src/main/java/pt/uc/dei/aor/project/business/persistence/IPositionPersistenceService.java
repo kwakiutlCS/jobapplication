@@ -13,6 +13,4 @@ public interface IPositionPersistenceService {
 	
 	long findBiggestCode();
 
-	void delete(IPosition position);
-
 }
