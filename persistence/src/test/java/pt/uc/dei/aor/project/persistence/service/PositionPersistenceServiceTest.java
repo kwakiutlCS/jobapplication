@@ -44,7 +44,7 @@ public class PositionPersistenceServiceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-        	.addAsResource("META-INF/persistence.xml")
+        	.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
        		.addPackage(User.class.getPackage())
        		.addPackage(Role.class.getPackage())
        		.addPackage(Localization.class.getPackage())
@@ -87,13 +87,11 @@ public class PositionPersistenceServiceTest {
     }
    
     
-    @Ignore
     @Test
     public void shouldStartCodesWithZero() {
     	assertThat(ejb.findBiggestCode(), is(equalTo(0L)));
     }
     
-    @Ignore
     @Test
     public void shouldAddOneToLastCode() {
     	pos = ejb.save(pos);

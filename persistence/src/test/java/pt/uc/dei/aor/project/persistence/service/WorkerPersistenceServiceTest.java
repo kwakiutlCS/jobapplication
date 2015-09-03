@@ -35,7 +35,7 @@ public class WorkerPersistenceServiceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-        	.addAsResource("META-INF/persistence.xml")
+        	.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
        		.addPackage(User.class.getPackage())
        		.addPackage(Role.class.getPackage())
        		.addPackage(Localization.class.getPackage())
