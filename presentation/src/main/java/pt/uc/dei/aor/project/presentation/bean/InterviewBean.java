@@ -8,8 +8,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 
 @Named
-@RequestScoped
+@ViewScoped
 public class InterviewBean implements Serializable {
 	
 	private static final long serialVersionUID = -4484148866779896144L;
@@ -72,6 +72,7 @@ public class InterviewBean implements Serializable {
 	}
 	
 	public void addInterviewer() {
+		if (interviewer == null) return;
 		if (selectedInterviewers == null) selectedInterviewers = new HashSet<>();
 		selectedInterviewers.add(interviewer);
 	}
@@ -84,8 +85,9 @@ public class InterviewBean implements Serializable {
 	public void addInterview() {
 		System.out.println("Add interview");
 		System.out.println(getInterviewsByApplication());
+		System.out.println(selectedInterviewers);
 		if (selectedInterviewers == null || selectedInterviewers.isEmpty()) return;
-		
+		System.out.println("here");
 		String[] hours = interviewTime.split("h");
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(interviewDate);

@@ -63,8 +63,8 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IInterview interview(IApplication application, Date date, Collection<IWorker> interviewers) {
-		return new InterviewProxy(application, date, interviewers);
+	public IInterview interview(IApplication application, Date date) {
+		return new InterviewProxy(application, date);
 	}
 
 	@Override

@@ -25,21 +25,15 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 
 	
 	@SuppressWarnings("unchecked")
-	public InterviewProxy(IApplication application, Date date, Collection<IWorker> interviewers) {
+	public InterviewProxy(IApplication application, Date date) {
 		ApplicationEntity applicationEntity = null;
-		List<WorkerEntity> workerEntities = new ArrayList<>();
 		
 		if (application instanceof IProxyToEntity<?>)
 			applicationEntity = ((IProxyToEntity<ApplicationEntity>) application).getEntity();
 		else throw new IllegalStateException();
 		
-		for (IWorker wp : interviewers) {
-			if (wp instanceof IProxyToEntity<?>) 
-				workerEntities.add(((IProxyToEntity<WorkerEntity>) wp).getEntity());
-			else throw new IllegalStateException();
-		}
 		
-		this.entity = new InterviewEntity(applicationEntity, date, workerEntities);
+		this.entity = new InterviewEntity(applicationEntity, date);
 	}
 
 

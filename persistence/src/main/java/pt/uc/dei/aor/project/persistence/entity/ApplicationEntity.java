@@ -52,6 +52,7 @@ public class ApplicationEntity {
 	private JobProposalEntity proposal;
 
 	public List<InterviewEntity> getInterviews() {
+		System.out.println(interviews.size());
 		return interviews;
 	}
 

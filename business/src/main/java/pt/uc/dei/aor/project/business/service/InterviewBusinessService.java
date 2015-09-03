@@ -42,7 +42,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 	@Override
 	public IInterview addInterview(IApplication application, Date date, Collection<IWorker> interviewers) {
-		IInterview interview = factory.interview(application, date, interviewers);
+		IInterview interview = factory.interview(application, date);
 		interview = interviewPersistence.save(interview);
 		
 		for (IWorker w : interviewers) {

@@ -54,7 +54,8 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public List<IInterview> getInterviews() {
 		List<IInterview> proxies = new ArrayList<>();
 		List<InterviewEntity> entities = entity.getInterviews();
-		
+		System.out.println("interviews");
+		System.out.println(entities);
 		for (InterviewEntity ie : entities) {
 			proxies.add(new InterviewProxy(ie));
 		}

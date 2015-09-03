@@ -1,11 +1,10 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,9 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.IWorker;
-
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 @Table(name="interview")
@@ -32,10 +30,8 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 })
 public class InterviewEntity {
 	
-	public InterviewEntity(ApplicationEntity application, Date date, Collection<WorkerEntity> interviewers) {
+	public InterviewEntity(ApplicationEntity application, Date date) {
 		this.application = application;
-		this.interviewers = new ArrayList<>();
-		this.interviewers.addAll(interviewers);
 		this.date = date;
 	}
 
@@ -58,7 +54,8 @@ public class InterviewEntity {
 	private Date date;
 	
 	@ManyToMany(mappedBy="interviews", fetch=FetchType.EAGER)
-	private List<WorkerEntity> interviewers;
+	//@Fetch(FetchMode.SELECT)
+	private Set<WorkerEntity> interviewers;
 
 	
 	
@@ -70,7 +67,7 @@ public class InterviewEntity {
 
 
 
-	public Collection<WorkerEntity> getInterviewers() {
+	public Set<WorkerEntity> getInterviewers() {
 		return interviewers;
 	}
 	
