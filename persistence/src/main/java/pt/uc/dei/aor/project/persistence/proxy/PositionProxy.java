@@ -34,7 +34,6 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 			String description, IScript script,
 			Collection<IPublicationChannel> channels){
 
-
 		Set<PublicationChannelEntity> publicationChannelEntities = new TreeSet<>();
 		if (channels != null) {
 			for(IPublicationChannel pc: channels){

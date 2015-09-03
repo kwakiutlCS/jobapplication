@@ -22,6 +22,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 @Stateless
 public class ModelFactory implements IModelFactory {
 	
+	
 	@Override
 	public IWorker worker(String login, String email, String password, String name, 
 			String surname, Collection<Role> roles) {

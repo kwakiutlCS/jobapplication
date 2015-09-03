@@ -19,8 +19,5 @@ public interface IPositionBusinessService {
 	List<IPosition> getIPositions();
 	
 	long codeDefiningMethod();
-	
-	
-	
-	
+		
 }

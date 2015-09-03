@@ -27,4 +27,5 @@ public interface IModelFactory {
 	IApplication application();
 
 	IInterview interview(IApplication application, Date date, Collection<IWorker> interviewers);
+	
 }

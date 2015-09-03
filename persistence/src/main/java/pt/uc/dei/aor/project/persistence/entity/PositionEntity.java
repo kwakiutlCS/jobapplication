@@ -37,6 +37,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 	@NamedQuery(name="position.findMaxCode", query="SELECT max(u.code) FROM PositionEntity u")
 })
 public class PositionEntity {
+
 	
 	
 	@Id

@@ -29,8 +29,7 @@ public class PositionBean implements Serializable {
 
 	@Inject
 	private IPositionBusinessService position;
-	
-	
+		
 	private String code;
 	private Date openingDate;
 	private String title;

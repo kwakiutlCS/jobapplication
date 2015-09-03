@@ -45,7 +45,6 @@ public class PositionBusinessService implements IPositionBusinessService {
 				contactPerson, company, technicalAreas, description, script, channels);
 
 		return positionPersistence.save(position);
-
 	}
 
 

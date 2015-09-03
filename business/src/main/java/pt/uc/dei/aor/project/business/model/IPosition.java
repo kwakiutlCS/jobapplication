@@ -46,7 +46,4 @@ public interface IPosition  {
 	public List<IPublicationChannel> getIPublicationChannels();
 	public void setIPublicationChannels(List<IPublicationChannel> ipublicationChannels);
 	
-	
-	
-
 }
