@@ -28,8 +28,8 @@ public interface IPosition  {
 	public Date getClosingDate();
 	public void setClosingDate(Date closingDate);
 	
-	public String getSla();
-	public void setSLA(String Sla);
+	public int getSla();
+	public void setSLA(int Sla);
 	
 	public String getCompany();
 	public void setCompany(String company);

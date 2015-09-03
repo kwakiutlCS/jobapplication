@@ -31,7 +31,7 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IPosition position(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
-			int vacancies, Date closingDate, String sla, String contactPerson,
+			int vacancies, Date closingDate, int sla, String contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
 			String description, IScript script,
 			Collection<IPublicationChannel> channels) {

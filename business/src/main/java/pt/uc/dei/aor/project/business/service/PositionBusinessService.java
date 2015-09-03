@@ -31,7 +31,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 	@Override
 	public IPosition createNewPosition(String title, Collection<Localization> localizations,
-			PositionState state, int vacancies, Date closingDate, String sla,
+			PositionState state, int vacancies, Date closingDate, int sla,
 			String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			IScript script, Collection<IPublicationChannel> channels) {
@@ -60,7 +60,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 	public long codeDefiningMethod() {
 
 		code =positionPersistence.findBiggestCode()+1;
-		
+				
 		return code;
 	}
 
