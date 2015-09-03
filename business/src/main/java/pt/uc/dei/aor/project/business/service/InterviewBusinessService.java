@@ -52,10 +52,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		return interview;
 	}
 
-
 	@Override
-	public List<IInterview> findInterviewsByApplication(IApplication selected) {
-		return applicationPersistence.find(selected.getId()).getInterviews();
+	public List<IInterview> findInterviewsByApplication(IApplication application) {
+		return applicationPersistence.find(application.getId()).getInterviews();
 	}
 	
 }

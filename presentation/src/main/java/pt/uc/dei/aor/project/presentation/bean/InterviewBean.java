@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -22,7 +22,7 @@ import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 
 @Named
-@SessionScoped
+@RequestScoped
 public class InterviewBean implements Serializable {
 	
 	private static final long serialVersionUID = -4484148866779896144L;
@@ -58,7 +58,8 @@ public class InterviewBean implements Serializable {
 	}
 	
 	public List<IInterview> getInterviewsByApplication() {
-		return interviewService.findInterviewsByApplication(applicationBean.getSelected());
+		return applicationBean.getSelectedApplication().getInterviews();
+		//return interviewService.findInterviewsByApplication(applicationBean.getSelectedApplication());
 	}
 	
 	public String selectInterview(IInterview interview) {
@@ -91,12 +92,12 @@ public class InterviewBean implements Serializable {
 		calendar.set(Calendar.HOUR, Integer.parseInt(hours[0]));
 		calendar.set(Calendar.MINUTE, Integer.parseInt(hours[1]));
 		
-		interviewService.addInterview(applicationBean.getSelected(), calendar.getTime(), selectedInterviewers);
+		interviewService.addInterview(applicationBean.getSelectedApplication(), calendar.getTime(), selectedInterviewers);
 	
 		selectedInterviewers.clear();
 		interviewDate = null;
 		interviewTime = null;
-		System.out.println(applicationBean.getSelected().getInterviews());
+		System.out.println(applicationBean.getSelectedApplication().getInterviews());
 		System.out.println(getInterviewsByApplication());
 	}
 	

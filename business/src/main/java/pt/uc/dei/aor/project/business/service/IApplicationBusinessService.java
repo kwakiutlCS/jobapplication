@@ -9,5 +9,7 @@ import pt.uc.dei.aor.project.business.model.IApplication;
 public interface IApplicationBusinessService {
 
 	List<IApplication> findActiveApplications();
+
+	IApplication findApplicationById(long id);
 	
 }

@@ -60,6 +60,12 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
         throw new IllegalStateException();
     }
 
+	@Override
+	public IScript findScriptById(long id) {
+		ScriptEntity entity = em.find(ScriptEntity.class, id);
+		return new ScriptProxy(entity);
+	}
+
 	
 
 	

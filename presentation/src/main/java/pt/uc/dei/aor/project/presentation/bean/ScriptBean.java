@@ -8,12 +8,14 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.ReorderEvent;
 
@@ -26,7 +28,7 @@ import pt.uc.dei.aor.project.business.service.IScriptBusinessService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ScriptBean implements Serializable {
 	
 	private static final long serialVersionUID = -6537089658441990072L;
@@ -34,7 +36,7 @@ public class ScriptBean implements Serializable {
 	@Inject
 	private IScriptBusinessService scriptEjb;
 	
-		
+	private long selectedId;	
 	private IScript editableScript;
 	private String questionText;
 	private QuestionType questionType;
@@ -46,7 +48,6 @@ public class ScriptBean implements Serializable {
 	private boolean editScriptTitle = false;
 	private String newTitle;
 	private String option;
-	
 	
 	
 	
@@ -196,6 +197,10 @@ public class ScriptBean implements Serializable {
 	}
 	
 	
+	public void onload() {
+		editableScript = scriptEjb.findScriptById(selectedId);
+	}
+	
 	// getters and setters
 	public String getQuestionText() {
 		return questionText;
@@ -289,5 +294,19 @@ public class ScriptBean implements Serializable {
 		questionText = null;
 		answers = new TreeSet<>();
 		scriptTitle = null;
+	}
+	
+	private HttpSession getSession() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+		return request.getSession();
+	}
+
+	public long getSelectedId() {
+		return selectedId;
+	}
+
+	public void setSelectedId(long selectedId) {
+		this.selectedId = selectedId;
 	}
 }

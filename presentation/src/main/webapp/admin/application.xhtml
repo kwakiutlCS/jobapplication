@@ -7,14 +7,17 @@
 
 	<ui:define name="title">Job Application</ui:define>
 	
+	
+	<ui:define name="metadata">
+		<f:metadata>
+    		<f:viewParam name="ap" value="#{applicationBean.selectedId}" />
+    		<f:viewAction action="#{applicationBean.onload}" />
+		</f:metadata>
+	</ui:define>
+	
+	
 	<ui:define name="content">
-		<p>
-		Esta página é para ser preenchida talvez com os detalhes da application. 
-		Da minha parte só preciso de uma secção para
-		 marcar/editar a entrevista que é o que eu estou a fazer neste momento.
-		</p>
-
-		<p:dataTable id="interviewList" value="#{applicationBean.selected.interviews}" var="interview">
+		<p:dataTable id="interviewList" value="#{applicationBean.selectedApplication.interviews}" var="interview">
 			<p:column>
 				#{interview.date}
 			</p:column>

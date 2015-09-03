@@ -40,5 +40,7 @@ public interface IScriptBusinessService {
 
 	public void updateEntry(IScriptEntry entry);
 
+	public IScript findScriptById(long id);
+
 	
 }

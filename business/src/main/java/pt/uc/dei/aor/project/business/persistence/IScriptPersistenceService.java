@@ -14,4 +14,6 @@ public interface IScriptPersistenceService {
 
 	void delete(IScript script);
 
+	IScript findScriptById(long id);
+
 }

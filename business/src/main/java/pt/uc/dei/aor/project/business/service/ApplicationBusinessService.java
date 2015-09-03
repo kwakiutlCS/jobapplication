@@ -28,5 +28,10 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		// neste momento devolve provisoriamente uma lista de applications vazias
 		return applicationPersistence.dummyQuery();
 	}
+
+	@Override
+	public IApplication findApplicationById(long id) {
+		return applicationPersistence.find(id);
+	}
 	
 }

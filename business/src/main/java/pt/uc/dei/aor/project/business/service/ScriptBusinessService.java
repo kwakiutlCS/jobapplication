@@ -134,5 +134,10 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		entryPersistence.save(entry);
 	}
 
+	@Override
+	public IScript findScriptById(long id) {
+		return scriptPersistence.findScriptById(id);
+	}
+
 	
 }

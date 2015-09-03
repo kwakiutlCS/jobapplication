@@ -11,18 +11,13 @@
 		<p>
 		Esta página é para ser alterada. Da minha parte só preciso de um link em cada entrada da candidatura
 		para os detalhes da candidatura
+		o link já está feito (só é visível se houver applications na db, claro)
 		</p>
 		
-		<p:dataTable value="#{applicationBean.activeApplications}" var="application">
-			<p:column>#{application}</p:column>
+		<p:dataTable value="#{applicationBean.activeApplications}" var="app">
+			<p:column>#{app}</p:column>
+			<p:column><p:link outcome="application.xthml?ap=#{app.id}" value="detail" /></p:column>
 		</p:dataTable>
-		
-		
-		<ui:repeat value="#{applicationBean.activeApplications}" var="application">
-			<div>
-				<span>#{application}</span>
-			</div>
-		</ui:repeat>
 
 	</ui:define>
 </ui:composition>
