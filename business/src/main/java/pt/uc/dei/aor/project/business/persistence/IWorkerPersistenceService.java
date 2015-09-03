@@ -28,4 +28,6 @@ public interface IWorkerPersistenceService {
 
 	void insertInterview(long worker_id, IInterview interview);
 
+	boolean findWorkerByEmailOrLogin(String email, String login);
+
 }

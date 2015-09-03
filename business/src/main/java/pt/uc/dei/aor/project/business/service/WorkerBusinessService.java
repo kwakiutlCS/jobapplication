@@ -28,6 +28,8 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	public IWorker createNewWorker(String login, String name, String surname, String email, String password,
 			Collection<Role> roles) throws NoRoleException {
 		if (roles.isEmpty()) throw new NoRoleException();
+		if (findWorkerByEmailOrLogin(email, login)) return null;
+		
 		IWorker worker = factory.worker(login, email, password, name, surname, roles);
 		
 		try {
@@ -81,4 +83,7 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		return workerPersistence.findAllManagers();
 	}
 	
+	private	boolean findWorkerByEmailOrLogin(String email, String login) {
+		return workerPersistence.findWorkerByEmailOrLogin(email, login);
+	}
 }

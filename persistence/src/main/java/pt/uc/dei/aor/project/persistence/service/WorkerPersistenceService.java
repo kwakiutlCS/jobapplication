@@ -135,6 +135,15 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		em.merge(entity);
 	}
 	
+	@Override
+	public boolean findWorkerByEmailOrLogin(String email, String login) {
+		TypedQuery<WorkerEntity> q = em.createNamedQuery("Worker.findWorkerByEmailOrLogin", WorkerEntity.class);
+		q.setParameter("email", email);
+		q.setParameter("login", login);
+		
+		return q.getResultList().size() > 0;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
     private WorkerEntity getEntity(IWorker workerProxy) {
@@ -145,6 +154,8 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
         throw new IllegalStateException();
     }
 	
+	
+	// TODO REFACTOR
 	@SuppressWarnings("unchecked")
     private InterviewEntity getEntity(IInterview interviewProxy) {
         if (interviewProxy instanceof IProxyToEntity<?>) {
@@ -156,8 +167,10 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 
 	@Override
 	public IWorker createSuperUser() {
-		IWorker su = getWorkerByLogin("SU");
-		if (su != null) return null;
+		WorkerEntity worker = em.find(WorkerEntity.class, 0L);
+		if (worker != null) {
+			return null;
+		}
 		
 		Query query = em.createNamedQuery("Worker.createSuperUser");
 		query.executeUpdate();
@@ -166,5 +179,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		
 		return getWorkerByLogin("SU");
 	}
+
+	
 
 }

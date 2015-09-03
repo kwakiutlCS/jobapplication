@@ -33,17 +33,6 @@ public class StartUpEjb {
 		System.out.println();
 		
 		
-		// super user
-		System.out.println("Adding super user...");
-		IWorker su = workerEjb.createSuperUser();
-		if (su == null) {
-			System.out.println("Super user already exists. Nothing to be done here.");
-		}
-		else {
-			System.out.println("Super user created successfully.");
-		}
-		
-		
 		// Admin user
 		System.out.println("Adding admin user...");
 		List<Role> roles = new ArrayList<>();
@@ -60,6 +49,16 @@ public class StartUpEjb {
 		}
 		System.out.println();
 		
+		
+		// super user
+		System.out.println("Adding super user...");
+		IWorker su = workerEjb.createSuperUser();
+		if (su == null) {
+			System.out.println("Super user already exists. Nothing to be done here.");
+		}
+		else {
+			System.out.println("Super user created successfully.");
+		}
 		
 		// publication channels
 		//channelEjb.createNewPublicationChannel("sadfdadsf");

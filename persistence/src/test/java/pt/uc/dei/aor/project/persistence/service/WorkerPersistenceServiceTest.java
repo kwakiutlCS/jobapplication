@@ -15,6 +15,7 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -53,7 +54,6 @@ public class WorkerPersistenceServiceTest {
     @Inject
     private IModelFactory factory;
     
-
     @Test
     public void shouldReturnNullForNonExistentWorker() {
     	String username = "inexistentUser";

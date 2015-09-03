@@ -3,10 +3,8 @@
 
 import java.util.Collection;
 import java.util.HashSet;
-
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -22,8 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-
 import pt.uc.dei.aor.project.business.util.Role;
 
 @Entity
@@ -35,7 +31,9 @@ import pt.uc.dei.aor.project.business.util.Role;
 	@NamedQuery(name = "Worker.findAllAdmins", query="from WorkerEntity u where 'ADMIN' member of u.roles"),
 	@NamedQuery(name = "Worker.findAllManagers", query="from WorkerEntity u where 'MANAGER' member of u.roles"),
 	@NamedQuery(name = "Worker.findAllInterviewers", 
-	query="from WorkerEntity u where 'INTERVIEWER' member of u.roles"),
+	query = "from WorkerEntity u where 'INTERVIEWER' member of u.roles"),
+	@NamedQuery(name = "Worker.findWorkerByEmailOrLogin", 
+	query = "from WorkerEntity u where u.login = :login or u.email = :email"),
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "Worker.createSuperUser", 
