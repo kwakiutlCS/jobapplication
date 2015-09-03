@@ -1,23 +1,18 @@
 package pt.uc.dei.aor.project.persistence.service;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
-import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -32,10 +27,10 @@ import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
-import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.User;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 import pt.uc.dei.aor.project.persistence.proxy.PublicationChannelProxy;
+
 
 @RunWith(Arquillian.class)
 public class PositionPersistenceServiceTest {
@@ -72,7 +67,7 @@ public class PositionPersistenceServiceTest {
     	PositionState state = PositionState.OPEN;
     	int vacancies = 4;
     	Date closingDate = new Date();
-    	String sla = "SLA";
+    	int sla = 2;
     	String description = "description";
     	String person = "person";
     	String company = "company";
@@ -87,10 +82,13 @@ public class PositionPersistenceServiceTest {
    
     @Test
     public void shouldStartCodesWithZero() {
-    	assertThat(ejb.findBiggestCode(), is(equalTo(0L)));
+    	
+    	assertThat(ejb.findBiggestCode(), is.EqualTo(0L));
     }
     
-    @Test
+    
+
+	@Test
     @Transactional(TransactionMode.ROLLBACK)
     public void shouldReturnHighestCode() {
     	long code = 7;
@@ -100,7 +98,7 @@ public class PositionPersistenceServiceTest {
     	PositionState state = PositionState.OPEN;
     	int vacancies = 1;
     	Date closingDate = new Date();
-    	String sla = "SLA2";
+    	int sla = 3;
     	String description = "description2";
     	String person = "person2";
     	String company = "company2";
@@ -116,7 +114,10 @@ public class PositionPersistenceServiceTest {
     	ejb.save(otherPos);
     	Long expected = Math.max(pos.getCode(), otherPos.getCode());
     	
-    	assertThat(ejb.findBiggestCode(), is(equalTo(expected)));
+    	assertThat(ejb.findBiggestCode(), is(equals(expected)));
     }
+
+	
     
 }
+

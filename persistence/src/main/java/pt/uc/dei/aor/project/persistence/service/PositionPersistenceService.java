@@ -59,16 +59,17 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		long code = 0;
 		TypedQuery<Long> q = em.createNamedQuery("position.findMaxCode", Long.class);
 
+
 		try
 		{
-			List<Long> codes = q.getResultList();
-			code = codes.get(0);
+		code = q.getSingleResult();
+		
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-
+		
 		return code;
 
 	}

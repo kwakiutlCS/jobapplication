@@ -29,22 +29,22 @@ public class PositionBean implements Serializable {
 
 	@Inject
 	private IPositionBusinessService position;
-	
-	
+		
 	private String code;
 	private Date openingDate;
 	private String title;
 	private int vacancies; 
 	private Date closingDate;
-	private String sla;
+	private int sla;
 	private String contactPerson;
 	private String company;
 	private String description;
-	private List<Localization> localizations;
 	private PositionState state;
-	private List<TechnicalArea> technicalAreas;
 	private IScript script;
 	private List<IPublicationChannel> channels;
+	private List<Localization> selectedLocalizations;
+	private List<TechnicalArea> selectedTechnicalAreas;
+	private List<IPublicationChannel> selectedChannels;
 	
 	public PositionBean() {
 	}
@@ -86,19 +86,8 @@ public class PositionBean implements Serializable {
 		return code;
 	}
 
-
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-
 	public Date getOpeningDate() {
 		return openingDate;
-	}
-
-
-	public void setOpeningDate(Date openingDate) {
-		this.openingDate = openingDate;
 	}
 
 
@@ -132,12 +121,12 @@ public class PositionBean implements Serializable {
 	}
 
 
-	public String getSla() {
+	public int getSla() {
 		return sla;
 	}
 
 
-	public void setSla(String sla) {
+	public void setSla(int sla) {
 		this.sla = sla;
 	}
 
@@ -173,7 +162,6 @@ public class PositionBean implements Serializable {
 
 
 	public void setLocalizations(List<Localization> localizations) {
-		this.localizations = localizations;
 	}
 
 
@@ -188,14 +176,38 @@ public class PositionBean implements Serializable {
 
 
 	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
-		this.technicalAreas = technicalAreas;
+	}
+	
+	public List<Localization> getSelectedLocalizations() {
+		
+		return selectedLocalizations;
+	}
+		
+	public void setSelectedLocalizations(List<Localization> selectedLocalizations) {
+		this.selectedLocalizations = selectedLocalizations;
 	}
 
+	public List<TechnicalArea> getSelectedTechnicalAreas() {
+		
+		return selectedTechnicalAreas;
+	}
+	
+	public void setSelectedTechnicalAreas(List<TechnicalArea> selectedTechnicalAreas) {
+		this.selectedTechnicalAreas = selectedTechnicalAreas;
+	}
+
+	public List<IPublicationChannel> getSelectedChannels() {
+		return selectedChannels;
+	}
+
+	public void setSelectedChannels(List<IPublicationChannel> selectedChannels) {
+		this.selectedChannels = selectedChannels;
+	}
 
 	public String createPosition() {
 		
-		position.createNewPosition(title, localizations, state, vacancies, closingDate, sla, contactPerson,
-				company, technicalAreas, description, script, channels);
+		position.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
+				company, selectedTechnicalAreas, description, script, selectedChannels);
 		
 		String result="";
 		

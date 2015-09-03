@@ -21,10 +21,8 @@ import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -39,6 +37,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 	@NamedQuery(name="position.findMaxCode", query="SELECT max(u.code) FROM PositionEntity u")
 })
 public class PositionEntity {
+
 	
 	
 	@Id
@@ -70,7 +69,7 @@ public class PositionEntity {
 	private Date closingDate;
 	
 	@Column(nullable=false) 
-	private String sla;
+	private int sla;
 	
 	@Column(nullable=false)
 	private String contactPerson;
@@ -96,7 +95,7 @@ public class PositionEntity {
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
-			Date closingDate, String sla, String contactPerson, String company,
+			Date closingDate, int sla, String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			Collection<PublicationChannelEntity> publications, ScriptEntity script) {
 		super();
@@ -186,11 +185,11 @@ public class PositionEntity {
 		this.closingDate = closingDate;
 	}
 
-	public String getSla() {
+	public int getSla() {
 		return sla;
 	}
 
-	public void setSla(String sla) {
+	public void setSla(int sla) {
 		this.sla = sla;
 	}
 

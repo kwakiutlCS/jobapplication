@@ -15,7 +15,7 @@ public interface IModelFactory {
 	IWorker worker(String login, String email, String password, String name, 
 			String surname, Collection<Role> roles);	
 
-	IPosition position(long code, Date openingDate, String title, Collection<Localization> localizations, PositionState state, int vacancies, Date closingDate, String sla, 
+	IPosition position(long code, Date openingDate, String title, Collection<Localization> localizations, PositionState state, int vacancies, Date closingDate, int sla, 
 			String contactPerson, String company ,Collection<TechnicalArea> technicalAreas, String description, IScript script, Collection<IPublicationChannel> channels);
 
 	IPublicationChannel publicationChannel(String channel);

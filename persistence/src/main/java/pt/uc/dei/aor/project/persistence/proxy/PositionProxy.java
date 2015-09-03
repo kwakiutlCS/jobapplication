@@ -29,11 +29,10 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	@SuppressWarnings("unchecked")
 	public PositionProxy(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
-			int vacancies, Date closingDate, String sla, String contactPerson,
+			int vacancies, Date closingDate, int sla, String contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
 			String description, IScript script,
 			Collection<IPublicationChannel> channels){
-
 
 		Set<PublicationChannelEntity> publicationChannelEntities = new TreeSet<>();
 		if (channels != null) {
@@ -122,13 +121,13 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public String getSla() {
+	public int getSla() {
 		
 		return entity.getSla();
 	}
 
 	@Override
-	public void setSLA(String sla) {
+	public void setSLA(int sla) {
 		
 		entity.setSla(sla);
 	}
