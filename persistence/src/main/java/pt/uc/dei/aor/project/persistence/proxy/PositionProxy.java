@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -59,6 +60,14 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
+	public String getOpeningDateFormatted() {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY"); 
+		
+		return formatter.format(getOpeningDate());
+	}
+	
+	@Override
 	public Date getOpeningDate() {
 		return entity.getOpeningDate();
 	}
@@ -67,6 +76,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	public long getCode() {
 		return entity.getCode();
 	}
+	
 
 	@Override
 	public String getTitle() {
@@ -78,6 +88,18 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		entity.setTitle(title);
 	}
 
+	@Override
+	public String getLocalizationsFormatted() {
+		StringBuilder build = new StringBuilder("");
+		for(Localization local : getLocalizations()){
+			if(build.length()>0)
+				build.append(", ");
+			build.append(local.getLocalizationLabel());
+		}
+		return build.toString();
+	}
+
+	
 	@Override
 	public List<Localization> getLocalizations() {
 		return entity.getLocalizations();
@@ -99,13 +121,21 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public int getVacancies() {
-		return entity.getVacancies();
+	public String getVacancies() {
+		return Integer.toString(entity.getVacancies());
 	}
 
 	@Override
 	public void setVacancies(int vacancies) {
 		entity.setVacancies(vacancies);
+	}
+	
+	@Override
+	public String getClosingDateFormatted() {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/YYYY"); 
+		
+		return formatter.format(getClosingDate());
 	}
 
 	@Override
@@ -121,9 +151,9 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public int getSla() {
+	public String getSla() {
 		
-		return entity.getSla();
+		return Integer.toString(entity.getSla());
 	}
 
 	@Override
@@ -160,6 +190,18 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		
 		return entity.getTechnicalAreas();
 	}
+	
+	@Override
+	public String getTechnicalAreasFormatted() {
+		StringBuilder build = new StringBuilder("");
+		for ( TechnicalArea area : getTechnicalAreas()) {
+			if (build.length() > 0)
+				build.append(", ");
+			build.append(area.getTechnicalAreaLabel());
+		}
+		
+		return build.toString();
+	}
 
 	@Override
 	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
@@ -179,6 +221,23 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		entity.setDescription(description);	
 	}
 
+	
+	@Override
+	public String getPublicationChannels() {
+		
+		StringBuilder build = new StringBuilder("");
+		
+		Set<PublicationChannelEntity> channels = entity.getPublications();
+		
+		for ( PublicationChannelEntity pce : channels) {
+			if (build.length() > 0)
+				build.append(", ");
+			build.append(pce.getChannel());
+		}
+		
+		return build.toString();
+	}
+	
 	@Override
 	public List<IPublicationChannel> getIPublicationChannels() {
 		
@@ -187,7 +246,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		for(PublicationChannelEntity pce : channels)
 			ichannels.add( new PublicationChannelProxy (pce) );
 		
-		return ichannels;
+		return ichannels ;
 	}
 
 	@Override
@@ -207,7 +266,9 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		return new ScriptProxy(script);
 	}
 
-
-
+	@Override
+	public long getId() {
+		return entity.getId();
+	}
 
 }

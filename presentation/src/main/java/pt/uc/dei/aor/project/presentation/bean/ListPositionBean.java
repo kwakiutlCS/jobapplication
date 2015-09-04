@@ -20,16 +20,15 @@ public class ListPositionBean implements Serializable{
 	
 
 	@Inject
-	private IPositionBusinessService iposition;
+	private IPositionBusinessService position;
 	
 	private List<IPosition> filteredPositions;
-	
-	
+	private IPosition selectedPosition;
 	
 	
 	public List<IPosition> getPositions() {
 			
-		return iposition.getIPositions();
+		return position.getIPositions();
 	}
 
 
@@ -40,6 +39,16 @@ public class ListPositionBean implements Serializable{
 	
 	public void setFilteredPositions(List<IPosition> filteredPositions) {
 		this.filteredPositions = filteredPositions;
+	}
+
+
+	public IPosition getSelectedPosition() {
+		return selectedPosition;
+	}
+
+
+	public void setSelectedPosition(IPosition selectedPosition) {
+		this.selectedPosition = selectedPosition;
 	}
 
 }
