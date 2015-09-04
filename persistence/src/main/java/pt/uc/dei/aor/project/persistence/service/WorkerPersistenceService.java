@@ -160,6 +160,16 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return getWorkerByLogin("SU");
 	}
 
+	@Override
+	public void removeInterview(long worker_id, long interview_id) {
+		WorkerEntity workerEntity = em.find(WorkerEntity.class, worker_id);
+		InterviewEntity interviewEntity = em.find(InterviewEntity.class, interview_id);
+		
+		workerEntity.removeInterview(interviewEntity);
+		
+		em.merge(workerEntity);
+	}
+
 	
 
 }

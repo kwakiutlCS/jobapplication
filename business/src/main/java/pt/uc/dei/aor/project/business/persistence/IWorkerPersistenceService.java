@@ -30,4 +30,6 @@ public interface IWorkerPersistenceService {
 
 	boolean findWorkerByEmailOrLogin(String email, String login);
 
+	void removeInterview(long worker_id, long interview_id);
+
 }

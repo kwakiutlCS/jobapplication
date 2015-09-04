@@ -23,5 +23,6 @@ public interface IWorker {
 	public String getEmail();
 
 	public void addInterview(IInterview interview) throws IllegalRoleException, IllegalStateException;
+
 	
 }

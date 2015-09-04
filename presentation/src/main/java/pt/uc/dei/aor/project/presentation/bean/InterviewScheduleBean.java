@@ -63,8 +63,8 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public List<IInterview> getInterviewsByApplication() {
-		return selectedApplication.getInterviews();
-		//return interviewService.findInterviewsByApplication(applicationBean.getSelectedApplication());
+		//return selectedApplication.getInterviews();
+		return interviewService.findInterviewsByApplication(selectedApplication);
 	}
 	
 	
@@ -104,6 +104,9 @@ public class InterviewScheduleBean implements Serializable {
 		interviewTime = null;
 	}
 	
+	public void delete(IInterview interview) {
+		selectedApplication = interviewService.delete(interview);
+	}
 	
 	public void onload() {
 		System.out.println("onload");

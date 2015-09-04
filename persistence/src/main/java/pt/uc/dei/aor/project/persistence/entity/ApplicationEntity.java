@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="application")
 @NamedQueries({
-	@NamedQuery(name = "Application.dummyQuery", query="from ApplicationEntity u"),
+	@NamedQuery(name = "Application.dummyQuery", query = "from ApplicationEntity u"),
 })
 public class ApplicationEntity {
 	
@@ -64,4 +64,36 @@ public class ApplicationEntity {
 		return id;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
+		result = prime * result + ((position == null) ? 0 : position.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ApplicationEntity other = (ApplicationEntity) obj;
+		if (candidate == null) {
+			if (other.candidate != null)
+				return false;
+		} else if (!candidate.equals(other.candidate))
+			return false;
+		if (position == null) {
+			if (other.position != null)
+				return false;
+		} else if (!position.equals(other.position))
+			return false;
+		return true;
+	}
+
+	
 }

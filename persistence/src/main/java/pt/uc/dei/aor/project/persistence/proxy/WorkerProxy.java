@@ -105,10 +105,11 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		entity.addInterview(interviewEntity);
 	}
 	
-	
-	
+		
 	// helper methods
 	private boolean isInterviewer() {
 		return entity.isInterviewer();
 	}
+
+	
 }

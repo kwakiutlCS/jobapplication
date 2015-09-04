@@ -15,5 +15,7 @@ public interface IInterviewBusinessService {
 	IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers);
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
+
+	IApplication delete(IInterview interview);
 	
 }

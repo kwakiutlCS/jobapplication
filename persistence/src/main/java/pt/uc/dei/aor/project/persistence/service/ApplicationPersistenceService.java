@@ -49,9 +49,8 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 	@Override
 	public IApplication find(long id) {
 		ApplicationEntity entity = em.find(ApplicationEntity.class, id);
-		System.out.println("application entity find");
-		System.out.println(entity.getInterviews());
 		return new ApplicationProxy(entity);
 	}
+	
 	
 }

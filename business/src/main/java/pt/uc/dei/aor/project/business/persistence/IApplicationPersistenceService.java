@@ -11,5 +11,6 @@ public interface IApplicationPersistenceService {
 	IApplication save(IApplication application);
 
 	IApplication find(long id);
+
 	
 }

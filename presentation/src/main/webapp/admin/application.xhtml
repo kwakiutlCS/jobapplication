@@ -24,6 +24,12 @@
 			<p:column>
 				#{interview.interviewersFormatted}
 			</p:column>
+			<p:column>
+				<h:form>
+					<p:commandLink value="delete" action="#{interviewScheduleBean.delete(interview)}"
+					update=":interviewList" />
+				</h:form>
+			</p:column>
 		</p:dataTable>
 		
 		<h:form id="addInterviewForm">

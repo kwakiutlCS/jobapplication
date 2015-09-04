@@ -240,6 +240,43 @@ public class PositionEntity {
 	public void setScript(ScriptEntity script) {
 		this.script = script;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((openingDate == null) ? 0 : openingDate.hashCode());
+		result = prime * result + ((technicalAreas == null) ? 0 : technicalAreas.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		PositionEntity other = (PositionEntity) obj;
+		if (openingDate == null) {
+			if (other.openingDate != null)
+				return false;
+		} else if (!openingDate.equals(other.openingDate))
+			return false;
+		if (technicalAreas == null) {
+			if (other.technicalAreas != null)
+				return false;
+		} else if (!technicalAreas.equals(other.technicalAreas))
+			return false;
+		if (title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!title.equals(other.title))
+			return false;
+		return true;
+	}
     
     
     

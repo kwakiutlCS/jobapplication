@@ -54,5 +54,17 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public List<IInterview> findInterviewsByApplication(IApplication application) {
 		return applicationPersistence.find(application.getId()).getInterviews();
 	}
+
+
+	@Override
+	public IApplication delete(IInterview interview) {
+		for (IWorker w : interview.getInterviewers()) {
+			workerPersistence.removeInterview(w.getId(), interview.getId());
+		}
+		
+		interviewPersistence.delete(interview);
+		
+		return applicationPersistence.find(interview.getApplication().getId());
+	}
 	
 }

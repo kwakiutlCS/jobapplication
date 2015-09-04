@@ -86,4 +86,12 @@ public class WorkerEntity extends User {
 	public boolean isAdmin() {
 		return roles.contains(Role.ADMIN);
 	}
+
+	public void removeInterview(InterviewEntity interview) {
+		interviews.remove(interview);
+	}
+
+	public Collection<InterviewEntity> getInterviews() {
+		return interviews;
+	}
 }
