@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ import org.hibernate.annotations.FetchMode;
 	@NamedQuery(name = "Interview.findActiveInterviewsByInterviewer", 
 	query="from InterviewEntity u where :user member of u.interviewers and u.date >= :date"),
 })
-public class InterviewEntity {
+public class InterviewEntity implements Comparable<InterviewEntity> {
 	
 	public InterviewEntity(ApplicationEntity application, Date date) {
 		this.application = application;
@@ -44,7 +45,7 @@ public class InterviewEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(nullable=false)
 	private ApplicationEntity application;
 	
@@ -77,6 +78,19 @@ public class InterviewEntity {
 
 	public long getId() {
 		return id;
+	}
+
+	@Override
+	public int compareTo(InterviewEntity o) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		
+		Calendar otherCal = Calendar.getInstance();
+		otherCal.setTime(o.date);
+		
+		if (cal.after(otherCal)) return 1;
+		else if (cal.before(otherCal)) return -1;
+		return 0;
 	}
 
 }

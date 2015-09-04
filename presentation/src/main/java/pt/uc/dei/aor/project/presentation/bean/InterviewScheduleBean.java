@@ -106,7 +106,9 @@ public class InterviewScheduleBean implements Serializable {
 	
 	
 	public void onload() {
+		System.out.println("onload");
 		selectedApplication = applicationService.findApplicationById(selectedApplicationId);
+		System.out.println("onload: "+selectedApplication.getInterviews());
 	}
 	
 	// helper methods

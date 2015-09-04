@@ -14,6 +14,8 @@ import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
+import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
 public class ScriptEntryProxyTest {
 
@@ -48,5 +50,14 @@ public class ScriptEntryProxyTest {
 	public void shouldModifyMaxScaleToLegalValue() throws IllegalScaleException {
 		entry.setMax("12");
 		assertThat(entry.getMax(), is(equalTo("12")));
+	}
+	
+	
+	@Test
+	public void shouldRetrieveCorrectEntity() {
+		@SuppressWarnings("unchecked")
+		ScriptEntryEntity entity = ((IProxyToEntity<ScriptEntryEntity>) entry).getEntity();
+		
+		assertThat(entity.getQuestion().getText(), is(equalTo("question 1")));
 	}
 }

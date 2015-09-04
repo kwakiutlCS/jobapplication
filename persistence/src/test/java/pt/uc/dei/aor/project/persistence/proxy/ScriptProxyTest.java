@@ -19,6 +19,7 @@ import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
 public class ScriptProxyTest {
@@ -123,5 +124,17 @@ public class ScriptProxyTest {
 		String title = "otherTitle";
 		script.setTitle(title);
 		assertThat(script.getTitle(), is(equalTo(title)));
+	}
+	
+	
+	@Test
+	public void shouldRetrieveCorrectEntity() {
+		String title = "title";
+		IScript script = new ScriptProxy(title);
+		
+		@SuppressWarnings("unchecked")
+		ScriptEntity entity = ((IProxyToEntity<ScriptEntity>) script).getEntity();
+		
+		assertThat(entity.getTitle(), is(equalTo(title)));
 	}
 }

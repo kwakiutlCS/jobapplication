@@ -11,4 +11,5 @@ public interface IApplication {
 	List<IInterview> getInterviews();
 
 	long getId();
+
 }

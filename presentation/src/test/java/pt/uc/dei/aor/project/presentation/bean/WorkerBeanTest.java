@@ -17,7 +17,7 @@ import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RegisterBeanTest {
+public class WorkerBeanTest {
 	
 	@Mock
 	IWorkerBusinessService ejb;

@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.persistence.proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
@@ -54,7 +55,7 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	@Override
 	public List<IInterview> getInterviews() {
 		List<IInterview> proxies = new ArrayList<>();
-		Set<InterviewEntity> entities = entity.getInterviews();
+		SortedSet<InterviewEntity> entities = entity.getInterviews();
 		
 		for (InterviewEntity ie : entities) {
 			proxies.add(new InterviewProxy(ie));
@@ -68,5 +69,6 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public long getId() {
 		return entity.getId();
 	}
+
 	
 }

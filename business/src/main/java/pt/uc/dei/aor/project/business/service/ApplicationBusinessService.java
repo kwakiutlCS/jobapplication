@@ -31,7 +31,10 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 
 	@Override
 	public IApplication findApplicationById(long id) {
-		return applicationPersistence.find(id);
+		System.out.println("business find application by id");
+		IApplication application = applicationPersistence.find(id);
+		System.out.println("business: "+application.getInterviews());
+		return application;
 	}
 	
 }

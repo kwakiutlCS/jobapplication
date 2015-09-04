@@ -17,16 +17,19 @@ import org.junit.Test;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
+import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
+import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
+import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 
 
 public class InterviewProxyTest {
 
 	private InterviewProxy proxy;
+	IApplication application;
 	
 	@Before
 	public void init() {
-		IApplication application = new ApplicationProxy();
-		
+		application  = new ApplicationProxy();
 		proxy = new InterviewProxy(application, new Date());
 	}
 	
@@ -52,5 +55,16 @@ public class InterviewProxyTest {
 		proxy = new InterviewProxy(application, cal.getTime());
 		
 		assertThat(proxy.isEditable(), is(equalTo(true)));
+	}
+	
+	@Test
+	public void shouldRetrieveCorrectEntity() {
+		@SuppressWarnings("unchecked")
+		InterviewEntity entity = ((IProxyToEntity<InterviewEntity>) proxy).getEntity();
+		
+		@SuppressWarnings("unchecked")
+		ApplicationEntity applicationEntity = ((IProxyToEntity<ApplicationEntity>) application).getEntity();
+		
+		assertThat(entity.getApplication(), is(equalTo(applicationEntity)));
 	}
 }

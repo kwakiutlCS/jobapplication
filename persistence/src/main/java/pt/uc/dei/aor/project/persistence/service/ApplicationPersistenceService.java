@@ -31,7 +31,6 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		
 		for (ApplicationEntity ae : entities) {
 			proxies.add(new ApplicationProxy(ae));
-			System.out.println("id: "+ae.getId());
 		}
 		
 		return proxies;
@@ -49,7 +48,10 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 	
 	@Override
 	public IApplication find(long id) {
-		return new ApplicationProxy(em.find(ApplicationEntity.class, id));
+		ApplicationEntity entity = em.find(ApplicationEntity.class, id);
+		System.out.println("application entity find");
+		System.out.println(entity.getInterviews());
+		return new ApplicationProxy(entity);
 	}
 	
 	

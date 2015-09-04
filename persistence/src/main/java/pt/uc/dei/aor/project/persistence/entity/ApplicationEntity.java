@@ -1,7 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +15,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 
@@ -46,19 +47,21 @@ public class ApplicationEntity {
 	@JoinColumn(nullable=false)
 	private PositionEntity position;
 	
+	@OrderBy("date")
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
-	private Set<InterviewEntity> interviews;
+	private SortedSet<InterviewEntity> interviews = new TreeSet<>();
 	
 	@OneToOne
 	private JobProposalEntity proposal;
 
-	public Set<InterviewEntity> getInterviews() {
+	public SortedSet<InterviewEntity> getInterviews() {
+		System.out.println("interview getter");
+		System.out.println(interviews);
 		return interviews;
 	}
 
 	public long getId() {
 		return id;
 	}
-	
 
 }
