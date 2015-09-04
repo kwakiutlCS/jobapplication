@@ -43,7 +43,7 @@
 
 				<p:outputLabel for="timeSelector" value="Time" />
 				<p:inputMask id="timeSelector" value="#{interviewScheduleBean.interviewTime}"
-					mask="99h99" required="true" />
+					mask="99h99" required="true" validator="#{timeValidator.validate}" />
 				
 				<p:outputLabel for="interviewerSelector" value="Interviewer" />
 				<p:selectOneMenu id="interviewerSelector" value="#{interviewScheduleBean.interviewer}"

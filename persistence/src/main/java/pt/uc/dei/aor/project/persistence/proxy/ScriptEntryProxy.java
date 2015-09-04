@@ -120,4 +120,9 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		entity.removeAnswer(GenericPersistenceService.getEntity(answer));
 	}
 
+	@Override
+	public int getPosition() {
+		return entity.getPosition();
+	}
+
 }

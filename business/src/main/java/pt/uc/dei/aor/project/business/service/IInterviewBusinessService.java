@@ -6,6 +6,7 @@ import java.util.List;
 
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
+import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -25,5 +26,7 @@ public interface IInterviewBusinessService {
 	IInterview findInterviewById(long id);
 
 	List<IScriptEntry> getScriptEntries(IInterview interview);
+
+	IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry);
 	
 }

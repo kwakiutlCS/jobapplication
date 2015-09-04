@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
+import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -16,6 +17,7 @@ import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -32,6 +34,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	
 	@Inject
 	private IApplicationPersistenceService applicationPersistence;
+	
+	@Inject
+	private IAnswerPersistenceService answerPersistence;
 	
 	@Inject
 	private IModelFactory factory;
@@ -96,6 +101,14 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		if (script == null) return null;
 		
 		return script.getEntries();
+	}
+
+
+	@Override
+	public IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) {
+		IAnswer answerProxy = factory.answer(interview, answer, entry);
+		
+		return answerPersistence.save(answerProxy);
 	}
 	
 }
