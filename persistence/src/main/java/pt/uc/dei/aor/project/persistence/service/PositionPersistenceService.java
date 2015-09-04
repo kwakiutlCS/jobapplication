@@ -22,7 +22,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 	@Override
 	public IPosition save(IPosition position) {
-		PositionEntity entity = getEntity(position);
+		PositionEntity entity = GenericPersistenceService.getEntity(position);
 
 		entity = em.merge(entity);
 
@@ -30,15 +30,6 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	}
 
 	
-	@SuppressWarnings("unchecked")
-	private PositionEntity getEntity(IPosition positionProxy) {
-		if (positionProxy instanceof IProxyToEntity<?>) {
-			return ((IProxyToEntity<PositionEntity>) positionProxy).getEntity();
-		}
-		throw new IllegalStateException();
-	}
-
-
 	@Override
 	public List<IPosition> findAllPositions() {
 

@@ -13,6 +13,7 @@ import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.persistence.entity.AnswerChoiceEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 
 public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
@@ -64,12 +65,11 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 				min, max));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void addQuestion(String questionText, QuestionType questionType, Collection<IAnswerChoice> options) {
 		List<AnswerChoiceEntity> list = new ArrayList<>();
 		for (IAnswerChoice ac : options) {
-			list.add(((IProxyToEntity<AnswerChoiceEntity>) ac).getEntity());
+			list.add(GenericPersistenceService.getEntity(ac));
 		}
 		
 		entity.getEntries().add(new ScriptEntryEntity(questionText, questionType, entity.getNextPosition(),
@@ -77,15 +77,10 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public void deleteQuestion(IScriptEntry entry) {
-		ScriptEntryEntity entryEntity;
-		if (entry instanceof IProxyToEntity<?>) {
-            entryEntity = ((IProxyToEntity<ScriptEntryEntity>) entry).getEntity();
-        }
-		else throw new IllegalStateException();
-        
+		ScriptEntryEntity entryEntity = GenericPersistenceService.getEntity(entry);
+         
 		entity.getEntries().remove(entryEntity);
 	}
 

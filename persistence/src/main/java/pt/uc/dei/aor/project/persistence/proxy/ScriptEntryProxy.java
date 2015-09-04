@@ -12,6 +12,7 @@ import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.persistence.entity.AnswerChoiceEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntryEntity> {
 
@@ -109,16 +110,14 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		return entity.getId();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void addAnswer(IAnswerChoice option) {
-		entity.addAnswer(((IProxyToEntity<AnswerChoiceEntity>) option).getEntity());
+		entity.addAnswer(GenericPersistenceService.getEntity(option));
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void removeAnswer(IAnswerChoice answer) {
-		entity.removeAnswer(((IProxyToEntity<AnswerChoiceEntity>) answer).getEntity());
+		entity.removeAnswer(GenericPersistenceService.getEntity(answer));
 	}
 
 }

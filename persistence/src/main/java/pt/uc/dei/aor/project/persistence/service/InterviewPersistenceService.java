@@ -15,7 +15,6 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
-import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
 import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
 
 @Stateless
@@ -27,7 +26,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	
 	@Override
 	public IInterview save(IInterview interview) {
-		InterviewEntity entity = getEntity(interview);
+		InterviewEntity entity = GenericPersistenceService.getEntity(interview);
 		entity = em.merge(entity);
 		
 		return new InterviewProxy(entity);
@@ -36,7 +35,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 	@Override
 	public void delete(IInterview interview) {
-		InterviewEntity entity = getEntity(interview);
+		InterviewEntity entity = GenericPersistenceService.getEntity(interview);
 		em.remove(em.merge(entity));
 	}
 
@@ -56,19 +55,12 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		return proxies;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<IInterview> findActiveInterviewsByUser(IWorker user) {
 		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findActiveInterviewsByInterviewer", 
 				InterviewEntity.class);
 		
-		WorkerEntity userEntity = null;
-		if (user instanceof IProxyToEntity<?>) {
-			userEntity = ((IProxyToEntity<WorkerEntity>) user).getEntity();
-		}
-		else {
-			 throw new IllegalStateException();
-		}
+		WorkerEntity userEntity = GenericPersistenceService.getEntity(user);
 		
 		query.setParameter("user", userEntity);
 		query.setParameter("date", new Date());
@@ -82,18 +74,5 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		
 		return proxies;
 	}
-
-
-	
-	@SuppressWarnings("unchecked")
-    private InterviewEntity getEntity(IInterview interviewProxy) {
-        if (interviewProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<InterviewEntity>) interviewProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-
-
 
 }

@@ -26,7 +26,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	
 	@Override
 	public IWorker save(IWorker worker) {
-		WorkerEntity entity = getEntity(worker);
+		WorkerEntity entity = GenericPersistenceService.getEntity(worker);
 		
 		entity = em.merge(entity);
 		
@@ -35,7 +35,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	
 	@Override
 	public void delete(IWorker worker) {
-		WorkerEntity entity = getEntity(worker); 
+		WorkerEntity entity = GenericPersistenceService.getEntity(worker); 
 		
 		em.remove(em.merge(entity));
 	}
@@ -131,7 +131,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 	@Override
 	public void insertInterview(long worker_id, IInterview interview) {
 		WorkerEntity entity = em.find(WorkerEntity.class, worker_id);
-		entity.addInterview(getEntity(interview));
+		entity.addInterview(GenericPersistenceService.getEntity(interview));
 		em.merge(entity);
 	}
 	
@@ -143,27 +143,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		
 		return q.getResultList().size() > 0;
 	}
-	
-	
-	@SuppressWarnings("unchecked")
-    private WorkerEntity getEntity(IWorker workerProxy) {
-        if (workerProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<WorkerEntity>) workerProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-	
-	
-	// TODO REFACTOR
-	@SuppressWarnings("unchecked")
-    private InterviewEntity getEntity(IInterview interviewProxy) {
-        if (interviewProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<InterviewEntity>) interviewProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
+			
 
 	@Override
 	public IWorker createSuperUser() {

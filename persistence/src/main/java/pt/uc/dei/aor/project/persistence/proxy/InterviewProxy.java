@@ -14,6 +14,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntity> {
 
@@ -24,14 +25,8 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 	}
 
 	
-	@SuppressWarnings("unchecked")
 	public InterviewProxy(IApplication application, Date date) {
-		ApplicationEntity applicationEntity = null;
-		
-		if (application instanceof IProxyToEntity<?>)
-			applicationEntity = ((IProxyToEntity<ApplicationEntity>) application).getEntity();
-		else throw new IllegalStateException();
-		
+		ApplicationEntity applicationEntity = GenericPersistenceService.getEntity(application);
 		
 		this.entity = new InterviewEntity(applicationEntity, date);
 	}

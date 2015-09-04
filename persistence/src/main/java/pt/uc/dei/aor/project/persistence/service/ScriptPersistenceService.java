@@ -24,14 +24,14 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 	
 	@Override
 	public IScript save(IScript script) {
-		ScriptEntity entity = getEntity(script);
+		ScriptEntity entity = GenericPersistenceService.getEntity(script);
 		entity = em.merge(entity);
 		return new ScriptProxy(entity);
 	}
 	
 	@Override
 	public void delete(IScript script) {
-		ScriptEntity entity = getEntity(script);
+		ScriptEntity entity = GenericPersistenceService.getEntity(script);
 		em.remove(em.merge(entity));
 	}
 
@@ -51,15 +51,6 @@ public class ScriptPersistenceService implements IScriptPersistenceService {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-    private ScriptEntity getEntity(IScript scriptProxy) {
-        if (scriptProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<ScriptEntity>) scriptProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-
 	@Override
 	public IScript findScriptById(long id) {
 		ScriptEntity entity = em.find(ScriptEntity.class, id);

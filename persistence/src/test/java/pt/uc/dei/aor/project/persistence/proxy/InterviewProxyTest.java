@@ -20,6 +20,7 @@ import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 
 public class InterviewProxyTest {
@@ -59,11 +60,9 @@ public class InterviewProxyTest {
 	
 	@Test
 	public void shouldRetrieveCorrectEntity() {
-		@SuppressWarnings("unchecked")
-		InterviewEntity entity = ((IProxyToEntity<InterviewEntity>) proxy).getEntity();
+		InterviewEntity entity = GenericPersistenceService.getEntity(proxy);
 		
-		@SuppressWarnings("unchecked")
-		ApplicationEntity applicationEntity = ((IProxyToEntity<ApplicationEntity>) application).getEntity();
+		ApplicationEntity applicationEntity = GenericPersistenceService.getEntity(application);
 		
 		assertThat(entity.getApplication(), is(equalTo(applicationEntity)));
 	}

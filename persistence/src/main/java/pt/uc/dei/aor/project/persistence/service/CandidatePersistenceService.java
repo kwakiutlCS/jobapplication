@@ -19,24 +19,12 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 	
 	@Override
 	public ICandidate save(ICandidate candidateProxy) {
-		CandidateEntity entity = getEntity(candidateProxy);
+		CandidateEntity entity = GenericPersistenceService.getEntity(candidateProxy);
 		
 		entity = em.merge(entity);
 		
 		return new CandidateProxy(entity);
 	}
 	
-	@SuppressWarnings("unchecked")
-    private CandidateEntity getEntity(ICandidate candidateProxy) {
-        if (candidateProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<CandidateEntity>) candidateProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-
-
-
-
 	
 }

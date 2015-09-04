@@ -16,6 +16,7 @@ import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class ScriptEntryProxyTest {
 
@@ -55,8 +56,7 @@ public class ScriptEntryProxyTest {
 	
 	@Test
 	public void shouldRetrieveCorrectEntity() {
-		@SuppressWarnings("unchecked")
-		ScriptEntryEntity entity = ((IProxyToEntity<ScriptEntryEntity>) entry).getEntity();
+		ScriptEntryEntity entity = GenericPersistenceService.getEntity(entry);
 		
 		assertThat(entity.getQuestion().getText(), is(equalTo("question 1")));
 	}

@@ -12,6 +12,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 
@@ -84,27 +85,22 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return entity.hashCode();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object o) {
 		WorkerEntity oe = null;
 		
 		if (o instanceof IProxyToEntity<?>)
-			oe = ((IProxyToEntity<WorkerEntity>) o).getEntity();
+			oe = GenericPersistenceService.getEntity(o);
 		else return false;
 		
 		return entity.equals(oe);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void addInterview(IInterview interview) throws IllegalRoleException, IllegalStateException {
 		if (!isInterviewer()) throw new IllegalRoleException();
 		
-		InterviewEntity interviewEntity = null;
-		if (interview instanceof IProxyToEntity<?>) 
-			interviewEntity = ((IProxyToEntity<InterviewEntity>) interview).getEntity();
-		else throw new IllegalStateException();
+		InterviewEntity interviewEntity = GenericPersistenceService.getEntity(interview);
 		
 		entity.addInterview(interviewEntity);
 	}

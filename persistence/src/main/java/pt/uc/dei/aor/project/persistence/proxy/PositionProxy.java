@@ -16,6 +16,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 
 public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> {
@@ -26,7 +27,6 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		this.entity = entity != null ? entity : new PositionEntity();
 	}
 
-	@SuppressWarnings("unchecked")
 	public PositionProxy(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
 			int vacancies, Date closingDate, int sla, String contactPerson,
@@ -37,14 +37,14 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		Set<PublicationChannelEntity> publicationChannelEntities = new TreeSet<>();
 		if (channels != null) {
 			for(IPublicationChannel pc: channels){
-				publicationChannelEntities.add(((IProxyToEntity<PublicationChannelEntity>) pc).getEntity());
+				publicationChannelEntities.add(GenericPersistenceService.getEntity(pc));
 			}
 		}
 
 
 		ScriptEntity scriptEntity = null;
 		if (script != null) {
-			scriptEntity = ((IProxyToEntity<ScriptEntity>) script).getEntity();
+			scriptEntity = GenericPersistenceService.getEntity(script);
 		}
 
 		entity = new PositionEntity(code,title, localizations,
@@ -190,14 +190,13 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		return ichannels;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void setIPublicationChannels(
 			List<IPublicationChannel> ipublicationChannels) {
 
 		Set<PublicationChannelEntity> channels = new TreeSet<PublicationChannelEntity>(); 
 		for(IPublicationChannel ipc : ipublicationChannels)
-			channels.add(((IProxyToEntity<PublicationChannelEntity>) ipc).getEntity());
+			channels.add(GenericPersistenceService.getEntity(ipc));
 	}
 
 

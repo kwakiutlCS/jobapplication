@@ -20,7 +20,7 @@ public class ScriptEntryPersistenceService implements IScriptEntryPersistenceSer
 	
 	@Override
 	public IScriptEntry save(IScriptEntry entry) {
-		ScriptEntryEntity entity = getEntity(entry);
+		ScriptEntryEntity entity = GenericPersistenceService.getEntity(entry);
 		entity = em.merge(entity);
 		
 		return new ScriptEntryProxy(entity);
@@ -28,20 +28,10 @@ public class ScriptEntryPersistenceService implements IScriptEntryPersistenceSer
 	
 	@Override
 	public void delete(IScriptEntry entry) {
-		ScriptEntryEntity entity = getEntity(entry);
+		ScriptEntryEntity entity = GenericPersistenceService.getEntity(entry);
 		em.remove(em.merge(entity));
 	}
 
 		
-	@SuppressWarnings("unchecked")
-    private ScriptEntryEntity getEntity(IScriptEntry scriptEntryProxy) {
-        if (scriptEntryProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<ScriptEntryEntity>) scriptEntryProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-
-	
 	
 }

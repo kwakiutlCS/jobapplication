@@ -38,7 +38,7 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 
 	@Override
 	public IApplication save(IApplication application) {
-		ApplicationEntity entity = getEntity(application);
+		ApplicationEntity entity = GenericPersistenceService.getEntity(application);
 		
 		entity = em.merge(entity);
 		
@@ -53,17 +53,5 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		System.out.println(entity.getInterviews());
 		return new ApplicationProxy(entity);
 	}
-	
-	
-	
-	@SuppressWarnings("unchecked")
-    private ApplicationEntity getEntity(IApplication applicationProxy) {
-        if (applicationProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<ApplicationEntity>) applicationProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-
 	
 }

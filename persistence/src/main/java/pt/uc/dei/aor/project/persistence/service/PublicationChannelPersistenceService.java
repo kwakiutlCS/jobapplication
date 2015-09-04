@@ -25,23 +25,13 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 	public IPublicationChannel save(
 			IPublicationChannel publicationChannel) {
 		
-		PublicationChannelEntity pcEntity = getEntity(publicationChannel);
+		PublicationChannelEntity pcEntity = GenericPersistenceService.getEntity(publicationChannel);
 		pcEntity = em.merge(pcEntity);
 		
 		return new PublicationChannelProxy(pcEntity);
 	}
 	
 	
-	@SuppressWarnings("unchecked")
-	private PublicationChannelEntity getEntity(IPublicationChannel pcProxy) {
-        if (pcProxy instanceof IProxyToEntity<?>) {
-            return ((IProxyToEntity<PublicationChannelEntity>) pcProxy).getEntity();
-        }
-
-        throw new IllegalStateException();
-    }
-
-
 	@Override
 	public List<IPublicationChannel> findAllPublicationChannels() {
 		

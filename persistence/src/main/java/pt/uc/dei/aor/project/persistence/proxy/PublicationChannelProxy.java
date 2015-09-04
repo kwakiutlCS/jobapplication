@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.persistence.proxy;
 
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 
 public class PublicationChannelProxy implements IPublicationChannel,IProxyToEntity<PublicationChannelEntity> {
@@ -43,9 +44,8 @@ public class PublicationChannelProxy implements IPublicationChannel,IProxyToEnti
 		return pcEntity.hashCode();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object o) {
-		return pcEntity.equals(((IProxyToEntity<PublicationChannelEntity>)o).getEntity());
+		return pcEntity.equals(GenericPersistenceService.getEntity(o));
 	}
 }
