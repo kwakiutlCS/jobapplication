@@ -56,7 +56,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	}
 
 	@Override
-	public Collection<IInterview> findActiveInterviewsByUser(IWorker user) {
+	public List<IInterview> findActiveInterviewsByUser(IWorker user) {
 		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findActiveInterviewsByInterviewer", 
 				InterviewEntity.class);
 		
@@ -73,6 +73,15 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		}
 		
 		return proxies;
+	}
+
+
+	@Override
+	public IInterview findInterviewById(long id) {
+		InterviewEntity entity = em.find(InterviewEntity.class, id);
+		if (entity == null) return null;
+		
+		return new InterviewProxy(entity);
 	}
 
 }

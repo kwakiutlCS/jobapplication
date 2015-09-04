@@ -1,0 +1,52 @@
+<ui:composition template="/resources/layouts/interviewTemplate.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Interview</ui:define>
+	
+	
+	<ui:define name="metadata">
+		<f:metadata>
+    		<f:viewParam name="it" value="#{interviewBean.selectedInterviewId}" />
+    		<f:viewAction action="#{interviewBean.onload}" />
+		</f:metadata>
+	</ui:define>
+	
+	
+	<ui:define name="content">
+		
+	    <p:panelGrid columns="1">
+	    <ui:repeat value="#{interviewBean.scriptEntries}" var="entry">
+				<h:panelGroup layout="block" styleClass="questionBlock">
+					<h:panelGroup layout="block" styleClass="questionTitle">
+					#{entry.text}
+				</h:panelGroup>
+					<p:inputText rendered="#{entry.questionType eq 'SHORT_ANSWER'}" />
+					<p:inputTextarea rendered="#{entry.questionType eq 'LONG_ANSWER'}" />
+					<p:inputMask rendered="#{entry.questionType eq 'TIME'}"
+						mask="99h99" />
+					<p:calendar navigator="true"
+						rendered="#{entry.questionType eq 'DATE'}" />
+					<p:selectOneRadio rendered="#{entry.questionType eq 'TRUE_FALSE'}">
+						<f:selectItem itemLabel="yes" />
+						<f:selectItem itemLabel="no" />
+					</p:selectOneRadio>
+					<p:selectOneMenu rendered="#{entry.questionType eq 'SCALE'}">
+						<f:selectItems value="#{scriptBean.getScaleValues(entry)}" />
+					</p:selectOneMenu>
+					<p:selectOneRadio
+						rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}"
+						layout="grid" columns="3">
+						<f:selectItems value="#{entry.answers}" var="answer"
+							itemLabel="#{answer.text}" />
+					</p:selectOneRadio>
+				</h:panelGroup>
+			</ui:repeat>
+		</p:panelGrid>
+
+	</ui:define>
+
+</ui:composition>

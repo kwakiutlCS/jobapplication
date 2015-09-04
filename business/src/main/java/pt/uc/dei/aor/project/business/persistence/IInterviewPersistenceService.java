@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.business.persistence;
 
 import java.util.Collection;
+import java.util.List;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -13,5 +14,7 @@ public interface IInterviewPersistenceService {
 
 	Collection<IInterview> findAllInterviews();
 
-	Collection<IInterview> findActiveInterviewsByUser(IWorker user);
+	List<IInterview> findActiveInterviewsByUser(IWorker user);
+
+	IInterview findInterviewById(long id);
 }

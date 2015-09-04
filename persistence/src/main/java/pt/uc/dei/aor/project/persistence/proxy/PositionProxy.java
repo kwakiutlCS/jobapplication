@@ -199,6 +199,14 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 			channels.add(GenericPersistenceService.getEntity(ipc));
 	}
 
+	@Override
+	public IScript getScript() {
+		ScriptEntity script = entity.getScript();
+		
+		if (script == null) return null;
+		return new ScriptProxy(script);
+	}
+
 
 
 

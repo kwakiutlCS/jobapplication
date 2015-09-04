@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -54,6 +55,7 @@ public class ApplicationEntity {
 	@OneToOne
 	private JobProposalEntity proposal;
 
+	
 	public SortedSet<InterviewEntity> getInterviews() {
 		System.out.println("interview getter");
 		System.out.println(interviews);
@@ -93,6 +95,10 @@ public class ApplicationEntity {
 		} else if (!position.equals(other.position))
 			return false;
 		return true;
+	}
+
+	public PositionEntity getPosition() {
+		return position;
 	}
 
 	

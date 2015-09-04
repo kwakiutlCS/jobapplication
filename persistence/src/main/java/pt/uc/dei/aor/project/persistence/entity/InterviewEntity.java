@@ -82,6 +82,7 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 
 	@Override
 	public int compareTo(InterviewEntity o) {
+		if (date == null || o.date == null) return 0;
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		

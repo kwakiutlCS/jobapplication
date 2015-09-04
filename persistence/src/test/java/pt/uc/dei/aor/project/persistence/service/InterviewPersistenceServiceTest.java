@@ -14,6 +14,7 @@ import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,11 +24,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -61,9 +64,12 @@ public class InterviewPersistenceServiceTest {
     private IInterviewPersistenceService ejb;
     
     @Inject
+    private IApplicationPersistenceService applicationEjb;
+    
+    @Inject
     private IModelFactory factory;
     
-    
+    IApplication application;
     
     @Before
     public void init() {
@@ -89,13 +95,25 @@ public class InterviewPersistenceServiceTest {
     	IPosition pos = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, 
     			sla, person, company, tech, description, script, pub);
     	
-    	IApplication application = factory.application();
+    	application = factory.application();
+    	applicationEjb.save(application);
+    	
     }
    
     @Ignore
     @Test
-    public void shouldStartCodesWithZero() {
-    
+    public void shouldNotSaveInterviewsAtTheSameTime() {
+    	IInterview interview1 = factory.interview(application, new Date());
+    	IInterview interview2 = factory.interview(application, new Date());
+    	
+    	int size = ejb.findAllInterviews().size();
+    	
+    	ejb.save(interview1);
+    	
+    	assertThat(ejb.findAllInterviews().size(), is(equalTo(size+1)));
+    	
+
+    	
     }
 
 }

@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -11,6 +12,8 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
+import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class ApplicationProxy implements IApplication, IProxyToEntity<ApplicationEntity> {
 
@@ -25,7 +28,7 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		this(null);
 	}
 
-
+		
 	@Override
 	public ApplicationEntity getEntity() {
 		return entity;
@@ -44,11 +47,9 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 
 	@Override
 	public IPosition getPosition() {
-		// TODO Auto-generated method stub
-		// precisarei de um método que devolva a position
+		PositionEntity position = entity.getPosition();
 		
-		// neste momento devolve null
-		return null;
+		return new PositionProxy(position);
 	}
 
 

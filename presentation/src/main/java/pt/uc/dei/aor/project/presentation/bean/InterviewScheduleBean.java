@@ -98,7 +98,7 @@ public class InterviewScheduleBean implements Serializable {
 		
 		selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
 		setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
-		System.out.println("updated interviews: "+selectedApplication.getInterviews());
+		
 		selectedInterviewers.clear();
 		interviewDate = null;
 		interviewTime = null;
@@ -106,6 +106,7 @@ public class InterviewScheduleBean implements Serializable {
 	
 	public void delete(IInterview interview) {
 		selectedApplication = interviewService.delete(interview);
+		setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
 	}
 	
 	public void onload() {
