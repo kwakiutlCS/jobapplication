@@ -65,7 +65,6 @@ public class LoginBean {
 				result = "/interview/index.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
 			result = "loginerror";
 		}
 		return result;

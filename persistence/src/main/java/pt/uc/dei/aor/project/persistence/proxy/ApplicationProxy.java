@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.persistence.proxy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
@@ -53,9 +54,8 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	@Override
 	public List<IInterview> getInterviews() {
 		List<IInterview> proxies = new ArrayList<>();
-		List<InterviewEntity> entities = entity.getInterviews();
-		System.out.println("interviews");
-		System.out.println(entities);
+		Set<InterviewEntity> entities = entity.getInterviews();
+		
 		for (InterviewEntity ie : entities) {
 			proxies.add(new InterviewProxy(ie));
 		}

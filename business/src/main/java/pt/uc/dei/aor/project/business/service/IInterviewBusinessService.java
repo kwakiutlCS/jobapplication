@@ -12,7 +12,7 @@ public interface IInterviewBusinessService {
 	
 	Collection<IInterview> findActiveInterviewsByUser(IWorker user);
 
-	IInterview addInterview(IApplication application, Date date, Collection<IWorker> interviewers);
+	IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers);
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
 	

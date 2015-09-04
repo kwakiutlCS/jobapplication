@@ -7,6 +7,7 @@ import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
 
+
 public interface IWorkerBusinessService {
 	
 	IWorker createNewWorker(String login, String name, String surname, String email, 
@@ -27,6 +28,5 @@ public interface IWorkerBusinessService {
 	Collection<IWorker> findAllInterviewers();
 	
 	Collection<IWorker> findAllManagers();
-
 
 }

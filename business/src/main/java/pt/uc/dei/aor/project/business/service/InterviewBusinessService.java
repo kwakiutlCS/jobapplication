@@ -6,9 +6,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.resource.spi.IllegalStateException;
 
-import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -41,7 +39,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IInterview addInterview(IApplication application, Date date, Collection<IWorker> interviewers) {
+	public IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) {
 		IInterview interview = factory.interview(application, date);
 		interview = interviewPersistence.save(interview);
 		
@@ -49,7 +47,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			workerPersistence.insertInterview(w.getId(), interview);
 		}
 		
-		return interview;
+		return applicationPersistence.find(application.getId());
 	}
 
 	@Override

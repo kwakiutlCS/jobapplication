@@ -10,14 +10,14 @@
 	
 	<ui:define name="metadata">
 		<f:metadata>
-    		<f:viewParam name="ap" value="#{applicationBean.selectedId}" />
-    		<f:viewAction action="#{applicationBean.onload}" />
+    		<f:viewParam name="ap" value="#{interviewScheduleBean.selectedApplicationId}" />
+    		<f:viewAction action="#{interviewScheduleBean.onload}" />
 		</f:metadata>
 	</ui:define>
 	
 	
 	<ui:define name="content">
-		<p:dataTable id="interviewList" value="#{applicationBean.selectedApplication.interviews}" var="interview">
+		<p:dataTable id="interviewList" value="#{interviewScheduleBean.selectedApplication.interviews}" var="interview">
 			<p:column>
 				#{interview.date}
 			</p:column>
@@ -31,31 +31,31 @@
 			
 			<p:panelGrid columns="2">
 				<p:outputLabel for="dateSelector" value="Date" />
-				<p:calendar id="dateSelector" value="#{interviewBean.interviewDate}"
-					mindate="#{interviewBean.tommorrow}" pattern="dd/MM/yyyy"
+				<p:calendar id="dateSelector" value="#{interviewScheduleBean.interviewDate}"
+					mindate="#{interviewScheduleBean.tommorrow}" pattern="dd/MM/yyyy"
 					locale="pt" required="true" />
 
 				<p:outputLabel for="timeSelector" value="Time" />
-				<p:inputMask id="timeSelector" value="#{interviewBean.interviewTime}"
+				<p:inputMask id="timeSelector" value="#{interviewScheduleBean.interviewTime}"
 					mask="99h99" required="true" />
 				
 				<p:outputLabel for="interviewerSelector" value="Interviewer" />
-				<p:selectOneMenu id="interviewerSelector" value="#{interviewBean.interviewer}"
+				<p:selectOneMenu id="interviewerSelector" value="#{interviewScheduleBean.interviewer}"
 				converter="omnifaces.SelectItemsConverter">
-					<f:selectItems value="#{interviewBean.allInterviewers}"
+					<f:selectItems value="#{interviewScheduleBean.allInterviewers}"
 						var="interviewer" itemLabel="#{interviewer.fullName}" />
 				</p:selectOneMenu>
 				
-				<p:commandButton value="Add interviewer" action="#{interviewBean.addInterviewer()}"
+				<p:commandButton value="Add interviewer" action="#{interviewScheduleBean.addInterviewer()}"
 					update="interviewersList" process="@this interviewerSelector" />				
 			</p:panelGrid>
 			
 			<h:panelGroup id="interviewersList">
-				<ui:repeat value="#{interviewBean.selectedInterviewers}" var="interviewer">
+				<ui:repeat value="#{interviewScheduleBean.selectedInterviewers}" var="interviewer">
 					<div>
 						<span id="selectedInterviewer">#{interviewer.fullName}</span>
 						<span>
-							<p:commandLink value="x" action="#{interviewBean.removeInterviewer(interviewer)}"
+							<p:commandLink value="x" action="#{interviewScheduleBean.removeInterviewer(interviewer)}"
 							process="@this" update=":addInterviewForm:interviewersList" />
 						</span>
 					</div>
@@ -63,7 +63,7 @@
 			</h:panelGroup>
 			
 			<p:commandButton value="Schedule interview"
-				action="#{interviewBean.addInterview}" update="@form :interviewList" />
+				action="#{interviewScheduleBean.addInterview}" update="@form :interviewList" />
 		</h:form>
 
 	</ui:define>

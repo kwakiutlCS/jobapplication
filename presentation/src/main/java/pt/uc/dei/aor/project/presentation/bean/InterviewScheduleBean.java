@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -15,15 +17,17 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 
 @Named
 @ViewScoped
-public class InterviewBean implements Serializable {
+public class InterviewScheduleBean implements Serializable {
 	
 	private static final long serialVersionUID = -4484148866779896144L;
 
@@ -31,14 +35,15 @@ public class InterviewBean implements Serializable {
 	private IInterviewBusinessService interviewService;
 	
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IApplicationBusinessService applicationService;
 	
 	@Inject
-	private ApplicationBean applicationBean;
+	private IWorkerBusinessService workerService;
 	
 	
-	private IInterview selected;
-	
+	private IApplication selectedApplication;
+	private long selectedApplicationId;
+		
 	private Collection<IWorker> selectedInterviewers;
 	private IWorker interviewer;
 	private Date interviewDate;
@@ -46,7 +51,7 @@ public class InterviewBean implements Serializable {
 	private Date tommorrow;
 	
 	
-	public InterviewBean() {
+	public InterviewScheduleBean() {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_YEAR, 1);
 		tommorrow = c.getTime();
@@ -58,14 +63,11 @@ public class InterviewBean implements Serializable {
 	}
 	
 	public List<IInterview> getInterviewsByApplication() {
-		return applicationBean.getSelectedApplication().getInterviews();
+		return selectedApplication.getInterviews();
 		//return interviewService.findInterviewsByApplication(applicationBean.getSelectedApplication());
 	}
 	
-	public String selectInterview(IInterview interview) {
-		selected = interview;
-		return "interview.xhtml?faces-redirect=true";
-	}
+	
 	
 	public Collection<IWorker> getAllInterviewers() {
 		return workerService.findAllInterviewers();
@@ -83,27 +85,29 @@ public class InterviewBean implements Serializable {
 	
 	
 	public void addInterview() {
-		System.out.println("Add interview");
-		System.out.println(getInterviewsByApplication());
-		System.out.println(selectedInterviewers);
-		if (selectedInterviewers == null || selectedInterviewers.isEmpty()) return;
-		System.out.println("here");
+		if (selectedInterviewers == null || selectedInterviewers.isEmpty()) {
+			setMsg("At least one interviewer must be selected", FacesMessage.SEVERITY_ERROR);
+			return;
+		}
+		
 		String[] hours = interviewTime.split("h");
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(interviewDate);
 		calendar.set(Calendar.HOUR, Integer.parseInt(hours[0]));
 		calendar.set(Calendar.MINUTE, Integer.parseInt(hours[1]));
 		
-		interviewService.addInterview(applicationBean.getSelectedApplication(), calendar.getTime(), selectedInterviewers);
-	
+		selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
+		setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
+		System.out.println("updated interviews: "+selectedApplication.getInterviews());
 		selectedInterviewers.clear();
 		interviewDate = null;
 		interviewTime = null;
-		System.out.println(applicationBean.getSelectedApplication().getInterviews());
-		System.out.println(getInterviewsByApplication());
 	}
 	
 	
+	public void onload() {
+		selectedApplication = applicationService.findApplicationById(selectedApplicationId);
+	}
 	
 	// helper methods
 	
@@ -113,6 +117,12 @@ public class InterviewBean implements Serializable {
 		return request.getSession();
 	}
 
+	private void setMsg(String text, Severity severity) {
+		FacesMessage msg = new FacesMessage(severity,
+				text, text);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+	
 	
 	// getters and setters
 	
@@ -154,5 +164,23 @@ public class InterviewBean implements Serializable {
 	public void setInterviewTime(String interviewTime) {
 		this.interviewTime = interviewTime;
 	}
+
+	public IApplication getSelectedApplication() {
+		return selectedApplication;
+	}
+
+	public void setSelectedApplication(IApplication selectedApplication) {
+		this.selectedApplication = selectedApplication;
+	}
+
+	public long getSelectedApplicationId() {
+		return selectedApplicationId;
+	}
+
+	public void setSelectedApplicationId(long selectedApplicationId) {
+		this.selectedApplicationId = selectedApplicationId;
+	}
+	
+	
 }
 

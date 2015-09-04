@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,13 +47,12 @@ public class ApplicationEntity {
 	private PositionEntity position;
 	
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
-	private List<InterviewEntity> interviews;
+	private Set<InterviewEntity> interviews;
 	
 	@OneToOne
 	private JobProposalEntity proposal;
 
-	public List<InterviewEntity> getInterviews() {
-		System.out.println(interviews.size());
+	public Set<InterviewEntity> getInterviews() {
 		return interviews;
 	}
 

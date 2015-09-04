@@ -287,6 +287,13 @@ public class ScriptBean implements Serializable {
 		this.option = option;
 	}
 	
+	public long getSelectedId() {
+		return selectedId;
+	}
+
+	public void setSelectedId(long selectedId) {
+		this.selectedId = selectedId;
+	}
 	
 	// helper methods
 	
@@ -302,11 +309,5 @@ public class ScriptBean implements Serializable {
 		return request.getSession();
 	}
 
-	public long getSelectedId() {
-		return selectedId;
-	}
-
-	public void setSelectedId(long selectedId) {
-		this.selectedId = selectedId;
-	}
+	
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,7 +44,7 @@ public class InterviewEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(nullable=false)
 	private ApplicationEntity application;
 	
@@ -54,7 +55,6 @@ public class InterviewEntity {
 	private Date date;
 	
 	@ManyToMany(mappedBy="interviews", fetch=FetchType.EAGER)
-	//@Fetch(FetchMode.SELECT)
 	private Set<WorkerEntity> interviewers;
 
 	

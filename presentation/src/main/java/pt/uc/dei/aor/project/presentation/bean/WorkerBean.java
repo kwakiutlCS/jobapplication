@@ -40,9 +40,7 @@ public class WorkerBean {
 			surname = null;
 			roles = null;
 		} catch (NoRoleException e) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Missing role", "At least one role should be selected");
-			FacesContext.getCurrentInstance().addMessage(null, msg);
+			setMsg("Missing role", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -100,6 +98,15 @@ public class WorkerBean {
 
 	public void setRoles(List<Role> role) {
 		this.roles = role;
+	}
+	
+	
+	// helper methods
+	
+	private void setMsg(String text, Severity severity) {
+		FacesMessage msg = new FacesMessage(severity,
+				text, text);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 }
 
