@@ -8,11 +8,13 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
+import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
@@ -82,6 +84,24 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		if (entity == null) return null;
 		
 		return new InterviewProxy(entity);
+	}
+
+
+	@Override
+	public IInterview findInterview(IInterview interview) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findInterviewByDateAndApplication",
+				InterviewEntity.class);
+		query.setParameter("date", interview.getDateObject());
+		
+		ApplicationEntity applicationEntity = GenericPersistenceService.getEntity(interview.getApplication());
+		query.setParameter("application", applicationEntity);
+		
+		List<InterviewEntity> entities = query.getResultList();
+		
+		if (entities.isEmpty()) return null;
+		
+		return new InterviewProxy(entities.get(0));
+
 	}
 
 }

@@ -26,9 +26,11 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 @Table(name="interview")
 @NamedQueries({
-	@NamedQuery(name = "Interview.findAllInterviews", query="from InterviewEntity u"),
+	@NamedQuery(name = "Interview.findAllInterviews", query = "from InterviewEntity u"),
 	@NamedQuery(name = "Interview.findActiveInterviewsByInterviewer", 
-	query="from InterviewEntity u where :user member of u.interviewers and u.date >= :date"),
+	query = "from InterviewEntity u where :user member of u.interviewers and u.date >= :date"),
+	@NamedQuery(name = "Interview.findInterviewByDateAndApplication", 
+	query = "from InterviewEntity u where u.date = :date and u.application = :application"),	
 })
 public class InterviewEntity implements Comparable<InterviewEntity> {
 	
@@ -65,7 +67,6 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	public Date getDate() {
 		return date;
 	}
-
 
 
 	public Set<WorkerEntity> getInterviewers() {

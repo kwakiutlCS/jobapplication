@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -13,7 +15,8 @@ public interface IInterviewBusinessService {
 	
 	List<IInterview> findActiveInterviewsByUser(IWorker user);
 
-	IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers);
+	IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) 
+			throws GenericIllegalParamsException, RepeatedInterviewException;
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
 

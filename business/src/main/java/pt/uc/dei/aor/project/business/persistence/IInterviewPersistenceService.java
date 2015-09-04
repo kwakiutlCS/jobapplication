@@ -17,4 +17,6 @@ public interface IInterviewPersistenceService {
 	List<IInterview> findActiveInterviewsByUser(IWorker user);
 
 	IInterview findInterviewById(long id);
+
+	IInterview findInterview(IInterview interview);
 }

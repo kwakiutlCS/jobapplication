@@ -7,6 +7,8 @@ public interface IInterview {
 
 	public String getDate();
 	
+	public Date getDateObject();
+	
 	public IApplication getApplication();
 	
 	public ICandidate getCandidate();

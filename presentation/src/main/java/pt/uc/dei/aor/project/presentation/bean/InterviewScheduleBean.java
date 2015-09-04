@@ -17,6 +17,8 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -63,7 +65,6 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public List<IInterview> getInterviewsByApplication() {
-		//return selectedApplication.getInterviews();
 		return interviewService.findInterviewsByApplication(selectedApplication);
 	}
 	
@@ -96,8 +97,12 @@ public class InterviewScheduleBean implements Serializable {
 		calendar.set(Calendar.HOUR, Integer.parseInt(hours[0]));
 		calendar.set(Calendar.MINUTE, Integer.parseInt(hours[1]));
 		
-		selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
-		setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
+		try {
+			selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
+			setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
+		} catch (GenericIllegalParamsException | RepeatedInterviewException e) {
+			setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
+		}
 		
 		selectedInterviewers.clear();
 		interviewDate = null;

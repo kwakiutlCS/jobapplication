@@ -7,6 +7,8 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -42,8 +44,16 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) {
+	public IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) 
+			throws GenericIllegalParamsException, RepeatedInterviewException {
+		if (date == null || application == null 
+				|| interviewers == null) throw new GenericIllegalParamsException();
+		
 		IInterview interview = factory.interview(application, date);
+		
+		IInterview existingInterview = interviewPersistence.findInterview(interview);
+		if (existingInterview != null) throw new RepeatedInterviewException();
+		
 		interview = interviewPersistence.save(interview);
 		
 		for (IWorker w : interviewers) {

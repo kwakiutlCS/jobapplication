@@ -97,5 +97,11 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		return s.toString();
 	}
 
+
+	@Override
+	public Date getDateObject() {
+		return entity.getDate();
+	}
+
 	
 }
