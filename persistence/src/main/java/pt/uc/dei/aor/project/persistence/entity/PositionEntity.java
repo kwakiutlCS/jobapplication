@@ -42,7 +42,7 @@ public class PositionEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	
 	@Column(nullable=false)
 	private long code;
@@ -86,7 +86,7 @@ public class PositionEntity {
 	private String description;
 	
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
     @ManyToOne
@@ -125,7 +125,7 @@ public class PositionEntity {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
