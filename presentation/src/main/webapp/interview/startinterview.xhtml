@@ -6,47 +6,63 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">Interview</ui:define>
-	
-	
+
+
 	<ui:define name="metadata">
 		<f:metadata>
-    		<f:viewParam name="it" value="#{interviewBean.selectedInterviewId}" />
-    		<f:viewAction action="#{interviewBean.onload}" />
+			<f:viewParam name="it" value="#{interviewBean.selectedInterviewId}" />
+			<f:viewAction action="#{interviewBean.onload}" />
 		</f:metadata>
 	</ui:define>
-	
-	
-	<ui:define name="content">
-		
-	    <p:panelGrid columns="1">
-	    <ui:repeat value="#{interviewBean.scriptEntries}" var="entry">
-				<h:panelGroup layout="block" styleClass="questionBlock">
-					<h:panelGroup layout="block" styleClass="questionTitle">
-					#{entry.text}
-				</h:panelGroup>
-					<p:inputText rendered="#{entry.questionType eq 'SHORT_ANSWER'}" />
-					<p:inputTextarea rendered="#{entry.questionType eq 'LONG_ANSWER'}" />
-					<p:inputMask rendered="#{entry.questionType eq 'TIME'}"
-						mask="99h99" />
-					<p:calendar navigator="true"
-						rendered="#{entry.questionType eq 'DATE'}" />
-					<p:selectOneRadio rendered="#{entry.questionType eq 'TRUE_FALSE'}">
-						<f:selectItem itemLabel="yes" />
-						<f:selectItem itemLabel="no" />
-					</p:selectOneRadio>
-					<p:selectOneMenu rendered="#{entry.questionType eq 'SCALE'}">
-						<f:selectItems value="#{scriptBean.getScaleValues(entry)}" />
-					</p:selectOneMenu>
-					<p:selectOneRadio
-						rendered="#{entry.questionType eq 'MULTIPLE_CHOICE'}"
-						layout="grid" columns="3">
-						<f:selectItems value="#{entry.answers}" var="answer"
-							itemLabel="#{answer.text}" />
-					</p:selectOneRadio>
-				</h:panelGroup>
-			</ui:repeat>
-		</p:panelGrid>
 
+
+	<ui:define name="content">
+		<ui:repeat value="#{interviewBean.scriptEntries}" var="entry" varStatus="status">
+			<h:panelGroup>
+				<h:form>
+					<p:commandLink value="q#{status.index+1}"
+						action="#{interviewBean.changeQuestion(entry)}"
+						update=":answerForm" />
+				</h:form>
+			</h:panelGroup>
+		</ui:repeat>
+		
+		<h:form id="answerForm">
+			<h:panelGroup layout="block" styleClass="questionTitle">
+				#{interviewBean.selectedEntry.text}
+			</h:panelGroup>
+
+			<p:inputText value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'SHORT_ANSWER'}"
+				required="true" />
+			<p:inputTextarea value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'LONG_ANSWER'}"
+				required="true" />
+			<p:inputMask value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'TIME'}"
+				required="true" mask="99h99" validator="#{timeValidator.validate}" />
+			<p:calendar navigator="true" required="true" value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'DATE'}" />
+			<p:selectOneRadio value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'TRUE_FALSE'}"
+				required="true">
+				<f:selectItem itemLabel="yes" itemValue="yes" />
+				<f:selectItem itemLabel="no" itemValue="no" />
+			</p:selectOneRadio>
+			<p:selectOneMenu value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'SCALE'}"
+				required="true">
+				<f:selectItems value="#{scriptBean.getScaleValues(entry)}" />
+			</p:selectOneMenu>
+			<p:selectOneRadio value="#{interviewBean.answer}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'MULTIPLE_CHOICE'}"
+				required="true" layout="grid" columns="3">
+				<f:selectItems value="#{interviewBean.selectedEntry.answers}"
+					var="answer" itemLabel="#{answer.text}" />
+			</p:selectOneRadio>
+
+			<p:commandButton value="Save answer" action="#{interviewBean.saveAnswer}" />
+		</h:form>
 	</ui:define>
 
 </ui:composition>

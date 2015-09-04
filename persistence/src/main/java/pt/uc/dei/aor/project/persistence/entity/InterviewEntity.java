@@ -18,6 +18,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -60,6 +61,8 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	@ManyToMany(mappedBy="interviews", fetch=FetchType.EAGER)
 	private Set<WorkerEntity> interviewers;
 
+	@OneToMany(mappedBy="interview")
+	private List<AnswerEntity> answers;
 	
 	
 	// getters and setters

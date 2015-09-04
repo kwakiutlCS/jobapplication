@@ -12,12 +12,32 @@ import javax.persistence.Table;
 @Table(name="answer")
 public class AnswerEntity {
 	
+	public AnswerEntity(InterviewEntity interview, String question, String answer, int position) {
+		this.interview = interview;
+		this.question = question;
+		this.answer = answer;
+		this.position = position;
+	}
+	
+	public AnswerEntity() {
+		
+	}
+
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column
-	private int id_answer;
+	private long id;
 
 	@ManyToOne
 	private InterviewEntity interview;
+	
+	@Column
+	private String question;
+	
+	@Column
+	private String answer;
+	
+	@Column
+	private int position;
+	
 
 }

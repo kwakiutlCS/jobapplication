@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.ejb.Stateless;
 
+import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
@@ -13,6 +14,7 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
+import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
@@ -70,6 +72,11 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IApplication application() {
 		return new ApplicationProxy();
+	}
+
+	@Override
+	public IAnswer answer(IInterview interview, String answer, IScriptEntry entry) {
+		return new AnswerProxy(interview, answer, entry);
 	}
 
 	

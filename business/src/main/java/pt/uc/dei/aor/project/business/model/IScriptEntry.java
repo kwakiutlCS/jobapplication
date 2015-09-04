@@ -28,4 +28,6 @@ public interface IScriptEntry {
 	public void addAnswer(IAnswerChoice option);
 
 	public void removeAnswer(IAnswerChoice answer);
+
+	public int getPosition();
 }

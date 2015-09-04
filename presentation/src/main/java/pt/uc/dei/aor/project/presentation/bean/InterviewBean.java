@@ -23,21 +23,31 @@ public class InterviewBean implements Serializable {
 	private long selectedInterviewId;
 	private IInterview selectedInterview;
 
+	private List<IScriptEntry> scriptEntries;
+	private IScriptEntry selectedEntry;
+	
+	private String answer;
 	
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
 	
 	
-	public List<IScriptEntry> getScriptEntries() {
-		return interviewService.getScriptEntries(selectedInterview);
-	}
-	
 	public void onload() {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
+		scriptEntries = findScriptEntries();
+		
+		if (scriptEntries != null || !scriptEntries.isEmpty())
+			selectedEntry = scriptEntries.get(0);
 	}
 	
+	public void changeQuestion(IScriptEntry entry) {
+		selectedEntry = entry;
+	}
 	
+	public void saveAnswer() {
+		interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+	}
 	
 	
 	// helper functions
@@ -48,7 +58,9 @@ public class InterviewBean implements Serializable {
 		return (IWorker) request.getSession().getAttribute("user");	
 	}
 
-	
+	private List<IScriptEntry> findScriptEntries() {
+		return interviewService.getScriptEntries(selectedInterview);
+	}
 	
 	// getters and setters
 	
@@ -67,7 +79,36 @@ public class InterviewBean implements Serializable {
 	public void setSelectedInterviewId(long selectedInterviewId) {
 		this.selectedInterviewId = selectedInterviewId;
 	}
+
+	public IScriptEntry getSelectedEntry() {
+		return selectedEntry;
+	}
+
+	public void setSelectedEntry(IScriptEntry selectedEntry) {
+		this.selectedEntry = selectedEntry;
+	}
+
+	public void setScriptEntries(List<IScriptEntry> scriptEntries) {
+		this.scriptEntries = scriptEntries;
+	}
 	
+	public List<IScriptEntry> getScriptEntries() {
+		return scriptEntries;
+	}
+
+
+
+
+	public String getAnswer() {
+		return answer;
+	}
+
+
+
+
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
 	
 }
 

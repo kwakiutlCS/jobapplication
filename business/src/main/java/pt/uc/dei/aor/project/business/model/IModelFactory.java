@@ -27,4 +27,6 @@ public interface IModelFactory {
 	IApplication application();
 
 	IInterview interview(IApplication application, Date date);
+
+	IAnswer answer(IInterview interview, String answer, IScriptEntry entry);
 }
