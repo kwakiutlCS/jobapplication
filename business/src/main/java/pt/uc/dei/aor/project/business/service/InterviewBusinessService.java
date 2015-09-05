@@ -142,5 +142,11 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		
 		return entries;
 	}
+
+
+	@Override
+	public List<IInterview> findInterviews(int offset, int limit) {
+		return interviewPersistence.findInterviews(offset, limit);
+	}
 	
 }

@@ -5,9 +5,26 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="title">Interview list</ui:define>
+	
+	<ui:define name="metadata">
+		<f:metadata>
+    		<f:viewParam name="ofs" value="#{interviewListBean.offset}" />
+    		<f:viewAction action="#{interviewListBean.onload}" />
+		</f:metadata>
+	</ui:define>
+	
 	<ui:define name="content">
+	
+		<h:form>
+			
+		
+		</h:form>
 
-		TODO
+		<p:dataTable value="#{interviewListBean.interviews}" var="interview">
+			<p:column>#{interview.date}</p:column>
+			<p:column>#{interview.interviewersFormatted}</p:column>
+		</p:dataTable>
 
 	</ui:define>
 </ui:composition>

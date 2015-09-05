@@ -10,6 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -102,6 +105,28 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		
 		return new InterviewProxy(entities.get(0));
 
+	}
+
+
+	@Override
+	public List<IInterview> findInterviews(int offset, int limit) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<InterviewEntity> q = cb.createQuery(InterviewEntity.class);
+		Root<InterviewEntity> root = q.from(InterviewEntity.class);
+		q.select(root);
+		
+		TypedQuery<InterviewEntity> query = em.createQuery(q);
+		query.setFirstResult(offset);
+		query.setMaxResults(limit);
+		
+		List<InterviewEntity> entities = query.getResultList();
+		List<IInterview> proxies = new ArrayList<>();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
 	}
 
 }

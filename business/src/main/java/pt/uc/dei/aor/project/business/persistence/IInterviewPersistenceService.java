@@ -19,4 +19,6 @@ public interface IInterviewPersistenceService {
 	IInterview findInterviewById(long id);
 
 	IInterview findInterview(IInterview interview);
+
+	List<IInterview> findInterviews(int offset, int limit);
 }

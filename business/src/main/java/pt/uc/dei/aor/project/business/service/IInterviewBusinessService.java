@@ -35,5 +35,7 @@ public interface IInterviewBusinessService {
 	List<IAnswer> findAnswersByInterview(IInterview interview);
 
 	List<IScriptEntry> getCompleteScriptEntries(IInterview interview);
+
+	List<IInterview> findInterviews(int offset, int limit);
 	
 }

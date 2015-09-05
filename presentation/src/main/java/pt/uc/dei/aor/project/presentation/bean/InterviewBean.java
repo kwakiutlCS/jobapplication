@@ -89,11 +89,14 @@ public class InterviewBean implements Serializable {
 	}
 	
 	private IScriptEntry nextQuestion() {
-		int currentIndex = scriptEntries.indexOf(selectedEntry);
-		if (currentIndex < scriptEntries.size()-1) {
-			return scriptEntries.get(currentIndex+1);
+		int startIndex = scriptEntries.indexOf(selectedEntry);
+		int currentIndex = startIndex+1;
+		while (true) {
+			if (currentIndex == scriptEntries.size()) currentIndex = 0;
+			if (!isAnswered(currentIndex)) return scriptEntries.get(currentIndex);
+			currentIndex++;
+			if (startIndex == currentIndex) return scriptEntries.get(scriptEntries.size()-1);
 		}
-		return selectedEntry;
 	}
 	
 	private void getPreviousAnswer() {
@@ -201,6 +204,10 @@ public class InterviewBean implements Serializable {
 	
 	public boolean isFinalRemarks(IScriptEntry entry) {
 		return entry.equals(scriptEntries.get(scriptEntries.size()-1));
+	}
+	
+	public boolean isFinished() {
+		return !answersGiven.contains(false);
 	}
 }
 

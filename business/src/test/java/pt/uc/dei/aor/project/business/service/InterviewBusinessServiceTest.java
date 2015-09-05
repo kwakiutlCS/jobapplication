@@ -33,6 +33,7 @@ import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -70,6 +71,8 @@ public class InterviewBusinessServiceTest {
 	private Date date;
 	private IApplication application;
 	private List<IAnswer> answers;
+	private IPosition position;
+	private IScript script;
 	
 	
 	@Before
@@ -92,6 +95,9 @@ public class InterviewBusinessServiceTest {
 		answers.add(mock(IAnswer.class));
 		answers.add(mock(IAnswer.class));
 		answers.add(mock(IAnswer.class));
+		
+		position = mock(IPosition.class);
+		script = mock(IScript.class);
 	}
 	
 	
@@ -233,5 +239,30 @@ IInterview mockedInterview = mock(IInterview.class);
 		ejb.findInterviewById(id);
 		
 		verify(interviewEjb).findInterviewById(id);
+	}
+	
+	@Test
+	public void shouldCallCorrectFunctionsWhenFindScriptEntries() {
+		IInterview interview = mock(IInterview.class);
+		when(interview.getApplication()).thenReturn(application);
+		when(application.getPosition()).thenReturn(position);
+		when(position.getScript()).thenReturn(script);
+		
+		ejb.getScriptEntries(interview);
+		
+		verify(interview).getApplication();
+		verify(application).getPosition();
+		verify(position).getScript();
+		verify(script).getEntries();
+	}
+	
+	@Test
+	public void shouldReturnNullWhenPositionHasNoScriptInFindScriptEntries() {
+		IInterview interview = mock(IInterview.class);
+		when(interview.getApplication()).thenReturn(application);
+		when(application.getPosition()).thenReturn(position);
+		when(position.getScript()).thenReturn(null);
+		
+		assertThat(ejb.getScriptEntries(interview), is(equalTo(null)));
 	}
 }
