@@ -41,8 +41,11 @@
 			<p:inputMask value="#{interviewBean.answer}"
 				rendered="#{interviewBean.selectedEntry.questionType eq 'TIME'}"
 				required="true" mask="99h99" validator="#{timeValidator.validate}" />
-			<p:calendar navigator="true" required="true" value="#{interviewBean.answer}"
-				rendered="#{interviewBean.selectedEntry.questionType eq 'DATE'}" />
+			<p:calendar navigator="true" required="true" value="#{interviewBean.answerDate}"
+				rendered="#{interviewBean.selectedEntry.questionType eq 'DATE'}" 
+				pattern="dd/MM/yyyy" locale="pt" mode="inline">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</p:calendar>
 			<p:selectOneRadio value="#{interviewBean.answer}"
 				rendered="#{interviewBean.selectedEntry.questionType eq 'TRUE_FALSE'}"
 				required="true">
@@ -52,7 +55,8 @@
 			<p:selectOneMenu value="#{interviewBean.answer}"
 				rendered="#{interviewBean.selectedEntry.questionType eq 'SCALE'}"
 				required="true">
-				<f:selectItems value="#{scriptBean.getScaleValues(entry)}" />
+				<f:selectItem itemLabel="Choose option:" noSelectionOption="true" />
+				<f:selectItems value="#{scriptBean.getScaleValues(interviewBean.selectedEntry)}" />
 			</p:selectOneMenu>
 			<p:selectOneRadio value="#{interviewBean.answer}"
 				rendered="#{interviewBean.selectedEntry.questionType eq 'MULTIPLE_CHOICE'}"

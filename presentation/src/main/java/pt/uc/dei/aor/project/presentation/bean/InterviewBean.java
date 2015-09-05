@@ -1,7 +1,11 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -13,6 +17,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 
 @Named
 @ViewScoped
@@ -27,6 +32,7 @@ public class InterviewBean implements Serializable {
 	private IScriptEntry selectedEntry;
 	
 	private String answer;
+	private Date answerDate;
 	
 	@Inject
 	private IInterviewBusinessService interviewService;
@@ -37,21 +43,26 @@ public class InterviewBean implements Serializable {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
 		scriptEntries = findScriptEntries();
 		
-		if (scriptEntries != null || !scriptEntries.isEmpty())
+		if (scriptEntries != null || !scriptEntries.isEmpty()) {
 			selectedEntry = scriptEntries.get(0);
+			getPreviousAnswer();
+		}
 	}
 	
 	public void changeQuestion(IScriptEntry entry) {
 		selectedEntry = entry;
-		this.answer = interviewService.findAnswerByInterviewAndQuestion(selectedInterview, 
-				selectedEntry.getText());
+		getPreviousAnswer();
 	}
 	
 	public void saveAnswer() {
-		interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+		if (selectedEntry.getQuestionType() != QuestionType.DATE)
+			interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+		else {
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
+		}
 		selectedEntry = nextQuestion();
-		this.answer = interviewService.findAnswerByInterviewAndQuestion(selectedInterview, 
-				selectedEntry.getText());
+		getPreviousAnswer();
 	}
 	
 	
@@ -75,6 +86,32 @@ public class InterviewBean implements Serializable {
 		return selectedEntry;
 	}
 	
+	private void getPreviousAnswer() {
+		if (selectedEntry.getQuestionType() != QuestionType.DATE) {
+			answer = interviewService.findAnswerByInterviewAndQuestion(selectedInterview, 
+					selectedEntry.getText());
+		}
+		else {
+			String date = interviewService.findAnswerByInterviewAndQuestion(selectedInterview, 
+					selectedEntry.getText());
+			
+			System.out.println(date);
+			
+			if (date == null) {
+				answerDate = null;
+				return;
+			}
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+			try {
+				answerDate = sdf.parse(date);
+				System.out.println(answerDate);
+			} catch (ParseException e) {
+				answerDate = null;
+			}
+		}
+	}
 	
 	
 	// getters and setters
@@ -123,6 +160,14 @@ public class InterviewBean implements Serializable {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public Date getAnswerDate() {
+		return answerDate;
+	}
+
+	public void setAnswerDate(Date answerDate) {
+		this.answerDate = answerDate;
 	}
 	
 }

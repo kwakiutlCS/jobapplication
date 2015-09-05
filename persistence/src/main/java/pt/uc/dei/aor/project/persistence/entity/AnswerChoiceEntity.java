@@ -70,6 +70,6 @@ public class AnswerChoiceEntity implements Comparable<AnswerChoiceEntity>, Seria
 	
 	@Override
 	public String toString() {
-		return id+" -> "+answer;
+		return answer;
 	}
 }

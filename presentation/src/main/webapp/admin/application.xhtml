@@ -17,7 +17,8 @@
 	
 	
 	<ui:define name="content">
-		<p:dataTable id="interviewList" value="#{interviewScheduleBean.selectedApplication.interviews}" var="interview">
+		<p:dataTable id="interviewList" value="#{interviewScheduleBean.selectedApplication.interviews}" 
+		var="interview">
 			<p:column>
 				#{interview.date}
 			</p:column>
