@@ -18,6 +18,7 @@ import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
@@ -77,6 +78,11 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IAnswer answer(IInterview interview, String answer, IScriptEntry entry) {
 		return new AnswerProxy(interview, answer, entry);
+	}
+
+	@Override
+	public IScriptEntry scriptEntry(QuestionType questionType, String question, int position) {
+		return new ScriptEntryProxy(questionType, question, position);
 	}
 
 	

@@ -70,9 +70,7 @@ public class InterviewBean implements Serializable {
 			interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
 		}
 		
-		System.out.println(answersGiven);
 		answersGiven.set(scriptEntries.indexOf(selectedEntry), true);
-		System.out.println(answersGiven);
 		selectedEntry = nextQuestion();
 		getPreviousAnswer();
 	}
@@ -87,7 +85,7 @@ public class InterviewBean implements Serializable {
 	}
 
 	private List<IScriptEntry> findScriptEntries() {
-		return interviewService.getScriptEntries(selectedInterview);
+		return interviewService.getCompleteScriptEntries(selectedInterview);
 	}
 	
 	private IScriptEntry nextQuestion() {
@@ -194,8 +192,15 @@ public class InterviewBean implements Serializable {
 	}
 	
 	public boolean isAnswered(int i) {
-		System.out.println(i+" -> "+answersGiven.get(i));
 		return answersGiven.get(i);
+	}
+	
+	public boolean isSelectedEntry(IScriptEntry entry) {
+		return entry.equals(selectedEntry);
+	}
+	
+	public boolean isFinalRemarks(IScriptEntry entry) {
+		return entry.equals(scriptEntries.get(scriptEntries.size()-1));
 	}
 }
 

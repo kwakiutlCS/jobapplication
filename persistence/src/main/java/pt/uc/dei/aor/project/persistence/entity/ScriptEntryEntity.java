@@ -56,6 +56,7 @@ public class ScriptEntryEntity implements Comparable<ScriptEntryEntity>, Seriali
 		question = new QuestionEntity(questionText, questionType, list);
 	}
 
+	
 	public QuestionEntity getQuestion() {
 		return question;
 	}

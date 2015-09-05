@@ -22,6 +22,7 @@ import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 
 
 @Stateless
@@ -130,6 +131,16 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Override
 	public List<IAnswer> findAnswersByInterview(IInterview interview) {
 		return answerPersistence.findAnswersByInterview(interview);
+	}
+
+
+	@Override
+	public List<IScriptEntry> getCompleteScriptEntries(IInterview interview) {
+		List<IScriptEntry> entries = getScriptEntries(interview);
+		entries.add(factory.scriptEntry(QuestionType.LONG_ANSWER, 
+				"Interview's Global Appreciation", entries.size()));
+		
+		return entries;
 	}
 	
 }

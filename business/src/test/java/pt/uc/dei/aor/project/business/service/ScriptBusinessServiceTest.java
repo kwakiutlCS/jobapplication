@@ -21,6 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
+import pt.uc.dei.aor.project.business.exception.ReservedQuestionException;
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IScript;
@@ -49,7 +50,7 @@ public class ScriptBusinessServiceTest {
 	
 	
 	@Test
-	public void shouldCallMethodWhenAddQuestionToScriptCorrectly() throws IllegalQuestionTypeException {
+	public void shouldCallMethodWhenAddQuestionToScriptCorrectly() throws IllegalQuestionTypeException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.SHORT_ANSWER;
 		ejb.addQuestion(iScript, questionText, questionType);
@@ -57,21 +58,37 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalQuestionTypeException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithMultipleChoice() throws IllegalQuestionTypeException {
+	public void shouldThrowExceptionWhenAddQuestionWithMultipleChoice() throws IllegalQuestionTypeException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		ejb.addQuestion(iScript, questionText, questionType);
 	}
 	
+	@Test(expected=ReservedQuestionException.class)
+	public void shouldThrowExceptionWhenAddReservedQuestion() throws IllegalQuestionTypeException, ReservedQuestionException {
+		String questionText = "Interview's Global Appreciation ";
+		QuestionType questionType = QuestionType.LONG_ANSWER;
+		ejb.addQuestion(iScript, questionText, questionType);
+	}
+	
+	@Test(expected=ReservedQuestionException.class)
+	public void shouldThrowExceptionWhenAddReservedQuestion2() throws IllegalQuestionTypeException, ReservedQuestionException, IllegalScaleException {
+		String questionText = "Interview's Global Appreciation ";
+			QuestionType questionType = QuestionType.SCALE;
+		int min = 1;
+		int max = 5;
+		ejb.addQuestion(iScript, questionText, questionType, min, max);
+	}
+	
 	@Test(expected=IllegalQuestionTypeException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithScale() throws IllegalQuestionTypeException {
+	public void shouldThrowExceptionWhenAddQuestionWithScale() throws IllegalQuestionTypeException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.SCALE;
 		ejb.addQuestion(iScript, questionText, questionType);
 	}
 	
 	@Test
-	public void shouldCallMethodWhenAddQuestionToScriptWithScale() throws IllegalQuestionTypeException, IllegalScaleException {
+	public void shouldCallMethodWhenAddQuestionToScriptWithScale() throws IllegalQuestionTypeException, IllegalScaleException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.SCALE;
 		int min = 1;
@@ -81,7 +98,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalScaleException.class)
-	public void shouldThrowExceptionWhenAddQuestionToScriptWithWrongScale() throws IllegalQuestionTypeException, IllegalScaleException {
+	public void shouldThrowExceptionWhenAddQuestionToScriptWithWrongScale() throws IllegalQuestionTypeException, IllegalScaleException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.SCALE;
 		int min = 1;
@@ -90,7 +107,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalQuestionTypeException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithoutScale() throws IllegalQuestionTypeException, IllegalScaleException {
+	public void shouldThrowExceptionWhenAddQuestionWithoutScale() throws IllegalQuestionTypeException, IllegalScaleException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.SHORT_ANSWER;
 		int min = 1;
@@ -99,7 +116,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test
-	public void shouldCallMethodWhenAddQuestionToScriptWithMultipleChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldCallMethodWhenAddQuestionToScriptWithMultipleChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Noite"});
@@ -121,8 +138,30 @@ public class ScriptBusinessServiceTest {
 		verify(iScript).addQuestion(questionText, questionType, set);
 	}
 	
+	@Test(expected=ReservedQuestionException.class)
+	public void shouldThrowExceptionWhenAddReservedQuestion3() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
+		String questionText = "Interview's Global Appreciation";
+		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
+		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Noite"});
+		
+		IAnswerChoice ac1 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac2 = Mockito.mock(IAnswerChoice.class);
+		IAnswerChoice ac3 = Mockito.mock(IAnswerChoice.class);
+		
+		Set<IAnswerChoice> set = new HashSet<>();
+		set.add(ac1);
+		set.add(ac2);
+		set.add(ac3);
+		
+		Mockito.when(factory.answerChoice("Manhã")).thenReturn(ac1);
+		Mockito.when(factory.answerChoice("Tarde")).thenReturn(ac2);
+		Mockito.when(factory.answerChoice("Noite")).thenReturn(ac3);
+		
+		ejb.addQuestion(iScript, questionText, questionType, options);
+	}
+	
 	@Test(expected=IllegalQuestionTypeException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithoutMultipleChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithoutMultipleChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.SHORT_ANSWER;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Noite"});
@@ -130,7 +169,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithOneChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithOneChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã"});
@@ -138,7 +177,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithNullChoices() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithNullChoices() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = null;
@@ -146,7 +185,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithRepeatedChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithRepeatedChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "Manhã"});
@@ -154,7 +193,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithEmptyChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithEmptyChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", ""});
@@ -162,7 +201,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test(expected=IllegalAnswerOptionsException.class)
-	public void shouldThrowExceptionWhenAddQuestionWithNullChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldThrowExceptionWhenAddQuestionWithNullChoice() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", null});
@@ -170,7 +209,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test
-	public void shouldNotThrowExceptionWhenAddQuestionWithRepeatedChoice2() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldNotThrowExceptionWhenAddQuestionWithRepeatedChoice2() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"Manhã", "Tarde", "manhã"});
@@ -194,7 +233,7 @@ public class ScriptBusinessServiceTest {
 	
 	
 	@Test
-	public void shouldTrimAnswersWhenAddQuestion() throws IllegalQuestionTypeException, IllegalAnswerOptionsException {
+	public void shouldTrimAnswersWhenAddQuestion() throws IllegalQuestionTypeException, IllegalAnswerOptionsException, ReservedQuestionException {
 		String questionText = "a question text";
 		QuestionType questionType = QuestionType.MULTIPLE_CHOICE;
 		List<String> options = Arrays.asList(new String[]{"  Manhã", "Tarde  ", " Noite  "});
@@ -247,7 +286,7 @@ public class ScriptBusinessServiceTest {
 	}
 	
 	@Test 
-	public void shouldReorderQuestionsCorrectly() throws IllegalQuestionTypeException {
+	public void shouldReorderQuestionsCorrectly() throws IllegalQuestionTypeException, ReservedQuestionException {
 		ejb.addQuestion(iScript, "question1", QuestionType.SHORT_ANSWER);
 		ejb.addQuestion(iScript, "question2", QuestionType.SHORT_ANSWER);
 		ejb.addQuestion(iScript, "question3", QuestionType.SHORT_ANSWER);

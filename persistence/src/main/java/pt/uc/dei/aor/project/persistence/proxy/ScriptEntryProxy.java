@@ -26,6 +26,10 @@ public class ScriptEntryProxy implements IScriptEntry, IProxyToEntity<ScriptEntr
 		this(null);
 	}
 
+	public ScriptEntryProxy(QuestionType questionType, String question, int position) {
+		entity = new ScriptEntryEntity(question, questionType, position);
+	}
+
 	@Override
 	public ScriptEntryEntity getEntity() {
 		return entity;

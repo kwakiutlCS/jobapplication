@@ -26,10 +26,13 @@
 				varStatus="status">
 				<h:panelGroup styleClass="inlineForm 
 				        #{interviewBean.isAnswered(status.index) ? 'answered' : 'notAnswered'}
-						 #{entry eq interviewBean.selectedEntry ? 'active' : ''}"
+						 #{interviewBean.isSelectedEntry(entry) ? 'active' : ''}
+						 #{interviewBean.isFinalRemarks(entry) ? 'finalRemarksBtn' : ''}"
 					id="navItem">
 					<h:form>
-						<p:commandLink value="#{status.index+1}" update=":answerForm :navigationPanel"
+						<p:commandLink value="#{interviewBean.isFinalRemarks(entry) ? 
+						        'Global Appreciation' : status.index+1}" 
+						    update=":answerForm :navigationPanel"
 							action="#{interviewBean.changeQuestion(entry)}"
 							styleClass="questionLink #{interviewBean.isAnswered(status.index) ?
 						 'answered' : 'notAnswered'}" />

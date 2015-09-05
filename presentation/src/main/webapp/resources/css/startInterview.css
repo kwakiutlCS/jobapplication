@@ -28,6 +28,14 @@
 	border: 2px solid red;	
 }
 
+.inlineForm.answered.active.finalRemarksBtn,
+.inlineForm.notAnswered.active.finalRemarksBtn,
+.inlineForm.answered.finalRemarksBtn,
+.inlineForm.notAnswered.finalRemarksBtn {
+	width: 180px;
+}
+
+
 .inlineForm {
 	display: inline-block;
 	margin: 10px;

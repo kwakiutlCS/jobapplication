@@ -33,5 +33,7 @@ public interface IInterviewBusinessService {
 	String findAnswerByInterviewAndQuestion(IInterview interview, String text);
 
 	List<IAnswer> findAnswersByInterview(IInterview interview);
+
+	List<IScriptEntry> getCompleteScriptEntries(IInterview interview);
 	
 }

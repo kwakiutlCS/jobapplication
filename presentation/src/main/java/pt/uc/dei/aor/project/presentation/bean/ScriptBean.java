@@ -22,6 +22,7 @@ import org.primefaces.event.ReorderEvent;
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
 import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
+import pt.uc.dei.aor.project.business.exception.ReservedQuestionException;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.service.IScriptBusinessService;
@@ -81,6 +82,8 @@ public class ScriptBean implements Serializable {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Illegal scale values");
 			} catch (IllegalQuestionTypeException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
+			} catch (ReservedQuestionException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Reserved question");
 			}
 		}
 		else if (questionType.equals(QuestionType.MULTIPLE_CHOICE)) {
@@ -92,6 +95,8 @@ public class ScriptBean implements Serializable {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
 			} catch (IllegalAnswerOptionsException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Illegal answer options");
+			} catch (ReservedQuestionException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Reserved question");
 			} catch (Exception e) {
 				System.out.println("FINALEXCEPTION: "+e.getMessage());
 			}
@@ -102,6 +107,8 @@ public class ScriptBean implements Serializable {
 				questionText = null;
 			} catch (IllegalQuestionTypeException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Duplicated question");
+			} catch (ReservedQuestionException e) {
+				addMessage(FacesMessage.SEVERITY_ERROR, "Reserved question");
 			}
 		}
 	}

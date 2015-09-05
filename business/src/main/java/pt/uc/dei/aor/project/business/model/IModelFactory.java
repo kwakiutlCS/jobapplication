@@ -5,6 +5,7 @@ import java.util.Date;
 
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
@@ -29,4 +30,6 @@ public interface IModelFactory {
 	IInterview interview(IApplication application, Date date);
 
 	IAnswer answer(IInterview interview, String answer, IScriptEntry entry);
+
+	IScriptEntry scriptEntry(QuestionType questionType, String question, int position);
 }
