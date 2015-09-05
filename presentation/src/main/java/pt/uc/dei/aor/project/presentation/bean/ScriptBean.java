@@ -111,7 +111,6 @@ public class ScriptBean implements Serializable {
 	}
 	
 	public void updateScript() {
-		System.out.println("WEB updating");
 		editableScript = scriptEjb.update(editableScript);
 	}
 	

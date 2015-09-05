@@ -43,5 +43,23 @@ public class AnswerProxy implements IAnswer, IProxyToEntity<AnswerEntity> {
 	public AnswerEntity getEntity() {
 		return entity;
 	}
+
+
+	@Override
+	public String getQuestion() {
+		return entity.getQuestion();
+	}
+
+
+	@Override
+	public IInterview getInterview() {
+		return new InterviewProxy(entity.getInterview());
+	}
+
+
+	@Override
+	public void setAnswer(String answer) {
+		entity.setAnswer(answer);
+	}
 	
 }

@@ -61,7 +61,7 @@
 					var="answer" itemLabel="#{answer.text}" />
 			</p:selectOneRadio>
 
-			<p:commandButton value="Save answer" action="#{interviewBean.saveAnswer}" />
+			<p:commandButton value="Save answer" action="#{interviewBean.saveAnswer}" update="@form" />
 		</h:form>
 	</ui:define>
 

@@ -56,7 +56,7 @@ public class ScriptBusinessService implements IScriptBusinessService {
 	public IScript addQuestion(IScript script, String questionText, QuestionType questionType) throws IllegalQuestionTypeException {
 		if (questionType.equals(QuestionType.SCALE) || questionType.equals(QuestionType.MULTIPLE_CHOICE))
 			throw new IllegalQuestionTypeException();
-		script.addQuestion(questionText, questionType);
+		script.addQuestion(questionText.trim(), questionType);
 		return update(script);
 	}
 
@@ -65,7 +65,7 @@ public class ScriptBusinessService implements IScriptBusinessService {
 			throws IllegalQuestionTypeException, IllegalScaleException { 
 		if (!QuestionType.SCALE.equals(questionType)) throw new IllegalQuestionTypeException();
 		if (max <= min) throw new IllegalScaleException();
-		script.addQuestion(questionText, questionType, min, max);
+		script.addQuestion(questionText.trim(), questionType, min, max);
 		return update(script);
 	}
 
@@ -83,7 +83,7 @@ public class ScriptBusinessService implements IScriptBusinessService {
 		}
 		if (answerChoices.size() < options.size()) throw new IllegalAnswerOptionsException();
 		
-		script.addQuestion(questionText, questionType, answerChoices);
+		script.addQuestion(questionText.trim(), questionType, answerChoices);
 		return update(script);
 	}
 

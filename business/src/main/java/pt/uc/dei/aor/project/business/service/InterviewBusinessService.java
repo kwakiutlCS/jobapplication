@@ -106,7 +106,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 	@Override
 	public IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) {
-		IAnswer answerProxy = factory.answer(interview, answer, entry);
+		IAnswer answerProxy = answerPersistence.findAnswerByInterviewAndQuestion(interview, entry.getText());
+		
+		if (answerProxy == null) answerProxy = factory.answer(interview, answer, entry);
+		else answerProxy.setAnswer(answer);
 		
 		return answerPersistence.save(answerProxy);
 	}

@@ -47,6 +47,7 @@ public class InterviewBean implements Serializable {
 	
 	public void saveAnswer() {
 		interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+		selectedEntry = nextQuestion();
 	}
 	
 	
@@ -61,6 +62,16 @@ public class InterviewBean implements Serializable {
 	private List<IScriptEntry> findScriptEntries() {
 		return interviewService.getScriptEntries(selectedInterview);
 	}
+	
+	private IScriptEntry nextQuestion() {
+		int currentIndex = scriptEntries.indexOf(selectedEntry);
+		if (currentIndex < scriptEntries.size()-1) {
+			return scriptEntries.get(currentIndex+1);
+		}
+		return null;
+	}
+	
+	
 	
 	// getters and setters
 	
