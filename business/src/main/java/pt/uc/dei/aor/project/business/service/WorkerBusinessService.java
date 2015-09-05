@@ -9,6 +9,7 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -26,9 +27,9 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	
 	@Override
 	public IWorker createNewWorker(String login, String name, String surname, String email, String password,
-			Collection<Role> roles) throws NoRoleException {
+			Collection<Role> roles) throws NoRoleException, DuplicatedUserException {
 		if (roles.isEmpty()) throw new NoRoleException();
-		if (findWorkerByEmailOrLogin(email, login)) return null;
+		if (login.equals("admin") && findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
 		
 		IWorker worker = factory.worker(login, email, password, name, surname, roles);
 		

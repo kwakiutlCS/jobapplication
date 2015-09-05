@@ -35,6 +35,9 @@
 						 'answered' : 'notAnswered'}" />
 					</h:form>
 				</h:panelGroup>
+				<h:panelGroup rendered="#{(status.index+1)%10 eq 0}">
+					<br />
+				</h:panelGroup>
 			</ui:repeat>
 		</h:panelGroup>
 		

@@ -25,6 +25,7 @@ import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
+import pt.uc.dei.aor.project.business.persistence.IScriptEntryPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
@@ -36,6 +37,9 @@ public class ScriptBusinessServiceTest {
 	
 	@Mock
 	private IScriptPersistenceService scriptEjb;
+	
+	@Mock
+	private IScriptEntryPersistenceService entryEjb;
 	
 	@Mock
 	private IScript iScript;
@@ -380,5 +384,21 @@ public class ScriptBusinessServiceTest {
 		ejb.delete(iScript, entry);
 		verify(iScript).deleteQuestion(entry);
 		verify(scriptEjb).save(iScript);
+	}
+	
+	@Test
+	public void shouldCallCorrectFunctionWhenUpdateEntry() {
+		IScriptEntry entry = Mockito.mock(IScriptEntry.class);
+		
+		ejb.updateEntry(entry);
+		verify(entryEjb).save(entry);
+	}
+	
+	@Test
+	public void shouldCallCorrectFunctionWhenFindScriptById() {
+		long id = 1L;
+		
+		ejb.findScriptById(id);
+		verify(scriptEjb).findScriptById(id);
 	}
 }

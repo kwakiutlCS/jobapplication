@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
@@ -26,7 +27,7 @@ public class WorkerBeanTest {
 	WorkerBean bean;
 
 	@Test
-	public void registerFunctionShouldCallEjbMethod() throws NoRoleException {
+	public void registerFunctionShouldCallEjbMethod() throws NoRoleException, DuplicatedUserException {
 		String login = "login";
 		String name = "name";
 		String surname = "surname";

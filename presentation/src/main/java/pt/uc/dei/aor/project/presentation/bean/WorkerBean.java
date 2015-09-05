@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
@@ -41,6 +42,8 @@ public class WorkerBean {
 			roles = null;
 		} catch (NoRoleException e) {
 			setMsg("Missing role", FacesMessage.SEVERITY_ERROR);
+		} catch (DuplicatedUserException e) {
+			setMsg("User Already exists", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	

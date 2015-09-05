@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -110,8 +111,12 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public void delete(IInterview interview) {
-		selectedApplication = interviewService.delete(interview);
-		setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
+		try {
+			selectedApplication = interviewService.delete(interview);
+			setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
+		} catch (IllegalInterviewDeletionException e) {
+			setMsg("Interview already occurred", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	public void onload() {

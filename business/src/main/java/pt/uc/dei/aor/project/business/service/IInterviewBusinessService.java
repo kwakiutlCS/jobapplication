@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
@@ -21,7 +22,7 @@ public interface IInterviewBusinessService {
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
 
-	IApplication delete(IInterview interview);
+	IApplication delete(IInterview interview) throws IllegalInterviewDeletionException;
 
 	IInterview findInterviewById(long id);
 

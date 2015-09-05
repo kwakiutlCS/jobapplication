@@ -1,12 +1,8 @@
 package pt.uc.dei.aor.project.business.startup;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -14,10 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
@@ -33,7 +26,7 @@ public class StartUpEJBTest {
 	
 	
 	@Test
-	public void shouldCreateAdminIfDoesntExists() throws NoRoleException {
+	public void shouldCreateAdminIfDoesntExists() throws NoRoleException, DuplicatedUserException {
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		

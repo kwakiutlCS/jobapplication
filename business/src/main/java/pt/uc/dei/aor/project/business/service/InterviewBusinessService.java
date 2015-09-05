@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
@@ -75,7 +76,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IApplication delete(IInterview interview) {
+	public IApplication delete(IInterview interview) throws IllegalInterviewDeletionException {
+		List<IAnswer> answers = findAnswersByInterview(interview);
+		if (!answers.isEmpty()) throw new IllegalInterviewDeletionException();
+		
 		for (IWorker w : interview.getInterviewers()) {
 			workerPersistence.removeInterview(w.getId(), interview.getId());
 		}
