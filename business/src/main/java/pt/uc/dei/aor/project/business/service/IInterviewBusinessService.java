@@ -28,5 +28,7 @@ public interface IInterviewBusinessService {
 	List<IScriptEntry> getScriptEntries(IInterview interview);
 
 	IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry);
+
+	String findAnswerByInterviewAndQuestion(IInterview interview, String text);
 	
 }

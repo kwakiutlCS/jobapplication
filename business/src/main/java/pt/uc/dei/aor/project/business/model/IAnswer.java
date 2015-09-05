@@ -8,4 +8,6 @@ public interface IAnswer {
 
 	void setAnswer(String answer);
 
+	String getAnswer();
+
 }

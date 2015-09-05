@@ -108,10 +108,18 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) {
 		IAnswer answerProxy = answerPersistence.findAnswerByInterviewAndQuestion(interview, entry.getText());
 		
-		if (answerProxy == null) answerProxy = factory.answer(interview, answer, entry);
+		if (answerProxy == null) answerProxy = factory.answer(interview, answer.trim(), entry);
 		else answerProxy.setAnswer(answer);
 		
 		return answerPersistence.save(answerProxy);
+	}
+
+
+	@Override
+	public String findAnswerByInterviewAndQuestion(IInterview interview, String text) {
+		IAnswer answerProxy = answerPersistence.findAnswerByInterviewAndQuestion(interview, text);
+		if (answerProxy == null) return null;
+		return answerProxy.getAnswer();
 	}
 	
 }

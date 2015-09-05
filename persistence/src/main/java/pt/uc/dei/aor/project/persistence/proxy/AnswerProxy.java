@@ -61,5 +61,11 @@ public class AnswerProxy implements IAnswer, IProxyToEntity<AnswerEntity> {
 	public void setAnswer(String answer) {
 		entity.setAnswer(answer);
 	}
+
+
+	@Override
+	public String getAnswer() {
+		return entity.getAnswer();
+	}
 	
 }
