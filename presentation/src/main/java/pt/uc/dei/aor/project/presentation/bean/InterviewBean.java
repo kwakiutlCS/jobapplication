@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -34,6 +36,9 @@ public class InterviewBean implements Serializable {
 	private String answer;
 	private Date answerDate;
 	
+	private List<IAnswer> answerList;
+	private List<Boolean> answersGiven;
+	
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
@@ -42,6 +47,9 @@ public class InterviewBean implements Serializable {
 	public void onload() {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
 		scriptEntries = findScriptEntries();
+		
+		answerList = interviewService.findAnswersByInterview(selectedInterview);
+		populateAnswersGiven();
 		
 		if (scriptEntries != null || !scriptEntries.isEmpty()) {
 			selectedEntry = scriptEntries.get(0);
@@ -61,6 +69,10 @@ public class InterviewBean implements Serializable {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
 		}
+		
+		System.out.println(answersGiven);
+		answersGiven.set(scriptEntries.indexOf(selectedEntry), true);
+		System.out.println(answersGiven);
 		selectedEntry = nextQuestion();
 		getPreviousAnswer();
 	}
@@ -95,8 +107,6 @@ public class InterviewBean implements Serializable {
 			String date = interviewService.findAnswerByInterviewAndQuestion(selectedInterview, 
 					selectedEntry.getText());
 			
-			System.out.println(date);
-			
 			if (date == null) {
 				answerDate = null;
 				return;
@@ -106,13 +116,26 @@ public class InterviewBean implements Serializable {
 			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 			try {
 				answerDate = sdf.parse(date);
-				System.out.println(answerDate);
 			} catch (ParseException e) {
 				answerDate = null;
 			}
 		}
 	}
 	
+	
+	private void populateAnswersGiven() {
+		answersGiven = new ArrayList<>();
+		for (IScriptEntry e : scriptEntries) {
+			answersGiven.add(isAnswered(e));
+		}
+	}
+	
+	private boolean isAnswered(IScriptEntry entry) {
+		for (IAnswer answer : answerList) {
+			if (answer.getQuestion().equals(entry.getText())) return true;
+		}
+		return false;
+	}
 	
 	// getters and setters
 	
@@ -170,5 +193,9 @@ public class InterviewBean implements Serializable {
 		this.answerDate = answerDate;
 	}
 	
+	public boolean isAnswered(int i) {
+		System.out.println(i+" -> "+answersGiven.get(i));
+		return answersGiven.get(i);
+	}
 }
 

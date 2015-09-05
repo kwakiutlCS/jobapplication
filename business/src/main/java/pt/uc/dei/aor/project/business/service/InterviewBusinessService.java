@@ -121,5 +121,11 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		if (answerProxy == null) return null;
 		return answerProxy.getAnswer();
 	}
+
+
+	@Override
+	public List<IAnswer> findAnswersByInterview(IInterview interview) {
+		return answerPersistence.findAnswersByInterview(interview);
+	}
 	
 }

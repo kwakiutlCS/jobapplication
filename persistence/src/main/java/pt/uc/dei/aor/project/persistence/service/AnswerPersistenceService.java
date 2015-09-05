@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -42,5 +43,23 @@ public class AnswerPersistenceService implements IAnswerPersistenceService {
 		if (entities.isEmpty()) return null;
 		return new AnswerProxy(entities.get(0));
 		
+	}
+
+	@Override
+	public List<IAnswer> findAnswersByInterview(IInterview interview) {
+		TypedQuery<AnswerEntity> q = em.createNamedQuery("Answer.findAnswersByInterview", 
+				AnswerEntity.class);
+		InterviewEntity interviewEntity = GenericPersistenceService.getEntity(interview);
+		q.setParameter("interview", interviewEntity);
+		
+		List<AnswerEntity> entities = q.getResultList();
+		
+		List<IAnswer> proxies = new ArrayList<>();
+		
+		for (AnswerEntity ae : entities) {
+			proxies.add(new AnswerProxy(ae));
+		}
+		
+		return proxies;
 	}
 }

@@ -16,6 +16,8 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name = "Answer.findAnswerByInterviewAndQuestion", 
 			query = "from AnswerEntity u where u.question = :question and u.interview = :interview"),
+	@NamedQuery(name = "Answer.findAnswersByInterview", 
+		query = "from AnswerEntity u where u.interview = :interview"),
 })
 public class AnswerEntity {
 	

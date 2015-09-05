@@ -7,25 +7,36 @@
 
 	<ui:define name="title">Interview</ui:define>
 
-
 	<ui:define name="metadata">
 		<f:metadata>
 			<f:viewParam name="it" value="#{interviewBean.selectedInterviewId}" />
 			<f:viewAction action="#{interviewBean.onload}" />
 		</f:metadata>
 	</ui:define>
+	
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="startInterview.css" />
+	</ui:define>
 
-
+	
 	<ui:define name="content">
-		<ui:repeat value="#{interviewBean.scriptEntries}" var="entry" varStatus="status">
-			<h:panelGroup>
-				<h:form>
-					<p:commandLink value="q#{status.index+1}"
-						action="#{interviewBean.changeQuestion(entry)}"
-						update=":answerForm" />
-				</h:form>
-			</h:panelGroup>
-		</ui:repeat>
+		
+		<h:panelGroup id="navigationPanel">
+			<ui:repeat value="#{interviewBean.scriptEntries}" var="entry"
+				varStatus="status">
+				<h:panelGroup styleClass="inlineForm 
+				        #{interviewBean.isAnswered(status.index) ? 'answered' : 'notAnswered'}
+						 #{entry eq interviewBean.selectedEntry ? 'active' : ''}"
+					id="navItem">
+					<h:form>
+						<p:commandLink value="#{status.index+1}" update=":answerForm :navigationPanel"
+							action="#{interviewBean.changeQuestion(entry)}"
+							styleClass="questionLink #{interviewBean.isAnswered(status.index) ?
+						 'answered' : 'notAnswered'}" />
+					</h:form>
+				</h:panelGroup>
+			</ui:repeat>
+		</h:panelGroup>
 		
 		<h:form id="answerForm">
 			<h:panelGroup layout="block" styleClass="questionTitle">
@@ -65,7 +76,8 @@
 					var="answer" itemLabel="#{answer.text}" />
 			</p:selectOneRadio>
 
-			<p:commandButton value="Save answer" action="#{interviewBean.saveAnswer}" update="@form" />
+			<p:commandButton value="Save answer" action="#{interviewBean.saveAnswer}"
+			update="@form :navigationPanel" />
 		</h:form>
 	</ui:define>
 

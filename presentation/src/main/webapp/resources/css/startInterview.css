@@ -1,0 +1,37 @@
+.questionLink {
+	text-decoration: none;
+	margin: auto;
+	text-align: center;
+	line-height: 36px;
+	display: block;
+}
+
+.questionLink.answered {
+	color: green;
+}
+
+.questionLink.notAnswered {
+	color: grey;
+}
+
+.inlineForm.answered {
+	background: rgba(0, 128, 0, 0.44);
+	border: 2px solid green;
+}
+
+.inlineForm.notAnswered {
+	background: rgba(53, 45, 45, 0.3);
+    border: 2px solid grey;
+}
+
+.inlineForm.answered.active, .inlineForm.notAnswered.active {
+	border: 2px solid red;	
+}
+
+.inlineForm {
+	display: inline-block;
+	margin: 10px;
+	width: 36px;
+	height: 36px;
+	border-radius: 18px;
+}
