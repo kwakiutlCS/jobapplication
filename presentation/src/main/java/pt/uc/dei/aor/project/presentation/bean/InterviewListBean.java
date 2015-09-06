@@ -1,36 +1,93 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
+import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 @Named
-@RequestScoped
-public class InterviewListBean {
+@ViewScoped
+public class InterviewListBean implements Serializable {
+	
+	private static final long serialVersionUID = -5948435434591689631L;
 	
 	private int offset;
 	private List<IInterview> interviews;
 	
+	private IWorker filterInterviewer;
+	
+	private InterviewFilter filter;
+	
+	
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
+	@Inject
+	private IWorkerBusinessService workerService;
+	
+	
+	@PostConstruct
+	public void init() {
+		filter = new InterviewFilter();
+	}
+	
+	
+	
+	// public methods
+	
+	public void onload() {
+		interviews = interviewService.findInterviews(offset, 10);
+	}
+	
+	
+			// filter functions
 	
 	public List<IInterview> getActiveInterviews() {
 		return interviewService.findActiveInterviewsByUser(getUser());
 	}
 
-	
-	public void onload() {
-		interviews = interviewService.findInterviews(offset, 10);
+	public List<IInterview> getInterviewsWithFilter() {
+		return interviewService.findInterviews(offset, 10, filter);
 	}
+	
+	
+	
+			// prepare filter functions
+	
+	public void addInterviewerToFilter() {
+		filter.addInterviewerSet(filterInterviewer);
+		interviews = getInterviewsWithFilter();
+	}
+	
+	public void deleteInterviewer(int setPos, int pos) {
+		filter.deleteInterviewer(setPos, pos);
+		interviews = getInterviewsWithFilter();
+	}
+	
+	public void mergeInterviewers(int setPos) {
+		filter.mergeInterviewers(setPos);
+		interviews = getInterviewsWithFilter();
+	}
+	
+	public void splitInterviewers(int setPos, int pos) {
+		filter.splitInterviewers(setPos, pos);
+		interviews = getInterviewsWithFilter();
+	}
+	
 	
 	// helper functions
 	
@@ -60,6 +117,25 @@ public class InterviewListBean {
 
 	public void setInterviews(List<IInterview> interviews) {
 		this.interviews = interviews;
+	}
+	
+	public Collection<IWorker> getAllInterviewers() {
+		return workerService.findAllInterviewers();
+	}
+
+
+	public IWorker getFilterInterviewer() {
+		return filterInterviewer;
+	}
+
+
+	public void setFilterInterviewer(IWorker filterInterviewer) {
+		this.filterInterviewer = filterInterviewer;
+	}
+
+		
+	public List<List<IWorker>> getInterviewerSets() {
+		return filter.getInterviewerSets();
 	}
 }
 

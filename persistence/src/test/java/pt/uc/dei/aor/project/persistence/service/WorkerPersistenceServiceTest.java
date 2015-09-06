@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
+import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -43,6 +44,7 @@ public class WorkerPersistenceServiceTest {
        		.addPackage(Localization.class.getPackage())
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
+       		.addPackage(InterviewFilter.class.getPackage())
             .addClass(IWorker.class)
             .addPackage(IllegalRoleException.class.getPackage())
             .addPackage(WorkerPersistenceService.class.getPackage())

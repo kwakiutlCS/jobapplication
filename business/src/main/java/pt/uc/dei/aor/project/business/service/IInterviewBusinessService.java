@@ -7,6 +7,7 @@ import java.util.List;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
+import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -37,5 +38,7 @@ public interface IInterviewBusinessService {
 	List<IScriptEntry> getCompleteScriptEntries(IInterview interview);
 
 	List<IInterview> findInterviews(int offset, int limit);
+
+	List<IInterview> findInterviews(int offset, int limit, InterviewFilter filter);
 	
 }

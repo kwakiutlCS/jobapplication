@@ -15,8 +15,8 @@
 }
 
 .inlineForm.answered {
-	background: rgba(0, 128, 0, 0.44);
-	border: 2px solid green;
+	background: rgba(140, 237, 140, 0.5);
+	border: 2px solid rgb(86, 210, 86);
 }
 
 .inlineForm.notAnswered {

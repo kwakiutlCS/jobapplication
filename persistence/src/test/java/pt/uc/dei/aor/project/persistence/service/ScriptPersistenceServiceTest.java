@@ -15,6 +15,7 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
@@ -36,6 +37,7 @@ public class ScriptPersistenceServiceTest {
        		.addPackage(Localization.class.getPackage())
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
+       		.addPackage(InterviewFilter.class.getPackage())
             .addClass(IWorker.class)
             .addPackage(WorkerPersistenceService.class.getPackage())
             .addPackage(IWorkerPersistenceService.class.getPackage());

@@ -15,17 +15,46 @@
 	</ui:define>
 	
 	<ui:define name="content">
-	
-		<h:form>
-			
-		
-		</h:form>
 
+		<h:panelGroup id="preFilterSection">
+			<h:form>
+				<p:selectOneMenu value="#{interviewListBean.filterInterviewer}"
+				converter="omnifaces.SelectItemsConverter">>
+					<f:selectItems value="#{interviewListBean.allInterviewers}"
+						var="interviewer" itemLabel="#{interviewer.fullName}" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Add interviewer" action="#{interviewListBean.addInterviewerToFilter}"
+				update=":filterSection :filteredList" />
+			</h:form>
+		</h:panelGroup>
+
+		<h:panelGroup id="filterSection">
+			<h:form>
+			<ui:repeat value="#{interviewListBean.interviewerSets}" var="set" varStatus="status">
+				<ui:repeat value="#{set}" var="interviewer" varStatus="innerStatus">
+					<h:outputText value="#{interviewer.fullName}" />
+					<p:commandLink value="x" style="color:red;margin-right:20px" 
+					action="#{interviewListBean.deleteInterviewer(status.index, innerStatus.index)}" 
+					update="@form" />
+					<p:commandLink value="and" rendered="#{not innerStatus.last}" update="@form"
+					action="#{interviewListBean.splitInterviewers(status.index, innerStatus.index)}" 
+					style="margin-right:20px" />
+				</ui:repeat>
+				<p:commandLink value="or" rendered="#{not status.last}" update="@form"
+				action="#{interviewListBean.mergeInterviewers(status.index)}" 
+				style="margin-right:20px" />
+			</ui:repeat>
+			</h:form>
+		</h:panelGroup>
+
+		<h:panelGroup id="filteredList">
 		<p:dataTable value="#{interviewListBean.interviews}" var="interview">
 			<p:column>#{interview.date}</p:column>
 			<p:column>#{interview.interviewersFormatted}</p:column>
 		</p:dataTable>
-
+		</h:panelGroup>
+		
 	</ui:define>
 </ui:composition>
 

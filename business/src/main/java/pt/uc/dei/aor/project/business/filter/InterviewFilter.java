@@ -1,0 +1,80 @@
+package pt.uc.dei.aor.project.business.filter;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import pt.uc.dei.aor.project.business.model.IWorker;
+
+public class InterviewFilter {
+	
+	private List<Set<IWorker>> interviewerSets;
+	
+	
+	public InterviewFilter() {
+		interviewerSets = new ArrayList<>();
+	}
+	
+	
+	public void addInterviewerSet(IWorker interviewer) {
+		interviewerSets.add(new LinkedHashSet<IWorker>(Arrays.asList(new IWorker[]{interviewer})));
+	}
+
+	public void deleteInterviewer(int setIndex, int pos) {
+		Set<IWorker> set = interviewerSets.get(setIndex);
+	
+		if (set.size() == 1) interviewerSets.remove(setIndex);
+		else {
+			int counter = 0;
+			for (IWorker w : set) {
+				if (counter++ == pos) {
+					set.remove(w);
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	public void mergeInterviewers(int setPos) {
+		interviewerSets.get(setPos).addAll(interviewerSets.get(setPos+1));
+		interviewerSets.remove(setPos+1);
+	}
+	
+	public void splitInterviewers(int setPos, int pos) {
+		Set<IWorker> newSet = new LinkedHashSet<>();
+		Set<IWorker> oldSet = interviewerSets.get(setPos);
+		
+		int counter = 0;
+		for (IWorker w : oldSet) {
+			if (counter++ > pos) newSet.add(w);
+		}
+		
+		oldSet.removeAll(newSet);
+		
+		interviewerSets.add(newSet);
+	}
+	
+	
+	
+	
+	public List<List<IWorker>> getInterviewerSets() {
+		List<List<IWorker>> sets = new ArrayList<>();
+		for (Set<IWorker> set : interviewerSets) {
+			List<IWorker> workers = new ArrayList<>();
+			
+			for (IWorker w : set) {
+				workers.add(w);
+			}
+			
+			sets.add(workers);
+		}
+		
+		return sets;
+	}
+
+
+	
+}

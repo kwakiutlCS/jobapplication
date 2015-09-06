@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -55,6 +56,7 @@ public class InterviewPersistenceServiceTest {
        		.addPackage(Localization.class.getPackage())
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
+       		.addPackage(InterviewFilter.class.getPackage())
             .addClass(IWorker.class)
             .addPackage(WorkerPersistenceService.class.getPackage())
             .addPackage(IWorkerPersistenceService.class.getPackage());
