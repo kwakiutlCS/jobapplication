@@ -140,18 +140,29 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		Root<InterviewEntity> root = q.from(InterviewEntity.class);
 		q.select(root);
 		
-		// where
-		List<Predicate> predicates = new ArrayList<>();
-	
-//		Expression<Collection<WorkerEntity>> interviewers = root.get("interviewers");
-//		List<WorkerEntity> wel = GenericPersistenceService.getEntity(
-//					filter.getInterviewers());
-//		List<Predicate> interviewersSetPredicate = new ArrayList<>();
-//		for (WorkerEntity we : wel) {
-//			interviewersSetPredicate.add(cb.isMember(we, interviewers));
-//		}
-//		
-//		q.where(cb.or((Predicate[]) interviewersSetPredicate.toArray()));
+		// start where
+		List<List<IWorker>> interviewerSets = filter.getInterviewerSets();
+		if (interviewerSets.size() > 0) {
+			Expression<Collection<WorkerEntity>> interviewers = root.get("interviewers");
+
+			Predicate[] predicateOr = new Predicate[interviewerSets.size()];
+			int counterOr = 0;
+
+			for (List<IWorker> workers : interviewerSets) {
+				Predicate[] predicateAnd = new Predicate[workers.size()];
+				int counterAnd = 0;
+
+				for (IWorker w : workers) {
+					WorkerEntity interviewerEntity = GenericPersistenceService.getEntity(w);
+					predicateAnd[counterAnd++] = cb.isMember(interviewerEntity, interviewers);
+				}
+
+				predicateOr[counterOr++] = cb.and(predicateAnd);
+			}
+
+			q.where(cb.or(predicateOr));
+		}
+		// finish where
 		
 		TypedQuery<InterviewEntity> query = em.createQuery(q);
 		

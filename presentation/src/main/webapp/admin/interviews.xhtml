@@ -36,12 +36,12 @@
 					<h:outputText value="#{interviewer.fullName}" />
 					<p:commandLink value="x" style="color:red;margin-right:20px" 
 					action="#{interviewListBean.deleteInterviewer(status.index, innerStatus.index)}" 
-					update="@form" />
-					<p:commandLink value="and" rendered="#{not innerStatus.last}" update="@form"
+					update="@form :filteredList" />
+					<p:commandLink value="and" rendered="#{not innerStatus.last}" update="@form :filteredList"
 					action="#{interviewListBean.splitInterviewers(status.index, innerStatus.index)}" 
 					style="margin-right:20px" />
 				</ui:repeat>
-				<p:commandLink value="or" rendered="#{not status.last}" update="@form"
+				<p:commandLink value="or" rendered="#{not status.last}" update="@form :filteredList"
 				action="#{interviewListBean.mergeInterviewers(status.index)}" 
 				style="margin-right:20px" />
 			</ui:repeat>
