@@ -64,5 +64,11 @@ public class PositionBusinessService implements IPositionBusinessService {
 	}
 
 
+	@Override
+	public List<IPosition> findPositionByTitle(String title) {
+		return positionPersistence.findPositionByTitle(title);
+	}
+
+
 
 }

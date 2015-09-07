@@ -19,5 +19,7 @@ public interface IPositionBusinessService {
 	List<IPosition> getIPositions();
 	
 	long codeDefiningMethod();
+
+	List<IPosition> findPositionByTitle(String filterPosition);
 		
 }

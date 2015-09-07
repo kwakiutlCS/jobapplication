@@ -64,4 +64,21 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		return code;
 
 	}
+
+
+	@Override
+	public List<IPosition> findPositionByTitle(String title) {
+		TypedQuery<PositionEntity> query = em.createNamedQuery(
+				"Position.findPositionByTitle", PositionEntity.class);
+		query.setParameter("title", "%"+title+"%");
+		
+		List<PositionEntity> entities = query.getResultList();
+		List<IPosition> proxies = new ArrayList<>();
+		
+		for (PositionEntity pe : entities) {
+			proxies.add(new PositionProxy(pe));
+		}
+		
+		return proxies;
+	}
 }

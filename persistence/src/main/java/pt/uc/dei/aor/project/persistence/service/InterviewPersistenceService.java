@@ -22,6 +22,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
+import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
@@ -118,8 +119,6 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<InterviewEntity> q = cb.createQuery(InterviewEntity.class);
 		Root<InterviewEntity> interview = q.from(InterviewEntity.class);
-		Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
-		Root<PositionEntity> position = q.from(PositionEntity.class);
 		q.select(interview);
 		
 		List<Predicate> criteriaPredicates = new ArrayList<>();
@@ -152,6 +151,8 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 			
 			// position
 			if (!filter.getPositions().isEmpty()) {
+				Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
+				Root<PositionEntity> position = q.from(PositionEntity.class);
 				criteriaPredicates.add(cb.equal(interview.get("application"), application.get("id")));
 				criteriaPredicates.add(cb.equal(application.get("position"), position.get("id")));
 				
@@ -165,6 +166,15 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 					}
 				}
 				criteriaPredicates.add(cb.or(predicates.toArray(new Predicate[0])));
+			}
+			
+			// candidate to modify to fullName
+			if (filter.getCandidate() != null) {
+				Root<CandidateEntity> candidate = q.from(CandidateEntity.class);
+				Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
+				criteriaPredicates.add(cb.equal(interview.get("application"), application.get("id")));
+				criteriaPredicates.add(cb.equal(application.get("candidate"), candidate.get("id")));
+				criteriaPredicates.add(cb.like(candidate.get("name"), "%"+filter.getCandidate()+"%"));
 			}
 		}
 		

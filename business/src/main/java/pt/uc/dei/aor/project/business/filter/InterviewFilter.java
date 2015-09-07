@@ -14,10 +14,12 @@ public class InterviewFilter {
 	
 	private List<Set<IWorker>> interviewerSets;
 	private Set<String> positions;
+	private String candidate;
 	
 	public InterviewFilter() {
 		interviewerSets = new ArrayList<>();
 		positions = new HashSet<>();
+		candidate = null;
 	}
 	
 	
@@ -100,5 +102,17 @@ public class InterviewFilter {
 	public void deletePosition(int index) {
 		positions.remove(getPositions().get(index));
 	}
+
+
+	public String getCandidate() {
+		return candidate;
+	}
 	
+	public void addCandidate(String candidate) {
+		this.candidate = candidate;
+	}
+	
+	public void deleteCandidate() {
+		candidate = null;
+	}
 }

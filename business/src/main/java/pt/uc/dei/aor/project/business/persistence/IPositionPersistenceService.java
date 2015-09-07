@@ -12,6 +12,8 @@ public interface IPositionPersistenceService {
 	List<IPosition> findAllPositions();
 	
 	long findBiggestCode();
+
+	List<IPosition> findPositionByTitle(String title);
 	
 
 }

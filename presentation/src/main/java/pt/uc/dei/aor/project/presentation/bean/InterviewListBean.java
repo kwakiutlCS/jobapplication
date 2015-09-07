@@ -18,8 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
+import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 @Named
@@ -36,13 +38,16 @@ public class InterviewListBean implements Serializable {
 	// filter params
 	private IWorker filterInterviewer;
 	private String filterPosition;
-	
+	private String filterCandidate;
 	
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
 	@Inject
 	private IWorkerBusinessService workerService;
+	
+	@Inject
+	private IPositionBusinessService positionService;
 	
 	
 	@PostConstruct
@@ -84,6 +89,12 @@ public class InterviewListBean implements Serializable {
 		filterPosition = null;
 	}
 	
+	public void addCandidateToFilter() {
+		filter.addCandidate(filterCandidate);
+		filterCandidate = null;
+		interviews = getInterviewsWithFilter();
+	}
+	
 	public void deleteInterviewer(int setPos, int pos) {
 		try {
 			filter.deleteInterviewer(setPos, pos);
@@ -95,6 +106,11 @@ public class InterviewListBean implements Serializable {
 	
 	public void deletePosition(int index) {
 		filter.deletePosition(index);
+		interviews = getInterviewsWithFilter();
+	}
+	
+	public void deleteCandidate() {
+		filter.deleteCandidate();
 		interviews = getInterviewsWithFilter();
 	}
 	
@@ -115,6 +131,28 @@ public class InterviewListBean implements Serializable {
 		} catch (IllegalFilterParamException e) {
 			setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
+	}
+	
+	
+	// complete functions
+	public List<String> completePosition(String text) {
+		try {
+			Long.parseLong(text);
+			return null;
+		}
+		catch (Exception e) {
+			List<String> results = new ArrayList<>();
+			for (IPosition p : positionService.findPositionByTitle(text)) {
+				results.add(p.getTitle());
+				if (results.size() == 4) return results;
+			}
+			return results;
+		}
+	}
+	
+	public List<String> completeCandidate(String text) {
+		// TODO
+		return null;
 	}
 	
 	
@@ -175,7 +213,10 @@ public class InterviewListBean implements Serializable {
 		return filter.getPositions();
 	}
 
-
+	public String getCandidate() {
+		return filter.getCandidate();
+	}
+	
 	public String getFilterPosition() {
 		return filterPosition;
 	}
@@ -184,6 +225,18 @@ public class InterviewListBean implements Serializable {
 
 	public void setFilterPosition(String filterPosition) {
 		this.filterPosition = filterPosition;
+	}
+
+
+
+	public String getFilterCandidate() {
+		return filterCandidate;
+	}
+
+
+
+	public void setFilterCandidate(String filterCandidate) {
+		this.filterCandidate = filterCandidate;
 	}
 }
 

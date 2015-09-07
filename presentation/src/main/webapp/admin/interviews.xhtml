@@ -23,7 +23,7 @@
 		<h:panelGroup id="preFilterSection">		
 			<h:form>
 				<p:selectOneMenu value="#{interviewListBean.filterInterviewer}"
-				converter="omnifaces.SelectItemsConverter">>
+				converter="omnifaces.SelectItemsConverter">
 					<f:selectItems value="#{interviewListBean.allInterviewers}"
 						var="interviewer" itemLabel="#{interviewer.fullName}" />
 				</p:selectOneMenu>
@@ -33,13 +33,22 @@
 			</h:form>
 			
 			<h:form>
-				<p:inputText value="#{interviewListBean.filterPosition}" />
+				<p:autoComplete value="#{interviewListBean.filterPosition}" maxResults="4"
+				minQueryLength="3" completeMethod="#{interviewListBean.completePosition}" required="true" />
 				<p:commandButton value="Add position" action="#{interviewListBean.addPositionToFilter}"
+				update=":filterSection :filteredList" />
+			</h:form>
+			
+			<h:form>
+				<p:autoComplete value="#{interviewListBean.filterCandidate}" maxResults="4"
+				minQueryLength="3" completeMethod="#{interviewListBean.completeCandidate}" required="true" />
+				<p:commandButton value="Add Candidate" action="#{interviewListBean.addCandidateToFilter}"
 				update=":filterSection :filteredList" />
 			</h:form>
 		</h:panelGroup>
 
 		<h:panelGroup id="filterSection">
+			<h:panelGroup id="interviewers">
 			<h:form>
 						<ui:repeat value="#{interviewListBean.interviewerSets}" var="set"
 							varStatus="status">
@@ -62,7 +71,9 @@
 								styleClass="conjugationLink" />
 						</ui:repeat>
 					</h:form>
-					
+				</h:panelGroup>
+				
+				<h:panelGroup id="positions">
 					<h:form>
 						<ui:repeat value="#{interviewListBean.positionSets}" var="position" varStatus="status">
 							<span class="filterUnit">
@@ -74,12 +85,25 @@
 							<h:outputText value="or" rendered="#{not status.last}" />
 						</ui:repeat>
 					</h:form>
+					</h:panelGroup>
+					
+					<h:panelGroup id="candidates">
+					<h:form>
+						<h:panelGroup styleClass="filterUnit" rendered="#{not empty interviewListBean.candidate}">
+								<h:outputText value="#{interviewListBean.candidate}" />
+								<p:commandLink value="x" styleClass="removalLink"
+										action="#{interviewListBean.deleteCandidate}"
+										update="@form :filteredList" />
+						</h:panelGroup>
+					</h:form>
+					</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup id="filteredList">
 		<p:dataTable value="#{interviewListBean.interviews}" var="interview">
 			<p:column>#{interview.date}</p:column>
 			<p:column>#{interview.application.position}</p:column>
+			<p:column>#{interview.candidate}</p:column>
 			<p:column>#{interview.interviewersFormatted}</p:column>
 		</p:dataTable>
 		</h:panelGroup>

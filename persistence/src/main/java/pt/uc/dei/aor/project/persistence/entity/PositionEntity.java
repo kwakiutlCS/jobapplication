@@ -34,7 +34,9 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 @Table(name="position")
 @NamedQueries({
 	@NamedQuery(name="position.findAll", query="from PositionEntity u"),
-	@NamedQuery(name="position.findMaxCode", query="SELECT max(u.code) FROM PositionEntity u")
+	@NamedQuery(name="position.findMaxCode", query="SELECT max(u.code) FROM PositionEntity u"),
+	@NamedQuery(name = "Position.findPositionByTitle", 
+	query = "from PositionEntity u where u.title like :title"),
 })
 public class PositionEntity {
 
