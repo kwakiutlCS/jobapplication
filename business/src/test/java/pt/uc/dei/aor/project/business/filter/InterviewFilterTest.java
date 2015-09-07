@@ -186,4 +186,17 @@ public class InterviewFilterTest {
 		
 		assertThat(filter.getInterviewerSets().get(2).get(0), is(equalTo(w)));
 	}
+	
+	@Test
+	public void addPositionShouldAddCorrectly() {
+		filter.addPosition("title");
+		assertThat(filter.getPositions().size(), is(equalTo(1)));
+		
+		filter.addPosition("title2");
+		assertThat(filter.getPositions().size(), is(equalTo(2)));
+		
+		filter.addPosition("title");
+		assertThat(filter.getPositions().size(), is(equalTo(2)));
+		
+	}
 }

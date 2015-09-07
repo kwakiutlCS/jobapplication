@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.business.filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -12,10 +13,11 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 public class InterviewFilter {
 	
 	private List<Set<IWorker>> interviewerSets;
-	
+	private Set<String> positions;
 	
 	public InterviewFilter() {
 		interviewerSets = new ArrayList<>();
+		positions = new HashSet<>();
 	}
 	
 	
@@ -84,6 +86,19 @@ public class InterviewFilter {
 		return sets;
 	}
 
+	
 
+	public void addPosition(String filterPosition) {
+		positions.add(filterPosition);
+	}
+
+	public List<String> getPositions() {
+		return new ArrayList<>(positions);
+	}
+
+
+	public void deletePosition(int index) {
+		positions.remove(getPositions().get(index));
+	}
 	
 }

@@ -29,11 +29,13 @@ public class InterviewListBean implements Serializable {
 	private static final long serialVersionUID = -5948435434591689631L;
 	
 	private int offset;
+	private InterviewFilter filter;
+		
 	private List<IInterview> interviews;
 	
+	// filter params
 	private IWorker filterInterviewer;
-	
-	private InterviewFilter filter;
+	private String filterPosition;
 	
 	
 	@Inject
@@ -76,6 +78,12 @@ public class InterviewListBean implements Serializable {
 		interviews = getInterviewsWithFilter();
 	}
 	
+	public void addPositionToFilter() {
+		filter.addPosition(filterPosition);
+		interviews = getInterviewsWithFilter();
+		filterPosition = null;
+	}
+	
 	public void deleteInterviewer(int setPos, int pos) {
 		try {
 			filter.deleteInterviewer(setPos, pos);
@@ -84,6 +92,12 @@ public class InterviewListBean implements Serializable {
 			setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
 	}
+	
+	public void deletePosition(int index) {
+		filter.deletePosition(index);
+		interviews = getInterviewsWithFilter();
+	}
+	
 	
 	public void mergeInterviewers(int setPos) {
 		try {
@@ -155,6 +169,21 @@ public class InterviewListBean implements Serializable {
 		
 	public List<List<IWorker>> getInterviewerSets() {
 		return filter.getInterviewerSets();
+	}
+
+	public List<String> getPositionSets() {
+		return filter.getPositions();
+	}
+
+
+	public String getFilterPosition() {
+		return filterPosition;
+	}
+
+
+
+	public void setFilterPosition(String filterPosition) {
+		this.filterPosition = filterPosition;
 	}
 }
 

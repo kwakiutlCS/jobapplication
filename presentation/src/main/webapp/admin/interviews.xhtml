@@ -20,7 +20,7 @@
 	
 	<ui:define name="content">
 
-		<h:panelGroup id="preFilterSection">
+		<h:panelGroup id="preFilterSection">		
 			<h:form>
 				<p:selectOneMenu value="#{interviewListBean.filterInterviewer}"
 				converter="omnifaces.SelectItemsConverter">>
@@ -31,13 +31,20 @@
 				<p:commandButton value="Add interviewer" action="#{interviewListBean.addInterviewerToFilter}"
 				update=":filterSection :filteredList" />
 			</h:form>
+			
+			<h:form>
+				<p:inputText value="#{interviewListBean.filterPosition}" />
+				<p:commandButton value="Add position" action="#{interviewListBean.addPositionToFilter}"
+				update=":filterSection :filteredList" />
+			</h:form>
 		</h:panelGroup>
 
 		<h:panelGroup id="filterSection">
 			<h:form>
 						<ui:repeat value="#{interviewListBean.interviewerSets}" var="set"
 							varStatus="status">
-							<span class="filterUnit"> <ui:repeat value="#{set}"
+							<span class="filterUnit"> 
+								<ui:repeat value="#{set}"
 									var="interviewer" varStatus="innerStatus">
 									<h:outputText value="#{interviewer.fullName}" />
 									<p:commandLink value="x" styleClass="removalLink"
@@ -55,11 +62,24 @@
 								styleClass="conjugationLink" />
 						</ui:repeat>
 					</h:form>
+					
+					<h:form>
+						<ui:repeat value="#{interviewListBean.positionSets}" var="position" varStatus="status">
+							<span class="filterUnit">
+								<h:outputText value="#{position}" />
+								<p:commandLink value="x" styleClass="removalLink"
+										action="#{interviewListBean.deletePosition(status.index)}"
+										update="@form :filteredList" />
+							</span>
+							<h:outputText value="or" rendered="#{not status.last}" />
+						</ui:repeat>
+					</h:form>
 		</h:panelGroup>
 
 		<h:panelGroup id="filteredList">
 		<p:dataTable value="#{interviewListBean.interviews}" var="interview">
 			<p:column>#{interview.date}</p:column>
+			<p:column>#{interview.application.position}</p:column>
 			<p:column>#{interview.interviewersFormatted}</p:column>
 		</p:dataTable>
 		</h:panelGroup>

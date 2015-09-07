@@ -21,7 +21,5 @@ public interface IInterviewPersistenceService {
 
 	IInterview findInterview(IInterview interview);
 
-	List<IInterview> findInterviews(int offset, int limit);
-
 	List<IInterview> findInterviewsWithFilter(int offset, int limit, InterviewFilter filter);
 }

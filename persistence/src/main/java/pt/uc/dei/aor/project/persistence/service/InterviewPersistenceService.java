@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -22,6 +23,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
+import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
 
@@ -112,56 +114,61 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 
 	@Override
-	public List<IInterview> findInterviews(int offset, int limit) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<InterviewEntity> q = cb.createQuery(InterviewEntity.class);
-		Root<InterviewEntity> root = q.from(InterviewEntity.class);
-		q.select(root);
-		
-		TypedQuery<InterviewEntity> query = em.createQuery(q);
-		query.setFirstResult(offset);
-		query.setMaxResults(limit);
-		
-		List<InterviewEntity> entities = query.getResultList();
-		List<IInterview> proxies = new ArrayList<>();
-		
-		for (InterviewEntity ie : entities) {
-			proxies.add(new InterviewProxy(ie));
-		}
-		
-		return proxies;
-	}
-
-
-	@Override
 	public List<IInterview> findInterviewsWithFilter(int offset, int limit, InterviewFilter filter) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<InterviewEntity> q = cb.createQuery(InterviewEntity.class);
-		Root<InterviewEntity> root = q.from(InterviewEntity.class);
-		q.select(root);
+		Root<InterviewEntity> interview = q.from(InterviewEntity.class);
+		Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
+		Root<PositionEntity> position = q.from(PositionEntity.class);
+		q.select(interview);
 		
+		List<Predicate> criteriaPredicates = new ArrayList<>();
 		// start where
-		List<List<IWorker>> interviewerSets = filter.getInterviewerSets();
-		if (interviewerSets.size() > 0) {
-			Expression<Collection<WorkerEntity>> interviewers = root.get("interviewers");
+		if (filter != null) {
+			
+			// interviewers
+			List<List<IWorker>> interviewerSets = filter.getInterviewerSets();
+			if (interviewerSets.size() > 0) {
+				Expression<Collection<WorkerEntity>> interviewers = interview.get("interviewers");
 
-			Predicate[] predicateOr = new Predicate[interviewerSets.size()];
-			int counterOr = 0;
+				Predicate[] predicateOr = new Predicate[interviewerSets.size()];
+				int counterOr = 0;
 
-			for (List<IWorker> workers : interviewerSets) {
-				Predicate[] predicateAnd = new Predicate[workers.size()];
-				int counterAnd = 0;
+				for (List<IWorker> workers : interviewerSets) {
+					Predicate[] predicateAnd = new Predicate[workers.size()];
+					int counterAnd = 0;
 
-				for (IWorker w : workers) {
-					WorkerEntity interviewerEntity = GenericPersistenceService.getEntity(w);
-					predicateAnd[counterAnd++] = cb.isMember(interviewerEntity, interviewers);
+					for (IWorker w : workers) {
+						WorkerEntity interviewerEntity = GenericPersistenceService.getEntity(w);
+						predicateAnd[counterAnd++] = cb.isMember(interviewerEntity, interviewers);
+					}
+
+					predicateOr[counterOr++] = cb.and(predicateAnd);
 				}
 
-				predicateOr[counterOr++] = cb.and(predicateAnd);
+				//q.where(cb.or(predicateOr));
+				criteriaPredicates.add(cb.or(predicateOr));
 			}
-
-			q.where(cb.or(predicateOr));
+			
+			// position
+			if (!filter.getPositions().isEmpty()) {
+				criteriaPredicates.add(cb.equal(interview.get("application"), application.get("id")));
+				criteriaPredicates.add(cb.equal(application.get("position"), position.get("id")));
+				
+				List<Predicate> predicates = new ArrayList<>();
+				for (String s : filter.getPositions()) {
+					try {
+						long code = Long.parseLong(s);
+						predicates.add(cb.equal(position.get("code"), code));
+					} catch (Exception e) {
+						predicates.add(cb.like(position.get("title"), "%"+s+"%"));					
+					}
+				}
+				criteriaPredicates.add(cb.or(predicates.toArray(new Predicate[0])));
+			}
 		}
+		
+		q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));
 		// finish where
 		
 		TypedQuery<InterviewEntity> query = em.createQuery(q);

@@ -147,7 +147,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 	@Override
 	public List<IInterview> findInterviews(int offset, int limit) {
-		return interviewPersistence.findInterviews(offset, limit);
+		return interviewPersistence.findInterviewsWithFilter(offset, limit, null);
 	}
 
 

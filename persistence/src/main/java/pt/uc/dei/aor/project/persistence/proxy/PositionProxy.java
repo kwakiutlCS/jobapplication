@@ -271,4 +271,8 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		return entity.getId();
 	}
 
+	@Override
+	public String toString() {
+		return getCode()+" -> "+getTitle();
+	}
 }

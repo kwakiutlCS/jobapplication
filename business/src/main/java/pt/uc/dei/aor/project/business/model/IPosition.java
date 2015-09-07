@@ -54,5 +54,7 @@ public interface IPosition  {
 	public void setIPublicationChannels(List<IPublicationChannel> ipublicationChannels);
 
 	public IScript getScript();
+	
+	public String toString();
 
 }
