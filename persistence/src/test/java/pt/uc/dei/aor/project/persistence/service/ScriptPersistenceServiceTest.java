@@ -17,10 +17,12 @@ import org.junit.runner.RunWith;
 
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
+import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.User;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
@@ -57,11 +59,26 @@ public class ScriptPersistenceServiceTest {
     	String title2 = "nonExistingScriptNumber1";
     	
     	int size = ejb.findAllScripts().size();
-    	ejb.save(factory.script(title1));
-    	ejb.save(factory.script(title2));
     	
+    	IScript s1 = factory.script(title1);
+    	IScript s2 = factory.script(title2);
+    	
+    	s1 = ejb.save(s1);
+    	s2 = ejb.save(s2);
+    	
+    	assertThat(ejb.findAllScripts().size(), is(equalTo(size)));
+    	
+    	s1.addQuestion("test", QuestionType.LONG_ANSWER);
+    	
+    	ejb.save(s1);
+    	assertThat(ejb.findAllScripts().size(), is(equalTo(size+1)));
+    	
+    	
+    	s2.addQuestion("test", QuestionType.LONG_ANSWER);
+    	
+    	ejb.save(s2);
     	assertThat(ejb.findAllScripts().size(), is(equalTo(size+2)));
-    	
     }
+    
    
 }

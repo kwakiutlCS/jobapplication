@@ -42,7 +42,8 @@ public class ScriptBusinessService implements IScriptBusinessService {
 
 	@Override
 	public IScript createNewScript(String title) {
-		return factory.script(title);
+		IScript script = factory.script(title);
+		return scriptPersistence.save(script);
 	}
 
 	@Override

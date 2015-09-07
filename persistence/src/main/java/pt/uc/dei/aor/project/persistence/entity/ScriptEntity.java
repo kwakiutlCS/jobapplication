@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="script")
 @NamedQueries({
-	@NamedQuery(name = "Script.findAllScripts", query="from ScriptEntity u"),
+	@NamedQuery(name = "Script.findAllScripts", query="from ScriptEntity u where u.entries is not empty"),
 })
 public class ScriptEntity implements Serializable {
 

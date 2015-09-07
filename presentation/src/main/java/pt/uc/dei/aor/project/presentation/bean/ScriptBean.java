@@ -128,7 +128,7 @@ public class ScriptBean implements Serializable {
 	public String addScript() {
 		editableScript = scriptEjb.createNewScript(scriptTitle);
 		clear();
-		return "editscript.xhtml?faces-redirect=true";
+		return "editscript.xhtml?sc="+editableScript.getId()+"&faces-redirect=true";
 	}
 	
 	public String edit(IScript script) {
