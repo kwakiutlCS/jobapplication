@@ -63,7 +63,7 @@ public class InterviewFilter {
 		
 		oldSet.removeAll(newSet);
 		
-		interviewerSets.add(newSet);
+		interviewerSets.add(setPos+1, newSet);
 	}
 	
 	

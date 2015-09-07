@@ -175,4 +175,15 @@ public class InterviewFilterTest {
 		
 		filter.splitInterviewers(0, 1);
 	}
+	
+	@Test
+	public void shouldMergeAndSplitCorrectly() throws IllegalFilterParamException {
+		IWorker w = mock(IWorker.class);
+		filter.addInterviewerSet(w);
+		
+		filter.mergeInterviewers(0);
+		filter.splitInterviewers(0, 0);
+		
+		assertThat(filter.getInterviewerSets().get(2).get(0), is(equalTo(w)));
+	}
 }
