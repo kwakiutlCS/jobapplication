@@ -7,12 +7,15 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -74,18 +77,30 @@ public class InterviewListBean implements Serializable {
 	}
 	
 	public void deleteInterviewer(int setPos, int pos) {
-		filter.deleteInterviewer(setPos, pos);
-		interviews = getInterviewsWithFilter();
+		try {
+			filter.deleteInterviewer(setPos, pos);
+			interviews = getInterviewsWithFilter();
+		} catch (IllegalFilterParamException e) {
+			setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	public void mergeInterviewers(int setPos) {
-		filter.mergeInterviewers(setPos);
-		interviews = getInterviewsWithFilter();
+		try {
+			filter.mergeInterviewers(setPos);
+			interviews = getInterviewsWithFilter();
+		} catch (IllegalFilterParamException e) {
+			setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	public void splitInterviewers(int setPos, int pos) {
-		filter.splitInterviewers(setPos, pos);
-		interviews = getInterviewsWithFilter();
+		try {
+			filter.splitInterviewers(setPos, pos);
+			interviews = getInterviewsWithFilter();
+		} catch (IllegalFilterParamException e) {
+			setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	
@@ -97,7 +112,11 @@ public class InterviewListBean implements Serializable {
 		return (IWorker) request.getSession().getAttribute("user");	
 	}
 
-
+	private void setMsg(String text, Severity severity) {
+		FacesMessage msg = new FacesMessage(severity,
+				text, text);
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
 
 	// getters and setters
 	

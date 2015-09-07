@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 
 public class InterviewFilter {
@@ -22,9 +23,12 @@ public class InterviewFilter {
 		interviewerSets.add(new LinkedHashSet<IWorker>(Arrays.asList(new IWorker[]{interviewer})));
 	}
 
-	public void deleteInterviewer(int setIndex, int pos) {
+	public void deleteInterviewer(int setIndex, int pos) throws IllegalFilterParamException {
+		if (setIndex >= interviewerSets.size()) throw new IllegalFilterParamException();
+		if (pos >= interviewerSets.get(setIndex).size()) throw new IllegalFilterParamException();
+		
 		Set<IWorker> set = interviewerSets.get(setIndex);
-	
+		
 		if (set.size() == 1) interviewerSets.remove(setIndex);
 		else {
 			int counter = 0;
@@ -38,12 +42,17 @@ public class InterviewFilter {
 	}
 	
 	
-	public void mergeInterviewers(int setPos) {
+	public void mergeInterviewers(int setPos) throws IllegalFilterParamException {
+		if (setPos >= interviewerSets.size()-1) throw new IllegalFilterParamException();
+		
 		interviewerSets.get(setPos).addAll(interviewerSets.get(setPos+1));
 		interviewerSets.remove(setPos+1);
 	}
 	
-	public void splitInterviewers(int setPos, int pos) {
+	public void splitInterviewers(int setPos, int pos) throws IllegalFilterParamException {
+		if (setPos >= interviewerSets.size()) throw new IllegalFilterParamException();
+		if (pos >= interviewerSets.get(setPos).size()-1) throw new IllegalFilterParamException();
+		
 		Set<IWorker> newSet = new LinkedHashSet<>();
 		Set<IWorker> oldSet = interviewerSets.get(setPos);
 		
