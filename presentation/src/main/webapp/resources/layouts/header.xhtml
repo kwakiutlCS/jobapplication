@@ -9,6 +9,8 @@
 			<p:submenu label="#{loginBean.user.name}">
 				<p:menuitem value="quit" action="#{loginBean.logout}" />
 			</p:submenu>
+			<p:menuitem rendered="#{notificationBean.countUnread() gt 0}" 
+			label="unread notifications" outcome="/admin/notifications" />
 		</p:menubar>
 	</h:form>
 

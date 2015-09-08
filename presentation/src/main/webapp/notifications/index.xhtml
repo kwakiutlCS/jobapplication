@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form>
+		<p:selectOneMenu value="#{notificationBean.notificationStatus}" 
+		converter="omnifaces.SelectItemsConverter">
+			<p:ajax event="change" update=":notificationList" />
+			<f:selectItems value="#{notificationBean.allStatus}" var="status" itemLabel="#{status}" />
+		</p:selectOneMenu>
+	</h:form>
+
+	<h:panelGroup id="notificationList">
+		<ui:repeat value="#{notificationBean.notifications}"
+			var="notification" varStatus="status">
+			<div>
+				<span>#{notification.date}</span>
+				<span>#{notification.type}</span>
+				<span>
+					<h:form>
+						<p:commandButton value="view" update=":notificationList"
+						action="#{notificationBean.viewNotification(status.index, notification)}" />
+					</h:form>
+				</span>
+				<span>
+					<h:form>
+						<p:commandButton value="delete" update=":notificationList"
+						action="#{notificationBean.deleteNotification(notification)}" />
+					</h:form>
+				</span>
+			</div>
+			<h:panelGroup rendered="#{notificationBean.visibleNotification eq status.index}">
+				<span>#{notification.message}</span>
+			</h:panelGroup>
+		</ui:repeat>
+	</h:panelGroup>
+
+</ui:composition>

@@ -88,8 +88,8 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IWorkerNotification workerNotification(String msg, IWorker worker) {
-		return new WorkerNotificationProxy(msg, worker);
+	public IWorkerNotification workerNotification(String msg, IWorker worker, String type) {
+		return new WorkerNotificationProxy(msg, worker, type);
 	}
 
 	

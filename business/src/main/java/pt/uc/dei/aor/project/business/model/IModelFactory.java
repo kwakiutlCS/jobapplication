@@ -33,5 +33,5 @@ public interface IModelFactory {
 
 	IScriptEntry scriptEntry(QuestionType questionType, String question, int position);
 
-	IWorkerNotification workerNotification(String msg, IWorker worker);
+	IWorkerNotification workerNotification(String msg, IWorker worker, String type);
 }

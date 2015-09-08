@@ -7,6 +7,11 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
+
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
@@ -71,8 +76,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			workerPersistence.insertInterview(w.getId(), interview);
 
 			// notify user
-			notificationService.notify(w, "Interview sheduled");
+			notificationService.notify(w, "Interview sheduled", "Interview Scheduled");
 		}
+		
+
 		
 		return applicationPersistence.find(application.getId());
 	}

@@ -22,14 +22,17 @@ import javax.persistence.Table;
 		query = "from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
 	@NamedQuery(name = "WorkerNotification.findReadByWorker", 
 	query = "from WorkerNotificationEntity u where u.worker = :worker and u.read is TRUE"),
+	@NamedQuery(name = "WorkerNotification.countUnread", 
+	query = "select count(u) from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
 })
 public class WorkerNotificationEntity {
 	
-	public WorkerNotificationEntity(String msg, WorkerEntity entity, Date date) {
+	public WorkerNotificationEntity(String msg, WorkerEntity entity, String type) {
 		this.msg = msg;
 		this.worker = entity;
-		this.date = date;
+		this.date = new Date();
 		this.read = false;
+		this.type = type;
 	}
 
 	public WorkerNotificationEntity() {
@@ -48,6 +51,9 @@ public class WorkerNotificationEntity {
 	@Column(nullable=false)
 	private Date date;
 	
+	@Column(nullable=false)
+	private String type;
+	
 	@ManyToOne
 	@JoinColumn(nullable=false)
 	private WorkerEntity worker;
@@ -57,6 +63,21 @@ public class WorkerNotificationEntity {
 	
 	public void setRead(boolean b) {
 		read = b;
+	}
+
+	public String getMsg() {
+		return msg;
 	} 
 	
+	public Date getDate() {
+		return date;
+	}
+
+	public boolean isRead() {
+		return read;
+	}
+	
+	public String getType() {
+		return type;
+	}
 }

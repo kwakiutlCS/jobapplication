@@ -33,9 +33,9 @@ public class NotificationBusinessService implements INotificationBusinessService
 	
 	
 	@Override
-	public <T extends INotification, U> T notify(U person, String msg) {
+	public <T extends INotification, U> T notify(U person, String msg, String type) {
 		if (person instanceof IWorker) {
-			T notification = (T) factory.workerNotification(msg, (IWorker) person);
+			T notification = (T) factory.workerNotification(msg, (IWorker) person, type);
 			return notificationPersistence.save(notification);
 		}
 		//if (person instanceof ICandidate) return candidatePersistence.notify((ICandidate) person, msg);
@@ -55,6 +55,7 @@ public class NotificationBusinessService implements INotificationBusinessService
 
 	@Override
 	public <T extends INotification, U> List<T> findAllNotifications(U person, int offset, int limit) {
+		System.out.println("web");
 		return notificationPersistence.findAllNotifications(person, offset, limit);
 	}
 
@@ -66,6 +67,11 @@ public class NotificationBusinessService implements INotificationBusinessService
 	@Override
 	public <T extends INotification, U> List<T> findAllReadNotifications(U person, int offset, int limit) {
 		return notificationPersistence.findAllReadNotifications(person, offset, limit);
+	}
+
+	@Override
+	public long countUnreadNotifications(IWorker worker) {
+		return notificationPersistence.countUnread(worker);
 	}
 	
 }

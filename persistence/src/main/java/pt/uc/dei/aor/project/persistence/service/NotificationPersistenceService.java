@@ -70,11 +70,12 @@ public class NotificationPersistenceService implements INotificationPersistenceS
 		if (person instanceof IWorker) {
 			TypedQuery<WorkerNotificationEntity> query = em.createNamedQuery(
 					queryString, WorkerNotificationEntity.class);
-			query.setParameter("worker", person);
+			query.setParameter("worker", GenericPersistenceService.getEntity(person));
 			query.setFirstResult(offset);
 			query.setMaxResults(limit);
 			
 			List<WorkerNotificationEntity> entities = query.getResultList();
+			System.out.println(entities);
 			for (WorkerNotificationEntity wne : entities) {
 				proxies.add(new WorkerNotificationProxy(wne));
 			}
@@ -82,6 +83,16 @@ public class NotificationPersistenceService implements INotificationPersistenceS
 			return (List<T>) proxies;
 		}
 		return null;
+	}
+
+	@Override
+	public long countUnread(IWorker worker) {
+		TypedQuery<Long> query = em.createNamedQuery("WorkerNotification.countUnread", Long.class);
+		query.setParameter("worker", GenericPersistenceService.getEntity(worker));
+		
+		List<Long> counter = query.getResultList();
+		
+		return counter.get(0);
 	}
 
 

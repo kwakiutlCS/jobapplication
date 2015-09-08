@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import pt.uc.dei.aor.project.business.model.INotification;
@@ -21,9 +22,9 @@ public class WorkerNotificationProxy implements
 		this(null);
 	}
 
-	public WorkerNotificationProxy(String msg, IWorker worker) {
+	public WorkerNotificationProxy(String msg, IWorker worker, String type) {
 		entity = new WorkerNotificationEntity(msg, GenericPersistenceService.getEntity(worker),
-				new Date());
+				type);
 	}
 
 	@Override
@@ -36,4 +37,27 @@ public class WorkerNotificationProxy implements
 		entity.setRead(true);
 	}
 
+	@Override
+	public String getDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return sdf.format(new Date()); 
+	}
+
+	@Override
+	public String getMessage() {
+		return entity.getMsg();
+	}
+
+	
+	@Override
+	public String getType() {
+		return entity.getType();
+	}
+
+	@Override
+	public boolean isRead() {
+		return entity.isRead();
+	}
+
+	
 }
