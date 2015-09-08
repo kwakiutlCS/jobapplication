@@ -70,5 +70,11 @@ public class PositionBusinessService implements IPositionBusinessService {
 	}
 
 
+	@Override
+	public IPosition updatePosition(IPosition position) {
+		return positionPersistence.save(position);
+	}
+
+
 
 }

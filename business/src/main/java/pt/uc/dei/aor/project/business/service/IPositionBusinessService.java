@@ -21,5 +21,7 @@ public interface IPositionBusinessService {
 	long codeDefiningMethod();
 
 	List<IPosition> findPositionByTitle(String filterPosition);
+	
+	IPosition updatePosition(IPosition position);
 		
 }

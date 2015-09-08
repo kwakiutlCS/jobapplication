@@ -30,8 +30,6 @@ public class PositionBean implements Serializable {
 	@Inject
 	private IPositionBusinessService position;
 		
-	private String code;
-	private Date openingDate;
 	private String title;
 	private int vacancies; 
 	private Date closingDate;
@@ -81,15 +79,6 @@ public class PositionBean implements Serializable {
 				
 	}
 	
-	
-	public String getCode() {
-		return code;
-	}
-
-	public Date getOpeningDate() {
-		return openingDate;
-	}
-
 
 	public String getTitle() {
 		return title;
