@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
@@ -170,6 +171,6 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		em.merge(workerEntity);
 	}
 
-	
+		
 
 }

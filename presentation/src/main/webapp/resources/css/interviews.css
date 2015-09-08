@@ -27,3 +27,8 @@
 .conjugationLink:hover {
 	color: brown;
 }
+
+.selectMenu { 
+	display: inline-block; 
+	vertical-align: top; 
+}

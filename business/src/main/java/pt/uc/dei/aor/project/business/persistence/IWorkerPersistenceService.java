@@ -5,6 +5,7 @@ import java.util.List;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 
 public interface IWorkerPersistenceService {
 
@@ -32,4 +33,5 @@ public interface IWorkerPersistenceService {
 
 	void removeInterview(long worker_id, long interview_id);
 
+	
 }

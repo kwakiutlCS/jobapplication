@@ -64,6 +64,9 @@ public class InterviewBusinessServiceTest {
 	@Mock
 	private IAnswerPersistenceService answerEjb;
 	
+	@Mock
+	private INotificationBusinessService notificationEjb;
+	
 	@InjectMocks
 	InterviewBusinessService ejb;
 	

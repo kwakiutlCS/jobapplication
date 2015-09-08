@@ -32,4 +32,6 @@ public interface IModelFactory {
 	IAnswer answer(IInterview interview, String answer, IScriptEntry entry);
 
 	IScriptEntry scriptEntry(QuestionType questionType, String question, int position);
+
+	IWorkerNotification workerNotification(String msg, IWorker worker);
 }

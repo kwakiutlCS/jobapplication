@@ -44,6 +44,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Inject
 	private IModelFactory factory;
 	
+	@Inject
+	private INotificationBusinessService notificationService;
+	
 	
 	@Override
 	public List<IInterview> findActiveInterviewsByUser(IWorker user) {
@@ -66,6 +69,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		
 		for (IWorker w : interviewers) {
 			workerPersistence.insertInterview(w.getId(), interview);
+
+			// notify user
+			notificationService.notify(w, "Interview sheduled");
 		}
 		
 		return applicationPersistence.find(application.getId());

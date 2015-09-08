@@ -23,7 +23,7 @@
 		<h:panelGroup id="preFilterSection">		
 			<h:form>
 				<p:selectOneMenu value="#{interviewListBean.filterInterviewer}"
-				converter="omnifaces.SelectItemsConverter">
+				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
 					<f:selectItems value="#{interviewListBean.allInterviewers}"
 						var="interviewer" itemLabel="#{interviewer.fullName}" />
 				</p:selectOneMenu>

@@ -18,8 +18,10 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @Entity
@@ -64,6 +66,9 @@ public class WorkerEntity extends User {
 	@ManyToMany
 	private Set<InterviewEntity> interviews;
 	
+	@OneToMany(mappedBy="worker")
+	private Set<WorkerNotificationEntity> notification;
+	
 	
 	public Set<Role> getRoles() {
 		return roles;
@@ -94,4 +99,5 @@ public class WorkerEntity extends User {
 	public Collection<InterviewEntity> getInterviews() {
 		return interviews;
 	}
+	
 }

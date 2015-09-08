@@ -45,6 +45,7 @@ public class StartUpEjb {
 			else System.out.println("Admin already exists. Nothing to be done here.");
 			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			System.out.println("An error occurred adding admin user.");
 		}
 		System.out.println();

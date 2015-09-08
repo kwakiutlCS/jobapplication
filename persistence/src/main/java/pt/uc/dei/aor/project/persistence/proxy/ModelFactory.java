@@ -16,11 +16,13 @@ import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 @Stateless
 public class ModelFactory implements IModelFactory {
@@ -83,6 +85,11 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IScriptEntry scriptEntry(QuestionType questionType, String question, int position) {
 		return new ScriptEntryProxy(questionType, question, position);
+	}
+
+	@Override
+	public IWorkerNotification workerNotification(String msg, IWorker worker) {
+		return new WorkerNotificationProxy(msg, worker);
 	}
 
 	
