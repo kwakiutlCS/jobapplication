@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-<ui:define name="title">Create Position</ui:define>
+	<ui:define name="title">Create Position</ui:define>
 
 	<ui:define name="content">
 
@@ -64,9 +64,10 @@
 						var="positionState" itemValue="#{positionState}"
 						itemLabel="#{positionState.positionStateLabel}" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel for="chan" value="Publication Channel" />
-				<p:selectCheckboxMenu id="chan" value="#{positionBean.selectedChannels}"
+				<p:selectCheckboxMenu id="chan"
+					value="#{positionBean.selectedChannels}"
 					converter="omnifaces.SelectItemsConverter">
 					<f:selectItems
 						value="#{publicationChannelBean.iPublicationChannels}"
@@ -74,14 +75,13 @@
 						itemLabel="#{channel.channel}" />
 				</p:selectCheckboxMenu>
 
-			<p:commandButton onclick="PF('dlg1').show();" type="button"
-				value="New Channel" />
-			<br />
+				<p:commandButton onclick="PF('dlg1').show();" type="button"
+					value="New Channel" />
+				<br />
 
-			<p:commandButton value="Submit"
-				action="#{positionBean.createPosition}"
-				update="newpositionform" />
-			</h:panelGrid>	
+				<p:commandButton value="Submit"
+					action="#{positionBean.createPosition}" update="newpositionform" />
+			</h:panelGrid>
 		</h:form>
 
 		<p:dialog header="Insert new channel" widgetVar="dlg1" height="100">

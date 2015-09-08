@@ -20,6 +20,7 @@ public interface IPosition  {
 	public void setTitle(String title);
 	
 	public String getLocalizationsFormatted();
+	public void setLocalizationsFormatted(List<Localization> localizations);
 	public List<Localization> getLocalizations();
 	public void setLocalizations(List<Localization> localizations);
 	
@@ -27,7 +28,7 @@ public interface IPosition  {
 	public void setState(PositionState state);
 	
 	public String getVacancies();
-	public void setVacancies(int vacancies);
+	public void setVacancies(String vacancies);
 	
 	public String getClosingDateFormatted();
 	public Date getClosingDate();
