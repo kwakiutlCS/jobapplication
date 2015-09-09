@@ -50,5 +50,9 @@ public class ListPositionBean implements Serializable{
 	public void setSelectedPosition(IPosition selectedPosition) {
 		this.selectedPosition = selectedPosition;
 	}
+	
+	public void updatePosition(IPosition selectedposition){
+		position.updatePosition(selectedposition);
+	}
 
 }

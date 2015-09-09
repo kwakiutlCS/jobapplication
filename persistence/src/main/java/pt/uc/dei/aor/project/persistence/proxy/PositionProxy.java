@@ -99,6 +99,11 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		return build.toString();
 	}
 
+	@Override
+	public void setLocalizationsFormatted(List<Localization> localizations) {
+		entity.setLocalizations(localizations);
+	}
+	
 	
 	@Override
 	public List<Localization> getLocalizations() {
@@ -126,8 +131,8 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public void setVacancies(int vacancies) {
-		entity.setVacancies(vacancies);
+	public void setVacancies(String vacancies) {
+		entity.setVacancies(Integer.parseInt(vacancies));
 	}
 	
 	@Override
