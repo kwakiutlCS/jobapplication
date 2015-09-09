@@ -86,7 +86,8 @@
 		</h:form>
 
 		<p:dialog header="Edit Position" widgetVar="Dlg1" modal="true"
-			showEffect="fade" hideEffect="fade" resizable="true">
+			showEffect="fade" hideEffect="fade" resizable="true"
+			minimizable="true" maximizable="true">
 			<p:outputPanel id="positionDetail" style="text-align:left;">
 				<h:form>
 
@@ -96,9 +97,10 @@
 						rendered="#{not empty listPositionBean.selectedPosition}"
 						columnClasses="label,value">
 
-						<h:outputText colspan="2" value="Non editable fields" />
+						
+						<h:outputText value="Non editable fields" />
 						<h:outputText value="" />
-
+					
 						<h:outputText value="Opening date:" />
 						<h:outputText
 							value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
@@ -120,8 +122,7 @@
 						<h:outputText
 							value="#{listPositionBean.selectedPosition.technicalAreasFormatted}" />
 
-
-						<h:outputText colspan="2" value="Editable fields" />
+								<h:outputText value="Editable fields" />
 						<h:outputText value="" />
 
 						<h:outputText value="Title:" />
@@ -162,7 +163,6 @@
 						<p:inputTextarea
 							value="#{listPositionBean.selectedPosition.description}" />
 
-
 						<h:outputText value="Publication channels" />
 						<p:selectManyCheckbox id="chan"
 							value="#{listPositionBean.selectedPosition.IPublicationChannels}"
@@ -173,10 +173,11 @@
 								itemLabel="#{channel.channel}" />
 						</p:selectManyCheckbox>
 
-
-						<p:commandButton value="Save Changes" update="growl"
+						<p:commandButton value="Save changes" update="growl"
 							actionListener="#{listPositionBean.updatePosition(listPositionBean.selectedPosition)}"
 							styleClass="ui-priority-primary" />
+
+						<p:commandButton value="Exit" onclick="positionDetail.hide()" />
 					</p:panelGrid>
 				</h:form>
 			</p:outputPanel>

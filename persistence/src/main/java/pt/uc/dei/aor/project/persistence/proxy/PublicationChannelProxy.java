@@ -48,4 +48,9 @@ public class PublicationChannelProxy implements IPublicationChannel,IProxyToEnti
 	public boolean equals(Object o) {
 		return pcEntity.equals(GenericPersistenceService.getEntity(o));
 	}
+
+	@Override
+	public int getPublicationChannelId() {
+		return pcEntity.getId();
+	}
 }
