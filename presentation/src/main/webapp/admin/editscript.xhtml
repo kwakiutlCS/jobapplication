@@ -53,7 +53,8 @@
 			<p:column headerText="Question">
 				<h:form>
 				<p:inplace editor="true">
-					<p:ajax event="save"
+					
+
 						listener="#{scriptBean.updateEntry(entry)}" />
 					<p:inputText value="#{entry.text}" />
 				</p:inplace>

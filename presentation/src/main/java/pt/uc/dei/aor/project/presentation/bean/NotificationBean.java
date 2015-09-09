@@ -20,7 +20,7 @@ public class NotificationBean implements Serializable {
 	
 	private static final long serialVersionUID = 3741180061807047698L;
 	
-	private NotificationStatus notificationStatus = NotificationStatus.ALL;
+	private NotificationStatus notificationStatus = NotificationStatus.UNREAD;
 	
 	private int visibleNotification = -1;
 	
@@ -52,6 +52,10 @@ public class NotificationBean implements Serializable {
 	
 	public long countUnread() {
 		return notificationService.countUnreadNotifications(getUser());
+	}
+	
+	public void filter() {
+		visibleNotification = -1;
 	}
 	
 	// getters and setters

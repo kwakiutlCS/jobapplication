@@ -8,6 +8,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
 
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
@@ -41,11 +42,11 @@ public class StartUpEjb {
 			IWorker worker = workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
 					Encryptor.encrypt("admin"), roles);
 				
-			if (worker != null) System.out.println("Admin added with sucess.");
-			else System.out.println("Admin already exists. Nothing to be done here.");
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("Admin added with sucess.");
+		} catch (DuplicatedUserException e) {
+			System.out.println("Admin already exists. Nothing to be done here.");
+		}
+		catch (Exception e) {
 			System.out.println("An error occurred adding admin user.");
 		}
 		System.out.println();

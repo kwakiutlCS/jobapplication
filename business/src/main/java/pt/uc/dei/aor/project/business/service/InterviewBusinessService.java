@@ -28,6 +28,7 @@ import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 
 
@@ -79,8 +80,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			notificationService.notify(w, "Interview sheduled", "Interview Scheduled");
 		}
 		
-
-		
+		EmailUtil.send("Interview", "Interview scheduled", "ricardo.rsr.rodrigues@gmail.com");
 		return applicationPersistence.find(application.getId());
 	}
 
