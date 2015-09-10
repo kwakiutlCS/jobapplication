@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.service.INotificationBusinessService;
 
 @Named
@@ -24,25 +25,33 @@ public class NotificationBean implements Serializable {
 	
 	private int visibleNotification = -1;
 	
+	private List<INotification> notifications;
+	
 	@Inject
 	private INotificationBusinessService notificationService;
 	
 	
 	public List<INotification> getNotifications() {
-		if (notificationStatus == NotificationStatus.UNREAD) {
-			return notificationService.findAllUnreadNotifications(getUser(), 0, 10);
+		if (notificationStatus == NotificationStatus.UNREAD && notifications == null) {
+			notifications = notificationService.findAllUnreadNotifications(getUser(), 0, 10);
 		}
 		if (notificationStatus == NotificationStatus.ALL) {
-			return notificationService.findAllNotifications(getUser(), 0, 10);
+			notifications = notificationService.findAllNotifications(getUser(), 0, 10);
 		}
 		if (notificationStatus == NotificationStatus.READ) {
-			return notificationService.findAllReadNotifications(getUser(), 0, 10);
+			notifications = notificationService.findAllReadNotifications(getUser(), 0, 10);
 		}
-		return null;
+		return notifications;
 	}
 	
 	public void deleteNotification(INotification notification) {
+		int deleted = notifications.indexOf(notification);
+		if (deleted == visibleNotification) visibleNotification = -1;
+		else if (deleted < visibleNotification) visibleNotification--;
+		
 		notificationService.deleteNotification(notification);
+		if (notificationStatus == NotificationStatus.UNREAD)
+			notifications = notificationService.findAllUnreadNotifications(getUser(), 0, 10);
 	}
 	
 	public void viewNotification(int index, INotification notification) {
@@ -56,6 +65,7 @@ public class NotificationBean implements Serializable {
 	
 	public void filter() {
 		visibleNotification = -1;
+		if (notificationStatus == NotificationStatus.UNREAD) notifications = null;
 	}
 	
 	// getters and setters
