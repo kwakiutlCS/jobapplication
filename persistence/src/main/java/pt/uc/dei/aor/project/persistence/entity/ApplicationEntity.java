@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,7 +50,7 @@ public class ApplicationEntity {
 	private PositionEntity position;
 	
 	@OrderBy("date")
-	@OneToMany(mappedBy="application", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private SortedSet<InterviewEntity> interviews = new TreeSet<>();
 	
 	@OneToOne
@@ -57,8 +58,6 @@ public class ApplicationEntity {
 
 	
 	public SortedSet<InterviewEntity> getInterviews() {
-		System.out.println("interview getter");
-		System.out.println(interviews);
 		return interviews;
 	}
 
@@ -99,6 +98,15 @@ public class ApplicationEntity {
 
 	public PositionEntity getPosition() {
 		return position;
+	}
+
+	public void addInterview(InterviewEntity interview) {
+		interview.setApplication(this);
+		interviews.add(interview);
+	}
+
+	public void remove(InterviewEntity interview) {
+		interviews.remove(interview);
 	}
 
 	

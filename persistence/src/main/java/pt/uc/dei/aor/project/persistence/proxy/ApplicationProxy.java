@@ -71,5 +71,26 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		return entity.getId();
 	}
 
+
+	@Override
+	public void addInterview(IInterview interview) {
+		entity.addInterview(GenericPersistenceService.getEntity(interview));
+	}
+
+
+	@Override
+	public IInterview getInterviewByDate(Date date) {
+		for (IInterview i : getInterviews()) {
+			if (i.getDateObject().equals(date)) return i;
+		}
+		return null;
+	}
+
+
+	@Override
+	public void remove(IInterview interview) {
+		entity.remove(GenericPersistenceService.getEntity(interview));
+	}
+
 	
 }

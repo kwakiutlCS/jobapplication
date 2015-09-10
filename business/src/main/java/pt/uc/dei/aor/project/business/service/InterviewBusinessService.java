@@ -11,6 +11,8 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
@@ -35,6 +37,8 @@ import pt.uc.dei.aor.project.business.util.QuestionType;
 @Stateless
 public class InterviewBusinessService implements IInterviewBusinessService {
 
+	private static Logger logger = LoggerFactory.getLogger(InterviewBusinessService.class);
+	
 	@Inject
 	private IInterviewPersistenceService interviewPersistence;
 	
@@ -66,12 +70,12 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		if (date == null || application == null 
 				|| interviewers == null) throw new GenericIllegalParamsException();
 		
-		IInterview interview = factory.interview(application, date);
+		IInterview interview = factory.interview(date);
 		
-		IInterview existingInterview = interviewPersistence.findInterview(interview);
-		if (existingInterview != null) throw new RepeatedInterviewException();
+		application.addInterview(interview);
+		application = applicationPersistence.save(application);
 		
-		interview = interviewPersistence.save(interview);
+		interview = application.getInterviewByDate(date);
 		
 		for (IWorker w : interviewers) {
 			workerPersistence.insertInterview(w.getId(), interview);
@@ -80,8 +84,8 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			notificationService.notify(w, "Interview sheduled", "Interview Scheduled");
 		}
 		
-		EmailUtil.send("Interview", "Interview scheduled", "ricardo.rsr.rodrigues@gmail.com");
-		return applicationPersistence.find(application.getId());
+		//EmailUtil.send("Interview", "Interview scheduled", "ricardo.rsr.rodrigues@gmail.com");
+		return application;
 	}
 
 	@Override
@@ -91,9 +95,13 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IApplication delete(IInterview interview) throws IllegalInterviewDeletionException {
+	public IApplication delete(IApplication application, IInterview interview) 
+			throws IllegalInterviewDeletionException {
 		List<IAnswer> answers = findAnswersByInterview(interview);
 		if (!answers.isEmpty()) throw new IllegalInterviewDeletionException();
+		
+		application.remove(interview);
+		application = applicationPersistence.save(application);
 		
 		for (IWorker w : interview.getInterviewers()) {
 			workerPersistence.removeInterview(w.getId(), interview.getId());
@@ -101,7 +109,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		
 		interviewPersistence.delete(interview);
 		
-		return applicationPersistence.find(interview.getApplication().getId());
+		return application;
 	}
 
 

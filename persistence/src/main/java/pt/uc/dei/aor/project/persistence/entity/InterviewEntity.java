@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.persistence.entity;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -35,8 +36,7 @@ import org.hibernate.annotations.FetchMode;
 })
 public class InterviewEntity implements Comparable<InterviewEntity> {
 	
-	public InterviewEntity(ApplicationEntity application, Date date) {
-		this.application = application;
+	public InterviewEntity(Date date) {
 		this.date = date;
 	}
 
@@ -73,6 +73,7 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 
 
 	public Set<WorkerEntity> getInterviewers() {
+		if (interviewers == null) interviewers = new HashSet<>();
 		return interviewers;
 	}
 	
@@ -134,5 +135,16 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 		return true;
 	}
 
+	public void setApplication(ApplicationEntity application) {
+		this.application = application;
+	}
+
+	public void addInterviewer(WorkerEntity interviewer) {
+		if (this.interviewers == null) this.interviewers = new HashSet<>();
+		this.interviewers.add(interviewer);
+	}
 	
+	public void removeInterviewer(WorkerEntity interviewer) {
+		this.interviewers.remove(interviewer);
+	}
 }

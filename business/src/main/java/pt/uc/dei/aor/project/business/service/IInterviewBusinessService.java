@@ -23,7 +23,7 @@ public interface IInterviewBusinessService {
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
 
-	IApplication delete(IInterview interview) throws IllegalInterviewDeletionException;
+	IApplication delete(IApplication selectedApplication, IInterview interview) throws IllegalInterviewDeletionException;
 
 	IInterview findInterviewById(long id);
 

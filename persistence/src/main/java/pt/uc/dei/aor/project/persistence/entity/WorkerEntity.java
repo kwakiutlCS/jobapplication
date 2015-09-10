@@ -76,7 +76,7 @@ public class WorkerEntity extends User {
 
 	public void addInterview(InterviewEntity interviewEntity) {
 		if (interviews == null) interviews = new HashSet<>();
-		
+		interviewEntity.addInterviewer(this);
 		interviews.add(interviewEntity);
 	}
 	
@@ -93,6 +93,7 @@ public class WorkerEntity extends User {
 	}
 
 	public void removeInterview(InterviewEntity interview) {
+		interview.removeInterviewer(this);
 		interviews.remove(interview);
 	}
 

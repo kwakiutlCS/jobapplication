@@ -3,12 +3,14 @@ package pt.uc.dei.aor.project.business.startup;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.slf4j.Logger;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
@@ -23,7 +25,6 @@ public class StartUpEJBTest {
 	
 	@InjectMocks
 	private StartUpEjb startUp;
-	
 	
 	@Test
 	public void shouldCreateAdminIfDoesntExists() throws NoRoleException, DuplicatedUserException {

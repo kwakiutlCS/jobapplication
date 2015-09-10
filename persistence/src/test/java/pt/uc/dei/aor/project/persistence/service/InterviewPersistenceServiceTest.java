@@ -105,8 +105,8 @@ public class InterviewPersistenceServiceTest {
     @Ignore
     @Test
     public void shouldNotSaveInterviewsAtTheSameTime() {
-    	IInterview interview1 = factory.interview(application, new Date());
-    	IInterview interview2 = factory.interview(application, new Date());
+    	IInterview interview1 = factory.interview(new Date());
+    	IInterview interview2 = factory.interview(new Date());
     	
     	int size = ejb.findAllInterviews().size();
     	

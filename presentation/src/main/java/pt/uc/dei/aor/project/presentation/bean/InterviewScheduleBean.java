@@ -112,7 +112,7 @@ public class InterviewScheduleBean implements Serializable {
 	
 	public void delete(IInterview interview) {
 		try {
-			selectedApplication = interviewService.delete(interview);
+			selectedApplication = interviewService.delete(selectedApplication, interview);
 			setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
 		} catch (IllegalInterviewDeletionException e) {
 			setMsg("Interview already occurred", FacesMessage.SEVERITY_ERROR);

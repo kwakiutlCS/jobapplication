@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -17,7 +20,9 @@ import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntity> {
-
+	
+	private static Logger logger = LoggerFactory.getLogger(InterviewProxy.class);
+	
 	private InterviewEntity entity;
 	
 	public InterviewProxy(InterviewEntity entity) {
@@ -25,10 +30,8 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 	}
 
 	
-	public InterviewProxy(IApplication application, Date date) {
-		ApplicationEntity applicationEntity = GenericPersistenceService.getEntity(application);
-		
-		this.entity = new InterviewEntity(applicationEntity, date);
+	public InterviewProxy(Date date) {
+		this.entity = new InterviewEntity(date);
 	}
 
 
