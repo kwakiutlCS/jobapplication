@@ -11,4 +11,5 @@ public interface IPublicationChannelBusService {
 	List<IPublicationChannel> getIPublicationChannels();
 	
 	void deletePublicationChannel(IPublicationChannel publicationChannel);
+
 }

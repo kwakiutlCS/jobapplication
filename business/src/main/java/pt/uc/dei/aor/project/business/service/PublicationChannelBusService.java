@@ -24,9 +24,8 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 
 	@Override
 	public IPublicationChannel createNewPublicationChannel(String channel) {
-
-		IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
-		return pcPersistenceService.save(publicationChannel);
+			IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
+			return pcPersistenceService.save(publicationChannel);
 	}
 
 
@@ -40,7 +39,6 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 	public void deletePublicationChannel(IPublicationChannel publicationChannel) {
 		pcPersistenceService.delete(publicationChannel);
 	}
-
 
 
 }

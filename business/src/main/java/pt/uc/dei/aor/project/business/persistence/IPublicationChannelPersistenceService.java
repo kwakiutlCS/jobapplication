@@ -9,7 +9,7 @@ public interface IPublicationChannelPersistenceService {
 	IPublicationChannel save(IPublicationChannel publicationChannel);
 	
 	List<IPublicationChannel> findAllPublicationChannels();
-
+	
 	void delete(IPublicationChannel publicationChannel);
 	
 	

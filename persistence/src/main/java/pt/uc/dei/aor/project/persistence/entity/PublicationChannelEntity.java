@@ -12,7 +12,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="publication_channel")
 @NamedQueries({
-	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u")
+	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u"),
+	@NamedQuery(name="publicationChannel.findByName", query="from PublicationChannelEntity u where u.channel like:i")
 })
 public class PublicationChannelEntity implements Comparable<PublicationChannelEntity> {
 	
@@ -21,7 +22,7 @@ public class PublicationChannelEntity implements Comparable<PublicationChannelEn
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
 	private String channel;
 	
 	

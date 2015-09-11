@@ -155,5 +155,27 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 	public void removeAnswerFromEntry(IScriptEntry entry, IAnswerChoice answerChoice) {
 		entry.removeAnswer(answerChoice);
 	}
+	
+	@Override
+	public String toString() {
+		return entity.toString();
+	}
+	
+	@Override
+	public int hashCode() {
+		return entity.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		ScriptEntity oe = null;
+		
+		if (o instanceof IProxyToEntity<?>)
+			oe = GenericPersistenceService.getEntity(o);
+		else return false;
+		
+		return entity.equals(oe);
+	}
+
 
 }

@@ -39,7 +39,7 @@
 			<type>war</type>
 		</dependency>
 
-			<dependency>
+		<dependency>
 			<groupId>pt.uc.dei.aor.project.alberto_ricardo</groupId>
 			<artifactId>presentation-public</artifactId>
 			<version>${project.version}</version>

@@ -91,8 +91,6 @@
 			<p:outputPanel id="positionDetail" style="text-align:left;">
 				<h:form>
 
-					<p:growl id="growl" life="2000" />
-
 					<p:panelGrid columns="2"
 						rendered="#{not empty listPositionBean.selectedPosition}"
 						columnClasses="label,value">
@@ -173,7 +171,7 @@
 								itemLabel="#{channel.channel}" />
 						</p:selectManyCheckbox>
 
-						<p:commandButton value="Save changes" update="growl"
+						<p:commandButton value="Save changes"
 							actionListener="#{listPositionBean.updatePosition(listPositionBean.selectedPosition)}"
 							styleClass="ui-priority-primary" />
 

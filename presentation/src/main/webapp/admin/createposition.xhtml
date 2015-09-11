@@ -75,7 +75,13 @@
 						itemLabel="#{channel.channel}" />
 				</p:selectCheckboxMenu>
 
-				<br />
+				<p:outputLabel for="script" value="Add Script" />
+				<p:selectOneMenu id="script"
+					value="#{positionBean.script}" converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{scriptBean.scripts}"
+						var="scr" itemValue="#{scr}"
+						itemLabel="#{scr.title}" />
+				</p:selectOneMenu>				
 
 				<p:commandButton value="Submit"
 					action="#{positionBean.createPosition}" update="newpositionform" />
