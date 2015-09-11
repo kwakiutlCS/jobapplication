@@ -56,7 +56,7 @@ public class ScriptPersistenceServiceTest {
     @Transactional(TransactionMode.ROLLBACK)
     public void shouldReturnListOfScripts() {
     	String title1 = "nonExistingScriptNumber1";
-    	String title2 = "nonExistingScriptNumber1";
+    	String title2 = "nonExistingScriptNumber2";
     	
     	int size = ejb.findAllScripts().size();
     	
