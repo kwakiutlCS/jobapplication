@@ -40,6 +40,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	private static Logger logger = LoggerFactory.getLogger(InterviewBusinessService.class);
 	
 	@Inject
+	private EmailUtil email;
+	
+	@Inject
 	private IInterviewPersistenceService interviewPersistence;
 	
 	@Inject
@@ -84,7 +87,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			notificationService.notify(w, "Interview sheduled", "Interview Scheduled");
 		}
 		
-		//EmailUtil.send("Interview", "Interview scheduled", "ricardo.rsr.rodrigues@gmail.com");
+		email.send("centenocosta@gmail.com", "Acertar o Rumo - Bom dia!!", "Já manda emails...\n\nricardo");
 		return application;
 	}
 

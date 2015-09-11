@@ -1,63 +1,51 @@
 package pt.uc.dei.aor.project.business.util;
 
-import org.apache.commons.mail.DefaultAuthenticator;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
+import javax.annotation.Resource;
+import javax.ejb.Asynchronous;
+import javax.ejb.Stateless;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Stateless
 public class EmailUtil {
-	private static String hostname = "smtp.googlemail.com";
-	private static int port = 587;
-	private static String sendMail = "managrecruit@gmail.com";
-	private static String password = "apjomaad";
-	private static Email email;
 	
+	private static final Logger log = LoggerFactory.getLogger(EmailUtil.class);
+
+	@Resource(mappedName="java:jboss/mail/Gmail")
+	Session session;
+
+	private static String from = "managrecruit@gmail.com";
+
 	
-	public static void send(String subject, String msg, String receiver) {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				for (int i = 0; i < 10; i++) {
-					try {
-						attemptSend(subject, msg, receiver);
-						System.out.println("Email send sucess");
-						break;
-					}
-					catch(Exception e) {
-						System.out.println("Email send error. retrying...");
-						System.out.println(e.getMessage());
-					}
-				}
-			}
-		}).start();
+	@Asynchronous
+	public void send(String to, String subject, String content) {
+
+		log.info("Sending Email from " + from + " to " + to + " : " + subject);
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(from));
+			message.setRecipients(Message.RecipientType.TO,
+					InternetAddress.parse(to));
+			
+			message.setSubject(subject);
+			message.setText(content);
+
+			Transport.send(message);
+
+			log.debug("Email was sent");
+
+		} catch (MessagingException e) {
+			log.error("Error while sending email : " + e.getMessage());
+		}
 	}
-	
-	
-	private static void attemptSend(String subject, String msg, String receiver) throws EmailException {
-		email = new SimpleEmail();
-		email.setSmtpPort(587);
-		email.setDebug(true);
-		email.setAuthenticator(new DefaultAuthenticator(sendMail, password));
-		email.setHostName(hostname);
-		
-//		email.getMailSession().getProperties().put("mail.smtps.auth", "true");
-//		email.getMailSession().getProperties().put("mail.debug", "true");
-//		email.getMailSession().getProperties().put("mail.smtps.port", "587");
-//		email.getMailSession().getProperties().put("mail.smtps.socketFactory.port", "587");
-//		email.getMailSession().getProperties().put("mail.smtps.socketFactory.class",   "javax.net.ssl.SSLSocketFactory");
-//		email.getMailSession().getProperties().put("mail.smtps.socketFactory.fallback", "false");
-//		email.getMailSession().getProperties().put("mail.smtp.starttls.enable", "true");
-		
-//		email.setSmtpPort(port);
-		email = email.setSSLOnConnect(true);
-		
-		email = email.setFrom(sendMail, "Recruitment");
-		email = email.setSubject(subject);
-		email = email.setMsg(msg);
-		email = email.addTo(receiver);
-		email.setSSL(true);
-		
-		email.send();
-		
-	}
+
 }
