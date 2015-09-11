@@ -3,6 +3,7 @@
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -68,6 +69,40 @@ public class WorkerEntity extends User {
 	
 	@OneToMany(mappedBy="worker")
 	private Set<WorkerNotificationEntity> notification;
+	
+	
+	
+	// applications attributes
+	
+	@Column
+	private String address;
+	
+	@Column
+	private String city;
+	
+	@Column
+	private String country;
+	
+	@Column
+	private String phone;
+	
+	@Column
+	private String mobilePhone;
+	
+	// change string
+	@Column
+	private String qualifications;
+	
+	// change ??
+	@Column
+	private String institution;
+	
+	@Column
+	private String cv;
+	
+	@OneToMany(mappedBy="internalCandidate")
+	private List<ApplicationEntity> applications;
+	
 	
 	
 	public Set<Role> getRoles() {

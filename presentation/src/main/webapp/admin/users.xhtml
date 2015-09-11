@@ -35,14 +35,6 @@
 				<p:inputText id="email" value="#{workerBean.email}"
 					validator="#{emailValidator.validate}" required="true" />
 
-				<p:outputLabel for="password" value="Password" />
-				<p:password id="password" value="#{workerBean.password}"
-					match="confirm" required="true" />
-
-				<p:outputLabel for="confirm" value="Confirm Password" />
-				<p:password id="confirm" value="#{workerBean.password}"
-					required="true" />
-
 				<p:selectManyCheckbox value="#{workerBean.roles}"
 					converter="roleConverter" label="Roles" required="true">
 					<f:selectItems value="#{workerBean.possibleRoles}" var="role"

@@ -39,8 +39,7 @@ public class StartUpEjb {
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		try {
-			workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", 
-					Encryptor.encrypt("admin"), roles);
+			workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin", roles);
 				
 			logger.info("Admin added with sucess.");
 		} catch (DuplicatedUserException e) {

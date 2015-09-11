@@ -12,7 +12,7 @@ import pt.uc.dei.aor.project.business.util.Role;
 public interface IWorkerBusinessService {
 	
 	IWorker createNewWorker(String login, String name, String surname, String email, 
-			String password, Collection<Role> roles) throws NoRoleException, DuplicatedUserException;
+			Collection<Role> roles) throws NoRoleException, DuplicatedUserException;
 	
 	IWorker getWorkerByLogin(String login);
 

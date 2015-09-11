@@ -9,15 +9,22 @@ import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.business.util.PasswordUtil;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @Stateless
 public class WorkerBusinessService implements IWorkerBusinessService {
+	
+	private static Logger logger = LoggerFactory.getLogger(WorkerBusinessService.class);
 	
 	@Inject
 	private IModelFactory factory;
@@ -26,12 +33,23 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	private IWorkerPersistenceService workerPersistence;
 	
 	@Override
-	public IWorker createNewWorker(String login, String name, String surname, String email, String password,
+	public IWorker createNewWorker(String login, String name, String surname, String email,
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException {
 		if (roles.isEmpty()) throw new NoRoleException();
-		if (login.equals("admin") && findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
 		
-		IWorker worker = factory.worker(login, email, password, name, surname, roles);
+		String password = null;
+		if (login.equals("admin")) {
+			if (findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
+			password = Encryptor.encrypt("admin");
+		}
+		else {
+			String p = PasswordUtil.generate(8);
+			password = Encryptor.encrypt(p);
+			logger.trace("User: "+login+" with password: "+p+" created");
+		}
+		
+		IWorker worker = factory.worker(login, email, 
+				password, name, surname, roles);
 		
 		try {
 			return workerPersistence.save(worker);

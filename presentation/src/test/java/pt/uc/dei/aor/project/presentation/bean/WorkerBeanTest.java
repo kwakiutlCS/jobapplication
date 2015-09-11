@@ -32,7 +32,6 @@ public class WorkerBeanTest {
 		String name = "name";
 		String surname = "surname";
 		String email = "email";
-		String password = "password";
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		
@@ -40,11 +39,10 @@ public class WorkerBeanTest {
 		bean.setLogin(login);
 		bean.setName(name);
 		bean.setSurname(surname);
-		bean.setPassword(password);
 		bean.setRoles(roles);
 		bean.register();
 		
-		verify(ejb).createNewWorker(login, name, surname, email, Encryptor.encrypt(password), roles);
+		verify(ejb).createNewWorker(login, name, surname, email, roles);
 	}
 
 }

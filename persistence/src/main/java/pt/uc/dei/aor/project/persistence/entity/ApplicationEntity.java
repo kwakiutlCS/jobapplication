@@ -42,8 +42,10 @@ public class ApplicationEntity {
 	private String sourceInfo; 
 	
 	@ManyToOne
-	@JoinColumn(nullable=false)
 	private CandidateEntity candidate;
+	
+	@ManyToOne
+	private WorkerEntity internalCandidate;
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
