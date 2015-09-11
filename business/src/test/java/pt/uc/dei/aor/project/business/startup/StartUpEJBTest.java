@@ -35,10 +35,9 @@ public class StartUpEJBTest {
 		String name = "admin";
 		String surname = "admin";
 		String email = "admin@admin";
-		String password = Encryptor.encrypt("admin");
 		
 		startUp.init(); 
 		
-		Mockito.verify(workerEjb).createNewWorker(login, name, surname, email, password, roles);
+		Mockito.verify(workerEjb).createNewWorker(login, name, surname, email, roles);
 	}
 }

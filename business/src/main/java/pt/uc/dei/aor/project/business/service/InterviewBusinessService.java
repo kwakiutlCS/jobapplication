@@ -87,7 +87,6 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			notificationService.notify(w, "Interview sheduled", "Interview Scheduled");
 		}
 		
-		email.send("centenocosta@gmail.com", "Acertar o Rumo - Bom dia!!", "Já manda emails...\n\nricardo");
 		return application;
 	}
 

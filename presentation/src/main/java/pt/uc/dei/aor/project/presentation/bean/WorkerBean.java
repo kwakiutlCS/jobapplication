@@ -24,7 +24,6 @@ public class WorkerBean {
 	private IWorkerBusinessService workerService;
 	
 	private String login;
-	private String password;
 	private String email;
 	private String name;
 	private String surname;
@@ -33,9 +32,8 @@ public class WorkerBean {
 	
 	public void register() {
 		try {
-			workerService.createNewWorker(login, name, surname, email, Encryptor.encrypt(password), roles);
+			workerService.createNewWorker(login, name, surname, email, roles);
 			login = null;
-			password = null;
 			email = null;
 			name = null;
 			surname = null;
@@ -61,14 +59,6 @@ public class WorkerBean {
 	
 	public void setLogin(String login) {
 		this.login = login;
-	}
-	
-	public String getPassword() {
-		return password;
-	}
-	
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	
 	public String getEmail() {
