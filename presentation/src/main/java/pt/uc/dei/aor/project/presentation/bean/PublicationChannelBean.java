@@ -26,9 +26,9 @@ public class PublicationChannelBean implements Serializable {
 
 
 	private String channel;
-	private List<IPublicationChannel> iPublicationChannels;
-
-
+	private String editchannel;
+	
+	
 	public String getChannel() {
 		return channel;
 	}
@@ -48,23 +48,33 @@ public class PublicationChannelBean implements Serializable {
 	}
 
 
-	public String createNewPublicationChannel(){
-
-		String result="";
-		publicationChannel.createNewPublicationChannel(channel);
-
-		return result;
-
-	}
-
 	public void setIPublicationChannels(List<IPublicationChannel> ipublicationchannels) {
-		this.iPublicationChannels = ipublicationchannels;
 	}
 
 	public List<IPublicationChannel> getiPublicationChannels() {
 		return publicationChannel.getIPublicationChannels();
 	}
 
+
+	public void createNewPublicationChannel(){
+
+		publicationChannel.createNewPublicationChannel(editchannel);
+
+	}
+
+	public void deletePublicationChannel(IPublicationChannel ipchannel){
+
+		publicationChannel.deletePublicationChannel(ipchannel);
+
+	}
+
+	public String getEditchannel() {
+		return editchannel;
+	}
+
+	public void setEditchannel(String editchannel) {
+		this.editchannel = editchannel;
+	}
 
 
 }

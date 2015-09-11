@@ -4,4 +4,6 @@ public interface IPublicationChannel {
 
 	public String getChannel();
 	
+	public int getPublicationChannelId();
+	
 }

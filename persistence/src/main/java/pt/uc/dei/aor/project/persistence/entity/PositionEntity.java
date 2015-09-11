@@ -46,7 +46,7 @@ public class PositionEntity {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, unique=true)
 	private long code;
 	
 	@Column(nullable=false)

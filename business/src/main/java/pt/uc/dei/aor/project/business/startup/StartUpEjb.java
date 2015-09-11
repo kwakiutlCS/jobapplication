@@ -62,7 +62,20 @@ public class StartUpEjb {
 		}
 		
 		// publication channels
-		//channelEjb.createNewPublicationChannel("sadfdadsf");
-		//System.out.println("Created channel qq coisa");
+		System.out.println("Adding Channels...");
+		
+		try { channelEjb.createNewPublicationChannel("Critical Software website"); } 
+		catch (Exception e) {System.out.println(e.getMessage());}
+		
+		try {channelEjb.createNewPublicationChannel("Linkedin"); }
+		catch (Exception e) {System.out.println(e.getMessage());}
+		
+		try {channelEjb.createNewPublicationChannel("Glassdoor"); } 
+		catch (Exception e) {System.out.println(e.getMessage());}
+		
+		try {channelEjb.createNewPublicationChannel("Facebook"); } 
+		catch (Exception e) {System.out.println(e.getMessage());}
+		
+		 
 	}
 }

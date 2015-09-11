@@ -13,36 +13,31 @@ import pt.uc.dei.aor.project.business.persistence.IPublicationChannelPersistence
 
 @Stateless
 public class PublicationChannelBusService implements IPublicationChannelBusService{
-	
-	
+
+
 	@Inject
 	private IModelFactory pcfactory;
-	
+
 	@Inject
 	private IPublicationChannelPersistenceService pcPersistenceService;
-	
+
 
 	@Override
 	public IPublicationChannel createNewPublicationChannel(String channel) {
-		
-		IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
-		return pcPersistenceService.save(publicationChannel);
+			IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
+			return pcPersistenceService.save(publicationChannel);
 	}
-
 
 
 	@Override
 	public List<IPublicationChannel> getIPublicationChannels() {
-
 		return pcPersistenceService.findAllPublicationChannels();
 	}
 
 
-
 	@Override
-	public List<IPublicationChannel> getIPublicationChannel(String channel) {
-		
-		return pcPersistenceService.getIPublicationChannel(channel);
+	public void deletePublicationChannel(IPublicationChannel publicationChannel) {
+		pcPersistenceService.delete(publicationChannel);
 	}
 
 

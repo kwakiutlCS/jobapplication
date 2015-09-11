@@ -135,6 +135,17 @@ public class PositionBean implements Serializable {
 	}
 
 
+	public IScript getScript() {
+		return script;
+	}
+
+	public void setScript(IScript script) {
+		
+		System.out.println("Getting script "+script.getTitle());
+		
+		this.script = script;
+	}
+
 	public void setCompany(String company) {
 		this.company = company;
 	}
@@ -193,14 +204,11 @@ public class PositionBean implements Serializable {
 		this.selectedChannels = selectedChannels;
 	}
 
-	public String createPosition() {
+	public void createPosition() {
 		
 		position.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
 				company, selectedTechnicalAreas, description, script, selectedChannels);
 		
-		String result="";
-		
-		return  result;
 	}
 
 

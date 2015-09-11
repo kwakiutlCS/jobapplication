@@ -10,7 +10,8 @@ public interface IPublicationChannelPersistenceService {
 	
 	List<IPublicationChannel> findAllPublicationChannels();
 	
-	List<IPublicationChannel> getIPublicationChannel(String channel);
+	void delete(IPublicationChannel publicationChannel);
+	
 	
 	
 	

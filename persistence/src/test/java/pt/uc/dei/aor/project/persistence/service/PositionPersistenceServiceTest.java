@@ -1,5 +1,9 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -13,12 +17,9 @@ import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -93,7 +94,7 @@ public class PositionPersistenceServiceTest {
     
     
 
-	@Test
+	@Ignore
     @Transactional(TransactionMode.ROLLBACK)
     public void shouldReturnHighestCode() {
     	long code = 7;

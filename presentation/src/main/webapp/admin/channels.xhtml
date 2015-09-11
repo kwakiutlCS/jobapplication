@@ -1,0 +1,39 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">Publication Channel</ui:define>
+
+	<ui:define name="content">
+
+		<h2>Publication Channels page</h2>
+		
+		<h:form id="submitChannel">
+				<p:outputLabel for="newChannel" value="New Channel" />
+				<p:inputText id="newChannel"
+					value="#{publicationChannelBean.editchannel}" />
+				<p:commandButton value="Submit"
+					action="#{publicationChannelBean.createNewPublicationChannel()}" update="editchannel"/>
+		</h:form>
+		
+		<p:dataTable id="editchannel" var="edchan"
+			value="#{publicationChannelBean.iPublicationChannels}"
+			selection="#{publicationChannelBean.channel}"
+			style="margin-bottom:0 ; width:50%">
+			<p:column>
+				<h:outputText value="#{edchan.channel}" />
+			</p:column>
+			<p:column>
+				<h:form>
+					<p:commandButton
+						action="#{publicationChannelBean.deletePublicationChannel(edchan)}"
+						update="editchannel" icon="ui-icon-trash" />
+				</h:form>
+			</p:column>
+		</p:dataTable>
+	</ui:define>
+</ui:composition>
