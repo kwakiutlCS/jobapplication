@@ -35,5 +35,7 @@ public interface IWorkerPersistenceService {
 
 	IWorker findWorkerByEmail(String email);
 
+	IWorker verifyUser(IWorker user, String encrypt);
+
 	
 }

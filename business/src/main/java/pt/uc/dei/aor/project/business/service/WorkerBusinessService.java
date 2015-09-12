@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -116,5 +117,16 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		workerPersistence.save(worker);
 		
 		logger.trace("New password: "+password);
+	}
+
+	@Override
+	public void updatePassword(IWorker user, String password, String oldPassword) 
+			throws WrongPasswordException {
+		IWorker worker = workerPersistence.verifyUser(user, Encryptor.encrypt(oldPassword));
+		
+		if (worker == null) throw new WrongPasswordException(); 
+		
+		worker.setPassword(Encryptor.encrypt(password));
+		workerPersistence.save(worker);
 	}
 }

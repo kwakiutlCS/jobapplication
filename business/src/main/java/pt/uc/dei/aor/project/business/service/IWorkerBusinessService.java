@@ -5,6 +5,7 @@ import java.util.List;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -31,5 +32,7 @@ public interface IWorkerBusinessService {
 	Collection<IWorker> findAllManagers();
 
 	void recoverPassword(String email);
+
+	void updatePassword(IWorker user, String password, String oldPassword) throws WrongPasswordException;
 
 }

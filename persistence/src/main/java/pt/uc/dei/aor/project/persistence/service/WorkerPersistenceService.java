@@ -182,6 +182,18 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return new WorkerProxy(entities.get(0));
 	}
 
+	@Override
+	public IWorker verifyUser(IWorker user, String password) {
+		TypedQuery<WorkerEntity> query = em.createNamedQuery("Worker.verifyWorker", WorkerEntity.class);
+		query.setParameter("login", user.getLogin());
+		query.setParameter("password", password);
+		
+		List<WorkerEntity> entities = query.getResultList();
+		if (entities.isEmpty()) return null;
+		
+		return new WorkerProxy(entities.get(0));
+	}
+
 		
 
 }
