@@ -70,7 +70,8 @@ public class InterviewBean implements Serializable {
 			interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
 		}
 		
-		answersGiven.set(scriptEntries.indexOf(selectedEntry), true);
+		int index = scriptEntries.indexOf(selectedEntry);
+		answersGiven.set(index, true);
 		selectedEntry = nextQuestion();
 		getPreviousAnswer();
 	}

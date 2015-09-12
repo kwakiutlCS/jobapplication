@@ -40,9 +40,6 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	private static Logger logger = LoggerFactory.getLogger(InterviewBusinessService.class);
 	
 	@Inject
-	private EmailUtil email;
-	
-	@Inject
 	private IInterviewPersistenceService interviewPersistence;
 	
 	@Inject

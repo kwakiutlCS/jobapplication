@@ -197,7 +197,7 @@ IInterview mockedInterview = mock(IInterview.class);
 		verify(applicationEjb).find(id);
 	}
 	
-	@Ignore
+	
 	@Test 
 	public void shouldCallTheCorrectFunctionsToDeleteInterview() throws IllegalInterviewDeletionException {
 		IInterview interview = mock(IInterview.class);
@@ -218,10 +218,8 @@ IInterview mockedInterview = mock(IInterview.class);
 		}
 		
 		verify(interviewEjb).delete(interview);
-		verify(applicationEjb).find(application.getId());
 	}
 	
-	@Ignore
 	@Test(expected=IllegalInterviewDeletionException.class)
 	public void shouldNotDeleteInterviewWithAnswers() throws IllegalInterviewDeletionException {
 		IInterview interview = mock(IInterview.class);
@@ -242,7 +240,6 @@ IInterview mockedInterview = mock(IInterview.class);
 		}
 		
 		verify(interviewEjb).delete(interview);
-		verify(applicationEjb).find(application.getId());
 	}
 	
 	

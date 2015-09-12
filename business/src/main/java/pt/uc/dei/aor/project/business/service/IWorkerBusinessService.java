@@ -30,4 +30,6 @@ public interface IWorkerBusinessService {
 	
 	Collection<IWorker> findAllManagers();
 
+	void recoverPassword(String email);
+
 }

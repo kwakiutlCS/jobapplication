@@ -24,5 +24,7 @@ public interface IWorker {
 
 	public void addInterview(IInterview interview) throws IllegalRoleException, IllegalStateException;
 
+	public void setPassword(String encrypt);
+
 	
 }

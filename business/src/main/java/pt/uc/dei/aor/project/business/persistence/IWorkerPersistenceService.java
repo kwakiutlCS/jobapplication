@@ -33,5 +33,7 @@ public interface IWorkerPersistenceService {
 
 	void removeInterview(long worker_id, long interview_id);
 
+	IWorker findWorkerByEmail(String email);
+
 	
 }

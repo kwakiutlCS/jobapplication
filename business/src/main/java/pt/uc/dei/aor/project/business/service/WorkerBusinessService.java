@@ -105,4 +105,16 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	private	boolean findWorkerByEmailOrLogin(String email, String login) {
 		return workerPersistence.findWorkerByEmailOrLogin(email, login);
 	}
+
+	@Override
+	public void recoverPassword(String email) {
+		IWorker worker = workerPersistence.findWorkerByEmail(email);
+		if (worker == null) return;
+		
+		String password = PasswordUtil.generate(8);
+		worker.setPassword(Encryptor.encrypt(password));
+		workerPersistence.save(worker);
+		
+		logger.trace("New password: "+password);
+	}
 }

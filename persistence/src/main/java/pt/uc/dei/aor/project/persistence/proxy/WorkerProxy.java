@@ -111,5 +111,10 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return entity.isInterviewer();
 	}
 
+	@Override
+	public void setPassword(String password) {
+		entity.setPassword(password);
+	}
+
 	
 }

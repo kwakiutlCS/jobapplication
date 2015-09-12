@@ -10,24 +10,42 @@
 	<title>index </title>
 	
 	<h:outputStylesheet library="css" name="style.css" />
+	<h:outputScript library="js" name="loginScript.js" />
 </h:head>
 <h:body>
-	
-	<h:form id="loginform">
-			<p:messages autoUpdate="true" />
-			<p:panelGrid columns="2">
-			
-				<p:outputLabel for="mail" value="login" />
-				<p:inputText id="mail" 
-					value="#{loginBean.username}" required="true" />
-				<p:outputLabel for="password" value="password" />
-				<p:password id="password" required="true"
-					value="#{loginBean.password}" />
-			
-				<p:commandButton action="#{loginBean.login}" value="Entrar" />
-			</p:panelGrid>		
 
-		</h:form>
+	<h:panelGroup styleClass="loginForm">
+	<h:form id="loginform">
+		<p:messages autoUpdate="true" />
+		<p:panelGrid columns="2">
+
+			<p:outputLabel for="mail" value="login" />
+			<p:inputText id="mail" value="#{loginBean.username}" required="true" />
+			<p:outputLabel for="password" value="password" />
+			<p:password id="password" required="true"
+				value="#{loginBean.password}" />
+
+			<p:commandButton action="#{loginBean.login}" value="Entrar" />
+		</p:panelGrid>
+
+	</h:form>
 	
-	</h:body>
+	<h:link value="recover password" id="recoverLink" />
+	</h:panelGroup>
+
+	<h:panelGroup styleClass="recoverForm">
+	<h:form id="recoveryform">
+		<p:panelGrid columns="2">
+
+			<p:outputLabel for="mail" value="email" />
+			<p:inputText id="mail" value="#{loginBean.email}" validator="#{emailRepeatedValidator.validate}"
+			required="true" />
+			<p:commandButton action="#{loginBean.recover}" value="Recover password" />
+		</p:panelGrid>
+	</h:form>
+
+	<h:link value="login" id="loginLink" />
+	</h:panelGroup>
+	
+</h:body>
 </html>

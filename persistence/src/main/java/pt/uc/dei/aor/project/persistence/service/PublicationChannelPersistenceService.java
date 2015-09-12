@@ -21,9 +21,7 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 	private EntityManager em;
 
 	@Override
-	public IPublicationChannel save(
-			IPublicationChannel publicationChannel) {
-
+	public IPublicationChannel save(IPublicationChannel publicationChannel) {
 		PublicationChannelEntity pcEntity = GenericPersistenceService.getEntity(publicationChannel);
 		pcEntity = em.merge(pcEntity);
 

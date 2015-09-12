@@ -17,6 +17,7 @@ import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,7 +59,8 @@ public class PositionPersistenceServiceTest {
 
     @Inject
     private IPositionPersistenceService ejb;
-    IPosition pos = null;
+    
+    private IPosition pos = null;
     
     @Inject
     private IModelFactory factory;
@@ -93,9 +95,8 @@ public class PositionPersistenceServiceTest {
     }
     
     
-
-	@Ignore
-    @Transactional(TransactionMode.ROLLBACK)
+    @Test
+	@Transactional(TransactionMode.ROLLBACK)
     public void shouldReturnHighestCode() {
     	long code = 7;
     	Date openingDate = new Date();
@@ -110,7 +111,8 @@ public class PositionPersistenceServiceTest {
     	String company = "company2";
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.DOT_NET_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{
-    			new PublicationChannelProxy("jornal")});
+    			new PublicationChannelProxy("other")});
+    	
     	IScript script = null;
     	
     	IPosition otherPos = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, 
