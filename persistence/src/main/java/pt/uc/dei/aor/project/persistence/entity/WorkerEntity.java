@@ -38,7 +38,7 @@ import pt.uc.dei.aor.project.business.util.Role;
 	@NamedQuery(name = "Worker.findWorkerByEmailOrLogin", 
 	query = "from WorkerEntity u where u.login = :login or u.email = :email"),
 	@NamedQuery(name = "Worker.verifyWorker", 
-	query = "from WorkerEntity u where u.login = :login and u.password = :password"),
+	query = "from WorkerEntity u where u.id = :id and u.password = :password"),
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "Worker.createSuperUser", 

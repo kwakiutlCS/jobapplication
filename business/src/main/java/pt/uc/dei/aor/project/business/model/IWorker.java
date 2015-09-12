@@ -26,5 +26,13 @@ public interface IWorker {
 
 	public void setPassword(String encrypt);
 
+	public void setLogin(String login);
+
+	public void setName(String name);
+
+	public void setSurname(String surname);
+
+	public void setEmail(String email);
+
 	
 }

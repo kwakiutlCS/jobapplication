@@ -33,6 +33,6 @@ public interface IWorkerBusinessService {
 
 	void recoverPassword(String email);
 
-	void updatePassword(IWorker user, String password, String oldPassword) throws WrongPasswordException;
+	IWorker update(IWorker user, String password) throws WrongPasswordException;
 
 }

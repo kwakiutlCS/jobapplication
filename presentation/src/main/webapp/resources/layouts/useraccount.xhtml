@@ -13,10 +13,12 @@
 		<h:form>
 		<h:panelGrid columns="2">
 			<p:outputLabel value="Login" for="login" />
-			<p:inputText id="login" value="#{accountBean.login}" required="true" />
+			<p:inputText id="login" value="#{accountBean.login}" required="true"
+			validator="#{loginChangeValidator.validate}" />
 			
 			<p:outputLabel value="Email" for="email" />
-			<p:inputText id="email" value="#{accountBean.email}" required="true" />
+			<p:inputText id="email" value="#{accountBean.email}" required="true"
+			validator="#{emailChangeValidator.validate}" />
 			
 			<p:outputLabel value="First name" for="name" />
 			<p:inputText id="name" value="#{accountBean.name}" required="true" />
@@ -24,7 +26,11 @@
 			<p:outputLabel value="Last name" for="surname" />
 			<p:inputText id="surname" value="#{accountBean.surname}" required="true" />
 			
-			<p:commandButton value="Update" action="#{accountBean.updatePersonal}" />
+			<p:outputLabel for="password" value="Password" />
+			<p:password id="password" value="#{accountBean.password}" required="true" />
+				
+			<p:commandButton value="Update" action="#{accountBean.updatePersonal}" update=":headerForm
+			:globalMessages @form" />
 		</h:panelGrid>
 		</h:form>
 	</h:panelGroup>
@@ -35,7 +41,6 @@
 	
 	<h:panelGroup id="passwordDetails" styleClass="accountPanel">
 			<h:form>
-			<p:messages autoUpdate="true" />
 			<h:panelGrid columns="2">
 				<p:outputLabel for="password" value="New password" />
 				<p:password id="password" value="#{accountBean.password}" match="confirm" required="true" />
@@ -46,7 +51,8 @@
 				<p:outputLabel for="oldPassword" value="Old password" />
 				<p:password id="oldPassword" value="#{accountBean.oldPassword}" required="true" />
 				
-				<p:commandButton value="Update" action="#{accountBean.updatePassword}" />
+				<p:commandButton value="Update" action="#{accountBean.updatePassword}" 
+				update=":globalMessages @form" />
 			</h:panelGrid>
 		</h:form>
 	</h:panelGroup>

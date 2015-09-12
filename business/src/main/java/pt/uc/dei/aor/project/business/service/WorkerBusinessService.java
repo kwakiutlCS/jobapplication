@@ -120,13 +120,11 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public void updatePassword(IWorker user, String password, String oldPassword) 
-			throws WrongPasswordException {
-		IWorker worker = workerPersistence.verifyUser(user, Encryptor.encrypt(oldPassword));
+	public IWorker update(IWorker updatedUser, String password) throws WrongPasswordException {
+		IWorker user = workerPersistence.verifyUser(updatedUser.getId(), Encryptor.encrypt(password));
 		
-		if (worker == null) throw new WrongPasswordException(); 
+		if (user == null) throw new WrongPasswordException(); 
 		
-		worker.setPassword(Encryptor.encrypt(password));
-		workerPersistence.save(worker);
+		return workerPersistence.save(updatedUser);
 	}
 }

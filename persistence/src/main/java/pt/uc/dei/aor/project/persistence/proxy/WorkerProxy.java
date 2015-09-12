@@ -116,5 +116,25 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		entity.setPassword(password);
 	}
 
+	@Override
+	public void setLogin(String login) {
+		entity.setLogin(login);
+	}
+
+	@Override
+	public void setName(String name) {
+		entity.setName(name);
+	}
+
+	@Override
+	public void setSurname(String surname) {
+		entity.setSurname(surname);
+	}
+
+	@Override
+	public void setEmail(String email) {
+		entity.setEmail(email);
+	}
+
 	
 }
