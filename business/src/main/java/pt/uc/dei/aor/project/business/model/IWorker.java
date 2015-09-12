@@ -34,5 +34,33 @@ public interface IWorker {
 
 	public void setEmail(String email);
 
+	public void setAddress(String address);
+
+	public void setCity(String city);
+
+	public void setCountry(String country);
+
+	public void setInstitution(String institution);
+
+	public void setMobile(String mobile);
+
+	public void setPhone(String phone);
+
+	public void setQualification(String qualification);
+
+	public String getAddress();
+
+	public String getCity();
+
+	public String getInstitutions();
+
+	public String getCountry();
+
+	public String getPhone();
+
+	public String getMobile();
+
+	public String getQualifications();
+
 	
 }

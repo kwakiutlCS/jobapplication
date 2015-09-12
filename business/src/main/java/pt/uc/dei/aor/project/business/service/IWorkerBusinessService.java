@@ -35,4 +35,6 @@ public interface IWorkerBusinessService {
 
 	IWorker update(IWorker user, String password) throws WrongPasswordException;
 
+	IWorker update(IWorker user);
+
 }

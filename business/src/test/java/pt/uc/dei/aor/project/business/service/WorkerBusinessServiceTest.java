@@ -25,11 +25,15 @@ import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WorkerBusinessServiceTest {
 
+	@Mock
+	private EmailUtil emailUtil;
+	
 	@Mock
 	private IModelFactory factory;
 	

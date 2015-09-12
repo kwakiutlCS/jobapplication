@@ -5,60 +5,97 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ul>
-		<li><h:link id="personalLink" value="personal details" /></li>
+		<li><h:link id="personalLink" value="account details" /></li>
+		<li><h:link id="extraLink" value="personal details" /></li>
 		<li><h:link id="passwordLink" value="change password" /></li>
 	</ul>
-	
+
 	<h:panelGroup id="personalDetails" styleClass="accountPanel">
 		<h:form>
-		<h:panelGrid columns="2">
-			<p:outputLabel value="Login" for="login" />
-			<p:inputText id="login" value="#{accountBean.login}" required="true"
-			validator="#{loginChangeValidator.validate}" />
-			
-			<p:outputLabel value="Email" for="email" />
-			<p:inputText id="email" value="#{accountBean.email}" required="true"
-			validator="#{emailChangeValidator.validate}" />
-			
-			<p:outputLabel value="First name" for="name" />
-			<p:inputText id="name" value="#{accountBean.name}" required="true" />
-			
-			<p:outputLabel value="Last name" for="surname" />
-			<p:inputText id="surname" value="#{accountBean.surname}" required="true" />
-			
-			<p:outputLabel for="password" value="Password" />
-			<p:password id="password" value="#{accountBean.password}" required="true" />
-				
-			<p:commandButton value="Update" action="#{accountBean.updatePersonal}" update=":headerForm
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Login" for="login" />
+				<p:inputText id="login" value="#{accountBean.login}" required="true"
+					validator="#{loginChangeValidator.validate}" />
+
+				<p:outputLabel value="Email" for="email" />
+				<p:inputText id="email" value="#{accountBean.email}" required="true"
+					validator="#{emailChangeValidator.validate}" />
+
+				<p:outputLabel value="First name" for="name" />
+				<p:inputText id="name" value="#{accountBean.name}" required="true" />
+
+				<p:outputLabel value="Last name" for="surname" />
+				<p:inputText id="surname" value="#{accountBean.surname}"
+					required="true" />
+
+				<p:outputLabel for="password" value="Password" />
+				<p:password id="password" value="#{accountBean.password}"
+					required="true" />
+
+				<p:commandButton value="Update"
+					action="#{accountBean.updatePersonal}"
+					update=":headerForm
 			:globalMessages @form" />
-		</h:panelGrid>
+			</h:panelGrid>
 		</h:form>
 	</h:panelGroup>
-	
+
 	<h:panelGroup id="extraDetails" styleClass="accountPanel">
-	
+		<h:form>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Address" for="address" />
+				<p:inputText id="address" value="#{accountBean.address}" />
+
+				<p:outputLabel value="City" for="city" />
+				<p:inputText id="city" value="#{accountBean.city}" />
+
+				<p:outputLabel value="Country" for="country" />
+				<p:inputText id="country" value="#{accountBean.country}" />
+
+				<p:outputLabel value="Phone number" for="phone" />
+				<p:inputMask mask="999 999 999" id="phone"
+					value="#{accountBean.phone}" />
+
+				<p:outputLabel value="Mobile number" for="mobile" />
+				<p:inputMask mask="999 999 999" id="mobile"
+					value="#{accountBean.mobile}" />
+
+				<p:outputLabel value="Institution" for="institution" />
+				<p:inputText id="institution" value="#{accountBean.institution}" />
+
+				<p:outputLabel value="Qualification" for="qualification" />
+				<p:inputText id="qualification" value="#{accountBean.qualification}" />
+
+				<p:commandButton value="Update" action="#{accountBean.updateExtra}"
+					update=":globalMessages @form" />
+			</h:panelGrid>
+		</h:form>
 	</h:panelGroup>
-	
+
 	<h:panelGroup id="passwordDetails" styleClass="accountPanel">
-			<h:form>
+		<h:form>
 			<h:panelGrid columns="2">
 				<p:outputLabel for="password" value="New password" />
-				<p:password id="password" value="#{accountBean.password}" match="confirm" required="true" />
-				
+				<p:password id="password" value="#{accountBean.password}"
+					match="confirm" required="true" />
+
 				<p:outputLabel for="confirm" value="Confirm password" />
-				<p:password id="confirm" value="#{accountBean.password}" required="true" />
-				
+				<p:password id="confirm" value="#{accountBean.password}"
+					required="true" />
+
 				<p:outputLabel for="oldPassword" value="Old password" />
-				<p:password id="oldPassword" value="#{accountBean.oldPassword}" required="true" />
-				
-				<p:commandButton value="Update" action="#{accountBean.updatePassword}" 
-				update=":globalMessages @form" />
+				<p:password id="oldPassword" value="#{accountBean.oldPassword}"
+					required="true" />
+
+				<p:commandButton value="Update"
+					action="#{accountBean.updatePassword}"
+					update=":globalMessages @form" />
 			</h:panelGrid>
 		</h:form>
 	</h:panelGroup>
 
 	<h:panelGroup id="accountDetails" styleClass="accountPanel">
-	
+
 	</h:panelGroup>
-	
+
 </ui:composition>

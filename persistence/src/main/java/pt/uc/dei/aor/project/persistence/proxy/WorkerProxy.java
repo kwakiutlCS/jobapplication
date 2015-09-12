@@ -136,5 +136,75 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		entity.setEmail(email);
 	}
 
+	@Override
+	public void setAddress(String address) {
+		entity.setAddress(address);
+	}
+
+	@Override
+	public void setCity(String city) {
+		entity.setCity(city);
+	}
+
+	@Override
+	public void setCountry(String country) {
+		entity.setCountry(country);
+	}
+
+	@Override
+	public void setInstitution(String institution) {
+		entity.setInstitution(institution);
+	}
+
+	@Override
+	public void setMobile(String mobile) {
+		entity.setMobile(mobile);
+	}
+
+	@Override
+	public void setPhone(String phone) {
+		entity.setPhone(phone);
+	}
+
+	@Override
+	public void setQualification(String qualification) {
+		entity.setQualification(qualification);
+	}
+
+	@Override
+	public String getAddress() {
+		return entity.getAddress();
+	}
+
+	@Override
+	public String getCity() {
+		return entity.getCity();
+	}
+
+	@Override
+	public String getInstitutions() {
+		return entity.getInstitution();
+	}
+
+	@Override
+	public String getCountry() {
+		return entity.getCountry();
+	}
+
+	@Override
+	public String getPhone() {
+		return entity.getPhone();
+	}
+
+	@Override
+	public String getMobile() {
+		return entity.getMobilePhone();
+	}
+
+	@Override
+	public String getQualifications() {
+		return entity.getQualifications();
+	}
+
 	
 }

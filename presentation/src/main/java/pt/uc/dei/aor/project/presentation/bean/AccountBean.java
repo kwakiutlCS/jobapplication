@@ -29,6 +29,14 @@ public class AccountBean implements Serializable {
 	private String email;
 	private String password;
 	private String oldPassword;
+	
+	private String address;
+	private String city;
+	private String country;
+	private String phone;
+	private String mobile;
+	private String institution;
+	private String qualification;
 
 	
 	@PostConstruct
@@ -38,6 +46,14 @@ public class AccountBean implements Serializable {
 		name = user.getName();
 		surname = user.getSurname();
 		email = user.getEmail();
+		
+		address = user.getAddress();
+		city = user.getCity();
+		country = user.getCountry();
+		phone = user.getPhone();
+		mobile = user.getMobile();
+		institution = user.getInstitutions();
+		qualification = user.getQualifications();
 	}
 	
 	
@@ -71,6 +87,22 @@ public class AccountBean implements Serializable {
 		} catch(WrongPasswordException e) {
 			MetaUtils.setMsg("Password is incorrect", FacesMessage.SEVERITY_ERROR);
 		}
+	}
+	
+	public void updateExtra() {
+		IWorker user = MetaUtils.getUser();
+		user.setAddress(address);
+		user.setCity(city);
+		user.setCountry(country);
+		user.setPhone(phone);
+		user.setMobile(mobile);
+		user.setInstitution(institution);
+		user.setQualification(qualification);
+
+		user = workerService.update(user);
+		password = null;
+		MetaUtils.getSession().setAttribute("user", user);
+		MetaUtils.setMsg("User details updated", FacesMessage.SEVERITY_INFO);
 	}
 	
 
@@ -112,6 +144,76 @@ public class AccountBean implements Serializable {
 	}
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
+	}
+
+
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+	public String getCountry() {
+		return country;
+	}
+
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+
+	public String getPhone() {
+		return phone;
+	}
+
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+
+	public String getMobile() {
+		return mobile;
+	}
+
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+
+	public String getInstitution() {
+		return institution;
+	}
+
+
+	public void setInstitution(String intitution) {
+		this.institution = intitution;
+	}
+
+
+	public String getQualification() {
+		return qualification;
+	}
+
+
+	public void setQualification(String qualification) {
+		this.qualification = qualification;
 	}
 
 	

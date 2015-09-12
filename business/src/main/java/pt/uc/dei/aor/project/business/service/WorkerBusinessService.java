@@ -19,6 +19,7 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.PasswordUtil;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -26,6 +27,9 @@ import pt.uc.dei.aor.project.business.util.Role;
 public class WorkerBusinessService implements IWorkerBusinessService {
 	
 	private static Logger logger = LoggerFactory.getLogger(WorkerBusinessService.class);
+	
+	@Inject
+	private EmailUtil emailUtil;
 	
 	@Inject
 	private IModelFactory factory;
@@ -47,6 +51,7 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 			String p = PasswordUtil.generate(8);
 			password = Encryptor.encrypt(p);
 			logger.trace("User: "+login+" with password: "+p+" created");
+			emailUtil.send(email, "test", "other");
 		}
 		
 		IWorker worker = factory.worker(login, email, 
@@ -126,5 +131,10 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		if (user == null) throw new WrongPasswordException(); 
 		
 		return workerPersistence.save(updatedUser);
+	}
+
+	@Override
+	public IWorker update(IWorker user) {
+		return workerPersistence.save(user);
 	}
 }

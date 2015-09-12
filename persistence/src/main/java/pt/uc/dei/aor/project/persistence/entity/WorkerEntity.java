@@ -137,5 +137,71 @@ public class WorkerEntity extends User {
 	public Collection<InterviewEntity> getInterviews() {
 		return interviews;
 	}
+
+	public void setQualification(String qualification) {
+		this.qualifications = qualification;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public void setInstitution(String institution) {
+		this.institution = institution;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobilePhone = mobile;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getMobilePhone() {
+		return mobilePhone;
+	}
+
+	public void setMobilePhone(String mobilePhone) {
+		this.mobilePhone = mobilePhone;
+	}
+
+	public String getQualifications() {
+		return qualifications;
+	}
+
+	public void setQualifications(String qualifications) {
+		this.qualifications = qualifications;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getInstitution() {
+		return institution;
+	}
+	
+	
 	
 }
