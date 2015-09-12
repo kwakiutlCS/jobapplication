@@ -26,6 +26,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 
 @Named
@@ -61,7 +62,7 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public Collection<IInterview> getActiveInterviews() {
-		IWorker user = (IWorker) getSession().getAttribute("user");
+		IWorker user = MetaUtils.getUser();
 		return interviewService.findActiveInterviewsByUser(user);
 	}
 	
@@ -88,7 +89,7 @@ public class InterviewScheduleBean implements Serializable {
 	
 	public void addInterview() {
 		if (selectedInterviewers == null || selectedInterviewers.isEmpty()) {
-			setMsg("At least one interviewer must be selected", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("At least one interviewer must be selected", FacesMessage.SEVERITY_ERROR);
 			return;
 		}
 		
@@ -100,9 +101,9 @@ public class InterviewScheduleBean implements Serializable {
 		
 		try {
 			selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
-			setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
+			MetaUtils.setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
 		} catch (GenericIllegalParamsException | RepeatedInterviewException e) {
-			setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
 		}
 		
 		selectedInterviewers.clear();
@@ -113,9 +114,9 @@ public class InterviewScheduleBean implements Serializable {
 	public void delete(IInterview interview) {
 		try {
 			selectedApplication = interviewService.delete(selectedApplication, interview);
-			setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
+			MetaUtils.setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
 		} catch (IllegalInterviewDeletionException e) {
-			setMsg("Interview already occurred", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("Interview already occurred", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -123,19 +124,8 @@ public class InterviewScheduleBean implements Serializable {
 		selectedApplication = applicationService.findApplicationById(selectedApplicationId);
 	}
 	
-	// helper methods
 	
-	private HttpSession getSession() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return request.getSession();
-	}
 
-	private void setMsg(String text, Severity severity) {
-		FacesMessage msg = new FacesMessage(severity,
-				text, text);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
 	
 	
 	// getters and setters

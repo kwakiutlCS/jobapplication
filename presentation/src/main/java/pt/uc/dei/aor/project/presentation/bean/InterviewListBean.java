@@ -23,6 +23,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -67,7 +68,7 @@ public class InterviewListBean implements Serializable {
 			// filter functions
 	
 	public List<IInterview> getActiveInterviews() {
-		return interviewService.findActiveInterviewsByUser(getUser());
+		return interviewService.findActiveInterviewsByUser(MetaUtils.getUser());
 	}
 
 	public List<IInterview> getInterviewsWithFilter() {
@@ -100,7 +101,7 @@ public class InterviewListBean implements Serializable {
 			filter.deleteInterviewer(setPos, pos);
 			interviews = getInterviewsWithFilter();
 		} catch (IllegalFilterParamException e) {
-			setMsg("todo", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -120,7 +121,7 @@ public class InterviewListBean implements Serializable {
 			filter.mergeInterviewers(setPos);
 			interviews = getInterviewsWithFilter();
 		} catch (IllegalFilterParamException e) {
-			setMsg("todo", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -129,7 +130,7 @@ public class InterviewListBean implements Serializable {
 			filter.splitInterviewers(setPos, pos);
 			interviews = getInterviewsWithFilter();
 		} catch (IllegalFilterParamException e) {
-			setMsg("todo", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -156,20 +157,6 @@ public class InterviewListBean implements Serializable {
 	}
 	
 	
-	// helper functions
-	
-	private IWorker getUser() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (IWorker) request.getSession().getAttribute("user");	
-	}
-
-	private void setMsg(String text, Severity severity) {
-		FacesMessage msg = new FacesMessage(severity,
-				text, text);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
-
 	// getters and setters
 	
 	public int getOffset() {

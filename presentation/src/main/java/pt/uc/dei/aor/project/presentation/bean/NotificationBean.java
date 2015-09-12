@@ -14,6 +14,7 @@ import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.service.INotificationBusinessService;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -33,13 +34,13 @@ public class NotificationBean implements Serializable {
 	
 	public List<INotification> getNotifications() {
 		if (notificationStatus == NotificationStatus.UNREAD && notifications == null) {
-			notifications = notificationService.findAllUnreadNotifications(getUser(), 0, 10);
+			notifications = notificationService.findAllUnreadNotifications(MetaUtils.getUser(), 0, 10);
 		}
 		if (notificationStatus == NotificationStatus.ALL) {
-			notifications = notificationService.findAllNotifications(getUser(), 0, 10);
+			notifications = notificationService.findAllNotifications(MetaUtils.getUser(), 0, 10);
 		}
 		if (notificationStatus == NotificationStatus.READ) {
-			notifications = notificationService.findAllReadNotifications(getUser(), 0, 10);
+			notifications = notificationService.findAllReadNotifications(MetaUtils.getUser(), 0, 10);
 		}
 		return notifications;
 	}
@@ -51,7 +52,7 @@ public class NotificationBean implements Serializable {
 		
 		notificationService.deleteNotification(notification);
 		if (notificationStatus == NotificationStatus.UNREAD)
-			notifications = notificationService.findAllUnreadNotifications(getUser(), 0, 10);
+			notifications = notificationService.findAllUnreadNotifications(MetaUtils.getUser(), 0, 10);
 	}
 	
 	public void viewNotification(int index, INotification notification) {
@@ -60,7 +61,7 @@ public class NotificationBean implements Serializable {
 	}
 	
 	public long countUnread() {
-		return notificationService.countUnreadNotifications(getUser());
+		return notificationService.countUnreadNotifications(MetaUtils.getUser());
 	}
 	
 	public void filter() {
@@ -82,14 +83,7 @@ public class NotificationBean implements Serializable {
 		this.notificationStatus = notificationStatus;
 	}
 
-	// helper functions
-	public IWorker getUser() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (IWorker) request.getSession().getAttribute("user");	
-	}
-	
-	
+
 	
 	public int getVisibleNotification() {
 		return visibleNotification;

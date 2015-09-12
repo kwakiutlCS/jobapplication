@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @RequestScoped
@@ -73,11 +74,8 @@ public class LoginBean {
 	
 	
 	
-	// helper method
 	public IWorker getUser() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (IWorker) request.getSession().getAttribute("user");	
+		return MetaUtils.getUser();	
 	}
 
 	public String getEmail() {

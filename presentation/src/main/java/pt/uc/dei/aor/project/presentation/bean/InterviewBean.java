@@ -77,14 +77,7 @@ public class InterviewBean implements Serializable {
 	}
 	
 	
-	// helper functions
 	
-	private IWorker getUser() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (IWorker) request.getSession().getAttribute("user");	
-	}
-
 	private List<IScriptEntry> findScriptEntries() {
 		return interviewService.getCompleteScriptEntries(selectedInterview);
 	}

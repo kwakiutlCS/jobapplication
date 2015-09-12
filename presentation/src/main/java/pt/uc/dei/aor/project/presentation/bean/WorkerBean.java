@@ -15,6 +15,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.Role;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @RequestScoped
@@ -39,9 +40,9 @@ public class WorkerBean {
 			surname = null;
 			roles = null;
 		} catch (NoRoleException e) {
-			setMsg("Missing role", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("Missing role", FacesMessage.SEVERITY_ERROR);
 		} catch (DuplicatedUserException e) {
-			setMsg("User Already exists", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("User Already exists", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
@@ -93,13 +94,5 @@ public class WorkerBean {
 		this.roles = role;
 	}
 	
-	
-	// helper methods
-	
-	private void setMsg(String text, Severity severity) {
-		FacesMessage msg = new FacesMessage(severity,
-				text, text);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
 }
 
