@@ -15,10 +15,14 @@ import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService
 import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
 import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.util.EmailUtil;
 
 @Stateless
 public class NotificationBusinessService implements INotificationBusinessService {
 
+	@Inject
+	private EmailUtil emailUtil;
+	
 	@Inject
 	private IModelFactory factory;
 
@@ -33,10 +37,16 @@ public class NotificationBusinessService implements INotificationBusinessService
 	
 	
 	@Override
-	public <T extends INotification, U> T notify(U person, String msg, String type) {
+	public <T extends INotification, U> T notify(U person, String msg, String type, 
+			String subject, String content) {
 		if (person instanceof IWorker) {
-			T notification = (T) factory.workerNotification(msg, (IWorker) person, type);
-			return notificationPersistence.save(notification);
+			IWorker worker = (IWorker) person;
+			
+			IWorkerNotification notification = factory.workerNotification(msg, worker, type);
+			
+			emailUtil.send(worker.getEmail(), subject, content);
+			
+			return (T) notificationPersistence.save(notification);
 		}
 		//if (person instanceof ICandidate) return candidatePersistence.notify((ICandidate) person, msg);
 		return null;
@@ -55,7 +65,6 @@ public class NotificationBusinessService implements INotificationBusinessService
 
 	@Override
 	public <T extends INotification, U> List<T> findAllNotifications(U person, int offset, int limit) {
-		System.out.println("web");
 		return notificationPersistence.findAllNotifications(person, offset, limit);
 	}
 

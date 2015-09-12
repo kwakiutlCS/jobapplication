@@ -8,7 +8,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 
 public interface INotificationBusinessService {
 
-	public <T extends INotification ,U> T notify(U person, String msg, String type);
+	public <T extends INotification ,U> T notify(U person, String msg, String type, String subject, String content);
 	
 	public <T extends INotification> T markNotificationAsViewed(T notification);
 	

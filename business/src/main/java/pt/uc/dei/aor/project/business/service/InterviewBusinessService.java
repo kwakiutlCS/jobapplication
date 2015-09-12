@@ -81,7 +81,8 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			workerPersistence.insertInterview(w.getId(), interview);
 
 			// notify user
-			notificationService.notify(w, "Interview sheduled", "Interview Scheduled");
+			notificationService.notify(w, "Interview scheduled", "Interview Scheduled",
+					"Interview scheduled", "Interview scheduled");
 		}
 		
 		return application;
