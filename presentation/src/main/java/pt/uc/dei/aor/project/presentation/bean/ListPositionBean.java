@@ -3,16 +3,19 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ListPositionBean implements Serializable{
 
 	
@@ -20,28 +23,41 @@ public class ListPositionBean implements Serializable{
 	
 
 	@Inject
-	private IPositionBusinessService position;
+	private IPositionBusinessService positionEjb;
 	
-	private List<IPosition> filteredPositions;
 	private IPosition selectedPosition;
+	private int offset;
+	private PositionFilter filter;
+	
+	// filter params
+	private int code;
+	
+	
+	
+	@PostConstruct
+	public void init() {
+		offset = 0;
+		filter = new PositionFilter();
+	}
 	
 	
 	public List<IPosition> getPositions() {
-			
-		return position.getIPositions();
-	}
-
-
-	public List<IPosition> getFilteredPositions() {
-		return filteredPositions;
+		return positionEjb.findFilteredPositions(offset, 10, filter);
 	}
 
 	
-	public void setFilteredPositions(List<IPosition> filteredPositions) {
-		this.filteredPositions = filteredPositions;
+	
+	// filter functions
+	
+	public void addCode() {
+		filter.setCode(code);
+	}
+	
+	public void removeCode() {
+		filter.setCode(-1);
 	}
 
-
+	
 	public IPosition getSelectedPosition() {
 		return selectedPosition;
 	}
@@ -52,7 +68,25 @@ public class ListPositionBean implements Serializable{
 	}
 	
 	public void updatePosition(IPosition selectedposition){
-		position.updatePosition(selectedposition);
+		positionEjb.updatePosition(selectedposition);
 	}
+	
+	
+	// getters and setters
+	public int getCode() {
+		return code;
+	}
+
+
+	public void setCode(int code) {
+		this.code = code;
+	}
+
+
+	public PositionFilter getFilter() {
+		return filter;
+	}
+
+
 
 }

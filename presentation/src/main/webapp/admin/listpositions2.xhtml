@@ -10,65 +10,71 @@
 
 	<ui:define name="content">
 
-		<h:panelGroup id="filterAction">
-			<h:form>
-				<p:spinner value="#{listPositionBean.code}" required="true" min="1" />
-				<p:commandButton value="Add Code" action="#{listPositionBean.addCode}" 
-				update=":positionsTable :filterList" />
-			</h:form>
-		
-		</h:panelGroup>
-		
-		<h:panelGroup id="filterList">
-			<h:panelGroup rendered="#{listPositionBean.filter.code gt 0}">
-				<h:form>
-					<h:outputText value="#{listPositionBean.filter.code}" />
-					<p:commandLink value="x" action="#{listPositionBean.removeCode}" 
-					update=":positionsTable @form" />
-				</h:form>
-			</h:panelGroup>
-		</h:panelGroup>
+		<h2>List position page</h2>
 
-		<p:dataTable var="position" value="#{listPositionBean.positions}" id="positionsTable"
+		<h:form id="listpositionform">
+
+			<p:dataTable var="position" value="#{listPositionBean.positions}"
 				widgetVar="positionsTable"
 				emptymessage="No positions found for given criteria"
+				filteredValue="#{listPositionBean.filteredPositions}"
 				style="text-align: center">
 
-				<p:column headerText="Closing date">
-					<h:outputText value="#{position.closingDateFormatted}" />
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Search all fields:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('positionsTable').filter()" update="listpositionform"
+							placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="Closing date"
+					filterBy="#{position.closingDateFormatted}"
+					filterMatchMode="contains">
+					<h:outputText value="#{position.closingDateFormatted}">
+					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Code">
+				<p:column headerText="Code" filterBy="#{position.code}"
+					filterMatchMode="contains">
 					<h:outputText value="#{position.code}" />
 				</p:column>
 
-				<p:column headerText="Title">
+				<p:column headerText="Title" filterBy="#{position.title}"
+					filterMatchMode="contains">
 					<h:outputText value="#{position.title}" />
 				</p:column>
 
-				<p:column headerText="Situation">
+				<p:column headerText="Situation" filterBy="#{position.state}"
+					filterMatchMode="contains">
 					<h:outputText value="#{position.state.positionStateLabel}" />
 				</p:column>
 
 
-				<p:column headerText="Location">
+				<p:column headerText="Location"
+					filterBy="#{position.localizationsFormatted}"
+					filterMatchMode="contains">
 					<ui:repeat value="#{position.localizationsFormatted}" var="l">
   						    #{l}
 					</ui:repeat>
 				</p:column>
 
-				<p:column headerText="Technical Area" style="width:200px">
+				<p:column headerText="Technical Area" style="width:200px"
+					filterBy="#{position.technicalAreasFormatted}"
+					filterMatchMode="contains">
 					<ui:repeat value="#{position.technicalAreasFormatted}" var="t">
   						    #{t}
 					</ui:repeat>
 				</p:column>
 
-				<p:column headerText="Company">
+				<p:column headerText="Company" filterBy="#{position.company}"
+					filterMatchMode="contains">
 					<h:outputText value="#{position.company}" />
 				</p:column>
 
 				<p:column headerText="Detail" style="width:32px;text-align: center">
-					<p:commandButton update=":positionDetail"
+					<p:commandButton update=":listpositionform :positionDetail"
 						oncomplete="PF('Dlg1').show()" icon="ui-icon-search" title="View">
 						<f:setPropertyActionListener value="#{position}"
 							target="#{listPositionBean.selectedPosition}" />
@@ -77,7 +83,9 @@
 
 			</p:dataTable>
 
-			<p:dialog header="Edit Position" widgetVar="Dlg1" modal="true"
+		</h:form>
+
+		<p:dialog header="Edit Position" widgetVar="Dlg1" modal="true"
 			showEffect="fade" hideEffect="fade" resizable="true"
 			minimizable="true" maximizable="true">
 			<p:outputPanel id="positionDetail" style="text-align:left;">
@@ -172,5 +180,7 @@
 				</h:form>
 			</p:outputPanel>
 		</p:dialog>
+
+
 	</ui:define>
 </ui:composition>

@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
@@ -23,5 +24,7 @@ public interface IPositionBusinessService {
 	List<IPosition> findPositionByTitle(String filterPosition);
 	
 	IPosition updatePosition(IPosition position);
+
+	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter);
 		
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
@@ -73,6 +74,12 @@ public class PositionBusinessService implements IPositionBusinessService {
 	@Override
 	public IPosition updatePosition(IPosition position) {
 		return positionPersistence.save(position);
+	}
+
+
+	@Override
+	public List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter) {
+		return positionPersistence.findFilteredPositions(offset, limit, filter);
 	}
 
 

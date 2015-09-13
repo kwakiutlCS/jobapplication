@@ -1,17 +1,32 @@
 package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
+import pt.uc.dei.aor.project.business.filter.InterviewFilter;
+import pt.uc.dei.aor.project.business.filter.PositionFilter;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
+import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
+import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
+import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
+import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
+import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
 import pt.uc.dei.aor.project.persistence.proxy.PositionProxy;
 
 @Stateless
@@ -80,5 +95,46 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		}
 		
 		return proxies;
+	}
+
+
+	@Override
+	public List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter) {
+			CriteriaBuilder cb = em.getCriteriaBuilder();
+			CriteriaQuery<PositionEntity> q = cb.createQuery(PositionEntity.class);
+			Root<PositionEntity> position = q.from(PositionEntity.class);
+			q.select(position);
+			
+			List<Predicate> criteriaPredicates = new ArrayList<>();
+			// start where
+			if (filter != null) {
+				
+				// code
+				int codeFilter = filter.getCode();
+				if (codeFilter != -1) {
+					Expression<Integer> code = position.get("code");
+					Predicate codePredicate = cb.equal(code, codeFilter);
+										
+					criteriaPredicates.add(codePredicate);
+				}
+			}
+			
+			q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));
+			// finish where
+			
+			TypedQuery<PositionEntity> query = em.createQuery(q);
+			
+			query.setFirstResult(offset);
+			query.setMaxResults(limit);
+			
+			List<PositionEntity> entities = query.getResultList();
+			List<IPosition> proxies = new ArrayList<>();
+			
+			for (PositionEntity ie : entities) {
+				proxies.add(new PositionProxy(ie));
+			}
+			
+			return proxies;
+		
 	}
 }
