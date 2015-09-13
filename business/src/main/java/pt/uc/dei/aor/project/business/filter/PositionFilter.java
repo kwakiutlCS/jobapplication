@@ -20,13 +20,14 @@ public class PositionFilter {
 	private PositionState state;
 	private Localization localization;
 	private TechnicalArea area;
-	
+	private String company;
 	
 	public PositionFilter() {
 		code = -1;
 		title = null;
 		setState(PositionState.OPEN);
 		localization = null;
+		setCompany(null);
 	}
 	
 	
@@ -75,5 +76,15 @@ public class PositionFilter {
 
 	public void setArea(TechnicalArea area) {
 		this.area = area;
+	}
+
+
+	public String getCompany() {
+		return company;
+	}
+
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 }

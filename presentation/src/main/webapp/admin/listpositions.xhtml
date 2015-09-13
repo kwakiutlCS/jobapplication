@@ -65,6 +65,14 @@
 				update=":positionsTable :filterList" />
 			</h:form>
 			</h:panelGroup>
+			
+			<h:panelGroup id="companyFilter">
+			<h:form>
+				<p:inputText value="#{listPositionBean.company}" required="true" />
+				<p:commandButton value="Add Company" action="#{listPositionBean.addCompany}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
 		</h:panelGroup>
 		
 		
@@ -112,6 +120,15 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.localization.localizationLabel}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeLocalization}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.company}" 
+				styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{listPositionBean.filter.company}" />
+					<p:commandLink value="x" action="#{listPositionBean.removeCompany}" 
 					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>

@@ -38,6 +38,7 @@ public class ListPositionBean implements Serializable{
 	private PositionState state;
 	private Localization localization;
 	private TechnicalArea area;
+	private String company;
 	
 	@PostConstruct
 	public void init() {
@@ -94,6 +95,15 @@ public class ListPositionBean implements Serializable{
 	public void removeArea() {
 		filter.setArea(null);
 	}
+	
+	public void addCompany() {
+		filter.setCompany(company);
+	}
+	
+	public void removeCompany() {
+		filter.setCompany(null);
+	}
+	
 	
 	
 	
@@ -164,6 +174,16 @@ public class ListPositionBean implements Serializable{
 
 	public void setArea(TechnicalArea area) {
 		this.area = area;
+	}
+
+
+	public String getCompany() {
+		return company;
+	}
+
+
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 

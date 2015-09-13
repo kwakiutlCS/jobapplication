@@ -125,7 +125,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				String titleFilter = filter.getTitle();
 				if (titleFilter != null) {
 					Expression<String> title = position.get("title");
-					Predicate titlePredicate = cb.like(title, "%"+titleFilter+"%");
+					Predicate titlePredicate = cb.like(cb.lower(title), "%"+titleFilter.toLowerCase()+"%");
 										
 					criteriaPredicates.add(titlePredicate);
 				}
@@ -148,13 +148,22 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 					criteriaPredicates.add(localizationPredicate);
 				}
 				
-				// localization
+				// technical area
 				TechnicalArea areaFilter = filter.getArea();
 				if (areaFilter != null) {
 					Expression<List<TechnicalArea>> areas = position.get("technicalAreas");
 					Predicate areaPredicate = cb.isMember(areaFilter, areas);
 					
 					criteriaPredicates.add(areaPredicate);
+				}
+				
+				// company
+				String companyFilter = filter.getCompany();
+				if (companyFilter != null) {
+					Expression<String> company = position.get("company");
+					Predicate companyPredicate = cb.like(cb.lower(company), "%"+companyFilter.toLowerCase()+"%");
+										
+					criteriaPredicates.add(companyPredicate);
 				}
 			}
 			
