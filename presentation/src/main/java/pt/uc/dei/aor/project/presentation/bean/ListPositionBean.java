@@ -12,6 +12,7 @@ import javax.inject.Named;
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
+import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 
 
@@ -34,6 +35,7 @@ public class ListPositionBean implements Serializable{
 	private int code;
 	private String title;
 	private PositionState state;
+	private Localization localization;
 	
 	
 	@PostConstruct
@@ -74,6 +76,14 @@ public class ListPositionBean implements Serializable{
 	
 	public void removeState() {
 		filter.setState(null);
+	}
+	
+	public void addLocalization() {
+		filter.setLocalization(localization);
+	}
+	
+	public void removeLocalization() {
+		filter.setLocalization(null);
 	}
 	
 	
@@ -125,6 +135,16 @@ public class ListPositionBean implements Serializable{
 
 	public void setState(PositionState state) {
 		this.state = state;
+	}
+
+
+	public Localization getLocalization() {
+		return localization;
+	}
+
+
+	public void setLocalization(Localization localization) {
+		this.localization = localization;
 	}
 
 

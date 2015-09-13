@@ -9,6 +9,7 @@ import java.util.Set;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 
 public class PositionFilter {
@@ -16,14 +17,26 @@ public class PositionFilter {
 	private int code;
 	private String title;
 	private PositionState state;
+	private Localization localization;
 	
 	public PositionFilter() {
 		code = -1;
 		title = null;
 		setState(PositionState.OPEN);
+		localization = null;
 	}
 	
 	
+	public Localization getLocalization() {
+		return localization;
+	}
+
+
+	public void setLocalization(Localization localization) {
+		this.localization = localization;
+	}
+
+
 	public void setCode(int code) {
 		this.code = code;
 	}

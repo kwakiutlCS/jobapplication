@@ -42,6 +42,18 @@
 			</h:form>
 			</h:panelGroup>
 			
+			<h:panelGroup id="localizationFilter">
+			<h:form>
+				<p:selectOneMenu value="#{listPositionBean.localization}" 
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{positionBean.localizations}" var="localization" 
+					itemLabel="#{localization.localizationLabel}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Add Localization" action="#{listPositionBean.addLocalization}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
 		</h:panelGroup>
 		
 		<h:panelGroup id="filterList">
@@ -65,6 +77,15 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.state.positionStateLabel}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeState}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.localization}" 
+				styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{listPositionBean.filter.localization.localizationLabel}" />
+					<p:commandLink value="x" action="#{listPositionBean.removeLocalization}" 
 					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>

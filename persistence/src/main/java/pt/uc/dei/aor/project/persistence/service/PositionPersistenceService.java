@@ -20,6 +20,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
+import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
@@ -135,6 +136,15 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 					Predicate statePredicate = cb.equal(state, stateFilter);
 					
 					criteriaPredicates.add(statePredicate);
+				}
+				
+				// localization
+				Localization localizationFilter = filter.getLocalization();
+				if (localizationFilter != null) {
+					Expression<List<Localization>> localizations = position.get("localizations");
+					Predicate localizationPredicate = cb.isMember(localizationFilter, localizations);
+					
+					criteriaPredicates.add(localizationPredicate);
 				}
 			}
 			
