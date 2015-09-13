@@ -105,7 +105,7 @@ public class PositionFilter {
 		if (startDate != null) {
 			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			date.setTime(startDate);
-			System.out.println(date.getTime());
+			date.add(Calendar.HOUR, -1);
 			this.startDate = date.getTime();
 		}
 		else {
@@ -123,10 +123,9 @@ public class PositionFilter {
 		if (finishDate != null) {
 			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
 			date.setTime(finishDate);
-			date.set(Calendar.HOUR, 23);
+			date.set(Calendar.HOUR, 22);
 			date.set(Calendar.MINUTE, 59);
 			date.set(Calendar.SECOND, 59);
-			System.out.println(date.getTime());
 			this.finishDate = date.getTime();
 		}
 		else {

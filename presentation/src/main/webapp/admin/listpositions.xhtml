@@ -151,15 +151,13 @@
 				rendered="#{not empty listPositionBean.filter.startDate or 
 							not empty listPositionBean.filter.finishDate}">
 				<h:form style="display:inline-block">
-					<h:outputText value="#{listPositionBean.filter.startDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT" />
+					<h:outputText value="#{listPositionBean.filter.startDate}" converter="dateConverter">
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty listPositionBean.filter.startDate}"
 						action="#{listPositionBean.removeStartDate}"
 						update=":positionsTable :filterList :filterAction" styleClass="removalLink" />
 					-
-					<h:outputText value="#{listPositionBean.filter.finishDate}">
-						<f:convertDateTime pattern="dd/MM/yyyy" timeZone="GMT" />
+					<h:outputText value="#{listPositionBean.filter.finishDate}" converter="dateConverter">
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty listPositionBean.filter.finishDate}"
 						action="#{listPositionBean.removeFinishDate}"
