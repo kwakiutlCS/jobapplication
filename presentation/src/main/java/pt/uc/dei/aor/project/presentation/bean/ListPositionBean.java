@@ -42,6 +42,7 @@ public class ListPositionBean implements Serializable{
 	private String company;
 	private Date startDate;
 	private Date finishDate;
+	private String keyword;
 	
 	@PostConstruct
 	public void init() {
@@ -122,6 +123,13 @@ public class ListPositionBean implements Serializable{
 		filter.setFinishDate(finishDate);
 	}
 	
+	public void addKeyword() {
+		filter.setKeyword(keyword);
+	}
+	
+	public void removeKeyword() {
+		filter.setKeyword(null);
+	}
 	
 	
 	public IPosition getSelectedPosition() {
@@ -221,6 +229,16 @@ public class ListPositionBean implements Serializable{
 
 	public void setFinishDate(Date finishDate) {
 		this.finishDate = finishDate;
+	}
+
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 

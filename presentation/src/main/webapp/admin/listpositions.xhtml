@@ -14,6 +14,15 @@
 	<ui:define name="content">
 
 		<h:panelGroup id="filterAction">
+		
+			<h:panelGroup id="keywordFilter">
+			<h:form>
+				<p:inputText value="#{listPositionBean.keyword}" required="true" />
+				<p:commandButton value="Add Keyword" action="#{listPositionBean.addKeyword}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
 			<h:panelGroup id="codeFilter">
 			<h:form>
 				<p:spinner value="#{listPositionBean.code}" required="true" min="1" />
@@ -93,6 +102,16 @@
 		
 		
 		<h:panelGroup id="filterList">
+			
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.keyword}" 
+			styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{listPositionBean.filter.keyword}" />
+					<p:commandLink value="x" action="#{listPositionBean.removeKeyword}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
 			<h:panelGroup rendered="#{listPositionBean.filter.code gt 0}" 
 			styleClass="filterUnit">
 				<h:form style="display:inline-block">

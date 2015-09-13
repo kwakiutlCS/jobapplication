@@ -26,6 +26,7 @@ public class PositionFilter {
 	private String company;
 	private Date startDate;
 	private Date finishDate;
+	private String keyword;
 	
 	public PositionFilter() {
 		code = -1;
@@ -35,6 +36,7 @@ public class PositionFilter {
 		setCompany(null);
 		startDate = null;
 		finishDate = null;
+		keyword = null;
 	}
 	
 	
@@ -131,5 +133,15 @@ public class PositionFilter {
 		else {
 			this.finishDate = null;
 		}
+	}
+
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 }
