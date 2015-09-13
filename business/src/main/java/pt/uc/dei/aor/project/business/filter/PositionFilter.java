@@ -2,10 +2,13 @@ package pt.uc.dei.aor.project.business.filter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -21,6 +24,8 @@ public class PositionFilter {
 	private Localization localization;
 	private TechnicalArea area;
 	private String company;
+	private Date startDate;
+	private Date finishDate;
 	
 	public PositionFilter() {
 		code = -1;
@@ -28,6 +33,8 @@ public class PositionFilter {
 		setState(PositionState.OPEN);
 		localization = null;
 		setCompany(null);
+		startDate = null;
+		finishDate = null;
 	}
 	
 	
@@ -86,5 +93,44 @@ public class PositionFilter {
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(Date startDate) {
+		if (startDate != null) {
+			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			date.setTime(startDate);
+			System.out.println(date.getTime());
+			this.startDate = date.getTime();
+		}
+		else {
+			this.startDate = null;
+		}
+	}
+
+
+	public Date getFinishDate() {
+		return finishDate;
+	}
+
+
+	public void setFinishDate(Date finishDate) {
+		if (finishDate != null) {
+			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			date.setTime(finishDate);
+			date.set(Calendar.HOUR, 23);
+			date.set(Calendar.MINUTE, 59);
+			date.set(Calendar.SECOND, 59);
+			System.out.println(date.getTime());
+			this.finishDate = date.getTime();
+		}
+		else {
+			this.finishDate = null;
+		}
 	}
 }

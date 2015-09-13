@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -164,6 +165,25 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 					Predicate companyPredicate = cb.like(cb.lower(company), "%"+companyFilter.toLowerCase()+"%");
 										
 					criteriaPredicates.add(companyPredicate);
+				}
+				
+				// dates filter
+				Expression<Date> date = position.get("closingDate");
+				
+				// start date
+				Date startFilter = filter.getStartDate();
+				if (startFilter != null) {
+					Predicate startPredicate = cb.greaterThanOrEqualTo(date, startFilter);
+										
+					criteriaPredicates.add(startPredicate);
+				}
+				
+				// finish date
+				Date finishFilter = filter.getFinishDate();
+				if (finishFilter != null) {
+					Predicate finishPredicate = cb.lessThanOrEqualTo(date, finishFilter);
+										
+					criteriaPredicates.add(finishPredicate);
 				}
 			}
 			

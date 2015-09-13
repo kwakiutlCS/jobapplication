@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +40,8 @@ public class ListPositionBean implements Serializable{
 	private Localization localization;
 	private TechnicalArea area;
 	private String company;
+	private Date startDate;
+	private Date finishDate;
 	
 	@PostConstruct
 	public void init() {
@@ -104,6 +107,20 @@ public class ListPositionBean implements Serializable{
 		filter.setCompany(null);
 	}
 	
+	public void removeStartDate() {
+		startDate = null;
+		filter.setStartDate(null);
+	}
+	
+	public void removeFinishDate() {
+		finishDate = null;
+		filter.setFinishDate(null);
+	}
+	
+	public void addDateFilter() {
+		filter.setStartDate(startDate);
+		filter.setFinishDate(finishDate);
+	}
 	
 	
 	
@@ -184,6 +201,26 @@ public class ListPositionBean implements Serializable{
 
 	public void setCompany(String company) {
 		this.company = company;
+	}
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+
+	public Date getFinishDate() {
+		return finishDate;
+	}
+
+
+	public void setFinishDate(Date finishDate) {
+		this.finishDate = finishDate;
 	}
 
 
