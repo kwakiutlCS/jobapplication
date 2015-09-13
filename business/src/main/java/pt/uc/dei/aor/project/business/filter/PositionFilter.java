@@ -9,15 +9,18 @@ import java.util.Set;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.util.PositionState;
 
 public class PositionFilter {
 	
 	private int code;
 	private String title;
+	private PositionState state;
 	
 	public PositionFilter() {
 		code = -1;
 		title = null;
+		setState(PositionState.OPEN);
 	}
 	
 	
@@ -36,5 +39,15 @@ public class PositionFilter {
 	
 	public String getTitle() {
 		return title;
+	}
+
+
+	public PositionState getState() {
+		return state;
+	}
+
+
+	public void setState(PositionState state) {
+		this.state = state;
 	}
 }

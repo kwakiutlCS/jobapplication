@@ -20,6 +20,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
+import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
@@ -122,11 +123,19 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				String titleFilter = filter.getTitle();
 				if (titleFilter != null) {
 					Expression<String> title = position.get("title");
-					Predicate codePredicate = cb.like(title, "%"+titleFilter+"%");
+					Predicate titlePredicate = cb.like(title, "%"+titleFilter+"%");
 										
-					criteriaPredicates.add(codePredicate);
+					criteriaPredicates.add(titlePredicate);
 				}
 				
+				// state
+				PositionState stateFilter = filter.getState();
+				if (stateFilter != null) {
+					Expression<PositionState> state = position.get("state");
+					Predicate statePredicate = cb.equal(state, stateFilter);
+					
+					criteriaPredicates.add(statePredicate);
+				}
 			}
 			
 			q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));

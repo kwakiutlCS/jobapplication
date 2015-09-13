@@ -5,7 +5,10 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
-
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+	</ui:define>
+	
 	<ui:define name="title">List Position</ui:define>
 
 	<ui:define name="content">
@@ -27,22 +30,42 @@
 			</h:form>
 			</h:panelGroup>
 			
+			<h:panelGroup id="stateFilter">
+			<h:form>
+				<p:selectOneMenu value="#{listPositionBean.state}" 
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{positionBean.positionStates}" var="state" 
+					itemLabel="#{state.positionStateLabel}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Add State" action="#{listPositionBean.addState}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
 		</h:panelGroup>
 		
 		<h:panelGroup id="filterList">
-			<h:panelGroup rendered="#{listPositionBean.filter.code gt 0}">
-				<h:form>
+			<h:panelGroup rendered="#{listPositionBean.filter.code gt 0}" styleClass="filterUnit">
+				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.code}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeCode}" 
-					update=":positionsTable :filterList" />
+					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not empty listPositionBean.filter.title}">
-				<h:form>
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.title}" styleClass="filterUnit">
+				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.title}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeTitle}" 
-					update=":positionsTable :filterList" />
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.state}" styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{listPositionBean.filter.state.positionStateLabel}" />
+					<p:commandLink value="x" action="#{listPositionBean.removeState}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>
