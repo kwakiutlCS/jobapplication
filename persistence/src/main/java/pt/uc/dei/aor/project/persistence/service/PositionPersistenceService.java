@@ -117,6 +117,16 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 										
 					criteriaPredicates.add(codePredicate);
 				}
+				
+				// title
+				String titleFilter = filter.getTitle();
+				if (titleFilter != null) {
+					Expression<String> title = position.get("title");
+					Predicate codePredicate = cb.like(title, "%"+titleFilter+"%");
+										
+					criteriaPredicates.add(codePredicate);
+				}
+				
 			}
 			
 			q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));

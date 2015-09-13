@@ -11,12 +11,22 @@
 	<ui:define name="content">
 
 		<h:panelGroup id="filterAction">
+			<h:panelGroup id="codeFilter">
 			<h:form>
 				<p:spinner value="#{listPositionBean.code}" required="true" min="1" />
 				<p:commandButton value="Add Code" action="#{listPositionBean.addCode}" 
 				update=":positionsTable :filterList" />
 			</h:form>
-		
+			</h:panelGroup>
+			
+			<h:panelGroup id="titleFilter">
+			<h:form>
+				<p:inputText value="#{listPositionBean.title}" required="true" />
+				<p:commandButton value="Add Title" action="#{listPositionBean.addTitle}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
 		</h:panelGroup>
 		
 		<h:panelGroup id="filterList">
@@ -24,7 +34,15 @@
 				<h:form>
 					<h:outputText value="#{listPositionBean.filter.code}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeCode}" 
-					update=":positionsTable @form" />
+					update=":positionsTable :filterList" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.title}">
+				<h:form>
+					<h:outputText value="#{listPositionBean.filter.title}" />
+					<p:commandLink value="x" action="#{listPositionBean.removeTitle}" 
+					update=":positionsTable :filterList" />
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>

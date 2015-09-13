@@ -31,12 +31,13 @@ public class ListPositionBean implements Serializable{
 	
 	// filter params
 	private int code;
-	
+	private String title;
 	
 	
 	@PostConstruct
 	public void init() {
 		offset = 0;
+		code = 1;
 		filter = new PositionFilter();
 	}
 	
@@ -57,6 +58,17 @@ public class ListPositionBean implements Serializable{
 		filter.setCode(-1);
 	}
 
+	public void addTitle() {
+		filter.setTitle(title);
+	}
+	
+	public void removeTitle() {
+		filter.setTitle(null);
+	}
+	
+	
+	
+	
 	
 	public IPosition getSelectedPosition() {
 		return selectedPosition;
@@ -85,6 +97,16 @@ public class ListPositionBean implements Serializable{
 
 	public PositionFilter getFilter() {
 		return filter;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 

@@ -13,9 +13,11 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 public class PositionFilter {
 	
 	private int code;
+	private String title;
 	
 	public PositionFilter() {
 		code = -1;
+		title = null;
 	}
 	
 	
@@ -25,5 +27,14 @@ public class PositionFilter {
 	
 	public int getCode() {
 		return code;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getTitle() {
+		return title;
 	}
 }
