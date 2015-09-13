@@ -14,6 +14,7 @@ import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 
 @Named
@@ -36,7 +37,7 @@ public class ListPositionBean implements Serializable{
 	private String title;
 	private PositionState state;
 	private Localization localization;
-	
+	private TechnicalArea area;
 	
 	@PostConstruct
 	public void init() {
@@ -84,6 +85,14 @@ public class ListPositionBean implements Serializable{
 	
 	public void removeLocalization() {
 		filter.setLocalization(null);
+	}
+	
+	public void addArea() {
+		filter.setArea(area);
+	}
+	
+	public void removeArea() {
+		filter.setArea(null);
 	}
 	
 	
@@ -145,6 +154,16 @@ public class ListPositionBean implements Serializable{
 
 	public void setLocalization(Localization localization) {
 		this.localization = localization;
+	}
+
+
+	public TechnicalArea getArea() {
+		return area;
+	}
+
+
+	public void setArea(TechnicalArea area) {
+		this.area = area;
 	}
 
 

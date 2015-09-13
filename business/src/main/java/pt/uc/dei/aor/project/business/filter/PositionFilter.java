@@ -11,6 +11,7 @@ import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 public class PositionFilter {
 	
@@ -18,6 +19,8 @@ public class PositionFilter {
 	private String title;
 	private PositionState state;
 	private Localization localization;
+	private TechnicalArea area;
+	
 	
 	public PositionFilter() {
 		code = -1;
@@ -62,5 +65,15 @@ public class PositionFilter {
 
 	public void setState(PositionState state) {
 		this.state = state;
+	}
+
+
+	public TechnicalArea getArea() {
+		return area;
+	}
+
+
+	public void setArea(TechnicalArea area) {
+		this.area = area;
 	}
 }

@@ -54,10 +54,25 @@
 			</h:form>
 			</h:panelGroup>
 			
+			<h:panelGroup id="areaFilter">
+			<h:form>
+				<p:selectOneMenu value="#{listPositionBean.area}" 
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{positionBean.technicalAreas}" var="area" 
+					itemLabel="#{area.technicalAreaLabel}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Add Technical Area" action="#{listPositionBean.addArea}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
 		</h:panelGroup>
 		
+		
+		
+		
 		<h:panelGroup id="filterList">
-			<h:panelGroup rendered="#{listPositionBean.filter.code gt 0}" styleClass="filterUnit">
+			<h:panelGroup rendered="#{listPositionBean.filter.code gt 0}" 
+			styleClass="filterUnit">
 				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.code}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeCode}" 
@@ -65,7 +80,8 @@
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not empty listPositionBean.filter.title}" styleClass="filterUnit">
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.title}" 
+			styleClass="filterUnit">
 				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.title}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeTitle}" 
@@ -73,10 +89,20 @@
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not empty listPositionBean.filter.state}" styleClass="filterUnit">
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.state}" 
+			styleClass="filterUnit">
 				<h:form style="display:inline-block">
 					<h:outputText value="#{listPositionBean.filter.state.positionStateLabel}" />
 					<p:commandLink value="x" action="#{listPositionBean.removeState}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty listPositionBean.filter.area}" 
+				styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{listPositionBean.filter.area.technicalAreaLabel}" />
+					<p:commandLink value="x" action="#{listPositionBean.removeArea}" 
 					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
@@ -90,6 +116,9 @@
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>
+
+
+
 
 		<p:dataTable var="position" value="#{listPositionBean.positions}" id="positionsTable"
 				widgetVar="positionsTable"
