@@ -1,5 +1,8 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -8,6 +11,8 @@ import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.model.UploadedFile;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
@@ -29,7 +34,7 @@ public class WorkerBean {
 	private String name;
 	private String surname;
 	private List<Role> roles;
-	
+	private UploadedFile file;
 	
 	public void register() {
 		try {
@@ -44,6 +49,12 @@ public class WorkerBean {
 		} catch (DuplicatedUserException e) {
 			MetaUtils.setMsg("User Already exists", FacesMessage.SEVERITY_ERROR);
 		}
+	}
+	
+	public void upload() {
+		System.out.println("upload");
+		System.out.println(file.getFileName());
+		
 	}
 	
 	public List<IWorker> getUsers() {
@@ -92,6 +103,14 @@ public class WorkerBean {
 
 	public void setRoles(List<Role> role) {
 		this.roles = role;
+	}
+
+	public UploadedFile getFile() {
+		return file;
+	}
+
+	public void setFile(UploadedFile file) {
+		this.file = file;
 	}
 	
 }
