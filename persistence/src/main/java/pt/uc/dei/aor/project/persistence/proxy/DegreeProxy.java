@@ -45,5 +45,26 @@ public class DegreeProxy implements IDegree, IProxyToEntity<DegreeEntity> {
 		return entity;
 	}
 
+
+	@Override
+	public String getName() {
+		return entity.getName();
+	}
+
+
+	@Override
+	public String getCompleteName() {
+		if (entity.getType().contains("Licenciatura")) {
+			return "Licenciatura - "+getName();
+		}
+		else if (entity.getType().contains("Mestrado")) {
+			return "Mestrado - "+getName();
+		}
+		else if (entity.getType().contains("Doutoramento")) {
+			return "Doutoramento - "+getName();
+		}
+		else return getName();
+	}
+
 	
 }

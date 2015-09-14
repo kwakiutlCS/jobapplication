@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.text.Normalizer;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,8 @@ public class InstitutionEntity {
 	
 	public InstitutionEntity(String school) {
 		this.name = school;
+		this.normalized = Normalizer.normalize(school, Normalizer.Form.NFD);
+		this.normalized = normalized.replaceAll("[^\\p{ASCII}]", "");
 	}
 
 	@Id 
@@ -34,6 +38,9 @@ public class InstitutionEntity {
 
 	@Column
 	private String name;
+	
+	@Column
+	private String normalized;
 
 	public String getName() {
 		return name;

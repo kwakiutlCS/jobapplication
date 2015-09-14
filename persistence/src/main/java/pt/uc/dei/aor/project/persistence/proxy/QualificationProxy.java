@@ -17,9 +17,26 @@ public class QualificationProxy implements IQualification, IProxyToEntity<Qualif
 	}
 
 	
+	public QualificationProxy(String school, String degree) {
+		entity = new QualificationEntity(school, degree);
+	}
+
+
 	@Override
 	public QualificationEntity getEntity() {
 		return entity;
+	}
+
+
+	@Override
+	public String getSchool() {
+		return entity.getSchool();
+	}
+
+
+	@Override
+	public String getDegree() {
+		return entity.getDegree();
 	}
 
 

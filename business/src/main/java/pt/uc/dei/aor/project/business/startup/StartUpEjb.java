@@ -93,23 +93,29 @@ public class StartUpEjb {
 		// load data
 		if (!qualificationEjb.isPopulated()) {
 			Path l = Paths.get(System.getProperty("java.class.path"));
-			l = l.resolve(Paths.get("../jobapplication/lpu.csv")).normalize();
+			l = l.resolve(Paths.get("../jobapplication")).normalize();
+			
+			String[] files = new String[]{"lpu", "lpr", "mpu", "mpr", "dpu", "dpr"};
 
-			if (Files.exists(l.toAbsolutePath())) {
-				BufferedReader reader = null;
-				try {
-					reader = Files.newBufferedReader(l);
-					String line = null;
-					while ((line = reader.readLine()) != null) {
-						qualificationEjb.addQualification(line);
-					}
-				} catch (IOException x) {
-					System.err.println(x);
-				} finally {
+			for (String s : files) {
+				Path filePath = l.resolve(Paths.get(s+".csv"));
+				
+				if (Files.exists(filePath.toAbsolutePath())) {
+					BufferedReader reader = null;
 					try {
-						reader.close();
-					} catch (IOException e) {
+						reader = Files.newBufferedReader(filePath);
+						String line = null;
+						while ((line = reader.readLine()) != null) {
+							qualificationEjb.addQualification(line);
+						}
+					} catch (IOException x) {
+						System.err.println(x);
+					} finally {
+						try {
+							reader.close();
+						} catch (IOException e) {
 
+						}
 					}
 				}
 			}

@@ -9,9 +9,12 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
+
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
@@ -25,6 +28,9 @@ public class AccountBean implements Serializable {
 	@Inject
 	private IWorkerBusinessService workerService;
 	
+	@Inject
+	private IQualificationBusinessService qualificationService;
+	
 	private String login;
 	private String name;
 	private String surname;
@@ -37,9 +43,11 @@ public class AccountBean implements Serializable {
 	private String country;
 	private String phone;
 	private String mobile;
-	private List<IQualification> qualifications;
-
+	private String school;
+	private String degree;
+	private boolean showExtra;
 	
+		
 	@PostConstruct
 	public void init() {
 		IWorker user = MetaUtils.getUser();
@@ -53,7 +61,6 @@ public class AccountBean implements Serializable {
 		country = user.getCountry();
 		phone = user.getPhone();
 		mobile = user.getMobile();
-		qualifications = user.getQualifications();
 	}
 	
 	
@@ -96,15 +103,31 @@ public class AccountBean implements Serializable {
 		user.setCountry(country);
 		user.setPhone(phone);
 		user.setMobile(mobile);
-		//user.setQualification(qualification);
-
+	
 		user = workerService.update(user);
 		password = null;
 		MetaUtils.getSession().setAttribute("user", user);
 		MetaUtils.setMsg("User details updated", FacesMessage.SEVERITY_INFO);
 	}
 	
-
+	public List<String> listSchools(String text) {
+		return qualificationService.listSchools(text);
+	}
+	
+	public List<String> listDegrees() {
+		return qualificationService.listDegrees(school);
+	}
+	
+	
+	public void addQualification() {
+		qualificationService.addQualification(MetaUtils.getUser(), school, degree);
+	}
+	
+	public void removeQualification(IQualification qualification) {
+		qualificationService.removeQualification(MetaUtils.getUser(), qualification);
+	}
+	
+	
 	
 	// getters and setters
 	
@@ -196,8 +219,33 @@ public class AccountBean implements Serializable {
 	}
 
 
-	public List<IQualification> getQualifications() {
-		return qualifications;
+	public String getQualification() {
+		return school;
+	}
+
+
+	public void setQualification(String qualification) {
+		this.school = qualification;
+	}
+
+
+	public boolean isShowExtra() {
+		return showExtra;
+	}
+
+
+	public void setShowExtra(boolean showExtra) {
+		this.showExtra = showExtra;
+	}
+
+
+	public String getDegree() {
+		return degree;
+	}
+
+
+	public void setDegree(String degree) {
+		this.degree = degree;
 	}
 	
 }

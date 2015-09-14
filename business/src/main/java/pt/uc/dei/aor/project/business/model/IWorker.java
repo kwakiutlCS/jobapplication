@@ -56,5 +56,8 @@ public interface IWorker {
 
 	public List<IQualification> getQualifications();
 
+	public void addQualification(IQualification qualification);
+
+	public void removeQualification(IQualification qualification);
 	
 }

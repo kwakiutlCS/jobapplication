@@ -19,6 +19,7 @@ import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IDegree;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.ISchool;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IQualificationPersistenceService;
@@ -39,6 +40,9 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 	
 	@Inject
 	private IQualificationPersistenceService qualificationPersistence;
+	
+	@Inject
+	private IWorkerPersistenceService workerPersistence;
 	
 	@Override
 	public void addQualification(String qualification) {
@@ -68,6 +72,49 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 	public boolean isPopulated() {
 		return qualificationPersistence.countSchools() > 0;
 	}
+
+	@Override
+	public List<String> listSchools(String text) {
+		List<ISchool> schools = qualificationPersistence.filterSchoolsByName(text);
+		
+		List<String> result = new ArrayList<>();
+		
+		for (ISchool school : schools) {
+			result.add(school.getName());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<String> listDegrees(String school) {
+		ISchool proxy = qualificationPersistence.findSchoolByName(school);
+		if (proxy == null) return null;
+		
+		List<IDegree> degrees = qualificationPersistence.findDegreeBySchool(proxy);
+		
+		List<String> result = new ArrayList<>();
+		
+		for (IDegree degree : degrees) {
+			result.add(degree.getCompleteName());
+		}
+		
+		return result;
+	}
+
+	@Override
+	public void addQualification(IWorker user, String school, String degree) {
+		IQualification qualification = factory.qualification(school, degree);
+		user.addQualification(qualification);
+		
+		workerPersistence.save(user);
+	}
 	
+	@Override
+	public void removeQualification(IWorker user, IQualification qualification) {
+		user.removeQualification(qualification);
+		
+		workerPersistence.save(user);
+	}
 	
 }

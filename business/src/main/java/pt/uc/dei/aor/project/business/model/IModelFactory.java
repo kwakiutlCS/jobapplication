@@ -38,4 +38,6 @@ public interface IModelFactory {
 	ISchool school(String school);
 
 	IDegree degree(ISchool school, String degree, String typeDegree);
+
+	IQualification qualification(String school, String degree);
 }

@@ -93,7 +93,7 @@ public class WorkerEntity extends User {
 	private String mobilePhone;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<QualificationEntity> qualifications;
+	private Set<QualificationEntity> qualifications;
 	
 	@Column
 	private String cv;
@@ -135,7 +135,7 @@ public class WorkerEntity extends User {
 	}
 
 	public void setQualification(List<QualificationEntity> qualifications) {
-		this.qualifications = qualifications;
+		this.qualifications.addAll(qualifications);
 	}
 
 	public void setCity(String city) {
@@ -166,7 +166,7 @@ public class WorkerEntity extends User {
 		this.mobilePhone = mobilePhone;
 	}
 
-	public List<QualificationEntity> getQualifications() {
+	public Set<QualificationEntity> getQualifications() {
 		return qualifications;
 	}
 
@@ -186,5 +186,11 @@ public class WorkerEntity extends User {
 		return phone;
 	}
 
-	
+	public void addQualification(QualificationEntity qualification) {
+		qualifications.add(qualification);
+	}
+
+	public void removeQualification(QualificationEntity qualification) {
+		qualifications.remove(qualification);
+	}
 }

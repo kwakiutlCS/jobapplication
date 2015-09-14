@@ -59,13 +59,43 @@
 				<p:inputMask mask="999 999 999" id="mobile"
 					value="#{accountBean.mobile}" />
 
-				<p:outputLabel value="Qualification" for="qualifications" />
-				<p:inputText id="qualifications" value="#{accountBean.qualifications}" />
-
 				<p:commandButton value="Update" action="#{accountBean.updateExtra}"
 					update=":globalMessages @form" />
 			</h:panelGrid>
 		</h:form>
+		
+		
+		<h2>Qualifications</h2>
+		<h:form>
+		<h:panelGroup id="qualificationsList">
+			<ui:repeat value="#{loginBean.user.qualifications}" var="qualification">
+				<div>
+					<div>
+						#{qualification.school}
+					</div>
+					<div>
+						#{qualification.degree}
+					</div>
+					<div><p:commandLink value="delete" update="@form"
+					action="#{accountBean.removeQualification(qualification)}" /></div>
+				</div>
+			</ui:repeat>
+		</h:panelGroup>
+		
+		<p:autoComplete value="#{accountBean.qualification}" forceSelection="true" 
+			completeMethod="#{accountBean.listSchools}" style="width:600px" 
+			maxResults="8">
+		</p:autoComplete>	
+	
+		<br />
+		<p:autoComplete id="degreeField" style="width:600px" value="#{accountBean.degree}"
+		completeMethod="#{accountBean.listDegrees()}" maxResults="8" />
+		
+		<p:commandButton value="Add qualification" 
+		action="#{accountBean.addQualification}" update="@form" />
+		</h:form>
+				
+				
 	</h:panelGroup>
 
 	<h:panelGroup id="passwordDetails" styleClass="accountPanel">

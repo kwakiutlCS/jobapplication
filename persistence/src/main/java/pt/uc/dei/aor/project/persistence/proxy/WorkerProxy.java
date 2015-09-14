@@ -202,4 +202,14 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return qualifications;
 	}
 
+	@Override
+	public void addQualification(IQualification qualification) {
+		entity.addQualification(GenericPersistenceService.getEntity(qualification));
+	}
+
+	@Override
+	public void removeQualification(IQualification qualification) {
+		entity.removeQualification(GenericPersistenceService.getEntity(qualification));
+	}
+
 }

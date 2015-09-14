@@ -14,6 +14,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.ISchool;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -102,6 +103,11 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IDegree degree(ISchool school, String degree, String typeDegree) {
 		return new DegreeProxy(school, degree, typeDegree);
+	}
+
+	@Override
+	public IQualification qualification(String school, String degree) {
+		return new QualificationProxy(school, degree);
 	}
 
 	
