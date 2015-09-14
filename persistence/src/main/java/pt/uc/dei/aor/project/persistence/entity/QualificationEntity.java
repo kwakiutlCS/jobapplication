@@ -29,4 +29,7 @@ public class QualificationEntity {
 	@Column
 	private String degree;
 	
+	@Column
+	private String type;
+	
 }

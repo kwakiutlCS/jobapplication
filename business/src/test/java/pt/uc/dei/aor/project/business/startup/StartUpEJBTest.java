@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -22,6 +23,9 @@ public class StartUpEJBTest {
 
 	@Mock
 	private IWorkerBusinessService workerEjb;
+	
+	@Mock
+	private IQualificationBusinessService qualificationEjb;
 	
 	@InjectMocks
 	private StartUpEjb startUp;

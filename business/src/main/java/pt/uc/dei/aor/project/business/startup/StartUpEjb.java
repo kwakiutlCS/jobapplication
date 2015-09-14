@@ -1,5 +1,14 @@
 package pt.uc.dei.aor.project.business.startup;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +22,9 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.persistence.IQualificationPersistenceService;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
+import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -28,6 +39,9 @@ public class StartUpEjb {
 	
 	@Inject
 	private IPublicationChannelBusService channelEjb;
+	
+	@Inject
+	private IQualificationBusinessService qualificationEjb;
 	
 	@PostConstruct
 	public void init() {
@@ -76,5 +90,30 @@ public class StartUpEjb {
 //		catch (Exception e) {System.out.println(e.getMessage());}
 		
 		 
+		// load data
+		if (!qualificationEjb.isPopulated()) {
+			Path l = Paths.get(System.getProperty("java.class.path"));
+			l = l.resolve(Paths.get("../jobapplication/lpu.csv")).normalize();
+
+			if (Files.exists(l.toAbsolutePath())) {
+				BufferedReader reader = null;
+				try {
+					reader = Files.newBufferedReader(l);
+					String line = null;
+					while ((line = reader.readLine()) != null) {
+						qualificationEjb.addQualification(line);
+					}
+				} catch (IOException x) {
+					System.err.println(x);
+				} finally {
+					try {
+						reader.close();
+					} catch (IOException e) {
+
+					}
+				}
+			}
+		}
+	
 	}
 }

@@ -9,10 +9,12 @@ import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
+import pt.uc.dei.aor.project.business.model.IDegree;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
+import pt.uc.dei.aor.project.business.model.ISchool;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -90,6 +92,16 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IWorkerNotification workerNotification(String msg, IWorker worker, String type) {
 		return new WorkerNotificationProxy(msg, worker, type);
+	}
+
+	@Override
+	public ISchool school(String school) {
+		return new SchoolProxy(school);
+	}
+
+	@Override
+	public IDegree degree(ISchool school, String degree, String typeDegree) {
+		return new DegreeProxy(school, degree, typeDegree);
 	}
 
 	

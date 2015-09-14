@@ -13,10 +13,19 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="instituition")
+@NamedQueries({
+	@NamedQuery(name = "Institution.countSchools", query = "select count(u) from InstitutionEntity u"),
+	@NamedQuery(name = "Institution.findSchoolByName", 
+	query = "from InstitutionEntity u where u.name = :name"),
+})
 public class InstitutionEntity {
 	
 	public InstitutionEntity() {
 		
+	}
+	
+	public InstitutionEntity(String school) {
+		this.name = school;
 	}
 
 	@Id 
@@ -25,5 +34,9 @@ public class InstitutionEntity {
 
 	@Column
 	private String name;
+
+	public String getName() {
+		return name;
+	}
 	
 }

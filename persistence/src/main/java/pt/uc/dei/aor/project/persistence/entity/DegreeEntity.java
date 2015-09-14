@@ -19,6 +19,12 @@ public class DegreeEntity {
 		
 	}
 
+	public DegreeEntity(InstitutionEntity institution, String degree, String typeDegree) {
+		this.institution = institution;
+		this.name = degree;
+		this.type = typeDegree;
+	}
+
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
@@ -28,5 +34,8 @@ public class DegreeEntity {
 	
 	@ManyToOne
 	private InstitutionEntity institution;
+	
+	@Column
+	private String type;
 	
 }

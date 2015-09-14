@@ -34,4 +34,8 @@ public interface IModelFactory {
 	IScriptEntry scriptEntry(QuestionType questionType, String question, int position);
 
 	IWorkerNotification workerNotification(String msg, IWorker worker, String type);
+
+	ISchool school(String school);
+
+	IDegree degree(ISchool school, String degree, String typeDegree);
 }
