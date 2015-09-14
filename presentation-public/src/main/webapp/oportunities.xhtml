@@ -1,0 +1,149 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">Index</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="listpositionform">
+
+			<p:dataTable var="position" value="#{listPositionBean.positions}"
+				widgetVar="positionsTable"
+				emptymessage="No positions found for given criteria"
+				filteredValue="#{listPositionBean.filteredPositions}"
+				style="text-align: center">
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Search all fields:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('positionsTable').filter()" update="listpositionform"
+							placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="Closing date">
+					<h:outputText value="#{position.closingDateFormatted}" />
+				</p:column>
+
+				<p:column headerText="Code">
+					<h:outputText value="#{position.code}" />
+				</p:column>
+
+				<p:column headerText="Title">
+					<h:outputText value="#{position.title}" />
+				</p:column>
+
+				<p:column headerText="Location">
+					<ui:repeat value="#{position.localizationsFormatted}" var="l">
+  						    #{l}
+					</ui:repeat>
+				</p:column>
+
+				<p:column headerText="Technical Area">
+					<ui:repeat value="#{position.technicalAreasFormatted}" var="t">
+  						    #{t}
+					</ui:repeat>
+				</p:column>
+
+				<p:column headerText="Company">
+					<h:outputText value="#{position.company}" />
+				</p:column>
+
+				<p:column headerText="Detail" style="width:32px;text-align: center">
+					<p:commandButton update=":listpositionform :positionDetail"
+						oncomplete="PF('Dlg3').show()" icon="ui-icon-search" title="View">
+						<f:setPropertyActionListener value="#{position}"
+							target="#{listPositionBean.selectedPosition}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+		<p:dialog header="Position Detail" widgetVar="Dlg3" modal="true"
+			showEffect="fade" hideEffect="fade" resizable="true"
+			minimizable="true" maximizable="true">
+			<p:outputPanel id="positionDetail" style="text-align:left;">
+				<h:form>
+
+					<p:panelGrid columns="2"
+						rendered="#{not empty listPositionBean.selectedPosition}"
+						columnClasses="label,value">
+
+						<h:outputText value="Opening date:" />
+						<h:outputText
+							value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
+
+						<h:outputText value="Code:" />
+						<h:outputText value="#{listPositionBean.selectedPosition.code}" />
+
+						<h:outputText value="Closing date:" />
+						<h:outputText
+							value="#{listPositionBean.selectedPosition.closingDateFormatted}" />
+
+						<h:outputText value="SLA (days):" />
+						<h:outputText value="#{listPositionBean.selectedPosition.sla}" />
+
+						<h:outputText value="Company" />
+						<h:outputText value="#{listPositionBean.selectedPosition.company}" />
+
+						<h:outputText value="Technical Area" />
+						<p:column headerText="Technical Area">
+							<ui:repeat value="#{listPositionBean.selectedPosition.technicalAreasFormatted}" var="t">
+  						    #{t}
+					</ui:repeat>
+						</p:column>
+
+						<h:outputText value="Title:" />
+						<h:outputText value="#{listPositionBean.selectedPosition.title}" />
+
+
+						<h:outputText value="Location:" />
+						<p:column headerText="Location">
+							<ui:repeat value="#{listPositionBean.selectedPosition.localizationsFormatted}" var="l">
+  						    #{l}
+					</ui:repeat>
+						</p:column>
+
+						<h:outputText value="Situation:" />
+						<h:outputText value="#{listPositionBean.selectedPosition.stateFormatted}" />
+
+						<h:outputText value="Vacancies:" />
+						<h:outputText
+							value="#{listPositionBean.selectedPosition.vacancies}" />
+
+						<h:outputText value="Contact person:" />
+						<h:outputText
+							value="#{listPositionBean.selectedPosition.contactPerson}" />
+
+						<h:outputText value="Description" />
+						<h:outputText
+							value="#{listPositionBean.selectedPosition.description}" />
+
+						<h:outputText value="Publication channels" />
+						<p:column headerText="Publication Channels">
+							<ui:repeat
+								value="#{listPositionBean.selectedPosition.publicationChannels}"
+								var="l">
+  						    #{l}
+					</ui:repeat>
+						</p:column>
+
+						<p:commandButton value="Exit" onclick="positionDetail.hide()" />
+					</p:panelGrid>
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+
+
+
+
+	</ui:define>
+</ui:composition>

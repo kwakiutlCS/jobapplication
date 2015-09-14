@@ -60,8 +60,11 @@ public class StartUpEjb {
 			logger.info("Super user created successfully.");
 		}
 		
+		System.out.println(System.getProperty("user.dir"));
+		
 		// publication channels
-		System.out.println("Adding Channels...");
+
+//		System.out.println("Adding Channels...");
 		
 //		try { channelEjb.createNewPublicationChannel("Critical Software website"); } 
 //		catch (Exception e) {System.out.println(e.getMessage());}
@@ -75,6 +78,6 @@ public class StartUpEjb {
 //		try {channelEjb.createNewPublicationChannel("Facebook"); } 
 //		catch (Exception e) {System.out.println(e.getMessage());}
 		
-		 
+
 	}
 }

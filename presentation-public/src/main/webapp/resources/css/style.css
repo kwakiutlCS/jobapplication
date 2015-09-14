@@ -1,0 +1,4 @@
+.ui-panelgrid>*>tr, .ui-panelgrid .ui-panelgrid-cell {
+	border: 0px solid rgba(0,0,0,0);
+	
+}
