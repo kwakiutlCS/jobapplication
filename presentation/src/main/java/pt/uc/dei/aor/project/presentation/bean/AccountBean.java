@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
@@ -35,8 +37,7 @@ public class AccountBean implements Serializable {
 	private String country;
 	private String phone;
 	private String mobile;
-	private String institution;
-	private String qualification;
+	private List<IQualification> qualifications;
 
 	
 	@PostConstruct
@@ -52,8 +53,7 @@ public class AccountBean implements Serializable {
 		country = user.getCountry();
 		phone = user.getPhone();
 		mobile = user.getMobile();
-		institution = user.getInstitutions();
-		qualification = user.getQualifications();
+		qualifications = user.getQualifications();
 	}
 	
 	
@@ -96,8 +96,7 @@ public class AccountBean implements Serializable {
 		user.setCountry(country);
 		user.setPhone(phone);
 		user.setMobile(mobile);
-		user.setInstitution(institution);
-		user.setQualification(qualification);
+		//user.setQualification(qualification);
 
 		user = workerService.update(user);
 		password = null;
@@ -197,24 +196,8 @@ public class AccountBean implements Serializable {
 	}
 
 
-	public String getInstitution() {
-		return institution;
+	public List<IQualification> getQualifications() {
+		return qualifications;
 	}
-
-
-	public void setInstitution(String intitution) {
-		this.institution = intitution;
-	}
-
-
-	public String getQualification() {
-		return qualification;
-	}
-
-
-	public void setQualification(String qualification) {
-		this.qualification = qualification;
-	}
-
 	
 }

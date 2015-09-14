@@ -2,8 +2,10 @@ package pt.uc.dei.aor.project.persistence.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,13 +28,8 @@ public class CandidateEntity extends User {
 	@Column(nullable=false)
 	private String mobilePhone;
 	
-	// change string
-	@Column
-	private String qualifications;
-	
-	// change ??
-	@Column
-	private String institution;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<QualificationEntity> qualifications;
 	
 	@Column
 	private String cv;
@@ -48,8 +45,7 @@ public class CandidateEntity extends User {
 		country = "a";
 		phone = "a";
 		mobilePhone = "a";
-		qualifications = "a";
-		institution = "a";
+		qualifications = null;
 		cv = "a";
 	}
 

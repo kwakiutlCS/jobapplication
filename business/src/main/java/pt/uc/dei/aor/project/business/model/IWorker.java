@@ -40,19 +40,13 @@ public interface IWorker {
 
 	public void setCountry(String country);
 
-	public void setInstitution(String institution);
-
 	public void setMobile(String mobile);
 
 	public void setPhone(String phone);
 
-	public void setQualification(String qualification);
-
 	public String getAddress();
 
 	public String getCity();
-
-	public String getInstitutions();
 
 	public String getCountry();
 
@@ -60,7 +54,7 @@ public interface IWorker {
 
 	public String getMobile();
 
-	public String getQualifications();
+	public List<IQualification> getQualifications();
 
 	
 }

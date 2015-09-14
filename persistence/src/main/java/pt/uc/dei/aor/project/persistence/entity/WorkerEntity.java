@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -91,13 +92,8 @@ public class WorkerEntity extends User {
 	@Column
 	private String mobilePhone;
 	
-	// change string
-	@Column
-	private String qualifications;
-	
-	// change ??
-	@Column
-	private String institution;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<QualificationEntity> qualifications;
 	
 	@Column
 	private String cv;
@@ -138,8 +134,8 @@ public class WorkerEntity extends User {
 		return interviews;
 	}
 
-	public void setQualification(String qualification) {
-		this.qualifications = qualification;
+	public void setQualification(List<QualificationEntity> qualifications) {
+		this.qualifications = qualifications;
 	}
 
 	public void setCity(String city) {
@@ -152,10 +148,6 @@ public class WorkerEntity extends User {
 
 	public void setCountry(String country) {
 		this.country = country;
-	}
-
-	public void setInstitution(String institution) {
-		this.institution = institution;
 	}
 
 	public void setMobile(String mobile) {
@@ -174,12 +166,8 @@ public class WorkerEntity extends User {
 		this.mobilePhone = mobilePhone;
 	}
 
-	public String getQualifications() {
+	public List<QualificationEntity> getQualifications() {
 		return qualifications;
-	}
-
-	public void setQualifications(String qualifications) {
-		this.qualifications = qualifications;
 	}
 
 	public String getAddress() {
@@ -198,10 +186,5 @@ public class WorkerEntity extends User {
 		return phone;
 	}
 
-	public String getInstitution() {
-		return institution;
-	}
-	
-	
 	
 }

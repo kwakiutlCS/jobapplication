@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,9 +9,11 @@ import javax.resource.spi.IllegalStateException;
 
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
 import pt.uc.dei.aor.project.business.model.IInterview;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
+import pt.uc.dei.aor.project.persistence.entity.QualificationEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
@@ -152,11 +155,6 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	}
 
 	@Override
-	public void setInstitution(String institution) {
-		entity.setInstitution(institution);
-	}
-
-	@Override
 	public void setMobile(String mobile) {
 		entity.setMobile(mobile);
 	}
@@ -166,11 +164,7 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		entity.setPhone(phone);
 	}
 
-	@Override
-	public void setQualification(String qualification) {
-		entity.setQualification(qualification);
-	}
-
+	
 	@Override
 	public String getAddress() {
 		return entity.getAddress();
@@ -181,11 +175,7 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return entity.getCity();
 	}
 
-	@Override
-	public String getInstitutions() {
-		return entity.getInstitution();
-	}
-
+	
 	@Override
 	public String getCountry() {
 		return entity.getCountry();
@@ -202,9 +192,14 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	}
 
 	@Override
-	public String getQualifications() {
-		return entity.getQualifications();
+	public List<IQualification> getQualifications() {
+		List<IQualification> qualifications = new ArrayList<>();
+		
+		for (QualificationEntity qe : entity.getQualifications()) {
+			qualifications.add(new QualificationProxy(qe));
+		}
+		
+		return qualifications;
 	}
 
-	
 }

@@ -34,8 +34,7 @@
 
 				<p:commandButton value="Update"
 					action="#{accountBean.updatePersonal}"
-					update=":headerForm
-			:globalMessages @form" />
+					update=":headerForm	:globalMessages @form" />
 			</h:panelGrid>
 		</h:form>
 	</h:panelGroup>
@@ -60,11 +59,8 @@
 				<p:inputMask mask="999 999 999" id="mobile"
 					value="#{accountBean.mobile}" />
 
-				<p:outputLabel value="Institution" for="institution" />
-				<p:inputText id="institution" value="#{accountBean.institution}" />
-
 				<p:outputLabel value="Qualification" for="qualification" />
-				<p:inputText id="qualification" value="#{accountBean.qualification}" />
+				<p:inputText id="qualification" value="#{accountBean.qualifications}" />
 
 				<p:commandButton value="Update" action="#{accountBean.updateExtra}"
 					update=":globalMessages @form" />
