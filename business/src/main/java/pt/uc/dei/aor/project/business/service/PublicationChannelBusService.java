@@ -21,12 +21,11 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 	@Inject
 	private IPublicationChannelPersistenceService pcPersistenceService;
 
-
 	@Override
 	public IPublicationChannel createNewPublicationChannel(String channel) {
-			IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
-			return pcPersistenceService.save(publicationChannel);
-	}
+				IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
+				return pcPersistenceService.save(publicationChannel);
+		}
 
 
 	@Override
@@ -39,6 +38,8 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 	public void deletePublicationChannel(IPublicationChannel publicationChannel) {
 		pcPersistenceService.delete(publicationChannel);
 	}
+
+
 
 
 }

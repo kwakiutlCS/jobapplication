@@ -3,7 +3,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
 	<h:outputStylesheet name="template.css" library="css" />
@@ -25,12 +26,9 @@
 			</header>
         </div>
         
+        
         <div class="ui-grid-row">
-    		<nav class="ui-grid-col-3"> 
-				<ui:include src="/resources/layouts/nav.xhtml" />
-			</nav>
-			
-			<div class="ui-grid-col-8">
+			<div class="ui-grid-col-12">
 				<ui:insert name="content" />
 			</div>
         </div>

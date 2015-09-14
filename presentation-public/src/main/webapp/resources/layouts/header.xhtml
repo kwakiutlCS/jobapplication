@@ -1,0 +1,42 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="headerForm">
+
+		<p:outputLabel value="OurCompany RH Services"
+			style="margin-right:200px" />
+		<p:button icon="fa-home" outcome="index" />
+		<p:button value="CAREERS" outcome="oportunities" />
+		<p:button value="ABOUT US" outcome="oportunities" />
+		<p:button value="CONTACTS" outcome="register" />
+		<p:button value="REGISTER" outcome="register" />
+		<p:commandButton value="LOGIN" oncomplete="PF('Dlg1').show()"
+			style="margin-right:10px" />
+	</h:form>
+
+	<p:dialog header="Login" widgetVar="Dlg1">
+		<p:outputPanel id="loginpanel">
+			<h:form>
+
+				<p:outputLabel value="Email" />
+				<br />
+				<p:inputText id="mail" value="#{loginBean.login}" required="true" />
+				<br />
+				<h:outputText value="Password" />
+				<br />
+				<h:inputSecret id="password" value="#{loginBean.password}" />
+				<br />
+				<h:commandButton action="#{loginBean.login}" value="Login" />
+				<br />
+				<p></p>
+				<h:commandLink value="forgotten your password?" />
+
+			</h:form>
+		</p:outputPanel>
+
+	</p:dialog>
+
+</ui:composition>
