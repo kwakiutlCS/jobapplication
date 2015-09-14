@@ -27,6 +27,8 @@ public interface IPosition  {
 	public PositionState getState();
 	public void setState(PositionState state);
 	
+	public String getStateFormatted();
+	
 	public String getVacancies();
 	public void setVacancies(String vacancies);
 	

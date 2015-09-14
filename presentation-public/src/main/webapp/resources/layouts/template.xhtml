@@ -8,34 +8,30 @@
 
 <h:head>
 	<h:outputStylesheet name="template.css" library="css" />
-
+	
 	<ui:insert name="scripts" />
-
-	<title><ui:insert name="title" /></title>
+	
+	<title>
+		<ui:insert name="title" />
+	</title>
 </h:head>
 
 <h:body>
 
 	<div class="ui-grid ui-grid-responsive">
-
-		<div class="ui-grid-row">
-			<header class="ui-grid-col-12">
+    	
+    	<div class="ui-grid-row">
+    		<header class="ui-grid-col-12"> 
 				<ui:include src="/resources/layouts/header.xhtml" />
 			</header>
-		</div>
-
-		<div class="ui-grid-row">
-			<nav class="ui-grid-col-3">
-				<ui:include src="/resources/layouts/nav.xhtml" />
-			</nav>
-
-			<div class="ui-grid-col-8">
-				<p:messages id="globalMessages" />
-
-
+        </div>
+        
+        
+        <div class="ui-grid-row">
+			<div class="ui-grid-col-12">
 				<ui:insert name="content" />
 			</div>
-		</div>
+        </div>
 	</div>
 
 </h:body>
