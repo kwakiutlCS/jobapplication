@@ -20,7 +20,7 @@ public class UploadUtil {
 	private static final Path UPLOADS = Paths.get(System.getProperty("jboss.server.data.dir")+
 			"/jobapplication/uploads");
 	
-	public static Path upload(String path, InputStream in) {
+	public Path upload(String path, InputStream in) {
 		Path folder = UPLOADS.resolve(Paths.get(path));
 				
 		try {
@@ -34,7 +34,7 @@ public class UploadUtil {
 	}
 		
 	
-	public static Path upload(String path, String filename, InputStream in) {
+	public Path upload(String path, String filename, InputStream in) {
 		Path file = UPLOADS.resolve(Paths.get(path)).resolve(Paths.get(filename));
 				
 		try {

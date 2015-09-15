@@ -1,9 +1,12 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -36,5 +39,7 @@ public interface IWorkerBusinessService {
 	IWorker update(IWorker user, String password) throws WrongPasswordException;
 
 	IWorker update(IWorker user);
+
+	void uploadWorkers(InputStream inputStream) throws IllegalFormatUploadException;
 
 }

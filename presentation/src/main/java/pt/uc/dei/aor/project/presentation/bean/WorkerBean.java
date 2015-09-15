@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -15,6 +16,7 @@ import javax.inject.Named;
 import org.primefaces.model.UploadedFile;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
@@ -53,16 +55,14 @@ public class WorkerBean {
 	}
 	
 	public void upload() {
-		System.out.println("upload");
-		System.out.println(file.getFileName());
-		
 		try {
-			System.out.println(UploadUtil.upload("usersImport", file.getInputstream()));
-			System.out.println(UploadUtil.upload("usersImport", "exp2.csv", file.getInputstream()));
+			workerService.uploadWorkers(file.getInputstream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
+		} catch (IllegalFormatUploadException e) {
+			MetaUtils.setMsg(e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
+		
 	}
 	
 	public List<IWorker> getUsers() {
