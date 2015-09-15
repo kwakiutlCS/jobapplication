@@ -47,6 +47,13 @@
 			</p:panelGrid>
 		</h:form>
 
+
+		<h:form enctype="multipart/form-data">
+   
+   			 <p:fileUpload value="#{workerBean.file}" mode="simple" skinSimple="true"/>
+ 
+    		<p:commandButton value="Submit" ajax="false" action="#{workerBean.upload}" />
+		</h:form>
 	</ui:define>
 </ui:composition>
 
