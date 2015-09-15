@@ -20,6 +20,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.Role;
+import pt.uc.dei.aor.project.business.util.UploadUtil;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
@@ -55,6 +56,13 @@ public class WorkerBean {
 		System.out.println("upload");
 		System.out.println(file.getFileName());
 		
+		try {
+			System.out.println(UploadUtil.upload("usersImport", file.getInputstream()));
+			System.out.println(UploadUtil.upload("usersImport", "exp2.csv", file.getInputstream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public List<IWorker> getUsers() {

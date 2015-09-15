@@ -89,7 +89,13 @@ public class StartUpEjb {
 //		try {channelEjb.createNewPublicationChannel("Facebook"); } 
 //		catch (Exception e) {System.out.println(e.getMessage());}
 		
-		 
+		
+		try {
+			createFileSystemStructure();
+		} catch (IOException e1) {
+			logger.error("Error creating the file structure");
+		}
+		
 		// load data
 		if (!qualificationEjb.isPopulated()) {
 			Path l = Paths.get(System.getProperty("java.class.path"));
@@ -121,5 +127,17 @@ public class StartUpEjb {
 			}
 		}
 	
+	}
+	
+	
+	private void createFileSystemStructure() throws IOException {
+		Path directory = Paths.get(System.getProperty("jboss.server.data.dir"))
+				.resolve(Paths.get("jobapplication"));
+		
+		if (!Files.exists(directory)) {
+			Files.createDirectory(directory);
+			Files.createDirectory(directory.resolve(Paths.get("uploads")));
+			Files.createDirectory(directory.resolve(Paths.get("uploads/usersImport")));
+		}
 	}
 }
