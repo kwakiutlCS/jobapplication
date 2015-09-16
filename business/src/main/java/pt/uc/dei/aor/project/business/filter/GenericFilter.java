@@ -84,7 +84,5 @@ public class GenericFilter {
 		
 		return sets;
 	}
-	
-	
-	// or section
+
 }

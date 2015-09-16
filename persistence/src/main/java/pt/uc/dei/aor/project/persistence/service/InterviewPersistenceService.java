@@ -128,25 +128,9 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 			// interviewers
 			List<List<IWorker>> interviewerSets = filter.getInterviewerSets();
 			if (interviewerSets.size() > 0) {
-				Expression<Collection<WorkerEntity>> interviewers = interview.get("interviewers");
-
-				Predicate[] predicateOr = new Predicate[interviewerSets.size()];
-				int counterOr = 0;
-
-				for (List<IWorker> workers : interviewerSets) {
-					Predicate[] predicateAnd = new Predicate[workers.size()];
-					int counterAnd = 0;
-
-					for (IWorker w : workers) {
-						WorkerEntity interviewerEntity = GenericPersistenceService.getEntity(w);
-						predicateAnd[counterAnd++] = cb.isMember(interviewerEntity, interviewers);
-					}
-
-					predicateOr[counterOr++] = cb.and(predicateAnd);
-				}
-
-				//q.where(cb.or(predicateOr));
-				criteriaPredicates.add(cb.or(predicateOr));
+				Expression<List<WorkerEntity>> interviewers = interview.get("interviewers");
+				criteriaPredicates.add(GenericPersistenceService
+						.andOrEntityPredicate(interviewerSets, interviewers, cb));
 			}
 			
 			// position
@@ -156,16 +140,8 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 				criteriaPredicates.add(cb.equal(interview.get("application"), application.get("id")));
 				criteriaPredicates.add(cb.equal(application.get("position"), position.get("id")));
 				
-				List<Predicate> predicates = new ArrayList<>();
-				for (String s : filter.getPositions()) {
-					try {
-						long code = Long.parseLong(s);
-						predicates.add(cb.equal(position.get("code"), code));
-					} catch (Exception e) {
-						predicates.add(cb.like(position.get("title"), "%"+s+"%"));					
-					}
-				}
-				criteriaPredicates.add(cb.or(predicates.toArray(new Predicate[0])));
+				criteriaPredicates.add(GenericPersistenceService.orStringPredicate(filter.getPositions(),
+						position.get("title"), cb));
 			}
 			
 			// candidate to modify to fullName

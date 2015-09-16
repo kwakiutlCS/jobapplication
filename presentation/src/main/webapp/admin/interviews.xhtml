@@ -72,22 +72,22 @@
 						</ui:repeat>
 					</h:form>
 				</h:panelGroup>
-				
-				<h:panelGroup id="positions">
-					<h:form>
-						<ui:repeat value="#{interviewListBean.positionSets}" var="position" varStatus="status">
-							<span class="filterUnit">
-								<h:outputText value="#{position}" />
-								<p:commandLink value="x" styleClass="removalLink"
-										action="#{interviewListBean.deletePosition(status.index)}"
-										update="@form :filteredList" />
-							</span>
-							<h:outputText value="or" rendered="#{not status.last}" />
-						</ui:repeat>
-					</h:form>
-					</h:panelGroup>
-					
-					<h:panelGroup id="candidates">
+
+			<h:panelGroup id="positions">
+				<h:form>
+					<ui:repeat value="#{interviewListBean.positionSets}" var="position"
+						varStatus="status">
+						<span class="filterUnit"> <h:outputText value="#{position}" />
+							<p:commandLink value="x" styleClass="removalLink"
+								action="#{interviewListBean.deletePosition(status.index)}"
+								update="@form :filteredList" />
+						</span>
+						<h:outputText value="or" rendered="#{not status.last}" />
+					</ui:repeat>
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup id="candidates">
 					<h:form>
 						<h:panelGroup styleClass="filterUnit" rendered="#{not empty interviewListBean.candidate}">
 								<h:outputText value="#{interviewListBean.candidate}" />

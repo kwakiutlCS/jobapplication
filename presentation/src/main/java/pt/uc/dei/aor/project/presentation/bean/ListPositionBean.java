@@ -80,14 +80,6 @@ public class ListPositionBean implements Serializable{
 		filter.setCode(-1);
 	}
 
-	public void addTitle() {
-		filter.setTitle(title);
-	}
-	
-	public void removeTitle() {
-		filter.setTitle(null);
-	}
-	
 	public void addState() {
 		filter.setState(state);
 	}
@@ -189,6 +181,15 @@ public class ListPositionBean implements Serializable{
 			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
 	}
+	
+	public void addTitle() {
+		filter.addTitle(title);
+	}
+	
+	public void deleteTitle(int index) {
+		filter.deleteTitle(index);
+	}
+	
 	
 	
 	// getters and setters
@@ -293,5 +294,9 @@ public class ListPositionBean implements Serializable{
 	
 	public List<List<Localization>> getLocalizationSet() {
 		return filter.getLocalizationSets();
+	}
+	
+	public List<String> getTitleSets() {
+		return filter.getTitles();
 	}
 }

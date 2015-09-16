@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.business.filter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
@@ -15,7 +16,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 public class PositionFilter extends GenericFilter {
 	
 	private int code;
-	private String title;
+	private Set<String> titles;
 	private PositionState state;
 	private List<Set<Localization>> localizationSets;
 	private List<Set<TechnicalArea>> areaSets;
@@ -26,7 +27,7 @@ public class PositionFilter extends GenericFilter {
 	
 	public PositionFilter() {
 		code = -1;
-		title = null;
+		titles = new HashSet<>();
 		setState(PositionState.OPEN);
 		areaSets = new ArrayList<>();
 		localizationSets = new ArrayList<>();
@@ -87,6 +88,18 @@ public class PositionFilter extends GenericFilter {
 	
 	// or section
 	
+	public void addTitle(String title) {
+		titles.add(title);
+	}
+
+	public List<String> getTitles() {
+		return new ArrayList<>(titles);
+	}
+
+
+	public void deleteTitle(int index) {
+		titles.remove(getTitles().get(index));
+	}
 	
 	
 	
@@ -98,15 +111,6 @@ public class PositionFilter extends GenericFilter {
 	
 	public int getCode() {
 		return code;
-	}
-
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	public String getTitle() {
-		return title;
 	}
 
 

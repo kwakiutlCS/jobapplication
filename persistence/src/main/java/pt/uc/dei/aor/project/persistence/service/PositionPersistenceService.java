@@ -123,12 +123,11 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				}
 				
 				// title
-				String titleFilter = filter.getTitle();
-				if (titleFilter != null) {
+				List<String> titleFilter = filter.getTitles();
+				if (titleFilter != null && titleFilter.size() > 0) {
 					Expression<String> title = position.get("title");
-					Predicate titlePredicate = cb.like(cb.lower(title), "%"+titleFilter.toLowerCase()+"%");
-										
-					criteriaPredicates.add(titlePredicate);
+					criteriaPredicates.add(GenericPersistenceService
+							.orStringPredicate(titleFilter, title, cb));
 				}
 				
 				// state
