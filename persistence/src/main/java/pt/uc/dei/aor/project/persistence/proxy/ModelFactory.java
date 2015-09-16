@@ -65,8 +65,8 @@ public class ModelFactory implements IModelFactory {
 
 
 	@Override
-	public ICandidate candidate(String login, String email, String password,
-			String name, String surname, String address, String city,
+	public ICandidate candidate(String login, String name, String surname,
+			String email, String password, String address, String city,
 			String country, String phone, String mobilePhone,
 			Collection<IQualification> qualifications, String cv,
 			Collection<IApplication> applications) {

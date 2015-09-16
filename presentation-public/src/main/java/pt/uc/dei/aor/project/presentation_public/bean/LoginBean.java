@@ -8,6 +8,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
 
 @Named
 @RequestScoped
@@ -45,6 +46,8 @@ public class LoginBean {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		
 		try {
+			System.out.println(login+" "+password);
+			System.out.println(Encryptor.encrypt(password));
 			request.login(login, password);
 			
 			//IWorker worker = workerService.getWorkerByLogin(login);

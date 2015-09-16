@@ -1,38 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	id="WebApp_ID" version="3.1">
-
+<web-app id="WebApp_ID" version="3.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
 	<display-name>web presentation</display-name>
 	<module-name>presentation</module-name>
-
-	<welcome-file-list>
-		<welcome-file>/manager/index.xhtml</welcome-file>
-		<welcome-file>/admin/index.xhtml</welcome-file>
-		<welcome-file>/interview/index.xhtml</welcome-file>
-	</welcome-file-list>
-
+	
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
 	<servlet>
 		<servlet-name>facesServlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
 	<servlet-mapping>
 		<servlet-name>facesServlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
-	<login-config>
-		<auth-method>FORM</auth-method>
-		<form-login-config>
-			<form-login-page>/index.xhtml</form-login-page>
-			<form-error-page>/loginerror.xhtml</form-error-page>
-		</form-login-config>
-	</login-config>
-	
-	
+	<welcome-file-list>
+		<welcome-file>/manager/index.xhtml</welcome-file>
+		<welcome-file>/admin/index.xhtml</welcome-file>
+		<welcome-file>/interview/index.xhtml</welcome-file>
+	</welcome-file-list>
+	<error-page>
+		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
+		<location>/index.xhtml</location>
+	</error-page>
 	<security-constraint>
 		<display-name>Manager Access</display-name>
 		<web-resource-collection>
@@ -43,10 +41,9 @@
 			<role-name>MANAGER</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>NONE</transport-guarantee>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-
 	<security-constraint>
 		<display-name>Admin Access</display-name>
 		<web-resource-collection>
@@ -57,10 +54,9 @@
 			<role-name>ADMIN</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>NONE</transport-guarantee>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-	
 	<security-constraint>
 		<display-name>Interview Access</display-name>
 		<web-resource-collection>
@@ -71,22 +67,33 @@
 			<role-name>INTERVIEWER</role-name>
 		</auth-constraint>
 		<user-data-constraint>
-			<transport-guarantee>NONE</transport-guarantee>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
 		</user-data-constraint>
 	</security-constraint>
-	
-	
+	<security-constraint>
+		<display-name>Login Access</display-name>
+		<web-resource-collection>
+			<web-resource-name>Default Access</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<user-data-constraint>
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/index.xhtml</form-login-page>
+			<form-error-page>/loginerror.xhtml</form-error-page>
+		</form-login-config>
+	</login-config>
 	<security-role>
 		<role-name>ADMIN</role-name>
 	</security-role>
-	
 	<security-role>
 		<role-name>INTERVIEWER</role-name>
 	</security-role>
-	
 	<security-role>
 		<role-name>MANAGER</role-name>
 	</security-role>
-	
-	
 </web-app>

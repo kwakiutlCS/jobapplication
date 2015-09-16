@@ -82,7 +82,7 @@
 			</ui:repeat>
 		</h:panelGroup>
 		
-		<p:autoComplete value="#{accountBean.qualification}" forceSelection="true" 
+		<p:autoComplete value="#{accountBean.qualification}" forceSelection="false" 
 			completeMethod="#{accountBean.listSchools}" style="width:600px" 
 			maxResults="8">
 		</p:autoComplete>	
@@ -96,6 +96,13 @@
 		</h:form>
 				
 				
+		<h2>Curriculum Vitae</h2>
+		<h:form enctype="multipart/form-data">
+			<h:inputFile value="#{accountBean.cv}" required="true">
+				<f:ajax listener="#{accountBean.upload}" render="@form" />
+			</h:inputFile>
+		</h:form>
+
 	</h:panelGroup>
 
 	<h:panelGroup id="passwordDetails" styleClass="accountPanel">

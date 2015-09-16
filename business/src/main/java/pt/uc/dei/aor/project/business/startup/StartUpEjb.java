@@ -74,7 +74,6 @@ public class StartUpEjb {
 			logger.info("Super user created successfully.");
 		}
 		
-		System.out.println(System.getProperty("user.dir"));
 		
 		// publication channels
 
@@ -100,8 +99,8 @@ public class StartUpEjb {
 
 		// load data
 		if (!qualificationEjb.isPopulated()) {
-			Path l = Paths.get(System.getProperty("java.class.path"));
-			l = l.resolve(Paths.get("../jobapplication")).normalize();
+			Path l = Paths.get(System.getProperty("jboss.server.data.dir"));
+			l = l.resolve(Paths.get("jobapplication")).normalize();
 			
 			String[] files = new String[]{"lpu", "lpr", "mpu", "mpr", "dpu", "dpr"};
 

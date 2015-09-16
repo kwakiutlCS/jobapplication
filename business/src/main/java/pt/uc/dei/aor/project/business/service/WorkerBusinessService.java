@@ -52,10 +52,10 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	public IWorker createNewWorker(String login, String name, String surname, String email,
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException {
 		if (roles.isEmpty()) throw new NoRoleException();
+		if (findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
 		
 		String password = null;
 		if (login.equals("admin")) {
-			if (findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
 			password = Encryptor.encrypt("admin");
 		}
 		else {

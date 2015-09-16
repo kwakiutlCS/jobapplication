@@ -5,11 +5,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.UploadedFile;
 
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IQualification;
@@ -46,6 +49,8 @@ public class AccountBean implements Serializable {
 	private String school;
 	private String degree;
 	private boolean showExtra;
+	
+	private Part cv;
 	
 		
 	@PostConstruct
@@ -109,6 +114,18 @@ public class AccountBean implements Serializable {
 		MetaUtils.getSession().setAttribute("user", user);
 		MetaUtils.setMsg("User details updated", FacesMessage.SEVERITY_INFO);
 	}
+	
+	public void upload(AjaxBehaviorEvent event) {
+		
+		String filename = cv.getSubmittedFileName();
+		if (!cv.getContentType().equals("application/pdf")) {
+			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
+			return; 
+		}
+		
+		System.out.println(cv);
+	}
+	
 	
 	public List<String> listSchools(String text) {
 		return qualificationService.listSchools(text);
@@ -247,5 +264,16 @@ public class AccountBean implements Serializable {
 	public void setDegree(String degree) {
 		this.degree = degree;
 	}
+
+
+	public Part getCv() {
+		return cv;
+	}
+
+
+	public void setCv(Part cv) {
+		this.cv = cv;
+	}
+
 	
 }
