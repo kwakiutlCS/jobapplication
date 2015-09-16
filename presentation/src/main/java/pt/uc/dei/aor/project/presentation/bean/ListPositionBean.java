@@ -92,21 +92,13 @@ public class ListPositionBean implements Serializable{
 		filter.setState(null);
 	}
 	
-	public void addLocalization() {
-		filter.setLocalization(localization);
-	}
-	
-	public void removeLocalization() {
-		filter.setLocalization(null);
-	}
-	
-	public void addArea() {
-		filter.setArea(area);
-	}
-	
-	public void removeArea() {
-		filter.setArea(null);
-	}
+//	public void addLocalization() {
+//		filter.setLocalization(localization);
+//	}
+//	
+//	public void removeLocalization() {
+//		filter.setLocalization(null);
+//	}
 	
 	public void addCompany() {
 		filter.setCompany(company);
@@ -173,6 +165,30 @@ public class ListPositionBean implements Serializable{
 	public void deleteArea(int setPos, int pos) {
 		try {
 			filter.deleteArea(setPos, pos);
+		} catch (IllegalFilterParamException e) {
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void mergeLocalizations(int setPos) {
+		try {
+			filter.mergeLocalizations(setPos);
+		} catch (IllegalFilterParamException e) {
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void splitLocalizations(int setPos, int pos) {
+		try {
+			filter.splitLocalizations(setPos, pos);
+		} catch (IllegalFilterParamException e) {
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void deleteLocalization(int setPos, int pos) {
+		try {
+			filter.deleteLocalization(setPos, pos);
 		} catch (IllegalFilterParamException e) {
 			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
 		}
@@ -277,5 +293,9 @@ public class ListPositionBean implements Serializable{
 
 	public List<List<TechnicalArea>> getAreaSet() {
 		return filter.getAreaSets();
+	}
+	
+	public List<List<Localization>> getLocalizationSet() {
+		return filter.getLocalizationSets();
 	}
 }

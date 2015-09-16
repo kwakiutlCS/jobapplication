@@ -16,108 +16,87 @@ import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
-public class PositionFilter {
+public class PositionFilter extends GenericFilter {
 	
 	private int code;
 	private String title;
 	private PositionState state;
-	private Localization localization;
-	private TechnicalArea area;
+	private List<Set<Localization>> localizationSets;
 	private List<Set<TechnicalArea>> areaSets;
 	private String company;
 	private Date startDate;
 	private Date finishDate;
 	private String keyword;
+	private Localization localization = null;
 	
 	public PositionFilter() {
 		code = -1;
 		title = null;
 		setState(PositionState.OPEN);
 		areaSets = new ArrayList<>();
-		localization = null;
+		localizationSets = new ArrayList<>();
 		setCompany(null);
 		startDate = null;
 		finishDate = null;
 		keyword = null;
 	}
 	
+	
+	// and or section
+	
 	public void addAreaSet(TechnicalArea area) {
-		areaSets.add(new LinkedHashSet<TechnicalArea>(Arrays.asList(new TechnicalArea[]{area})));
+		addGenericSet(areaSets, area);
 	}
 
 	public void deleteArea(int setIndex, int pos) throws IllegalFilterParamException {
-		if (setIndex >= areaSets.size()) throw new IllegalFilterParamException();
-		if (pos >= areaSets.get(setIndex).size()) throw new IllegalFilterParamException();
-		
-		Set<TechnicalArea> set = areaSets.get(setIndex);
-		
-		if (set.size() == 1) areaSets.remove(setIndex);
-		else {
-			int counter = 0;
-			for (TechnicalArea w : set) {
-				if (counter++ == pos) {
-					set.remove(w);
-					break;
-				}
-			}
-		}
+		deleteGenericElement(areaSets, setIndex, pos);
 	}
 	
 	
 	public void mergeAreas(int setPos) throws IllegalFilterParamException {
-		if (setPos >= areaSets.size()-1) throw new IllegalFilterParamException();
-		
-		areaSets.get(setPos).addAll(areaSets.get(setPos+1));
-		areaSets.remove(setPos+1);
+		mergeElements(areaSets, setPos);
 	}
 	
 	public void splitAreas(int setPos, int pos) throws IllegalFilterParamException {
-		if (setPos >= areaSets.size()) throw new IllegalFilterParamException();
-		if (pos >= areaSets.get(setPos).size()-1) throw new IllegalFilterParamException();
-		
-		Set<TechnicalArea> newSet = new LinkedHashSet<>();
-		Set<TechnicalArea> oldSet = areaSets.get(setPos);
-		
-		int counter = 0;
-		for (TechnicalArea w : oldSet) {
-			if (counter++ > pos) newSet.add(w);
-		}
-		
-		oldSet.removeAll(newSet);
-		
-		areaSets.add(setPos+1, newSet);
+		splitElements(areaSets, setPos, pos);
 	}
-	
-	
 	
 	
 	public List<List<TechnicalArea>> getAreaSets() {
-		List<List<TechnicalArea>> sets = new ArrayList<>();
-		for (Set<TechnicalArea> set : areaSets) {
-			List<TechnicalArea> areas = new ArrayList<>();
-			
-			for (TechnicalArea w : set) {
-				areas.add(w);
-			}
-			
-			sets.add(areas);
-		}
-		
-		return sets;
+		return getGenericSets(areaSets);
+	}
+	
+	
+	public void addLocalizationSet(Localization localization) {
+		addGenericSet(localizationSets, localization);
+	}
+
+	public void deleteLocalization(int setIndex, int pos) throws IllegalFilterParamException {
+		deleteGenericElement(localizationSets, setIndex, pos);
+	}
+	
+	
+	public void mergeLocalizations(int setPos) throws IllegalFilterParamException {
+		mergeElements(localizationSets, setPos);
+	}
+	
+	public void splitLocalizations(int setPos, int pos) throws IllegalFilterParamException {
+		splitElements(localizationSets, setPos, pos);
+	}
+	
+	public List<List<Localization>> getLocalizationSets() {
+		return getGenericSets(localizationSets);
 	}
 	
 	
 	
-	public Localization getLocalization() {
-		return localization;
-	}
-
-
-	public void setLocalization(Localization localization) {
-		this.localization = localization;
-	}
-
-
+	// or section
+	
+	
+	
+	
+	// getters and setters
+	
 	public void setCode(int code) {
 		this.code = code;
 	}
@@ -143,16 +122,6 @@ public class PositionFilter {
 
 	public void setState(PositionState state) {
 		this.state = state;
-	}
-
-
-	public TechnicalArea getArea() {
-		return area;
-	}
-
-
-	public void setArea(TechnicalArea area) {
-		this.area = area;
 	}
 
 
@@ -211,5 +180,13 @@ public class PositionFilter {
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+
+	public Localization getLocalization() {
+		return localization;
+	}
+
+	public void setLocalization(Localization localization) {
+		this.localization = localization;
 	}
 }

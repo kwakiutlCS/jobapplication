@@ -120,7 +120,9 @@ public class InterviewFilterTest {
 	@Test
 	public void shouldMergeInterviewerCorrectlyRepeated() throws IllegalFilterParamException {
 		IWorker i1 = mock(IWorker.class);
+		
 		filter.addInterviewerSet(i1);
+		filter.mergeInterviewers(1);
 		filter.addInterviewerSet(i1); // same interviewer
 		
 		int size = filter.getInterviewerSets().size();
@@ -129,11 +131,10 @@ public class InterviewFilterTest {
 			counter += workers.size();
 		}
 		
-		filter.mergeInterviewers(1);
 		filter.mergeInterviewers(0);
 		filter.mergeInterviewers(0);
 		
-		assertThat(filter.getInterviewerSets().size(), is(equalTo(size-3)));
+		assertThat(filter.getInterviewerSets().size(), is(equalTo(size-2)));
 		
 		assertThat(filter.getInterviewerSets().get(0).size(), is(equalTo(counter-1)));
 	}
