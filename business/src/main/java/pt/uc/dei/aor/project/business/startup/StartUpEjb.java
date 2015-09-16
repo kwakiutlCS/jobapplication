@@ -140,6 +140,9 @@ public class StartUpEjb {
 			Files.createDirectory(directory);
 			Files.createDirectory(directory.resolve(Paths.get("uploads")));
 			Files.createDirectory(directory.resolve(Paths.get("uploads/usersImport")));
+			Files.createDirectory(directory.resolve(Paths.get("uploads/cv")));
+			Files.createDirectory(directory.resolve(Paths.get("uploads/letter")));
+			
 		}
 	}
 }

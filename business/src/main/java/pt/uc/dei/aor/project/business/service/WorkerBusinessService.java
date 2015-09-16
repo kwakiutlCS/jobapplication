@@ -150,19 +150,15 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public void uploadWorkers(InputStream in) throws IllegalFormatUploadException {
+	public void uploadWorkers(InputStream in) throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException {
 		Path path =	upload.upload("usersImport", in);
 		
 		BufferedReader reader = null;
 		String header = null;
 		
-		try {
-			reader = Files.newBufferedReader(path);
-			header = reader.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		reader = Files.newBufferedReader(path);
+		header = reader.readLine();
+		
 		
 		// header
 		String[] headerFields = header.split(",");
@@ -172,30 +168,26 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		if (!(headerFields[0].toLowerCase().equals("login") && headerFields[1].toLowerCase().equals("email")
 			&& headerFields[2].toLowerCase().equals("first name") && headerFields[3].toLowerCase().equals("last name") &&
 			headerFields[4].toLowerCase().equals("roles"))) {
-				throw new IllegalFormatUploadException("CSV file must contain Login, Email, First Name, Last Name and Roles fields");
+				throw new IllegalFormatUploadException("CSV file must contain Login, Email, First Name, Last Name and Roles fields in that order");
 		}
 		
 		String line = null;
-		try {
-			while ((line = reader.readLine()) != null) {
-				String[] linef = line.split(",");
-				
-				List<Role> roles = new ArrayList<>();
+		while ((line = reader.readLine()) != null) {
+			String[] lineFields = line.split(",");
+			lineFields[4] = lineFields[4].toLowerCase();	
+			
+			List<Role> roles = new ArrayList<>();
+			if (lineFields[4].indexOf("admin") != -1)
 				roles.add(Role.ADMIN);
-			    try {
-					createNewWorker(linef[0], linef[2], linef[3], linef[1], roles);
-				} catch (NoRoleException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (DuplicatedUserException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if (lineFields[4].indexOf("manager") != -1)
+				roles.add(Role.MANAGER);
+			if (lineFields[4].indexOf("interviewer") != -1)
+				roles.add(Role.INTERVIEWER);
+			
+			createNewWorker(lineFields[0], lineFields[2], lineFields[3], lineFields[1], roles);
+				
 		}
 		
+		upload.delete(path);
 	}
 }

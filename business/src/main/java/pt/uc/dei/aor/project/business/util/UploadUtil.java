@@ -46,4 +46,12 @@ public class UploadUtil {
 		}
 		
 	}
+	
+	public void delete(Path path) {
+		try {
+			Files.deleteIfExists(path);
+		} catch (IOException e) {
+			return;
+		}
+	}
 }	

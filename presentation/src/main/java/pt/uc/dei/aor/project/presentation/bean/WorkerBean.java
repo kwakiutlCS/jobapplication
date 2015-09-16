@@ -61,6 +61,10 @@ public class WorkerBean {
 			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
 		} catch (IllegalFormatUploadException e) {
 			MetaUtils.setMsg(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+		} catch (NoRoleException e) {
+			MetaUtils.setMsg("No role selected", FacesMessage.SEVERITY_ERROR);
+		} catch (DuplicatedUserException e) {
+			MetaUtils.setMsg("Duplicated user", FacesMessage.SEVERITY_ERROR);
 		}
 		
 	}

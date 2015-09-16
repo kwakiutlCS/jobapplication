@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Collection;
@@ -40,6 +41,7 @@ public interface IWorkerBusinessService {
 
 	IWorker update(IWorker user);
 
-	void uploadWorkers(InputStream inputStream) throws IllegalFormatUploadException;
+	void uploadWorkers(InputStream inputStream) 
+			throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException;
 
 }
