@@ -53,12 +53,13 @@
 			
 			<h:panelGroup id="localizationFilter">
 			<h:form>
-				<p:selectOneMenu value="#{listPositionBean.localization}" 
-				converter="omnifaces.SelectItemsConverter">
-					<f:selectItems value="#{positionBean.localizations}" var="localization" 
-					itemLabel="#{localization.localizationLabel}" />
+				<p:selectOneMenu value="#{listPositionBean.localization}"
+				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
+					<f:selectItems value="#{positionBean.localizations}"
+						var="local" itemLabel="#{local.localizationLabel}" />
 				</p:selectOneMenu>
-				<p:commandButton value="Add Localization" action="#{listPositionBean.addLocalization}" 
+
+				<p:commandButton value="Add Localization" action="#{listPositionBean.addLocalizationToFilter}"
 				update=":positionsTable :filterList" />
 			</h:form>
 			</h:panelGroup>
@@ -164,12 +165,27 @@
 				</h:form>
 			</h:panelGroup>
 
-			<h:panelGroup rendered="#{not empty listPositionBean.filter.localization}" 
-				styleClass="filterUnit">
-				<h:form style="display:inline-block">
-					<h:outputText value="#{listPositionBean.filter.localization.localizationLabel}" />
-					<p:commandLink value="x" action="#{listPositionBean.removeLocalization}" 
-					update=":positionsTable :filterList" styleClass="removalLink" />
+			<h:panelGroup id="localizations">
+				<h:form>
+					<ui:repeat value="#{listPositionBean.localizationSet}" var="set"
+						varStatus="status">
+						<span class="filterUnit"> <ui:repeat value="#{set}"
+								var="local" varStatus="innerStatus">
+								<h:outputText value="#{local.localizationLabel}" />
+								<p:commandLink value="x" styleClass="removalLink"
+									action="#{listPositionBean.deleteLocalization(status.index, innerStatus.index)}"
+									update="@form :positionsTable" />
+								<p:commandLink value="and" rendered="#{not innerStatus.last}"
+									update="@form :positionsTable"
+									action="#{listPositionBean.splitLocalizations(status.index, innerStatus.index)}"
+									styleClass="conjugationLink" />
+							</ui:repeat>
+						</span>
+						<p:commandLink value="or" rendered="#{not status.last}"
+							update="@form :positionsTable"
+							action="#{listPositionBean.mergeLocalizations(status.index)}"
+							styleClass="conjugationLink" />
+					</ui:repeat>
 				</h:form>
 			</h:panelGroup>
 			

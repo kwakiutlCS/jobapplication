@@ -141,12 +141,11 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				}
 				
 				// localization
-				Localization localizationFilter = filter.getLocalization();
-				if (localizationFilter != null) {
+				List<List<Localization>> localizationFilter = filter.getLocalizationSets();
+				if (localizationFilter != null && localizationFilter.size() > 0) {
 					Expression<List<Localization>> localizations = position.get("localizations");
-					Predicate localizationPredicate = cb.isMember(localizationFilter, localizations);
-					
-					criteriaPredicates.add(localizationPredicate);
+					criteriaPredicates.add(GenericPersistenceService
+							.andOrPredicate(localizationFilter, localizations, cb));
 				}
 				
 								
@@ -154,20 +153,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				List<List<TechnicalArea>> areaFilter = filter.getAreaSets();
 				if (areaFilter != null && areaFilter.size() > 0) {
 					Expression<List<TechnicalArea>> areas = position.get("technicalAreas");
-					Predicate or = null;
-
-					for (List<TechnicalArea> set : areaFilter) {
-						Predicate and = null;
-						
-						for (TechnicalArea area : set) {
-							if (and == null) and = cb.isMember(area, areas);
-							else and = cb.and(and, cb.isMember(area, areas));
-						}
-						
-						if (or == null) or = and;
-						else or = cb.or(or, and);
-					}
-					criteriaPredicates.add(or);
+					criteriaPredicates.add(GenericPersistenceService.andOrPredicate(areaFilter, areas, cb));
 				}
 				
 				

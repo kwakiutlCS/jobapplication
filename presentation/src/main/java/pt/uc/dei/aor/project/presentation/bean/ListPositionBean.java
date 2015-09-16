@@ -68,6 +68,10 @@ public class ListPositionBean implements Serializable{
 		filter.addAreaSet(area);
 	}
 	
+	public void addLocalizationToFilter() {
+		filter.addLocalizationSet(localization);
+	}
+	
 	public void addCode() {
 		filter.setCode(code);
 	}
@@ -91,14 +95,6 @@ public class ListPositionBean implements Serializable{
 	public void removeState() {
 		filter.setState(null);
 	}
-	
-//	public void addLocalization() {
-//		filter.setLocalization(localization);
-//	}
-//	
-//	public void removeLocalization() {
-//		filter.setLocalization(null);
-//	}
 	
 	public void addCompany() {
 		filter.setCompany(company);

@@ -1,17 +1,13 @@
 package pt.uc.dei.aor.project.business.filter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TimeZone;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
-import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
@@ -27,7 +23,6 @@ public class PositionFilter extends GenericFilter {
 	private Date startDate;
 	private Date finishDate;
 	private String keyword;
-	private Localization localization = null;
 	
 	public PositionFilter() {
 		code = -1;
@@ -181,12 +176,5 @@ public class PositionFilter extends GenericFilter {
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
 	}
-
-	public Localization getLocalization() {
-		return localization;
-	}
-
-	public void setLocalization(Localization localization) {
-		this.localization = localization;
-	}
+	
 }
