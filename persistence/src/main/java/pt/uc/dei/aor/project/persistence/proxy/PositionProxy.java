@@ -42,7 +42,6 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 			}
 		}
 
-
 		ScriptEntity scriptEntity = null;
 		if (script != null) {
 			scriptEntity = GenericPersistenceService.getEntity(script);

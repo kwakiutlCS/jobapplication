@@ -25,18 +25,17 @@ import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
-import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 @Stateless
 public class ModelFactory implements IModelFactory {
-	
-	
+
+
 	@Override
 	public IWorker worker(String login, String email, String password, String name, 
 			String surname, Collection<Role> roles) {
 		return new WorkerProxy(login, email, password, name, surname, roles);
 	}
-	
+
 	@Override
 	public IPosition position(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
@@ -44,7 +43,7 @@ public class ModelFactory implements IModelFactory {
 			String company, Collection<TechnicalArea> technicalAreas,
 			String description, IScript script,
 			Collection<IPublicationChannel> channels) {
-	 
+
 		return new PositionProxy(code, openingDate, title,localizations, state, vacancies,closingDate, sla,
 				contactPerson, company, technicalAreas, description, script, channels);
 	}
@@ -54,20 +53,26 @@ public class ModelFactory implements IModelFactory {
 		return new PublicationChannelProxy(channel);
 	}
 
-    @Override
+	@Override
 	public IScript script(String title) {
 		return new ScriptProxy(title);
 	}
 
-    @Override
+	@Override
 	public IAnswerChoice answerChoice(String answer) {
 		return new AnswerChoiceProxy(answer);
 	}
 
 
 	@Override
-	public ICandidate candidate(String login, String name, String surname, String email, String encrypt) {
-		return new CandidateProxy(login, email, encrypt, name, surname);
+	public ICandidate candidate(String login, String email, String password,
+			String name, String surname, String address, String city,
+			String country, String phone, String mobilePhone,
+			Collection<IQualification> qualifications, String cv,
+			Collection<IApplication> applications) {
+
+		return new CandidateProxy(login, email, password,name, surname, address, city,country, 
+				phone, mobilePhone,	qualifications, cv, applications);
 	}
 
 	@Override
@@ -110,5 +115,6 @@ public class ModelFactory implements IModelFactory {
 		return new QualificationProxy(school, degree);
 	}
 
-	
+
+
 }

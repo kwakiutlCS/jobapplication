@@ -9,43 +9,62 @@
 	<ui:define name="title">Register</ui:define>
 
 	<ui:define name="content">
-	
-<h:panelGroup>
-		
-		<h:form id="registerform">
-						
-			<h:outputLabel for="login" value="login" />
-			<h:inputText id="login" 
-				value="#{registerBean.login}" required="true" />
-			<br />
-			
-			<h:outputLabel for="email" value="email" />
-			<h:inputText id="email" 
-				value="#{registerBean.email}" required="true" />
-			<br />
-			
-			<h:outputLabel for="name" value="name" />
-			<h:inputText id="name" 
-				value="#{registerBean.name}" required="true" />
-			<br />
-			
-			<h:outputLabel for="surname" value="surname" />
-			<h:inputText id="surname" 
-				value="#{registerBean.surname}" required="true" />
-			<br />
-			
-			<h:outputLabel for="password" value="password" />
-			<h:inputSecret id="password"
-				value="#{registerBean.password}" />
-			
-			<h:commandButton action="#{registerBean.register}" value="Registar" />
 
-		</h:form>
-	</h:panelGroup>
+		<h:panelGroup>
+
+			<h:form id="registerform">
+
+				<h:outputLabel for="login" value="login" />
+				<h:inputText id="login" value="#{registerBean.login}"
+					required="true" />
+				<br />
+
+				<h:outputLabel for="email" value="email" />
+				<h:inputText id="email" value="#{registerBean.email}"
+					required="true" />
+				<br />
+
+				<h:outputLabel for="name" value="name" />
+				<h:inputText id="name" value="#{registerBean.name}" required="true" />
+				<br />
+
+				<h:outputLabel for="surname" value="surname" />
+				<h:inputText id="surname" value="#{registerBean.surname}"
+					required="true" />
+				<br />
+
+				<h:outputLabel for="password" value="password" />
+				<h:inputSecret id="password" value="#{registerBean.password}" />
+				<br />
+
+				<h:outputLabel for="address" value="address" />
+				<h:inputText id="address" value="#{registerBean.address}" />
+				<br />
+
+				<h:outputLabel for="city" value="city" />
+				<h:inputText id="city" value="#{registerBean.city}" />
+				<br />
+
+				<h:outputLabel for="country" value="country" />
+				<h:inputText id="country" value="#{registerBean.country}" />
+				<br />
+
+				<h:outputLabel for="phone" value="phone" />
+				<h:inputText id="phone" value="#{registerBean.phone}" />
+				<br />
+
+				<h:outputLabel for="mobile" value="Mobile Phone" />
+				<h:inputText id="mobile" value="#{registerBean.mobilePhone}" />
+				<br />
+
+				<h:commandButton action="#{registerBean.register}" value="Registar" />
+
+			</h:form>
+		</h:panelGroup>
 
 
 	</ui:define>
 </ui:composition>
 
 
-	
+
