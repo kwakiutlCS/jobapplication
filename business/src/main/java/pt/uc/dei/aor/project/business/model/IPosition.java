@@ -12,48 +12,65 @@ public interface IPosition  {
 	public long getId();
 	
 	public String getOpeningDateFormatted();
+	
 	public Date getOpeningDate();
 	
 	public long getCode();
 	
 	public String getTitle();
+	
 	public void setTitle(String title);
 	
 	public String getLocalizationsFormatted();
+	
 	public void setLocalizationsFormatted(List<Localization> localizations);
+	
 	public List<Localization> getLocalizations();
+	
 	public void setLocalizations(List<Localization> localizations);
 	
 	public PositionState getState();
+	
 	public void setState(PositionState state);
 	
 	public String getStateFormatted();
 	
 	public String getVacancies();
+	
 	public void setVacancies(String vacancies);
 	
 	public String getClosingDateFormatted();
+	
 	public Date getClosingDate();
+	
 	public void setClosingDate(Date closingDate);
 	
 	public String getSla();
+	
 	public void setSLA(int Sla);
 	
 	public String getCompany();
+	
 	public void setCompany(String company);
 	
 	public String getContactPerson();
+	
 	public void setContactPerson(String contactPerson);
 	
 	public String getTechnicalAreasFormatted();
+	
 	public List<TechnicalArea> getTechnicalAreas();
+	
 	public void setTechnicalAreas(List<TechnicalArea> technicalAreas);
 	
 	public String getDescription();
+	
 	public void setDescription(String description);
 	
 	String getPublicationChannels();
+	
 	public List<IPublicationChannel> getIPublicationChannels();
+	
 	public void setIPublicationChannels(List<IPublicationChannel> ipublicationChannels);
 
 	public IScript getScript();

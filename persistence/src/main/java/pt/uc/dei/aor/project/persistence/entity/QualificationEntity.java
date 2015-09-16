@@ -5,10 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
@@ -43,7 +39,8 @@ public class QualificationEntity {
 	}
 
 	@Override
-	public int hashCode() {
+	public
+	int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((degree == null) ? 0 : degree.hashCode());
