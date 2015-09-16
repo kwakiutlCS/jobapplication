@@ -46,7 +46,54 @@ public class CandidateProxy implements ICandidate, IProxyToEntity<CandidateEntit
 	public CandidateEntity getEntity() {
 		return entity;
 	}
+    
+	@Override
+	public String getFullName() {
+		return entity.getName()+" "+entity.getSurname();
+	}
 
+	@Override
+	public String getLogin() {
+		return entity.getLogin();
+	}
+
+	@Override
+	public long getId() {
+		return entity.getId();
+		}
+
+	@Override
+	public String getName() {
+		return entity.getName();
+	}
+
+	@Override
+	public void setName(String name) {
+		entity.setName(name);
+		
+	}
+
+	@Override
+	public String getSurname() {
+		return entity.getSurname();
+	}
+
+	@Override
+	public void setSurname(String surname) {
+		entity.setSurname(surname);
+	}
+
+	@Override
+	public String getEmail() {
+		return entity.getEmail();
+	}
+
+	@Override
+	public void setEmail(String email) {
+		entity.setEmail(email);
+		
+	}
+	
 	@Override
 	public String getAddress() {
 		return entity.getAddress();
@@ -152,6 +199,7 @@ public class CandidateProxy implements ICandidate, IProxyToEntity<CandidateEntit
 		for(IApplication application : applications)
 			applicationentities.add(GenericPersistenceService.getEntity(application));	
 	}
+
 
 
 }
