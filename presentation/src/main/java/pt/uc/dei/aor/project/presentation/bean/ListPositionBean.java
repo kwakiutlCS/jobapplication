@@ -3,19 +3,23 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 
 @Named
@@ -59,6 +63,10 @@ public class ListPositionBean implements Serializable{
 	
 	
 	// filter functions
+	
+	public void addAreaToFilter() {
+		filter.addAreaSet(area);
+	}
 	
 	public void addCode() {
 		filter.setCode(code);
@@ -143,6 +151,31 @@ public class ListPositionBean implements Serializable{
 	
 	public void updatePosition(IPosition selectedposition){
 		positionEjb.updatePosition(selectedposition);
+	}
+	
+	
+	public void mergeAreas(int setPos) {
+		try {
+			filter.mergeAreas(setPos);
+		} catch (IllegalFilterParamException e) {
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void splitAreas(int setPos, int pos) {
+		try {
+			filter.splitAreas(setPos, pos);
+		} catch (IllegalFilterParamException e) {
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void deleteArea(int setPos, int pos) {
+		try {
+			filter.deleteArea(setPos, pos);
+		} catch (IllegalFilterParamException e) {
+			MetaUtils.setMsg("todo", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	
@@ -242,5 +275,7 @@ public class ListPositionBean implements Serializable{
 	}
 
 
-
+	public List<List<TechnicalArea>> getAreaSet() {
+		return filter.getAreaSets();
+	}
 }

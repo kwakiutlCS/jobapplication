@@ -23,6 +23,7 @@ public class PositionFilter {
 	private PositionState state;
 	private Localization localization;
 	private TechnicalArea area;
+	private List<Set<TechnicalArea>> areaSets;
 	private String company;
 	private Date startDate;
 	private Date finishDate;
@@ -32,12 +33,79 @@ public class PositionFilter {
 		code = -1;
 		title = null;
 		setState(PositionState.OPEN);
+		areaSets = new ArrayList<>();
 		localization = null;
 		setCompany(null);
 		startDate = null;
 		finishDate = null;
 		keyword = null;
 	}
+	
+	public void addAreaSet(TechnicalArea area) {
+		areaSets.add(new LinkedHashSet<TechnicalArea>(Arrays.asList(new TechnicalArea[]{area})));
+	}
+
+	public void deleteArea(int setIndex, int pos) throws IllegalFilterParamException {
+		if (setIndex >= areaSets.size()) throw new IllegalFilterParamException();
+		if (pos >= areaSets.get(setIndex).size()) throw new IllegalFilterParamException();
+		
+		Set<TechnicalArea> set = areaSets.get(setIndex);
+		
+		if (set.size() == 1) areaSets.remove(setIndex);
+		else {
+			int counter = 0;
+			for (TechnicalArea w : set) {
+				if (counter++ == pos) {
+					set.remove(w);
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	public void mergeAreas(int setPos) throws IllegalFilterParamException {
+		if (setPos >= areaSets.size()-1) throw new IllegalFilterParamException();
+		
+		areaSets.get(setPos).addAll(areaSets.get(setPos+1));
+		areaSets.remove(setPos+1);
+	}
+	
+	public void splitAreas(int setPos, int pos) throws IllegalFilterParamException {
+		if (setPos >= areaSets.size()) throw new IllegalFilterParamException();
+		if (pos >= areaSets.get(setPos).size()-1) throw new IllegalFilterParamException();
+		
+		Set<TechnicalArea> newSet = new LinkedHashSet<>();
+		Set<TechnicalArea> oldSet = areaSets.get(setPos);
+		
+		int counter = 0;
+		for (TechnicalArea w : oldSet) {
+			if (counter++ > pos) newSet.add(w);
+		}
+		
+		oldSet.removeAll(newSet);
+		
+		areaSets.add(setPos+1, newSet);
+	}
+	
+	
+	
+	
+	public List<List<TechnicalArea>> getAreaSets() {
+		List<List<TechnicalArea>> sets = new ArrayList<>();
+		for (Set<TechnicalArea> set : areaSets) {
+			List<TechnicalArea> areas = new ArrayList<>();
+			
+			for (TechnicalArea w : set) {
+				areas.add(w);
+			}
+			
+			sets.add(areas);
+		}
+		
+		return sets;
+	}
+	
 	
 	
 	public Localization getLocalization() {

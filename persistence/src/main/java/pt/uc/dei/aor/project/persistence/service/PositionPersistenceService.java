@@ -149,14 +149,27 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 					criteriaPredicates.add(localizationPredicate);
 				}
 				
+								
 				// technical area
-				TechnicalArea areaFilter = filter.getArea();
-				if (areaFilter != null) {
+				List<List<TechnicalArea>> areaFilter = filter.getAreaSets();
+				if (areaFilter != null && areaFilter.size() > 0) {
 					Expression<List<TechnicalArea>> areas = position.get("technicalAreas");
-					Predicate areaPredicate = cb.isMember(areaFilter, areas);
-					
-					criteriaPredicates.add(areaPredicate);
+					Predicate or = null;
+
+					for (List<TechnicalArea> set : areaFilter) {
+						Predicate and = null;
+						
+						for (TechnicalArea area : set) {
+							if (and == null) and = cb.isMember(area, areas);
+							else and = cb.and(and, cb.isMember(area, areas));
+						}
+						
+						if (or == null) or = and;
+						else or = cb.or(or, and);
+					}
+					criteriaPredicates.add(or);
 				}
+				
 				
 				// company
 				String companyFilter = filter.getCompany();

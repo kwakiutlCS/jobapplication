@@ -65,12 +65,13 @@
 			
 			<h:panelGroup id="areaFilter">
 			<h:form>
-				<p:selectOneMenu value="#{listPositionBean.area}" 
-				converter="omnifaces.SelectItemsConverter">
-					<f:selectItems value="#{positionBean.technicalAreas}" var="area" 
-					itemLabel="#{area.technicalAreaLabel}" />
+				<p:selectOneMenu value="#{listPositionBean.area}"
+				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
+					<f:selectItems value="#{positionBean.technicalAreas}"
+						var="area" itemLabel="#{area.technicalAreaLabel}" />
 				</p:selectOneMenu>
-				<p:commandButton value="Add Technical Area" action="#{listPositionBean.addArea}" 
+
+				<p:commandButton value="Add Technical Area" action="#{listPositionBean.addAreaToFilter}"
 				update=":positionsTable :filterList" />
 			</h:form>
 			</h:panelGroup>
@@ -139,15 +140,30 @@
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not empty listPositionBean.filter.area}" 
-				styleClass="filterUnit">
-				<h:form style="display:inline-block">
-					<h:outputText value="#{listPositionBean.filter.area.technicalAreaLabel}" />
-					<p:commandLink value="x" action="#{listPositionBean.removeArea}" 
-					update=":positionsTable :filterList" styleClass="removalLink" />
+			<h:panelGroup id="technicalAreas">
+				<h:form>
+					<ui:repeat value="#{listPositionBean.areaSet}" var="set"
+						varStatus="status">
+						<span class="filterUnit"> <ui:repeat value="#{set}"
+								var="area" varStatus="innerStatus">
+								<h:outputText value="#{area.technicalAreaLabel}" />
+								<p:commandLink value="x" styleClass="removalLink"
+									action="#{listPositionBean.deleteArea(status.index, innerStatus.index)}"
+									update="@form :positionsTable" />
+								<p:commandLink value="and" rendered="#{not innerStatus.last}"
+									update="@form :positionsTable"
+									action="#{listPositionBean.splitAreas(status.index, innerStatus.index)}"
+									styleClass="conjugationLink" />
+							</ui:repeat>
+						</span>
+						<p:commandLink value="or" rendered="#{not status.last}"
+							update="@form :positionsTable"
+							action="#{listPositionBean.mergeAreas(status.index)}"
+							styleClass="conjugationLink" />
+					</ui:repeat>
 				</h:form>
 			</h:panelGroup>
-			
+
 			<h:panelGroup rendered="#{not empty listPositionBean.filter.localization}" 
 				styleClass="filterUnit">
 				<h:form style="display:inline-block">
