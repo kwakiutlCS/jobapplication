@@ -23,7 +23,7 @@ public class PositionFilter extends GenericFilter {
 	private String company;
 	private Date startDate;
 	private Date finishDate;
-	private String keyword;
+	private Set<String> keywords;
 	
 	public PositionFilter() {
 		code = -1;
@@ -34,7 +34,7 @@ public class PositionFilter extends GenericFilter {
 		setCompany(null);
 		startDate = null;
 		finishDate = null;
-		keyword = null;
+		keywords = new HashSet<>();
 	}
 	
 	
@@ -101,6 +101,18 @@ public class PositionFilter extends GenericFilter {
 		titles.remove(getTitles().get(index));
 	}
 	
+	public void addKeyword(String keyword) {
+		keywords.add(keyword);
+	}
+
+	public List<String> getKeywords() {
+		return new ArrayList<>(keywords);
+	}
+
+
+	public void deleteKeyword(int index) {
+		keywords.remove(getKeywords().get(index));
+	}
 	
 	
 	// getters and setters
@@ -171,14 +183,5 @@ public class PositionFilter extends GenericFilter {
 		}
 	}
 
-
-	public String getKeyword() {
-		return keyword;
-	}
-
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
 	
 }

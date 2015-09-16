@@ -111,15 +111,6 @@ public class ListPositionBean implements Serializable{
 		filter.setFinishDate(finishDate);
 	}
 	
-	public void addKeyword() {
-		filter.setKeyword(keyword);
-	}
-	
-	public void removeKeyword() {
-		filter.setKeyword(null);
-	}
-	
-	
 	public IPosition getSelectedPosition() {
 		return selectedPosition;
 	}
@@ -190,6 +181,13 @@ public class ListPositionBean implements Serializable{
 		filter.deleteTitle(index);
 	}
 	
+	public void addKeyword() {
+		filter.addKeyword(keyword);
+	}
+	
+	public void deleteKeyword(int index) {
+		filter.deleteKeyword(index);
+	}
 	
 	
 	// getters and setters
@@ -298,5 +296,9 @@ public class ListPositionBean implements Serializable{
 	
 	public List<String> getTitleSets() {
 		return filter.getTitles();
+	}
+	
+	public List<String> getKeywordSets() {
+		return filter.getKeywords();
 	}
 }

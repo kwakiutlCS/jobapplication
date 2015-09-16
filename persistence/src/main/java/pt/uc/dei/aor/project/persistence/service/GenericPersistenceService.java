@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -75,4 +76,39 @@ public class GenericPersistenceService {
 		
 		return or;
 	}
+	
+	public static Predicate orLongPredicate(List<String> filter, 
+			Expression<Long> expression, CriteriaBuilder cb) {
+		Predicate or = null;
+		
+		for (String s : filter) {
+			try {
+				Long n = Long.parseLong(s);
+				if (or == null) or = cb.equal(expression, n);
+				else or = cb.or(or, cb.equal(expression, n));
+			}
+			catch(Exception e) {
+				
+			}
+		}
+		
+		return or;
+	}
+	
+	
+//	public static <T> Predicate orCollectionStringPredicate(List<String> filter, 
+//			Expression<String> expression, CriteriaBuilder cb, List<T> collection) {
+//		Predicate or = null;
+//		
+//		List<T> chosen = new ArrayList<>();
+//		for (String s : filter) {
+//			for (T v : collection)
+//		}
+//		for (String s : filter) {
+//			if (or == null) or = cb.isMember(cb.lower(expression), "%"+s.trim().toLowerCase()+"%");
+//			else or = cb.or(or, cb.like(cb.lower(expression), "%"+s.trim().toLowerCase()+"%"));
+//		}
+//		
+//		return or;
+//	}
 }

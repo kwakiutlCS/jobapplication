@@ -105,12 +105,17 @@
 		
 		<h:panelGroup id="filterList">
 			
-			<h:panelGroup rendered="#{not empty listPositionBean.filter.keyword}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
-					<h:outputText value="#{listPositionBean.filter.keyword}" />
-					<p:commandLink value="x" action="#{listPositionBean.removeKeyword}" 
-					update=":positionsTable :filterList" styleClass="removalLink" />
+			<h:panelGroup id="keyword">
+				<h:form>
+					<ui:repeat value="#{listPositionBean.keywordSets}" var="key"
+						varStatus="status">
+						<span class="filterUnit"> <h:outputText value="#{key}" />
+							<p:commandLink value="x" styleClass="removalLink"
+								action="#{listPositionBean.deleteKeyword(status.index)}"
+								update=":filterList :positionsTable" />
+						</span>
+						<h:outputText value="or" rendered="#{not status.last}" />
+					</ui:repeat>
 				</h:form>
 			</h:panelGroup>
 			

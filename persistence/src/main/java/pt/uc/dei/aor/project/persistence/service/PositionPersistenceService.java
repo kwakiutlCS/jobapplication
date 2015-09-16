@@ -185,45 +185,51 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				}
 				
 				// keyword
-				String keywordFilter = filter.getKeyword();
-				if (keywordFilter != null) {
-					keywordFilter = keywordFilter.toLowerCase();
+				List<String> keywordFilter = filter.getKeywords();
+				if (keywordFilter != null && keywordFilter.size() > 0) {
+					
 					Expression<String> keyword = position.get("title");
-					Predicate keywordPredicate = cb.like(cb.lower(keyword), "%"+keywordFilter+"%");
+					Predicate keywordPredicate = GenericPersistenceService
+							.orStringPredicate(keywordFilter, keyword, cb);
 					
 					keyword = position.get("company");
 					keywordPredicate = cb.or(keywordPredicate, 
-							cb.like(cb.lower(keyword), "%"+keywordFilter+"%"));
+							GenericPersistenceService.orStringPredicate(keywordFilter, keyword, cb));
 					
 					Expression<List<Localization>> localizations = position.get("localizations");
 					for (Localization l : Localization.values()) {
-						if (l.getLocalizationLabel().toLowerCase().indexOf(keywordFilter) != -1) {
-							keywordPredicate = cb.or(keywordPredicate, cb.isMember(l, localizations));
+						for (String s : keywordFilter) {
+							if (l.getLocalizationLabel().toLowerCase().equals(s.toLowerCase().trim())) {
+								keywordPredicate = cb.or(keywordPredicate, cb.isMember(l, localizations));
+							}
 						}
 					}
-					
+
 					Expression<List<TechnicalArea>> areas = position.get("technicalAreas");
 					for (TechnicalArea a : TechnicalArea.values()) {
-						if (a.getTechnicalAreaLabel().toLowerCase().indexOf(keywordFilter) != -1) {
-							keywordPredicate = cb.or(keywordPredicate, cb.isMember(a, areas));
+						for (String s : keywordFilter) {
+							if (a.getTechnicalAreaLabel().toLowerCase().indexOf(s) != -1) {
+								keywordPredicate = cb.or(keywordPredicate, cb.isMember(a, areas));
+							}
 						}
 					}
-					
+
 					Expression<PositionState> state = position.get("state");
 					for (PositionState st : PositionState.values()) {
-						if (st.getPositionStateLabel().toLowerCase().indexOf(keywordFilter) != -1) {
-							keywordPredicate = cb.or(keywordPredicate, cb.equal(state, st));
+						for (String s : keywordFilter) {
+							if (st.getPositionStateLabel().toLowerCase().equals(s.toLowerCase().trim())) {
+								keywordPredicate = cb.or(keywordPredicate, cb.equal(state, st));
+							}
 						}
 					}
 					
 					Expression<Long> code = position.get("code");
-					try {
-						codeFilter = Integer.parseInt(keywordFilter);
-						keywordPredicate = cb.or(keywordPredicate, cb.equal(code, codeFilter));
+					Predicate longPred = GenericPersistenceService
+							.orLongPredicate(keywordFilter, code, cb);
+					if (longPred != null) {
+						keywordPredicate = cb.or(keywordPredicate, longPred);
 					}
-					catch (Exception e) {
-						// no int
-					}
+					
 					
 					criteriaPredicates.add(keywordPredicate);
 				}
