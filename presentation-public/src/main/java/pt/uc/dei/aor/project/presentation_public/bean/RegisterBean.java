@@ -9,7 +9,7 @@ import javax.inject.Named;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
-import pt.uc.dei.aor.project.presentation_public.security.Encryptor;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
 
 @Named
 @RequestScoped

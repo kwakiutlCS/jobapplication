@@ -7,15 +7,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
+
+
 
 @Named
 @RequestScoped
 public class LoginBean {
 
 	@Inject
-	private IWorkerBusinessService workerService;
+	private ICandidateBusinessService candidateService;
 	
 	private String login;
 	private String password;
