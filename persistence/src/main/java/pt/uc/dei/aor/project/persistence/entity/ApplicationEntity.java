@@ -41,6 +41,9 @@ public class ApplicationEntity {
 	@Column(nullable=false)
 	private String sourceInfo; 
 	
+	@Column(nullable=false)
+	private Date date;
+	
 	@ManyToOne
 	private CandidateEntity candidate;
 	
@@ -113,5 +116,9 @@ public class ApplicationEntity {
 
 	public CandidateEntity getCandidate() {
 		return candidate;
+	}
+	
+	public Date getDate() {
+		return date;
 	}
 }

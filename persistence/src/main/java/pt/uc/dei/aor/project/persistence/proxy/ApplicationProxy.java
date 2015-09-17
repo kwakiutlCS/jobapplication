@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -86,6 +87,13 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	@Override
 	public void remove(IInterview interview) {
 		entity.remove(GenericPersistenceService.getEntity(interview));
+	}
+
+
+	@Override
+	public String getDate() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+		return sdf.format(entity.getDate());
 	}
 
 	

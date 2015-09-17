@@ -7,6 +7,10 @@
 
 	<ui:define name="title">Job Applications</ui:define>
 	
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+	</ui:define>
+	
 	<ui:define name="content">
 		<p>
 		Esta página é para ser alterada. Da minha parte só preciso de um link em cada entrada da candidatura
@@ -14,8 +18,47 @@
 		o link já está feito (só é visível se houver applications na db, claro)
 		</p>
 		
-		<p:dataTable value="#{applicationBean.activeApplications}" var="app">
-			<p:column>#{app}</p:column>
+		<h:panelGroup id="preFilterSection">		
+			
+			<h:form>
+				<p:outputLabel for="startDate" value="Start date" />
+				<p:calendar id="startDate" value="#{applicationBean.startDate}" 
+				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
+				<br />
+				<p:outputLabel for="finishDate" value="End date" />
+				<p:calendar id="finishDate" value="#{applicationBean.endDate}" 
+				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
+				<p:commandButton value="Add Date" action="#{applicationBean.addDateFilter}" 
+				update=":filterSection :filteredList" />
+			</h:form>
+			
+		</h:panelGroup>
+		
+		<h:panelGroup id="filterSection">
+			<h:panelGroup styleClass="filterUnit"
+				rendered="#{not empty applicationBean.filter.startDate or 
+							not empty applicationBean.filter.finishDate}">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{applicationBean.filter.startDate}" converter="dateConverter">
+					</h:outputText>
+					<p:commandLink value="x" rendered="#{not empty applicationBean.filter.startDate}"
+						action="#{applicationBean.removeStartDate}"
+						update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+					-
+					<h:outputText value="#{applicationBean.filter.finishDate}" converter="dateConverter">
+					</h:outputText>
+					<p:commandLink value="x" rendered="#{not empty applicationBean.filter.finishDate}"
+						action="#{applicationBean.removeFinishDate}"
+						update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+		
+		
+		<p:dataTable value="#{applicationBean.activeApplications}" var="app" id="filteredList">
+			<p:column>#{app.date}</p:column>
+			<p:column>#{app.position.code}</p:column>
+			<p:column>#{app.candidate.fullName}</p:column>
 			<p:column><p:link outcome="application.xthml?ap=#{app.id}" value="detail" /></p:column>
 		</p:dataTable>
 

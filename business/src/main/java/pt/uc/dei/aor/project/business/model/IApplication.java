@@ -18,5 +18,7 @@ public interface IApplication {
 	IInterview getInterviewByDate(Date date);
 
 	void remove(IInterview interview);
+	
+	String getDate();
 
 }
