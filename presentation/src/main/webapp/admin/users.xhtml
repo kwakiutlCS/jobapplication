@@ -7,6 +7,7 @@
 
 	<ui:define name="scripts">
 		<h:outputStylesheet library="css" name="interviews.css" />
+		<h:outputScript library="js" name="users.js" />
 	</ui:define>
 	
 	<ui:define name="content">
@@ -14,14 +15,21 @@
 		<h2>users page</h2>
 
 		<h:panelGroup id="preFilterSection">
-			<h:form>
+			<h:form prependId="false">
+				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
+					<f:selectItem itemValue="userFilter" itemLabel="users" />
+					<f:selectItem itemValue="roleFilter" itemLabel="roles" />
+				</p:selectOneMenu>
+			</h:form>
+				
+			<h:form class="filter" id="userFilter">
 				<p:inputText value="#{workerBean.keyword}" required="true" />
 				<p:commandButton value="Add Keyword"
 					action="#{workerBean.addKeyword}"
 					update=":filterSection :userTable" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="roleFilter">
 				<p:selectOneMenu value="#{workerBean.role}" 
 				converter="omnifaces.SelectItemsConverter">
 					<f:selectItems value="#{workerBean.possibleRoles}" var="role" 

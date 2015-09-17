@@ -9,6 +9,7 @@
 	
 	<ui:define name="scripts">
 		<h:outputStylesheet library="css" name="interviews.css" />
+		<h:outputScript library="js" name="interviews.js" />
 	</ui:define>
 	
 	<ui:define name="metadata">
@@ -21,7 +22,16 @@
 	<ui:define name="content">
 
 		<h:panelGroup id="preFilterSection">		
-			<h:form>
+			<h:form prependId="false">
+				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
+					<f:selectItem itemValue="interviewersFilter" itemLabel="interviewers" />
+					<f:selectItem itemValue="positionFilter" itemLabel="position" />
+					<f:selectItem itemValue="candidateFilter" itemLabel="candidate" />
+					<f:selectItem itemValue="dateFilter" itemLabel="date" />
+				</p:selectOneMenu>
+			</h:form>
+		
+			<h:form class="filter" id="interviewersFilter">
 				<p:selectOneMenu value="#{interviewListBean.filterInterviewer}"
 				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
 					<f:selectItems value="#{interviewListBean.allInterviewers}"
@@ -32,21 +42,21 @@
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="positionFilter">
 				<p:autoComplete value="#{interviewListBean.filterPosition}" maxResults="4"
 				minQueryLength="3" completeMethod="#{interviewListBean.completePosition}" required="true" />
 				<p:commandButton value="Add position" action="#{interviewListBean.addPositionToFilter}"
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="candidateFilter">
 				<p:autoComplete value="#{interviewListBean.filterCandidate}" maxResults="4"
 				minQueryLength="3" completeMethod="#{interviewListBean.completeCandidate}" required="true" />
 				<p:commandButton value="Add Candidate" action="#{interviewListBean.addCandidateToFilter}"
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="dateFilter">
 				<p:outputLabel for="startDate" value="Start date" />
 				<p:calendar id="startDate" value="#{interviewListBean.startDate}" 
 				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />

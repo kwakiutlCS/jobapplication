@@ -7,6 +7,7 @@
 
 	<ui:define name="scripts">
 		<h:outputStylesheet library="css" name="interviews.css" />
+		<h:outputScript library="js" name="positions.js" />
 	</ui:define>
 	
 	<ui:define name="title">List Position</ui:define>
@@ -14,8 +15,20 @@
 	<ui:define name="content">
 
 		<h:panelGroup id="filterAction">
-		
-			<h:panelGroup id="keywordFilter">
+			<h:form prependId="false">
+				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
+					<f:selectItem itemValue="keywordFilter" itemLabel="keyword" />
+					<f:selectItem itemValue="codeFilter" itemLabel="code" />
+					<f:selectItem itemValue="titleFilter" itemLabel="title" />
+					<f:selectItem itemValue="stateFilter" itemLabel="state" />
+					<f:selectItem itemValue="localizationFilter" itemLabel="localization" />
+					<f:selectItem itemValue="areaFilter" itemLabel="technical area" />
+					<f:selectItem itemValue="companyFilter" itemLabel="company" />
+					<f:selectItem itemValue="dateFilter" itemLabel="date" />
+				</p:selectOneMenu>
+			</h:form>
+			
+			<h:panelGroup id="keywordFilter" class="filter">
 			<h:form>
 				<p:inputText value="#{listPositionBean.keyword}" required="true" />
 				<p:commandButton value="Add Keyword" action="#{listPositionBean.addKeyword}" 
@@ -23,7 +36,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="codeFilter">
+			<h:panelGroup id="codeFilter" class="filter">
 			<h:form>
 				<p:spinner value="#{listPositionBean.code}" required="true" min="1" />
 				<p:commandButton value="Add Code" action="#{listPositionBean.addCode}" 
@@ -31,7 +44,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="titleFilter">
+			<h:panelGroup id="titleFilter" class="filter">
 			<h:form>
 				<p:inputText value="#{listPositionBean.title}" required="true" />
 				<p:commandButton value="Add Title" action="#{listPositionBean.addTitle}" 
@@ -39,7 +52,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="stateFilter">
+			<h:panelGroup id="stateFilter" class="filter">
 			<h:form>
 				<p:selectOneMenu value="#{listPositionBean.state}" 
 				converter="omnifaces.SelectItemsConverter">
@@ -51,7 +64,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="localizationFilter">
+			<h:panelGroup id="localizationFilter" class="filter">
 			<h:form>
 				<p:selectOneMenu value="#{listPositionBean.localization}"
 				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
@@ -64,7 +77,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="areaFilter">
+			<h:panelGroup id="areaFilter" class="filter">
 			<h:form>
 				<p:selectOneMenu value="#{listPositionBean.area}"
 				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
@@ -77,7 +90,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="companyFilter">
+			<h:panelGroup id="companyFilter" class="filter">
 			<h:form>
 				<p:inputText value="#{listPositionBean.company}" required="true" />
 				<p:commandButton value="Add Company" action="#{listPositionBean.addCompany}" 
@@ -85,7 +98,7 @@
 			</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup id="dateFilter">
+			<h:panelGroup id="dateFilter" class="filter">
 			<h:form>
 				<p:outputLabel for="startDate" value="Start date" />
 				<p:calendar id="startDate" value="#{listPositionBean.startDate}" 

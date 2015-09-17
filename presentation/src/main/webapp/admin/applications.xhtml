@@ -9,6 +9,7 @@
 	
 	<ui:define name="scripts">
 		<h:outputStylesheet library="css" name="interviews.css" />
+		<h:outputScript library="js" name="applications.js" />
 	</ui:define>
 	
 	<ui:define name="content">
@@ -19,20 +20,29 @@
 		</p>
 		
 		<h:panelGroup id="preFilterSection">		
+			<h:form prependId="false">
+				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
+					<f:selectItem itemValue="codeFilter" itemLabel="code" />
+					<f:selectItem itemValue="candidateFilter" itemLabel="candidate" />
+					<f:selectItem itemValue="stateFilter" itemLabel="state" />
+					<f:selectItem itemValue="typeFilter" itemLabel="type" />
+					<f:selectItem itemValue="dateFilter" itemLabel="date" />
+				</p:selectOneMenu>
+			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="codeFilter">
 				<p:inputText value="#{applicationBean.code}" required="true" />
 				<p:commandButton value="Add Code" action="#{applicationBean.addCode}" 
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="candidateFilter">
 				<p:inputText value="#{applicationBean.candidate}" required="true" />
 				<p:commandButton value="Add Candidate" action="#{applicationBean.addCandidate}" 
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="stateFilter">
 				<p:selectOneMenu value="#{applicationBean.state}" 
 				converter="omnifaces.SelectItemsConverter">
 					<f:selectItems value="#{positionBean.positionStates}" var="state" 
@@ -42,7 +52,7 @@
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="typeFilter">
 				<p:selectOneMenu value="#{applicationBean.type}">
 					<f:selectItem itemValue="External" itemLabel="External" />
 					<f:selectItem itemValue="Internal" itemLabel="Internal" />
@@ -51,7 +61,7 @@
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form>
+			<h:form class="filter" id="dateFilter">
 				<p:outputLabel for="startDate" value="Start date" />
 				<p:calendar id="startDate" value="#{applicationBean.startDate}" 
 				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
