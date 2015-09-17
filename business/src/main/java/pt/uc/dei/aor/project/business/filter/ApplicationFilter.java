@@ -11,7 +11,7 @@ public class ApplicationFilter extends GenericFilter {
 	private Date finishDate;
 	private String candidate;
 	private ApplicationType applicationType;
-	private PositionState positionState;
+	private PositionState state;
 	
 	
 	public ApplicationFilter() {
@@ -20,7 +20,7 @@ public class ApplicationFilter extends GenericFilter {
 		setFinishDate(null);
 		setCandidate(null);
 		setApplicationType(ApplicationType.BOTH);
-		setPositionState(PositionState.OPEN);
+		setState(PositionState.OPEN);
 	}
 	
 	
@@ -68,12 +68,12 @@ public class ApplicationFilter extends GenericFilter {
 		this.applicationType = applicationType;
 	}
 
-	public PositionState getPositionState() {
-		return positionState;
+	public PositionState getState() {
+		return state;
 	}
 
-	public void setPositionState(PositionState positionState) {
-		this.positionState = positionState;
+	public void setState(PositionState positionState) {
+		this.state = positionState;
 	}
 
 

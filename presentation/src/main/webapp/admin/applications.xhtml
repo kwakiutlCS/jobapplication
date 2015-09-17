@@ -33,6 +33,16 @@
 			</h:form>
 			
 			<h:form>
+				<p:selectOneMenu value="#{applicationBean.state}" 
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{positionBean.positionStates}" var="state" 
+					itemLabel="#{state.positionStateLabel}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Add State" action="#{applicationBean.addState}" 
+				update=":filterSection :filteredList" />
+			</h:form>
+			
+			<h:form>
 				<p:outputLabel for="startDate" value="Start date" />
 				<p:calendar id="startDate" value="#{applicationBean.startDate}" 
 				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
@@ -62,6 +72,15 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{applicationBean.filter.candidate}" />
 					<p:commandLink value="x" action="#{applicationBean.removeCandidate}" 
+					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty applicationBean.filter.state}" 
+			styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{applicationBean.filter.state.positionStateLabel}" />
+					<p:commandLink value="x" action="#{applicationBean.removeState}" 
 					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>

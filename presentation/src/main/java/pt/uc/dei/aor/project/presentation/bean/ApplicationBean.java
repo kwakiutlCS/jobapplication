@@ -12,6 +12,7 @@ import javax.inject.Named;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
+import pt.uc.dei.aor.project.business.util.PositionState;
 
 @Named
 @ViewScoped
@@ -29,11 +30,13 @@ public class ApplicationBean implements Serializable {
 	private Date endDate;
 	private String code;
 	private String candidate;
+	private PositionState state;
 	
 	
 	@PostConstruct
 	public void init() {
 		filter = new ApplicationFilter();
+		state = PositionState.OPEN;
 	}
 	
 	
@@ -79,6 +82,16 @@ public class ApplicationBean implements Serializable {
 		filter.setCandidate(null);
 		candidate = null;
 	}
+	
+	public void addState() {
+		filter.setState(state);
+	}
+	
+	public void removeState() {
+		filter.setState(null);
+		state = null;
+	}
+	
 	
 	// getters and setters
 	
@@ -140,6 +153,20 @@ public class ApplicationBean implements Serializable {
 
 	public void setCandidate(String candidate) {
 		this.candidate = candidate;
+	}
+
+
+
+
+	public PositionState getState() {
+		return state;
+	}
+
+
+
+
+	public void setState(PositionState state) {
+		this.state = state;
 	}
 }
 

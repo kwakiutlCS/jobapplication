@@ -21,6 +21,7 @@ import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
+import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
@@ -116,6 +117,18 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 				
 				criteriaPredicates.add(candidatePredicate);
 			}
+			
+			// state filter
+			PositionState stateFilter = filter.getState();
+			if (stateFilter != null) {
+				Root<PositionEntity> position = q.from(PositionEntity.class);
+				Predicate statePredicate = cb.equal(position.get("id"), application.get("position"));
+				statePredicate = cb.and(statePredicate, cb.equal(position.get("state"), stateFilter));
+				
+				criteriaPredicates.add(statePredicate);
+			}
+			
+			// type filter
 		}
 		
 		q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));
