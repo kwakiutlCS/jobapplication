@@ -27,6 +27,12 @@
 			</h:form>
 			
 			<h:form>
+				<p:inputText value="#{applicationBean.candidate}" required="true" />
+				<p:commandButton value="Add Candidate" action="#{applicationBean.addCandidate}" 
+				update=":filterSection :filteredList" />
+			</h:form>
+			
+			<h:form>
 				<p:outputLabel for="startDate" value="Start date" />
 				<p:calendar id="startDate" value="#{applicationBean.startDate}" 
 				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
@@ -47,6 +53,15 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{applicationBean.filter.code}" />
 					<p:commandLink value="x" action="#{applicationBean.removeCode}" 
+					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty applicationBean.filter.candidate}" 
+			styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{applicationBean.filter.candidate}" />
+					<p:commandLink value="x" action="#{applicationBean.removeCandidate}" 
 					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>

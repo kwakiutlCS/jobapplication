@@ -28,6 +28,7 @@ public class ApplicationBean implements Serializable {
 	private Date startDate;
 	private Date endDate;
 	private String code;
+	private String candidate;
 	
 	
 	@PostConstruct
@@ -70,7 +71,14 @@ public class ApplicationBean implements Serializable {
 		code = null;
 	}
 	
+	public void addCandidate() {
+		filter.setCandidate(candidate);
+	}
 	
+	public void removeCandidate() {
+		filter.setCandidate(null);
+		candidate = null;
+	}
 	
 	// getters and setters
 	
@@ -118,6 +126,20 @@ public class ApplicationBean implements Serializable {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+
+
+
+	public String getCandidate() {
+		return candidate;
+	}
+
+
+
+
+	public void setCandidate(String candidate) {
+		this.candidate = candidate;
 	}
 }
 

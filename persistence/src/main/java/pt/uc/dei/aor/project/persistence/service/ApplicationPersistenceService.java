@@ -23,6 +23,7 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
+import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ApplicationProxy;
@@ -106,7 +107,15 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 			}
 			
 			// candidate filter
-			
+			String candidateFilter = filter.getCandidate();
+			if (candidateFilter != null) {
+				Root<CandidateEntity> candidate = q.from(CandidateEntity.class);
+				Predicate candidatePredicate = cb.equal(candidate.get("id"), application.get("candidate"));
+				candidatePredicate = cb.and(candidatePredicate, cb.like(
+						cb.lower(candidate.get("completeName")), "%"+candidateFilter.toLowerCase()+"%"));
+				
+				criteriaPredicates.add(candidatePredicate);
+			}
 		}
 		
 		q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));
