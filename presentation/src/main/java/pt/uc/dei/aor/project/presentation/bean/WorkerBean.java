@@ -1,33 +1,36 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
+import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.model.UploadedFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
-import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.Role;
-import pt.uc.dei.aor.project.business.util.UploadUtil;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
-@RequestScoped
-public class WorkerBean {
+@ViewScoped
+public class WorkerBean implements Serializable {
+	
+	private static final long serialVersionUID = -1265270672848552351L;
+
+	private static final Logger logger = LoggerFactory.getLogger(WorkerBean.class);
 	
 	@Inject
 	private IWorkerBusinessService workerService;
@@ -39,6 +42,19 @@ public class WorkerBean {
 	private List<Role> roles;
 	private UploadedFile file;
 	
+	// filter
+	private WorkerFilter filter;
+	private String keyword;
+	private Role role;
+	
+	@PostConstruct
+	public void init() {
+		filter = new WorkerFilter();
+	}
+	
+	
+	
+
 	public void register() {
 		try {
 			workerService.createNewWorker(login, name, surname, email, roles);
@@ -75,8 +91,50 @@ public class WorkerBean {
 		
 	}
 	
+	
+	// filter actions
+	public void addKeyword() {
+		filter.setKeyword(keyword);
+	}
+	
+	public void removeKeyword() {
+		filter.setKeyword(null);
+		keyword = null;
+	}
+	
+	public void addRole() {
+		filter.addRole(role);
+	}
+	
+	public void removeRole(int index, int pos) {
+		try {
+			filter.removeRole(index, pos);
+		} catch (IllegalFilterParamException e) {
+			logger.error("Illegal filter parameters!!");
+			MetaUtils.setMsg("Illegal filter parameters", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void splitRoles(int index, int pos) {
+		try {
+			filter.splitRoles(index, pos);
+		} catch (IllegalFilterParamException e) {
+			logger.error("Illegal filter parameters!!");
+			MetaUtils.setMsg("Illegal filter parameters", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
+	public void mergeRoles(int index) {
+		try {
+			filter.mergeRoles(index);
+		} catch (IllegalFilterParamException e) {
+			logger.error("Illegal filter parameters!!");
+			MetaUtils.setMsg("Illegal filter parameters", FacesMessage.SEVERITY_ERROR);
+		}
+	}
+	
 	public List<IWorker> getUsers() {
-		return workerService.findAllUsers();
+		return workerService.findUsersWithFilter(filter, 0, 10);
 	}
 	
 	public List<Role> getPossibleRoles() {
@@ -131,5 +189,37 @@ public class WorkerBean {
 		this.file = file;
 	}
 	
+	public String getKeyword() {
+		return keyword;
+	}
+
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+
+	public WorkerFilter getFilter() {
+		return filter;
+	}
+
+
+
+
+	public Role getRole() {
+		return role;
+	}
+
+
+
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	public List<List<Role>> getRoleSets() {
+		return filter.getRoleSets();
+	}
+
 }
 

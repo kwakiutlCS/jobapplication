@@ -5,15 +5,77 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+	</ui:define>
+	
 	<ui:define name="content">
 
 		<h2>users page</h2>
 
+		<h:panelGroup id="preFilterSection">
+			<h:form>
+				<p:inputText value="#{workerBean.keyword}" required="true" />
+				<p:commandButton value="Add Keyword"
+					action="#{workerBean.addKeyword}"
+					update=":filterSection :userTable" />
+			</h:form>
+			
+			<h:form>
+				<p:selectOneMenu value="#{workerBean.role}" 
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{workerBean.possibleRoles}" var="role" 
+					itemLabel="#{role.label}" />
+				</p:selectOneMenu>
+				<p:commandButton value="Add State" action="#{workerBean.addRole}" 
+				update=":filterSection :userTable" />
+			</h:form>
+			
+		</h:panelGroup>
+
+		<h:panelGroup id="filterSection">
+			<h:panelGroup id="users">
+				<h:form>
+					<h:panelGroup styleClass="filterUnit"
+						rendered="#{not empty workerBean.keyword}">
+						<h:outputText value="#{workerBean.keyword}" />
+						<p:commandLink value="x" styleClass="removalLink"
+							action="#{workerBean.removeKeyword}"
+							update=":filterSection :userTable" />
+					</h:panelGroup>
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup id="roles">
+				<h:form>
+					<ui:repeat value="#{workerBean.roleSets}" var="set"
+						varStatus="status">
+						<span class="filterUnit"> <ui:repeat value="#{set}"
+								var="role" varStatus="innerStatus">
+								<h:outputText value="#{role.label}" />
+								<p:commandLink value="x" styleClass="removalLink"
+									action="#{workerBean.removeRole(status.index, innerStatus.index)}"
+									update=":filterSection :userTable" />
+								<p:commandLink value="and" rendered="#{not innerStatus.last}"
+									update="@form :userTable"
+									action="#{workerBean.splitRoles(status.index, innerStatus.index)}"
+									styleClass="conjugationLink" />
+							</ui:repeat>
+						</span>
+						<p:commandLink value="or" rendered="#{not status.last}"
+							update="@form :userTable"
+							action="#{workerBean.mergeRoles(status.index)}"
+							styleClass="conjugationLink" />
+					</ui:repeat>
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+
 
 		<p:dataTable value="#{workerBean.users}" var="user" id="userTable">
-			<p:column>#{user.name}</p:column>
-			<p:column>#{user.surname}</p:column>
+			<p:column>#{user.fullName}</p:column>
 			<p:column>#{user.email}</p:column>
+			<p:column>#{user.rolesAsString}</p:column>
 		</p:dataTable>
 
 		<h:form id="addUserForm">

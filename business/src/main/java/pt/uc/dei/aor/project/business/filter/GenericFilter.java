@@ -22,7 +22,6 @@ public class GenericFilter {
 		
 		Set<T> newSet = new LinkedHashSet<>();
 		newSet.add(element);
-		
 		sets.add(newSet);
 	}
 	

@@ -11,6 +11,8 @@ public interface IWorker {
 	public String getFullName();
 	
 	public List<String> getRoles();
+	
+	public String getRolesAsString();
 
 	public String getLogin();
 	

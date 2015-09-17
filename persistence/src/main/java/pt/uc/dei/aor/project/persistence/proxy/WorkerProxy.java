@@ -212,4 +212,16 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		entity.removeQualification(GenericPersistenceService.getEntity(qualification));
 	}
 
+	@Override
+	public String getRolesAsString() {
+		StringBuilder s = new StringBuilder();
+		
+		for (Role r : entity.getRoles()) {
+			if (s.length() == 0) s.append(r.getLabel());
+			else s.append(", "+r.getLabel());
+		}
+		
+		return s.toString();
+	}
+
 }

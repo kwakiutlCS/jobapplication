@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.business.persistence;
 import java.util.Collection;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.model.IWorkerNotification;
@@ -36,6 +37,8 @@ public interface IWorkerPersistenceService {
 	IWorker findWorkerByEmail(String email);
 
 	IWorker verifyUser(long id, String encrypt);
+
+	List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
 	
 }

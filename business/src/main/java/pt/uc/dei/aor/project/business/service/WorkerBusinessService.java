@@ -22,6 +22,7 @@ import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
+import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -189,5 +190,10 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		}
 		
 		upload.delete(path);
+	}
+
+	@Override
+	public List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit) {
+		return workerPersistence.findUsersWithFilter(filter, offset, limit);
 	}
 }

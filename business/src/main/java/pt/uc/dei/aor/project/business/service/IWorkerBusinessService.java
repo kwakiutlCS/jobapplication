@@ -10,6 +10,7 @@ import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
+import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -43,5 +44,7 @@ public interface IWorkerBusinessService {
 
 	void uploadWorkers(InputStream inputStream) 
 			throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException;
+
+	List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
 }
