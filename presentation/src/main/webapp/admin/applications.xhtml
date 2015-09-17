@@ -21,6 +21,12 @@
 		<h:panelGroup id="preFilterSection">		
 			
 			<h:form>
+				<p:inputText value="#{applicationBean.code}" required="true" />
+				<p:commandButton value="Add Code" action="#{applicationBean.addCode}" 
+				update=":filterSection :filteredList" />
+			</h:form>
+			
+			<h:form>
 				<p:outputLabel for="startDate" value="Start date" />
 				<p:calendar id="startDate" value="#{applicationBean.startDate}" 
 				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
@@ -35,6 +41,16 @@
 		</h:panelGroup>
 		
 		<h:panelGroup id="filterSection">
+		
+			<h:panelGroup rendered="#{not empty applicationBean.filter.code}" 
+			styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{applicationBean.filter.code}" />
+					<p:commandLink value="x" action="#{applicationBean.removeCode}" 
+					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
 			<h:panelGroup styleClass="filterUnit"
 				rendered="#{not empty applicationBean.filter.startDate or 
 							not empty applicationBean.filter.finishDate}">
@@ -58,6 +74,7 @@
 		<p:dataTable value="#{applicationBean.activeApplications}" var="app" id="filteredList">
 			<p:column>#{app.date}</p:column>
 			<p:column>#{app.position.code}</p:column>
+			<p:column>#{app.position.stateFormatted}</p:column>
 			<p:column>#{app.candidate.fullName}</p:column>
 			<p:column><p:link outcome="application.xthml?ap=#{app.id}" value="detail" /></p:column>
 		</p:dataTable>

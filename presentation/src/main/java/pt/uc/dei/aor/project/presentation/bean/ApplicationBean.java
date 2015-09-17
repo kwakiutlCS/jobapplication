@@ -27,6 +27,7 @@ public class ApplicationBean implements Serializable {
 	private ApplicationFilter filter;
 	private Date startDate;
 	private Date endDate;
+	private String code;
 	
 	
 	@PostConstruct
@@ -59,6 +60,16 @@ public class ApplicationBean implements Serializable {
 		filter.setFinishDate(null);
 		endDate = null;
 	}
+	
+	public void addCode() {
+		filter.setCode(code);
+	}
+	
+	public void removeCode() {
+		filter.setCode(null);
+		code = null;
+	}
+	
 	
 	
 	// getters and setters
@@ -93,6 +104,20 @@ public class ApplicationBean implements Serializable {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 }
 

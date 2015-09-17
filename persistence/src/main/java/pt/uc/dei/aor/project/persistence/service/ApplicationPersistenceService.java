@@ -14,12 +14,16 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
+import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ApplicationProxy;
 import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
@@ -27,6 +31,8 @@ import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
 
 @Stateless
 public class ApplicationPersistenceService implements IApplicationPersistenceService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ApplicationPersistenceService.class);
 	
 	@PersistenceContext(unitName = "jobs")
     private EntityManager em;
@@ -80,6 +86,26 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 									
 				criteriaPredicates.add(finishPredicate);
 			}
+			
+			// code filter
+			String codeFilter = filter.getCode();
+			if (codeFilter != null) {
+				try {
+					long longCode = Long.parseLong(codeFilter);
+					Root<PositionEntity> position = q.from(PositionEntity.class);
+					Predicate codePredicate = cb.equal(position.get("id"), application.get("position"));
+					codePredicate = cb.and(codePredicate, cb.equal(position.get("code"), longCode));
+
+					criteriaPredicates.add(codePredicate);
+				}
+				catch (Exception e) {
+					// wrong code - nothing to do
+					logger.error("Wrong code in filter");
+				}
+				
+			}
+			
+			// candidate filter
 			
 		}
 		
