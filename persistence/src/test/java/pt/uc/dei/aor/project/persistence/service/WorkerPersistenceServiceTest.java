@@ -29,6 +29,7 @@ import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.User;
+import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
 
@@ -99,8 +100,8 @@ public class WorkerPersistenceServiceTest {
     	roles.add(Role.ADMIN);
     	
     	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
-    	
     	IWorker worker = factory.worker(login, email, password, name, surname, roles);
+    	
     	workerEjb.save(worker);
     	
     	List<IWorker> users = workerEjb.findAllUsers();

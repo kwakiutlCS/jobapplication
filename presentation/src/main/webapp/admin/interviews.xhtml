@@ -45,6 +45,19 @@
 				<p:commandButton value="Add Candidate" action="#{interviewListBean.addCandidateToFilter}"
 				update=":filterSection :filteredList" />
 			</h:form>
+			
+			<h:form>
+				<p:outputLabel for="startDate" value="Start date" />
+				<p:calendar id="startDate" value="#{interviewListBean.startDate}" 
+				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
+				<br />
+				<p:outputLabel for="finishDate" value="End date" />
+				<p:calendar id="finishDate" value="#{interviewListBean.endDate}" 
+				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
+				<p:commandButton value="Add Date" action="#{interviewListBean.addDateFilter}" 
+				update=":filterSection :filteredList" />
+			</h:form>
+			
 		</h:panelGroup>
 
 		<h:panelGroup id="filterSection">
@@ -97,13 +110,31 @@
 						</h:panelGroup>
 					</h:form>
 					</h:panelGroup>
+					
+			<h:panelGroup styleClass="filterUnit"
+				rendered="#{not empty interviewListBean.filter.startDate or 
+							not empty interviewListBean.filter.finishDate}">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{interviewListBean.filter.startDate}" converter="dateConverter">
+					</h:outputText>
+					<p:commandLink value="x" rendered="#{not empty interviewListBean.filter.startDate}"
+						action="#{interviewListBean.removeStartDate}"
+						update="@form :filteredList :preFilterSection" styleClass="removalLink" />
+					-
+					<h:outputText value="#{interviewListBean.filter.finishDate}" converter="dateConverter">
+					</h:outputText>
+					<p:commandLink value="x" rendered="#{not empty interviewListBean.filter.finishDate}"
+						action="#{interviewListBean.removeFinishDate}"
+						update="@form :filteredList :preFilterSection" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup id="filteredList">
 		<p:dataTable value="#{interviewListBean.interviews}" var="interview">
 			<p:column>#{interview.date}</p:column>
 			<p:column>#{interview.application.position}</p:column>
-			<p:column>#{interview.candidate}</p:column>
+			<p:column>#{interview.candidate.fullName}</p:column>
 			<p:column>#{interview.interviewersFormatted}</p:column>
 		</p:dataTable>
 		</h:panelGroup>

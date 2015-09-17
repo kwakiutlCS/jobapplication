@@ -111,5 +111,7 @@ public class ApplicationEntity {
 		interviews.remove(interview);
 	}
 
-	
+	public CandidateEntity getCandidate() {
+		return candidate;
+	}
 }

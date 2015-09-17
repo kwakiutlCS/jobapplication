@@ -21,6 +21,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IQualificationPersistenceService;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
@@ -63,7 +64,10 @@ public class StartUpEjb {
 			logger.error("An error occurred adding admin user.");
 		}
 		
-		
+		// database populate
+		optionalPopulate();
+				
+				
 		// super user
 		logger.info("Adding super user...");
 		IWorker su = workerEjb.createSuperUser();
@@ -127,6 +131,8 @@ public class StartUpEjb {
 				}
 			}
 		}
+		
+		
 
 	}
 	
@@ -137,11 +143,66 @@ public class StartUpEjb {
 		
 		if (!Files.exists(directory)) {
 			Files.createDirectory(directory);
-			Files.createDirectory(directory.resolve(Paths.get("uploads")));
-			Files.createDirectory(directory.resolve(Paths.get("uploads/usersImport")));
-			Files.createDirectory(directory.resolve(Paths.get("uploads/cv")));
-			Files.createDirectory(directory.resolve(Paths.get("uploads/letter")));
+		}	
+		
+		Path tmp = directory.resolve(Paths.get("uploads"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
 			
+		tmp = directory.resolve(Paths.get("uploads/usersImport"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+			
+		tmp = directory.resolve(Paths.get("uploads/cv"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+			
+		tmp = directory.resolve(Paths.get("uploads/letter"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+		
+		tmp = directory.resolve(Paths.get("data"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+	}
+	
+	
+	private void optionalPopulate() {
+		BufferedReader reader = null;
+		Path directory = Paths.get(System.getProperty("jboss.server.data.dir"))
+				.resolve(Paths.get("jobapplication/data"));
+		
+		// users
+		Path file = directory.resolve(Paths.get("users.csv"));
+		
+		if (Files.exists(file)) {
+			logger.info("populating users database...");
+			try {
+				reader = Files.newBufferedReader(file);
+				String line = null;
+				while ((line = reader.readLine()) != null) {
+					String[] f = line.split(",");
+					List<Role> roles = new ArrayList<>();
+					if (f[4].indexOf("admin") != -1) roles.add(Role.ADMIN);
+					if (f[4].indexOf("manager") != -1) roles.add(Role.MANAGER);
+					if (f[4].indexOf("interviewer") != -1) roles.add(Role.INTERVIEWER);
+					
+					workerEjb.createNewWorker(f[0], f[1], f[2], f[3], roles);
+				}
+			} catch (IOException x) {
+				System.err.println(x);
+			} catch (NoRoleException e) {
+				
+			} catch (DuplicatedUserException e) {
+				
+			} finally {
+				try {
+					reader.close();
+				} catch (IOException e) {
+
+				}
+			}
 		}
+		
 	}
 }

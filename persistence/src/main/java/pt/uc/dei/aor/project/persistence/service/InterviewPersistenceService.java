@@ -144,13 +144,33 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 						position.get("title"), cb));
 			}
 			
-			// candidate to modify to fullName
+			// candidate 
 			if (filter.getCandidate() != null) {
 				Root<CandidateEntity> candidate = q.from(CandidateEntity.class);
 				Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
 				criteriaPredicates.add(cb.equal(interview.get("application"), application.get("id")));
 				criteriaPredicates.add(cb.equal(application.get("candidate"), candidate.get("id")));
-				criteriaPredicates.add(cb.like(candidate.get("name"), "%"+filter.getCandidate()+"%"));
+				criteriaPredicates.add(cb.like(cb.lower(candidate.get("completeName")),
+						"%"+filter.getCandidate().toLowerCase()+"%"));
+			}
+			
+			// dates filter
+			Expression<Date> date = interview.get("date");
+			
+			// start date
+			Date startFilter = filter.getStartDate();
+			if (startFilter != null) {
+				Predicate startPredicate = cb.greaterThanOrEqualTo(date, startFilter);
+									
+				criteriaPredicates.add(startPredicate);
+			}
+			
+			// finish date
+			Date finishFilter = filter.getFinishDate();
+			if (finishFilter != null) {
+				Predicate finishPredicate = cb.lessThanOrEqualTo(date, finishFilter);
+									
+				criteriaPredicates.add(finishPredicate);
 			}
 		}
 		

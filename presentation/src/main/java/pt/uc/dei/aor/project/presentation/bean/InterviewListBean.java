@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -40,6 +41,8 @@ public class InterviewListBean implements Serializable {
 	private IWorker filterInterviewer;
 	private String filterPosition;
 	private String filterCandidate;
+	private Date startDate;
+	private Date endDate;
 	
 	@Inject
 	private IInterviewBusinessService interviewService;
@@ -96,6 +99,20 @@ public class InterviewListBean implements Serializable {
 		interviews = getInterviewsWithFilter();
 	}
 	
+	public InterviewFilter getFilter() {
+		return filter;
+	}
+
+
+
+	public void addDateFilter() {
+		filter.setStartDate(startDate);
+		filter.setFinishDate(endDate);
+		startDate = null;
+		endDate = null;
+		interviews = getInterviewsWithFilter();
+	}
+	
 	public void deleteInterviewer(int setPos, int pos) {
 		try {
 			filter.deleteInterviewer(setPos, pos);
@@ -134,6 +151,17 @@ public class InterviewListBean implements Serializable {
 		}
 	}
 	
+	public void removeStartDate() {
+		filter.setStartDate(null);
+		startDate = null;
+		interviews = getInterviewsWithFilter();
+	}
+	
+	public void removeFinishDate() {
+		filter.setFinishDate(null);
+		endDate = null;
+		interviews = getInterviewsWithFilter();
+	}
 	
 	// complete functions
 	public List<String> completePosition(String text) {
@@ -224,6 +252,30 @@ public class InterviewListBean implements Serializable {
 
 	public void setFilterCandidate(String filterCandidate) {
 		this.filterCandidate = filterCandidate;
+	}
+
+
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 }
 

@@ -1,9 +1,12 @@
 package pt.uc.dei.aor.project.business.filter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TimeZone;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 
@@ -85,4 +88,39 @@ public class GenericFilter {
 		return sets;
 	}
 
+	
+	// Date section
+	public Date prepareStartDate(Date startDate) {
+		Date d = null;
+		if (startDate != null) {
+			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			date.setTime(startDate);
+			date.add(Calendar.HOUR, -1);
+			d = date.getTime();
+		}
+		else {
+			d = null;
+		}
+		
+		return d;
+	}
+
+
+	public Date prepareFinishDate(Date finishDate) {
+		Date d = null;
+		
+		if (finishDate != null) {
+			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
+			date.setTime(finishDate);
+			date.set(Calendar.HOUR, 22);
+			date.set(Calendar.MINUTE, 59);
+			date.set(Calendar.SECOND, 59);
+			d = date.getTime();
+		}
+		else {
+			d = null;
+		}
+		
+		return d;
+	}
 }

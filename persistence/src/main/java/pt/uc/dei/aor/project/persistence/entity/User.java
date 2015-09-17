@@ -15,6 +15,7 @@ public class User {
 		this.email = email;
 		this.name = name;
 		this.surname = surname;
+		this.completeName = name+" "+surname;
 	}
 	
 	public User() {
@@ -36,6 +37,9 @@ public class User {
 	
 	@Column(nullable=false)
 	protected String surname;
+	
+	@Column(nullable=false) 
+	protected String completeName;
 	
 	@Column(nullable=false, unique=true)
 	protected String email;
@@ -88,6 +92,11 @@ public class User {
 		this.email = email;
 	}
 
+	public String getCompleteName() {
+		return completeName;
+	}
+
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

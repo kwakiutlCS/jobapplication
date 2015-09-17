@@ -152,15 +152,7 @@ public class PositionFilter extends GenericFilter {
 
 
 	public void setStartDate(Date startDate) {
-		if (startDate != null) {
-			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			date.setTime(startDate);
-			date.add(Calendar.HOUR, -1);
-			this.startDate = date.getTime();
-		}
-		else {
-			this.startDate = null;
-		}
+		this.startDate = prepareStartDate(startDate);
 	}
 
 
@@ -170,17 +162,7 @@ public class PositionFilter extends GenericFilter {
 
 
 	public void setFinishDate(Date finishDate) {
-		if (finishDate != null) {
-			Calendar date = Calendar.getInstance(TimeZone.getTimeZone("GMT"));
-			date.setTime(finishDate);
-			date.set(Calendar.HOUR, 22);
-			date.set(Calendar.MINUTE, 59);
-			date.set(Calendar.SECOND, 59);
-			this.finishDate = date.getTime();
-		}
-		else {
-			this.finishDate = null;
-		}
+		this.finishDate = prepareFinishDate(finishDate);
 	}
 
 	

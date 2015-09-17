@@ -37,11 +37,7 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 
 	@Override
 	public ICandidate getCandidate() {
-		// TODO Auto-generated method stub
-		// precisarei de um método que devolva o candidato desta candidatura
-		
-		// neste momento devolve null
-		return null;
+		return new CandidateProxy(entity.getCandidate());
 	}
 
 

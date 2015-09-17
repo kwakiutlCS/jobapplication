@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.business.filter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,11 +14,15 @@ public class InterviewFilter extends GenericFilter {
 	private List<Set<IWorker>> interviewerSets;
 	private Set<String> positions;
 	private String candidate;
+	private Date startDate;
+	private Date endDate;
 	
 	public InterviewFilter() {
 		interviewerSets = new ArrayList<>();
 		positions = new HashSet<>();
 		candidate = null;
+		startDate = null;
+		endDate = null;
 	}
 	
 	
@@ -68,5 +73,25 @@ public class InterviewFilter extends GenericFilter {
 	
 	public void deleteCandidate() {
 		candidate = null;
+	}
+	
+	
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	public void setStartDate(Date startDate) {
+		this.startDate = prepareStartDate(startDate);
+	}
+
+
+	public Date getFinishDate() {
+		return endDate;
+	}
+
+
+	public void setFinishDate(Date finishDate) {
+		this.endDate = prepareFinishDate(finishDate);
 	}
 }

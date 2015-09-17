@@ -44,7 +44,7 @@ import pt.uc.dei.aor.project.business.util.Role;
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "Worker.createSuperUser", 
-	query="insert into worker values (0, 'SU', 'SU', 'SU', 'SU', 'SU')"),
+	query="insert into worker values (0, 'SU', 'SU', 'SU', 'SU', 'SU','SU')"),
 	@NamedNativeQuery(name = "Worker.createSuperUserRole", 
 	query="insert into role values (0, 'CANDIDATE')"),
 })

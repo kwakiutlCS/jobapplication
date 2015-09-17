@@ -31,7 +31,4 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 		
 		return candidatePersistence.save(candidateProxy);
 	}
-	
-	
-
 }
