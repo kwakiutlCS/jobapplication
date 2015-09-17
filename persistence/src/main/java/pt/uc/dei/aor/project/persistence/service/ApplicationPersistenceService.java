@@ -129,6 +129,15 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 			}
 			
 			// type filter
+			String typeFilter = filter.getType();
+			if (typeFilter != null) {
+				if (typeFilter.equals("Internal")) {
+					criteriaPredicates.add(cb.isNull(application.get("candidate")));
+				}
+				else {
+					criteriaPredicates.add(cb.isNull(application.get("internalCandidate")));
+				}
+			}
 		}
 		
 		q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));

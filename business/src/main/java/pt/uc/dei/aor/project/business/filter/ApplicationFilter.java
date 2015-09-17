@@ -10,7 +10,7 @@ public class ApplicationFilter extends GenericFilter {
 	private Date startDate;
 	private Date finishDate;
 	private String candidate;
-	private ApplicationType applicationType;
+	private String type;
 	private PositionState state;
 	
 	
@@ -19,12 +19,9 @@ public class ApplicationFilter extends GenericFilter {
 		setStartDate(null);
 		setFinishDate(null);
 		setCandidate(null);
-		setApplicationType(ApplicationType.BOTH);
+		type = null;
 		setState(PositionState.OPEN);
 	}
-	
-	
-	
 	
 	
 	
@@ -60,12 +57,12 @@ public class ApplicationFilter extends GenericFilter {
 		this.candidate = candidate;
 	}
 
-	public ApplicationType getApplicationType() {
-		return applicationType;
+	public String getType() {
+		return type;
 	}
 
-	public void setApplicationType(ApplicationType applicationType) {
-		this.applicationType = applicationType;
+	public void setType(String applicationType) {
+		this.type = applicationType;
 	}
 
 	public PositionState getState() {
@@ -77,11 +74,4 @@ public class ApplicationFilter extends GenericFilter {
 	}
 
 
-
-
-
-
-	private static enum ApplicationType {
-		INTERNAL, EXTERNAL, BOTH;
-	}
 }

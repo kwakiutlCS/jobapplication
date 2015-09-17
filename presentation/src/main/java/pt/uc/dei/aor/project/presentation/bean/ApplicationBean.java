@@ -31,6 +31,7 @@ public class ApplicationBean implements Serializable {
 	private String code;
 	private String candidate;
 	private PositionState state;
+	private String type;
 	
 	
 	@PostConstruct
@@ -92,6 +93,15 @@ public class ApplicationBean implements Serializable {
 		state = null;
 	}
 	
+	public void addType() {
+		filter.setType(type);
+	}
+	
+	public void removeType() {
+		filter.setType(null);
+		type = null;
+	}
+	
 	
 	// getters and setters
 	
@@ -99,74 +109,52 @@ public class ApplicationBean implements Serializable {
 		return filter;
 	}
 
-
-
-
 	public Date getStartDate() {
 		return startDate;
 	}
-
-
-
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-
-
-
 	public Date getEndDate() {
 		return endDate;
 	}
-
-
-
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
-
-
-
 	public String getCode() {
 		return code;
 	}
-
-
-
 
 	public void setCode(String code) {
 		this.code = code;
 	}
 
-
-
-
 	public String getCandidate() {
 		return candidate;
 	}
-
-
-
 
 	public void setCandidate(String candidate) {
 		this.candidate = candidate;
 	}
 
-
-
-
 	public PositionState getState() {
 		return state;
 	}
 
-
-
-
 	public void setState(PositionState state) {
 		this.state = state;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 }
 
