@@ -119,13 +119,13 @@
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty interviewListBean.filter.startDate}"
 						action="#{interviewListBean.removeStartDate}"
-						update="@form :filteredList :preFilterSection" styleClass="removalLink" />
+						update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
 					-
 					<h:outputText value="#{interviewListBean.filter.finishDate}" converter="dateConverter">
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty interviewListBean.filter.finishDate}"
 						action="#{interviewListBean.removeFinishDate}"
-						update="@form :filteredList :preFilterSection" styleClass="removalLink" />
+						update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>

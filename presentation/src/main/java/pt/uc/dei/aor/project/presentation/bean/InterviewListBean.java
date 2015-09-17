@@ -153,13 +153,11 @@ public class InterviewListBean implements Serializable {
 	
 	public void removeStartDate() {
 		filter.setStartDate(null);
-		startDate = null;
 		interviews = getInterviewsWithFilter();
 	}
 	
 	public void removeFinishDate() {
 		filter.setFinishDate(null);
-		endDate = null;
 		interviews = getInterviewsWithFilter();
 	}
 	
