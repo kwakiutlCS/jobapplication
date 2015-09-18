@@ -91,7 +91,7 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{applicationBean.filter.candidate}" />
 					<p:commandLink value="x" action="#{applicationBean.removeCandidate}" 
-					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+					update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 			
@@ -100,7 +100,7 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{applicationBean.filter.state.positionStateLabel}" />
 					<p:commandLink value="x" action="#{applicationBean.removeState}" 
-					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+					update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 			
@@ -109,7 +109,7 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{applicationBean.filter.type}" />
 					<p:commandLink value="x" action="#{applicationBean.removeType}" 
-					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+					update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 			
@@ -127,7 +127,7 @@
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty applicationBean.filter.finishDate}"
 						action="#{applicationBean.removeFinishDate}"
-						update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
+						update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 		</h:panelGroup>

@@ -98,8 +98,8 @@
 				
 		<h2>Curriculum Vitae</h2>
 		<h:form enctype="multipart/form-data">
-			<h:inputFile value="#{accountBean.cv}" required="true">
-				<f:ajax listener="#{accountBean.upload}" render="@form" />
+			<h:inputFile value="#{accountBean.cv}" required="true" id="fileUploader">
+				<f:ajax listener="#{accountBean.upload}" render=":globalMessages" />
 			</h:inputFile>
 		</h:form>
 

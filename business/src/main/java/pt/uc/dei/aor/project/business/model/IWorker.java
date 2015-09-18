@@ -61,5 +61,9 @@ public interface IWorker {
 	public void addQualification(IQualification qualification);
 
 	public void removeQualification(IQualification qualification);
+
+	public void setCv(String filename);
+
+	public String getCv();
 	
 }

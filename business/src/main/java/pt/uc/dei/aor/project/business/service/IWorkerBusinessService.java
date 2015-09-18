@@ -6,6 +6,8 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.Part;
+
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
@@ -46,5 +48,7 @@ public interface IWorkerBusinessService {
 			throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException;
 
 	List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
+
+	void uploadCV(IWorker worker, Part cv) throws IOException;
 
 }

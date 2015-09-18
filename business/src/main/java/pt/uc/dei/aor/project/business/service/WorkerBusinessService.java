@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.List;
 
+import javax.ejb.Asynchronous;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.servlet.http.Part;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -195,5 +197,18 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	@Override
 	public List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit) {
 		return workerPersistence.findUsersWithFilter(filter, offset, limit);
+	}
+
+	@Override
+	@Asynchronous
+	public void uploadCV(IWorker worker, Part cv) throws IOException {
+		String filename = cv.getSubmittedFileName();
+		String dir = "cv/"+worker.getLogin();
+		
+		upload.delete(dir);
+		upload.upload(dir, filename, cv.getInputStream());
+		
+		worker.setCv(filename);
+		workerPersistence.save(worker);
 	}
 }

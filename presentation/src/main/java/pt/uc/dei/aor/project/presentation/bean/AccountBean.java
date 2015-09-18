@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.presentation.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
 
-import org.primefaces.event.SelectEvent;
-import org.primefaces.model.UploadedFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IQualification;
@@ -27,6 +28,8 @@ import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 public class AccountBean implements Serializable {
 
 	private static final long serialVersionUID = -785077512441625997L;
+	
+	private static final Logger logger = LoggerFactory.getLogger(AccountBean.class);
 
 	@Inject
 	private IWorkerBusinessService workerService;
@@ -66,6 +69,8 @@ public class AccountBean implements Serializable {
 		country = user.getCountry();
 		phone = user.getPhone();
 		mobile = user.getMobile();
+		
+		//cv = user.getCv();
 	}
 	
 	
@@ -115,15 +120,21 @@ public class AccountBean implements Serializable {
 		MetaUtils.setMsg("User details updated", FacesMessage.SEVERITY_INFO);
 	}
 	
+	
 	public void upload(AjaxBehaviorEvent event) {
 		
-		String filename = cv.getSubmittedFileName();
 		if (!cv.getContentType().equals("application/pdf")) {
 			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
 			return; 
 		}
 		
-		System.out.println(cv);
+		try {
+			workerService.uploadCV(MetaUtils.getUser(), cv);
+		} catch (IOException e) {
+			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
+			cv = null;
+			logger.error("Error uploading file: "+cv.getSubmittedFileName());
+		}
 	}
 	
 	

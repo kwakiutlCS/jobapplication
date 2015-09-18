@@ -194,4 +194,12 @@ public class WorkerEntity extends User {
 	public void removeQualification(QualificationEntity qualification) {
 		qualifications.remove(qualification);
 	}
+
+	public void setCv(String cv) {
+		this.cv = cv;
+	}
+	
+	public String getCv() {
+		return cv;
+	}
 }

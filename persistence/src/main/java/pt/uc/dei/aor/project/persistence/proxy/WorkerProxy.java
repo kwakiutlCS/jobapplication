@@ -224,4 +224,13 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 		return s.toString();
 	}
 
+	@Override
+	public void setCv(String filename) {
+		entity.setCv(filename);
+	}
+
+	@Override
+	public String getCv() {
+		return entity.getCv();
+	}
 }
