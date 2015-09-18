@@ -2,14 +2,19 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.FacesComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 
 import org.slf4j.Logger;
@@ -55,7 +60,8 @@ public class AccountBean implements Serializable {
 	
 	private Part cv;
 	
-		
+	
+	
 	@PostConstruct
 	public void init() {
 		IWorker user = MetaUtils.getUser();
@@ -132,9 +138,10 @@ public class AccountBean implements Serializable {
 			workerService.uploadCV(MetaUtils.getUser(), cv);
 		} catch (IOException e) {
 			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
-			cv = null;
 			logger.error("Error uploading file: "+cv.getSubmittedFileName());
 		}
+		
+		cv = null;
 	}
 	
 	
@@ -286,5 +293,11 @@ public class AccountBean implements Serializable {
 		this.cv = cv;
 	}
 
-	
+	public String getCvLink() {
+		String app = ((HttpServletRequest) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequest()).getContextPath();
+		String cv = MetaUtils.getUser().getCv();
+		
+		return "https://localhost:8443"+app+"/cv/"+cv;
+	}
 }

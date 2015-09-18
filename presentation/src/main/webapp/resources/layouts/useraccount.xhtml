@@ -98,8 +98,11 @@
 				
 		<h2>Curriculum Vitae</h2>
 		<h:form enctype="multipart/form-data">
+			<h:outputLink value="#{accountBean.cvLink}" rendered="#{not empty loginBean.user.cv}">
+				#{loginBean.user.cv}
+			</h:outputLink>
 			<h:inputFile value="#{accountBean.cv}" required="true" id="fileUploader">
-				<f:ajax listener="#{accountBean.upload}" render=":globalMessages" />
+				<f:ajax listener="#{accountBean.upload}" update="@form" render=":globalMessages" />
 			</h:inputFile>
 		</h:form>
 
@@ -130,5 +133,5 @@
 	<h:panelGroup id="accountDetails" styleClass="accountPanel">
 
 	</h:panelGroup>
-
+		
 </ui:composition>
