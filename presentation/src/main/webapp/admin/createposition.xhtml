@@ -78,11 +78,20 @@
 				<p:outputLabel for="script" value="Add Script" />
 				<p:selectOneMenu id="script"
 					value="#{positionBean.script}" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="select one:" />
 					<f:selectItems value="#{scriptBean.scripts}"
 						var="scr" itemValue="#{scr}"
 						itemLabel="#{scr.title}" />
-				</p:selectOneMenu>				
-
+				</p:selectOneMenu>	
+				<p:commandLink value="add script" action="#{positionBean.addScript}" 
+				process=":newpositionform:script @this" update=":newpositionform:scriptList" />
+				
+				<h:panelGroup id="scriptList">
+				<ui:repeat value="#{positionBean.scripts}" var="script">
+					#{script.title}
+				</ui:repeat>		
+				</h:panelGroup>
+								
 				<p:commandButton value="Submit"
 					action="#{positionBean.createPosition}" update="newpositionform" />
 			</h:panelGrid>

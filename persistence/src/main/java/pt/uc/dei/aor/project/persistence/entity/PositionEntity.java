@@ -39,8 +39,6 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 	query = "from PositionEntity u where u.title like :title"),
 })
 public class PositionEntity {
-
-	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -92,7 +90,7 @@ public class PositionEntity {
 	private Set<PublicationChannelEntity> publications;
 	
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private Set<ScriptEntity> scripts = new TreeSet<>();
+    private Set<PhaseEntity> phases;
     
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
@@ -117,7 +115,12 @@ public class PositionEntity {
 		this.description = description;
 		this.publications = new TreeSet<>();
 		this.publications.addAll(publications);
-		this.scripts.addAll(scripts);
+		
+		phases = new TreeSet<>();
+		int i = 1;
+		for (ScriptEntity s : scripts)
+			this.phases.add(new PhaseEntity(s, i++));
+		
 	}
 
 	public PositionEntity() {
@@ -236,11 +239,21 @@ public class PositionEntity {
 	}
 
 	public List<ScriptEntity> getScripts() {
-		return new ArrayList<>(scripts);
+		List<ScriptEntity> scripts = new ArrayList<>();
+		
+		for (PhaseEntity p : phases)
+			scripts.add(p.getScript());
+		
+		return scripts;
 	}
 
-	public void setScripts(List<ScriptEntity> script) {
-		this.scripts.addAll(scripts);
+	public void setScripts(List<ScriptEntity> scripts) {
+		phases = new TreeSet<>();
+		
+		int i = 1;
+		for (ScriptEntity s : scripts) {
+			phases.add(new PhaseEntity(s, i++));
+		}
 	}
 
 	@Override

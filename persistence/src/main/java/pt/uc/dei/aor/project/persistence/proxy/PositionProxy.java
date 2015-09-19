@@ -45,6 +45,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		List<ScriptEntity> scriptEntities = new ArrayList<>();
 		if (scripts != null) {
 			for (IScript s : scripts) {
+				System.out.println(s);
 				scriptEntities.add(GenericPersistenceService.getEntity(s));
 			}
 		}
