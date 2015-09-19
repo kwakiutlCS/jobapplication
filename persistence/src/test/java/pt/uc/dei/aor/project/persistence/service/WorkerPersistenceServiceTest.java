@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
+import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -100,6 +101,7 @@ public class WorkerPersistenceServiceTest {
     	roles.add(Role.ADMIN);
     	
     	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
+    	assertThat(workerEjb.getWorkerByLogin("SU"), is(not(equalTo(null))));
     	IWorker worker = factory.worker(login, email, password, name, surname, roles);
     	
     	workerEjb.save(worker);
@@ -107,6 +109,33 @@ public class WorkerPersistenceServiceTest {
     	List<IWorker> users = workerEjb.findAllUsers();
     	
     	for (IWorker w : users) {
+    		assertThat(w.getName(), is(not(equalTo("SU"))));
+    	}
+    }
+    
+    @Test
+    @Transactional(TransactionMode.ROLLBACK)
+    public void findAllUsersWithFilterShouldntReturnSuperUser() {
+    	System.out.println("Super usering");
+    	workerEjb.createSuperUser();
+    	String login = "inexistentUser";
+    	String email = "email";
+    	String password = "password";
+    	String name = "name";
+    	String surname = "surname";
+    	List<Role> roles = new ArrayList<>();
+    	roles.add(Role.ADMIN);
+    	
+    	assertThat(workerEjb.getWorkerByLogin(login), is(equalTo(null)));
+    	assertThat(workerEjb.getWorkerByLogin("SU"), is(not(equalTo(null))));
+    	IWorker worker = factory.worker(login, email, password, name, surname, roles);
+    	
+    	workerEjb.save(worker);
+    	
+    	List<IWorker> users = workerEjb.findUsersWithFilter(new WorkerFilter(), 0, 20);
+    	
+    	for (IWorker w : users) {
+    		System.out.println(w.getName());
     		assertThat(w.getName(), is(not(equalTo("SU"))));
     	}
     }

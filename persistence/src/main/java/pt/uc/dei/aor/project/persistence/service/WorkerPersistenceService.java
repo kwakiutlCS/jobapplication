@@ -214,6 +214,7 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		q.select(worker);
 		
 		List<Predicate> criteriaPredicates = new ArrayList<>();
+		criteriaPredicates.add(cb.notLike(worker.get("name"), "SU"));
 		
 		// start where
 		if (filter != null) {
@@ -221,12 +222,22 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 			// workers
 			String workerFilter = filter.getKeyword();
 			if (workerFilter != null) {
+				workerFilter = workerFilter.toLowerCase();
+				
 				Expression<String> name = worker.get("completeName");
-				Predicate or = cb.like(cb.lower(name), "%"+workerFilter.toLowerCase()+"%");
+				Predicate or = cb.like(cb.lower(name), "%"+workerFilter+"%");
 				
 				Expression<String> email = worker.get("email");
-				or = cb.or(or, cb.like(cb.lower(email), "%"+workerFilter.toLowerCase()+"%"));
+				or = cb.or(or, cb.like(cb.lower(email), "%"+workerFilter+"%"));
 				
+				Expression<List<Role>> roles = worker.get("roles");
+				if (workerFilter.equals("admin") || workerFilter.equals("administrator"))
+					or = cb.or(or, cb.isMember(Role.ADMIN, roles));
+				else if (workerFilter.equals("manager"))
+					or = cb.or(or, cb.isMember(Role.MANAGER, roles));
+				else if (workerFilter.equals("interviewer"))
+					or = cb.or(or, cb.isMember(Role.INTERVIEWER, roles));
+					
 				criteriaPredicates.add(or);
 			}
 			
@@ -255,7 +266,5 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		
 		return proxies;
 	}
-
-		
 
 }
