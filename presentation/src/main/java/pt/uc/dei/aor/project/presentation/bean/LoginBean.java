@@ -9,6 +9,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
@@ -17,6 +20,8 @@ import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 @RequestScoped
 public class LoginBean {
 
+	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
+	
 	@Inject
 	private IWorkerBusinessService workerService;
 	
@@ -48,7 +53,7 @@ public class LoginBean {
 			else 
 				result = "/interview/index.xhtml?faces-redirect=true";
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logger.error(e.getMessage(), FacesMessage.SEVERITY_ERROR);
 			result = "loginerror";
 		}
 		return result;

@@ -200,7 +200,6 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	@Asynchronous
 	public void uploadCV(IWorker worker, Part cv) throws IOException {
 		String filename = cv.getSubmittedFileName();
 		String dir = "cv/"+worker.getLogin();

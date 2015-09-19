@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.ReorderEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
@@ -34,6 +36,8 @@ public class ScriptBean implements Serializable {
 	
 	private static final long serialVersionUID = -6537089658441990072L;
 
+	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
+	
 	@Inject
 	private IScriptBusinessService scriptEjb;
 	
@@ -98,7 +102,7 @@ public class ScriptBean implements Serializable {
 			} catch (ReservedQuestionException e) {
 				addMessage(FacesMessage.SEVERITY_ERROR, "Reserved question");
 			} catch (Exception e) {
-				System.out.println("FINALEXCEPTION: "+e.getMessage());
+				logger.error("FINALEXCEPTION: "+e.getMessage());
 			}
 		}
 		else {

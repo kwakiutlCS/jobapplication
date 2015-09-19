@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.presentationservlet;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
@@ -36,7 +37,11 @@ public class CvServlet extends HttpServlet {
 			Path path = DOWNLOADS.resolve(Paths.get(user.getLogin())).resolve(Paths.get(filename));
 			
 			if (Files.exists(path)) {
-				System.out.println(path.toAbsolutePath());
+				File file = path.toFile();
+				response.setHeader("Content-Type", getServletContext().getMimeType(filename));
+			    response.setHeader("Content-Length", String.valueOf(file.length()));
+			    response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
+			    
 				Files.copy(path, response.getOutputStream());
 			}
 		}

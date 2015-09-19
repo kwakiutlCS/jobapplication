@@ -102,7 +102,8 @@
 				#{loginBean.user.cv}
 			</h:outputLink>
 			<h:inputFile value="#{accountBean.cv}" required="true" id="fileUploader">
-				<f:ajax listener="#{accountBean.upload}" update="@form" render=":globalMessages" />
+				<f:validator validatorId="fileValidator" />
+				<f:ajax listener="#{accountBean.upload}" render=":globalMessages @form" />
 			</h:inputFile>
 		</h:form>
 

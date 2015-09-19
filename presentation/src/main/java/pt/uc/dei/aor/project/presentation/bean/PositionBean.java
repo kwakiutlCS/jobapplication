@@ -11,6 +11,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
@@ -22,11 +25,10 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 @RequestScoped
 public class PositionBean implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
+	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
+	
 	@Inject
 	private IPositionBusinessService position;
 		

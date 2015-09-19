@@ -75,15 +75,13 @@ public class AccountBean implements Serializable {
 		country = user.getCountry();
 		phone = user.getPhone();
 		mobile = user.getMobile();
-		
-		//cv = user.getCv();
 	}
 	
 	
 	public void updatePassword() {
 		try {
 			IWorker user = MetaUtils.getUser();
-			System.out.println(Encryptor.encrypt(password));
+			logger.trace(Encryptor.encrypt(password));
 			user.setPassword(Encryptor.encrypt(password));
 			user = workerService.update(user, oldPassword);
 			
