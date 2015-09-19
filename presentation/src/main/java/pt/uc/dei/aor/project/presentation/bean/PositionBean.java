@@ -40,6 +40,7 @@ public class PositionBean implements Serializable {
 	private String company;
 	private String description;
 	private PositionState state;
+	private List<IScript> scripts;
 	private IScript script;
 	private List<IPublicationChannel> channels;
 	private List<Localization> selectedLocalizations;
@@ -137,15 +138,12 @@ public class PositionBean implements Serializable {
 	}
 
 
-	public IScript getScript() {
-		return script;
+	public List<IScript> getScripts() {
+		return scripts;
 	}
 
-	public void setScript(IScript script) {
-		
-		System.out.println("Getting script "+script.getTitle());
-		
-		this.script = script;
+	public void setScript(List<IScript> scripts) {
+		this.scripts = scripts;
 	}
 
 	public void setCompany(String company) {
@@ -207,10 +205,17 @@ public class PositionBean implements Serializable {
 	}
 
 	public void createPosition() {
-		
 		position.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
-				company, selectedTechnicalAreas, description, script, selectedChannels);
+				company, selectedTechnicalAreas, description, scripts, selectedChannels);
 		
+	}
+
+	public IScript getScript() {
+		return script;
+	}
+
+	public void setScript(IScript script) {
+		this.script = script;
 	}
 
 

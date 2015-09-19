@@ -92,10 +92,13 @@ public class InterviewPersistenceServiceTest {
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.JAVA_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{
     			new PublicationChannelProxy("jornal")});
+    	
     	IScript script = null;
+    	List<IScript> scripts = new ArrayList<>();
+    	scripts.add(script);
     	
     	IPosition pos = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, 
-    			sla, person, company, tech, description, script, pub);
+    			sla, person, company, tech, description, scripts, pub);
     	
     	application = factory.application();
     	applicationEjb.save(application);
@@ -113,9 +116,6 @@ public class InterviewPersistenceServiceTest {
     	ejb.save(interview1);
     	
     	assertThat(ejb.findAllInterviews().size(), is(equalTo(size+1)));
-    	
-
-    	
     }
 
 }

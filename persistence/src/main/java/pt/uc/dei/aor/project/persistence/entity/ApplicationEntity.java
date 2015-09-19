@@ -63,7 +63,7 @@ public class ApplicationEntity {
 
 	
 	public SortedSet<InterviewEntity> getInterviews() {
-		return interviews;
+		return new TreeSet<>(interviews);
 	}
 
 	public long getId() {

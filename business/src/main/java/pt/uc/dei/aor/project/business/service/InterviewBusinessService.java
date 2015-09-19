@@ -123,9 +123,12 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public List<IScriptEntry> getScriptEntries(IInterview interview) {
 		IApplication application = interview.getApplication();
 		IPosition position = application.getPosition();
-		IScript script = position.getScript();
+		int phase = interview.getInterviewPhase();
 		
-		if (script == null) return null;
+		List<IScript> scripts = position.getScripts();
+		
+		if (scripts.size() < phase) return null;
+		IScript script = scripts.get(phase-1);
 		
 		return script.getEntries();
 	}

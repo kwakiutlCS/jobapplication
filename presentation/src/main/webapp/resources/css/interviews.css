@@ -36,3 +36,8 @@
 .filter {
 	display: none;
 }
+
+img {
+	display: block;
+	margin: auto;
+}

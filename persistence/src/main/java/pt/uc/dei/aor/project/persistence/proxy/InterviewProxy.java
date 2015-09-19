@@ -16,6 +16,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntity> {
 	
@@ -104,5 +105,30 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		return entity.getDate();
 	}
 
+
+	@Override
+	public int getInterviewPhase() {
+		IApplication application = this.getApplication();
+		List<IInterview> interviews = application.getInterviews();
+		
+		int counter = 1;
+		for (IInterview i : interviews) {
+			if (i == this) return counter;
+			counter++;
+		}
+		
+		return -1;
+	}
+
+	@Override
+	public int hashCode() {
+		return entity.hashCode();
+	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (!(o instanceof IInterview)) return false;
+		return entity.equals(GenericPersistenceService.getEntity(o));
+	}
 }

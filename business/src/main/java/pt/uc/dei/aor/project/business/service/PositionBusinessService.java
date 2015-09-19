@@ -35,7 +35,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 			PositionState state, int vacancies, Date closingDate, int sla,
 			String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
-			IScript script, Collection<IPublicationChannel> channels) {
+			List<IScript> scripts, Collection<IPublicationChannel> channels) {
 		
 		openingDate = new Date();		
 		
@@ -43,7 +43,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 
 		IPosition position = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, sla, 
-				contactPerson, company, technicalAreas, description, script, channels);
+				contactPerson, company, technicalAreas, description, scripts, channels);
 
 		return positionPersistence.save(position);
 	}

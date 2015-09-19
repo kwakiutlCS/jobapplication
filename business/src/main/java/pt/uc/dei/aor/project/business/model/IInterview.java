@@ -20,4 +20,6 @@ public interface IInterview {
 	public boolean isEditable();
 	
 	public String getInterviewersFormatted();
+	
+	public int getInterviewPhase();
 }

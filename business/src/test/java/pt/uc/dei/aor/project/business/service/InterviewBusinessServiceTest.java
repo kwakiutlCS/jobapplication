@@ -255,24 +255,29 @@ IInterview mockedInterview = mock(IInterview.class);
 	@Test
 	public void shouldCallCorrectFunctionsWhenFindScriptEntries() {
 		IInterview interview = mock(IInterview.class);
+		List<IScript> scripts = new ArrayList<>();
+		scripts.add(script);
 		when(interview.getApplication()).thenReturn(application);
 		when(application.getPosition()).thenReturn(position);
-		when(position.getScript()).thenReturn(script);
+		when(position.getScripts()).thenReturn(scripts);
+		when(interview.getInterviewPhase()).thenReturn(1);
 		
 		ejb.getScriptEntries(interview);
 		
 		verify(interview).getApplication();
 		verify(application).getPosition();
-		verify(position).getScript();
-		verify(script).getEntries();
+		verify(position).getScripts();
 	}
 	
 	@Test
 	public void shouldReturnNullWhenPositionHasNoScriptInFindScriptEntries() {
 		IInterview interview = mock(IInterview.class);
+		List<IScript> scripts = new ArrayList<>();
+		
 		when(interview.getApplication()).thenReturn(application);
 		when(application.getPosition()).thenReturn(position);
-		when(position.getScript()).thenReturn(null);
+		when(position.getScripts()).thenReturn(scripts);
+		when(interview.getInterviewPhase()).thenReturn(1);
 		
 		assertThat(ejb.getScriptEntries(interview), is(equalTo(null)));
 	}

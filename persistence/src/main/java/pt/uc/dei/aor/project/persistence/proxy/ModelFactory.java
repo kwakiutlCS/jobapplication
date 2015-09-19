@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.persistence.proxy;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Stateless;
 
@@ -41,11 +42,11 @@ public class ModelFactory implements IModelFactory {
 			Collection<Localization> localizations, PositionState state,
 			int vacancies, Date closingDate, int sla, String contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
-			String description, IScript script,
+			String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels) {
 
 		return new PositionProxy(code, openingDate, title,localizations, state, vacancies,closingDate, sla,
-				contactPerson, company, technicalAreas, description, script, channels);
+				contactPerson, company, technicalAreas, description, scripts, channels);
 	}
 
 	@Override

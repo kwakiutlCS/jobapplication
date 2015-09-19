@@ -91,15 +91,15 @@ public class PositionEntity {
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
-    @ManyToOne
-    private ScriptEntity script;
+    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private Set<ScriptEntity> scripts = new TreeSet<>();
     
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
 			Date closingDate, int sla, String contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
-			Collection<PublicationChannelEntity> publications, ScriptEntity script) {
+			Collection<PublicationChannelEntity> publications, List<ScriptEntity> scripts) {
 		super();
 		this.code=code;
 		this.title = title;
@@ -117,7 +117,7 @@ public class PositionEntity {
 		this.description = description;
 		this.publications = new TreeSet<>();
 		this.publications.addAll(publications);
-		this.script = script;
+		this.scripts.addAll(scripts);
 	}
 
 	public PositionEntity() {
@@ -235,12 +235,12 @@ public class PositionEntity {
 		this.publications.addAll(publications);
 	}
 
-	public ScriptEntity getScript() {
-		return script;
+	public List<ScriptEntity> getScripts() {
+		return new ArrayList<>(scripts);
 	}
 
-	public void setScript(ScriptEntity script) {
-		this.script = script;
+	public void setScripts(List<ScriptEntity> script) {
+		this.scripts.addAll(scripts);
 	}
 
 	@Override

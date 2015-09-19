@@ -15,6 +15,9 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -36,6 +39,8 @@ import pt.uc.dei.aor.project.persistence.proxy.PositionProxy;
 @Stateless
 public class PositionPersistenceService implements IPositionPersistenceService {
 
+	private static final Logger logger = LoggerFactory.getLogger(PositionPersistenceService.class);
+	
 	@PersistenceContext(unitName = "jobs")
 	private EntityManager em;
 
@@ -69,19 +74,14 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		long code = 0;
 		TypedQuery<Long> q = em.createNamedQuery("position.findMaxCode", Long.class);
 
-
-		try
-		{
-		code = q.getSingleResult();
-		
+		try	{
+			code = q.getSingleResult();
 		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
+		catch (Exception e)	{
+			// first entry
 		}
 		
 		return code;
-
 	}
 
 

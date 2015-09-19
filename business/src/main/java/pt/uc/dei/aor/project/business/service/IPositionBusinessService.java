@@ -14,9 +14,6 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 public interface IPositionBusinessService {
 
-	IPosition createNewPosition(String title, Collection<Localization> localizations, PositionState state, int vacancies, Date closingDate, int sla, 
-			String contactPerson, String company , Collection<TechnicalArea> technicalAreas, String description, IScript script, Collection<IPublicationChannel> channels);
-
 	List<IPosition> getIPositions();
 	
 	long codeDefiningMethod();
@@ -26,5 +23,10 @@ public interface IPositionBusinessService {
 	IPosition updatePosition(IPosition position);
 
 	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter);
+
+	IPosition createNewPosition(String title, Collection<Localization> localizations, PositionState state,
+			int vacancies, Date closingDate, int sla, String contactPerson, String company,
+			Collection<TechnicalArea> technicalAreas, String description, List<IScript> scripts,
+			Collection<IPublicationChannel> channels);
 		
 }

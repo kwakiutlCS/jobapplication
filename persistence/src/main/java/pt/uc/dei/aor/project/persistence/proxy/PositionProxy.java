@@ -32,7 +32,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 			Collection<Localization> localizations, PositionState state,
 			int vacancies, Date closingDate, int sla, String contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
-			String description, IScript script,
+			String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels){
 
 		Set<PublicationChannelEntity> publicationChannelEntities = new TreeSet<>();
@@ -42,15 +42,17 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 			}
 		}
 
-		ScriptEntity scriptEntity = null;
-		if (script != null) {
-			scriptEntity = GenericPersistenceService.getEntity(script);
+		List<ScriptEntity> scriptEntities = new ArrayList<>();
+		if (scripts != null) {
+			for (IScript s : scripts) {
+				scriptEntities.add(GenericPersistenceService.getEntity(s));
+			}
 		}
 
 		entity = new PositionEntity(code,title, localizations,
 				state,  vacancies, openingDate,
 				closingDate,  sla,  contactPerson, company,
-				technicalAreas,  description, publicationChannelEntities, scriptEntity);
+				technicalAreas,  description, publicationChannelEntities, scriptEntities);
 	}
 
 	@Override
@@ -263,11 +265,16 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public IScript getScript() {
-		ScriptEntity script = entity.getScript();
+	public List<IScript> getScripts() {
+		List<ScriptEntity> scripts = entity.getScripts();
+		List<IScript> proxies = new ArrayList<>();
 		
-		if (script == null) return null;
-		return new ScriptProxy(script);
+		if (scripts == null) return null;
+		for (ScriptEntity se : scripts) {
+			proxies.add(new ScriptProxy(se));
+		}
+		
+		return proxies;
 	}
 
 	@Override
