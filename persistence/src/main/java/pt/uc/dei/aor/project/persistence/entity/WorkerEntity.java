@@ -202,4 +202,12 @@ public class WorkerEntity extends User {
 	public String getCv() {
 		return cv;
 	}
+
+	public void addRole(Role role) {
+		roles.add(role);
+	}
+	
+	public void removeRole(Role role) {
+		roles.remove(role);
+	}
 }

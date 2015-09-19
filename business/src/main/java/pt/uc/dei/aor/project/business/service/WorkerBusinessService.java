@@ -210,4 +210,40 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 		worker.setCv(filename);
 		workerPersistence.save(worker);
 	}
+
+	@Override
+	public void addAdmin(IWorker user) {
+		user.addRole(Role.ADMIN);
+		workerPersistence.save(user);
+	}
+
+	@Override
+	public void removeAdmin(IWorker user) {
+		user.removeRole(Role.ADMIN);
+		workerPersistence.save(user);
+	}
+
+	@Override
+	public void addManager(IWorker user) {
+		user.addRole(Role.MANAGER);
+		workerPersistence.save(user);
+	}
+
+	@Override
+	public void removeManager(IWorker user) {
+		user.removeRole(Role.MANAGER);
+		workerPersistence.save(user);
+	}
+
+	@Override
+	public void addInterviewer(IWorker user) {
+		user.addRole(Role.INTERVIEWER);
+		workerPersistence.save(user);
+	}
+
+	@Override
+	public void removeInterviewer(IWorker user) {
+		user.removeRole(Role.INTERVIEWER);
+		workerPersistence.save(user);
+	}
 }

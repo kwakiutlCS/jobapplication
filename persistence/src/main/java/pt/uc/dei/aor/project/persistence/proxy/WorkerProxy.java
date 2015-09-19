@@ -110,10 +110,6 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	
 		
 	// helper methods
-	private boolean isInterviewer() {
-		return entity.isInterviewer();
-	}
-
 	@Override
 	public void setPassword(String password) {
 		entity.setPassword(password);
@@ -233,4 +229,31 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	public String getCv() {
 		return entity.getCv();
 	}
+
+	@Override
+	public boolean isAdmin() {
+		return entity.isAdmin();
+	}
+
+	@Override
+	public boolean isManager() {
+		return entity.isManager();
+	}
+
+	@Override
+	public boolean isInterviewer() {
+		return entity.isInterviewer();
+	}
+
+	@Override
+	public void addRole(Role role) {
+		entity.addRole(role);
+	}
+
+	@Override
+	public void removeRole(Role role) {
+		entity.removeRole(role);
+	}
+
+	
 }

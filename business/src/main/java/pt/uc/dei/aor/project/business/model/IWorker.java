@@ -5,6 +5,7 @@ import java.util.List;
 import javax.resource.spi.IllegalStateException;
 
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
+import pt.uc.dei.aor.project.business.util.Role;
 
 public interface IWorker {
 
@@ -65,5 +66,15 @@ public interface IWorker {
 	public void setCv(String filename);
 
 	public String getCv();
+	
+	public boolean isAdmin();
+	
+	public boolean isManager();
+	
+	public boolean isInterviewer();
+
+	public void addRole(Role interviewer);
+
+	public void removeRole(Role interviewer);
 	
 }

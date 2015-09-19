@@ -92,6 +92,31 @@ public class WorkerBean implements Serializable {
 	}
 	
 	
+	public void addAdmin(IWorker user) {
+		workerService.addAdmin(user);
+	}
+	
+	public void removeAdmin(IWorker user) {
+		workerService.removeAdmin(user);
+	}
+	
+	public void addManager(IWorker user) {
+		workerService.addManager(user);
+	}
+	
+	public void removeManager(IWorker user) {
+		workerService.removeManager(user);
+	}
+	
+	public void addInterviewer(IWorker user) {
+		workerService.addInterviewer(user);
+	}
+	
+	public void removeInterviewer(IWorker user) {
+		workerService.removeInterviewer(user);
+	}
+	
+	
 	// filter actions
 	public void addKeyword() {
 		filter.setKeyword(keyword);

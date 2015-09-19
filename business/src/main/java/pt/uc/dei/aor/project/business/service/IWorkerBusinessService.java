@@ -51,4 +51,16 @@ public interface IWorkerBusinessService {
 
 	void uploadCV(IWorker worker, Part cv) throws IOException;
 
+	void addAdmin(IWorker user);
+
+	void removeAdmin(IWorker user);
+
+	void addManager(IWorker user);
+
+	void removeManager(IWorker user);
+
+	void addInterviewer(IWorker user);
+
+	void removeInterviewer(IWorker user);
+
 }
