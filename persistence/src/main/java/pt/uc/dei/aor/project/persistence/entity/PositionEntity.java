@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
@@ -23,6 +24,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -89,8 +91,9 @@ public class PositionEntity {
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
+	@OrderBy("orderNumber")
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private Set<PhaseEntity> phases;
+    private SortedSet<PhaseEntity> phases;
     
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
@@ -240,9 +243,15 @@ public class PositionEntity {
 
 	public List<ScriptEntity> getScripts() {
 		List<ScriptEntity> scripts = new ArrayList<>();
+		SortedSet<PhaseEntity> newPhases = new TreeSet<>(phases);
 		
-		for (PhaseEntity p : phases)
+		while (!newPhases.isEmpty()) {
+			PhaseEntity p = newPhases.first();
+			newPhases.remove(p);
 			scripts.add(p.getScript());
+		}
+		
+		System.out.println(scripts);
 		
 		return scripts;
 	}

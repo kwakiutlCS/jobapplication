@@ -43,5 +43,10 @@ public class PhaseEntity implements Serializable, Comparable<PhaseEntity> {
 
 	public ScriptEntity getScript() {
 		return script;
-	} 
+	}
+	
+	@Override
+	public String toString() {
+		return "PHASE: "+orderNumber;
+	}
 }

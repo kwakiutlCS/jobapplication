@@ -113,7 +113,7 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		
 		int counter = 1;
 		for (IInterview i : interviews) {
-			if (i == this) return counter;
+			if (i.equals(this)) return counter;
 			counter++;
 		}
 		

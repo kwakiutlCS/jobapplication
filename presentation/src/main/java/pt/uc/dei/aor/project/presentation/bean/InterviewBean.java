@@ -46,9 +46,12 @@ public class InterviewBean implements Serializable {
 	
 	public void onload() {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
+		
 		scriptEntries = findScriptEntries();
 		
+		System.out.println(scriptEntries);
 		answerList = interviewService.findAnswersByInterview(selectedInterview);
+	
 		populateAnswersGiven();
 		
 		if (scriptEntries != null || !scriptEntries.isEmpty()) {
