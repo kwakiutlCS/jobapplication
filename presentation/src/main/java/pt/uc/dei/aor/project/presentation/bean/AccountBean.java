@@ -81,7 +81,7 @@ public class AccountBean implements Serializable {
 	public void updatePassword() {
 		try {
 			IWorker user = MetaUtils.getUser();
-			logger.trace(Encryptor.encrypt(password));
+			
 			user.setPassword(Encryptor.encrypt(password));
 			user = workerService.update(user, oldPassword);
 			

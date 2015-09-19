@@ -1,0 +1,18 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="headerForm">
+		<p:menubar id="headerMenu">
+			<p:submenu label="#{loginBean.user.name}">
+				<p:menuitem value="quit" action="#{loginBean.logout}" />
+			</p:submenu>
+			
+			<p:menuitem rendered="#{notificationBean.countUnread() gt 0}" id="notificationMsg"
+			value="#{notificationBean.countUnread()} unread notifications" outcome="/manager/notifications" />
+		</p:menubar>
+	</h:form>
+
+</ui:composition>
