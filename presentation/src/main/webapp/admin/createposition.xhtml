@@ -7,6 +7,10 @@
 
 
 	<ui:define name="title">Create Position</ui:define>
+	
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+	</ui:define>
 
 	<ui:define name="content">
 
@@ -84,11 +88,19 @@
 						itemLabel="#{scr.title}" />
 				</p:selectOneMenu>	
 				<p:commandLink value="add script" action="#{positionBean.addScript}" 
-				process=":newpositionform:script @this" update=":newpositionform:scriptList" />
+				process=":newpositionform:script @this" update="scriptList" />
 				
 				<h:panelGroup id="scriptList">
 				<ui:repeat value="#{positionBean.scripts}" var="script">
-					#{script.title}
+					<div class="objectUnit">
+						<span>
+						#{script.title}
+						</span>
+						<span class="removalLink">
+							<p:commandLink value="x" action="#{positionBean.removeScript(script)}"
+							process="@this" update=":newpositionform:scriptList" />
+						</span>
+					</div>
 				</ui:repeat>		
 				</h:panelGroup>
 								

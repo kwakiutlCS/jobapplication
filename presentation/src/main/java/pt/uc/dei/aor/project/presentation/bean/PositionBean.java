@@ -50,6 +50,10 @@ public class PositionBean implements Serializable {
 	
 	public PositionBean() {
 	}
+	
+	public void removeScript(IScript script) {
+		scripts.remove(script);
+	}
 
 	public List<Localization> getLocalizations(){
 		
