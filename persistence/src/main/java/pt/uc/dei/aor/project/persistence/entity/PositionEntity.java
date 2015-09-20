@@ -251,8 +251,6 @@ public class PositionEntity {
 			scripts.add(p.getScript());
 		}
 		
-		System.out.println(scripts);
-		
 		return scripts;
 	}
 

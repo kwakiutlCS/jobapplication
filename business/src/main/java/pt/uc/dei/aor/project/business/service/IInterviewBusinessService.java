@@ -40,5 +40,13 @@ public interface IInterviewBusinessService {
 	List<IInterview> findInterviews(int offset, int limit);
 
 	List<IInterview> findInterviews(int offset, int limit, InterviewFilter filter);
+
+	IInterview saveInterview(IInterview interview);
+
+	IInterview addInterviewer(IInterview interview, IWorker interviewer);
+
+	IInterview removeInterviewer(IInterview interview, IWorker interviewer);
+
+	IInterview setInterviewers(IInterview interview, Collection<IWorker> selectedInterviewers);
 	
 }

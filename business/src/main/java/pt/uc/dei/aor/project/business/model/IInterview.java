@@ -22,4 +22,13 @@ public interface IInterview {
 	public String getInterviewersFormatted();
 	
 	public int getInterviewPhase();
+
+	public void addInterviewer(IWorker interviewer);
+	
+	public void removeInterviewer(IWorker interviewer);
+
+	public void setDate(Date date);
+
+	public void setInterviewers(Collection<IWorker> selectedInterviewers);
+	
 }

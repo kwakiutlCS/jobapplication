@@ -179,5 +179,35 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public List<IInterview> findInterviews(int offset, int limit, InterviewFilter filter) {
 		return interviewPersistence.findInterviewsWithFilter(offset, limit, filter);
 	}
+
+
+	@Override
+	public IInterview saveInterview(IInterview interview) {
+		return interviewPersistence.save(interview);
+	}
+
+
+	@Override
+	public IInterview addInterviewer(IInterview interview, IWorker interviewer) {
+		interview.addInterviewer(interviewer);
+		return interviewPersistence.save(interview);
+	}
+
+
+	@Override
+	public IInterview removeInterviewer(IInterview interview, IWorker interviewer) {
+		interview.removeInterviewer(interviewer);
+		return interviewPersistence.save(interview);
+	}
+
+
+	@Override
+	public IInterview setInterviewers(IInterview interview, Collection<IWorker> selectedInterviewers) {
+		for (IWorker w : selectedInterviewers) {
+			workerPersistence.insertInterview(w.getId(), interview);
+		}
+		
+		return interviewPersistence.save(interview);
+	}
 	
 }

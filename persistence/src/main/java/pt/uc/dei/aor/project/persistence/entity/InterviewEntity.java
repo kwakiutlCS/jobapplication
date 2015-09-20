@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -146,5 +147,18 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	
 	public void removeInterviewer(WorkerEntity interviewer) {
 		this.interviewers.remove(interviewer);
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public void setInterviewers(List<WorkerEntity> interviewers) {
+		this.interviewers = new HashSet<>();
+		this.interviewers.addAll(interviewers);
+		
+		for (WorkerEntity w : interviewers) {
+			w.addInterview(this);
+		}
 	}
 }
