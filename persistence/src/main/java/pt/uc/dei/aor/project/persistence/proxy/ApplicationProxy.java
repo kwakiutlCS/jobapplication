@@ -106,5 +106,11 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		return true;
 	}
 
+
+	@Override
+	public String getLetter() {
+		return entity.getLetter();
+	}
+
 	
 }

@@ -64,4 +64,6 @@ public interface IWorkerBusinessService {
 
 	void removeInterviewer(IWorker user);
 
+	boolean interviewerHasCandidate(IWorker user, String string);
+
 }

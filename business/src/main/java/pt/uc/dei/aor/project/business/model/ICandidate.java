@@ -55,5 +55,5 @@ public interface ICandidate {
 
 	public void setApplications(List<IApplication> applications);
 
-
+	
 }

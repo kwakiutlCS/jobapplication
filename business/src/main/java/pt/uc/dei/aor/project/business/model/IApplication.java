@@ -23,4 +23,6 @@ public interface IApplication {
 
 	boolean reachedAllPhases();
 
+	String getLetter();
+
 }
