@@ -224,7 +224,9 @@ public class PositionBean implements Serializable {
 	}
 
 	public void addScript() {
+		if (script == null) return;
 		if (scripts == null) scripts = new ArrayList<>();
+		
 		scripts.remove(script);
 		scripts.add(script);
 	}

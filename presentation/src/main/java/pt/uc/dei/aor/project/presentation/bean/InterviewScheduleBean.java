@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
@@ -106,6 +107,9 @@ public class InterviewScheduleBean implements Serializable {
 			MetaUtils.setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
 		} catch (GenericIllegalParamsException | RepeatedInterviewException e) {
 			MetaUtils.setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
+		} catch (AllPhasesCompletedException e) {
+			MetaUtils.setMsg("Application reached process' final phase. Add another script to position", 
+					FacesMessage.SEVERITY_ERROR);
 		}
 		
 		selectedInterviewers.clear();

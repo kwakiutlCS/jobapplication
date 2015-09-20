@@ -96,5 +96,15 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		return sdf.format(entity.getDate());
 	}
 
+
+	@Override
+	public boolean reachedAllPhases() {
+		int scripts = getPosition().getScripts().size();
+		int interviews = getInterviews().size();
+		
+		if (interviews < scripts) return false;
+		return true;
+	}
+
 	
 }

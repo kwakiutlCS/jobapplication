@@ -14,6 +14,7 @@ import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
@@ -66,9 +67,13 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 	@Override
 	public IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) 
-			throws GenericIllegalParamsException, RepeatedInterviewException {
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		if (date == null || application == null 
 				|| interviewers == null) throw new GenericIllegalParamsException();
+		
+		if (application.reachedAllPhases()) {
+			throw new AllPhasesCompletedException();
+		}
 		
 		IInterview interview = factory.interview(date);
 		
