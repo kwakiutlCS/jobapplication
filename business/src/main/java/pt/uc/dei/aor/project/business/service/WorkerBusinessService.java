@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
+import pt.uc.dei.aor.project.business.exception.IllegalRoleChangeException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
@@ -218,7 +219,17 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public void removeAdmin(IWorker user) {
+	public void removeAdmin(IWorker admin, IWorker user) throws IllegalRoleChangeException {
+		if (admin.equals(user)) {
+			throw new IllegalRoleChangeException(
+					"It is not possible to remove admin status from yourself");
+		}
+		
+		if (workerPersistence.countAdmins() == 1) {
+			throw new IllegalRoleChangeException(
+					"At least one admin is required in the application");
+		}
+		
 		user.removeRole(Role.ADMIN);
 		workerPersistence.save(user);
 	}

@@ -40,5 +40,7 @@ public interface IWorkerPersistenceService {
 
 	List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
+	long countAdmins();
+
 	
 }

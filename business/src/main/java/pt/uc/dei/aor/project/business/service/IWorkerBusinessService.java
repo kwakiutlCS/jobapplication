@@ -10,6 +10,7 @@ import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
+import pt.uc.dei.aor.project.business.exception.IllegalRoleChangeException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
@@ -53,7 +54,7 @@ public interface IWorkerBusinessService {
 
 	void addAdmin(IWorker user);
 
-	void removeAdmin(IWorker user);
+	void removeAdmin(IWorker admin, IWorker user) throws IllegalRoleChangeException;
 
 	void addManager(IWorker user);
 

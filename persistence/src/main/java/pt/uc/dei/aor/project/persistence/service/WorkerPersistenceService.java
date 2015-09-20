@@ -267,4 +267,15 @@ public class WorkerPersistenceService implements IWorkerPersistenceService {
 		return proxies;
 	}
 
+	@Override
+	public long countAdmins() {
+		TypedQuery<Long> query = em.createNamedQuery("Worker.countAdmins", Long.class);
+		
+		List<Long> result = query.getResultList();
+		
+		if (result.isEmpty()) return 0;
+		
+		return result.get(0);
+	}
+
 }

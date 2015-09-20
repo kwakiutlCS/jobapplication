@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
+import pt.uc.dei.aor.project.business.exception.IllegalRoleChangeException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -97,7 +98,11 @@ public class WorkerBean implements Serializable {
 	}
 	
 	public void removeAdmin(IWorker user) {
-		workerService.removeAdmin(user);
+		try {
+			workerService.removeAdmin(MetaUtils.getUser(), user);
+		} catch (IllegalRoleChangeException e) {
+			MetaUtils.setMsg(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	public void addManager(IWorker user) {
