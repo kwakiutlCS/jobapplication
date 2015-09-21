@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.presentation_public.bean;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
@@ -25,7 +27,7 @@ import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 @Named
 @RequestScoped
 public class RegisterBean {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(RegisterBean.class);
 
 	@Inject
@@ -53,8 +55,26 @@ public class RegisterBean {
 	private String oldPassword;
 	private boolean showExtra;
 
+
+	@PostConstruct
+	public void init() {
+		ICandidate user = MetaUtils.getUser();
+		login = user.getLogin();
+		email = user.getEmail();
+		name = user.getName();
+		surname = user.getSurname();
+		address = user.getAddress();
+		city = user.getCity();
+		country = user.getCountry();
+		phone = user.getPhone();
+		mobilePhone = user.getMobilePhone();
+		
+	}
+
+
 	public RegisterBean() {
 	}
+
 
 
 	public void upload(AjaxBehaviorEvent event) {
@@ -98,7 +118,19 @@ public class RegisterBean {
 
 		return "index.xhtml";
 	}
-	
+
+	public void updateCandidate() {
+			ICandidate user = MetaUtils.getUser();
+			user.setName(name);
+			user.setSurname(surname);
+			user.setAddress(address);
+			user.setCity(city);
+			user.setCountry(country);
+			user.setPhone(phone);
+			user.setMobilePhone(mobilePhone);
+			user = candidateService.update(user);
+	}
+
 	//getters and setters
 
 	public String getLogin() {
@@ -197,7 +229,7 @@ public class RegisterBean {
 	public void setApplications(List<IApplication> applications) {
 		this.applications = applications;
 	}
-	
+
 	public String getQualification() {
 		return school;
 	}
@@ -285,8 +317,8 @@ public class RegisterBean {
 	public void setShowExtra(boolean showExtra) {
 		this.showExtra = showExtra;
 	}
-	
-	
-	
+
+
+
 }
 
