@@ -7,6 +7,9 @@
 
 	<ui:define name="title">Interview</ui:define>
 	
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviewCandidate.css" />
+	</ui:define>
 	
 	<ui:define name="metadata">
 		<f:metadata>
@@ -32,8 +35,11 @@
 				cover letter
 			</h:outputLink>
 			
+			
+		<div class="interviewStarter">
 		<p:link value="Start Interview" 
 		outcome="startinterview.xhtml?it=#{interviewBean.selectedInterviewId}" />
+		</div>	
 
 	</ui:define>
 

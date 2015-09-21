@@ -36,7 +36,6 @@ public class LetterInterviewerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
-		System.out.println(filename);
 		
 		String[] fields = filename.split("/");
 		if (fields.length != 2) return; 
@@ -54,7 +53,7 @@ public class LetterInterviewerServlet extends HttpServlet {
 		if (user != null) {
 			boolean invalid = true;
 			for (IInterview i : interviewService.findActiveInterviewsByUser(user)) {
-				System.out.println(i.getId());
+				
 				if (i.getApplication().getId() == id) {
 					invalid = false;
 					break;
@@ -64,7 +63,7 @@ public class LetterInterviewerServlet extends HttpServlet {
 			if (invalid) return;
 			
 			Path path = DOWNLOADS.resolve(Paths.get(filename));
-			System.out.println(path.toAbsolutePath());
+			
 			if (Files.exists(path)) {
 				File file = path.toFile();
 				response.setHeader("Content-Type", getServletContext().getMimeType(filename));
