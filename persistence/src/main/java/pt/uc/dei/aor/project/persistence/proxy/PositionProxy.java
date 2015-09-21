@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -194,8 +195,8 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 
 	@Override
 	public List<TechnicalArea> getTechnicalAreas() {
-		
-		return entity.getTechnicalAreas();
+		Set<TechnicalArea> set = new HashSet<>(entity.getTechnicalAreas()); 
+		return new ArrayList<>(set);
 	}
 	
 	@Override

@@ -18,6 +18,8 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
+import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
@@ -184,6 +186,42 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		
 		List<InterviewEntity> entities = query.getResultList();
 		List<IInterview> proxies = new ArrayList<>();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
+	}
+
+
+	@Override
+	public List<IInterview> findPastInterviewsByUser(ICandidate candidate, IApplication application, Date date) {
+		List<ApplicationEntity> appEntities =  
+				em.find(CandidateEntity.class, candidate.getId()).getApplications();
+		
+		long appId = application.getId();
+		
+		
+		for (ApplicationEntity ae : appEntities) {
+			long aeId = ae.getId();
+			if (ae.getId() == application.getId()) {
+				appEntities.remove(ae);
+				break;
+			}
+		}
+		
+		List<IInterview> proxies = new ArrayList<>();
+		if (appEntities.isEmpty()) return proxies;
+		
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findPastInterviewsByCandidate",
+				InterviewEntity.class);
+		
+		query.setParameter("date", date);
+		query.setParameter("applications", appEntities);
+		
+		List<InterviewEntity> entities = query.getResultList();
+		
 		
 		for (InterviewEntity ie : entities) {
 			proxies.add(new InterviewProxy(ie));

@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +23,7 @@ import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
@@ -132,7 +135,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		
 		List<IScript> scripts = position.getScripts();
 		
-		if (scripts.size() < phase) return null;
+		if (scripts.size() < phase || phase == -1) return null;
 		IScript script = scripts.get(phase-1);
 		
 		return script.getEntries();
@@ -213,6 +216,32 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		}
 		
 		return interviewPersistence.save(interview);
+	}
+
+
+	@Override
+	public List<IInterview> getPreviousInterviews(IInterview interview) {
+		List<IInterview> interviews = new ArrayList<>();
+		
+		IApplication app = interview.getApplication();
+		
+		Calendar date = Calendar.getInstance();
+		date.setTime(interview.getDateObject());
+		Calendar cal = Calendar.getInstance();
+		
+		for (IInterview i : app.getInterviews()) {
+			cal.setTime(i.getDateObject());
+			if (cal.before(date)) interviews.add(i);
+		}
+		
+		return interviews;
+	}
+
+
+	@Override
+	public List<IInterview> getHistoricInterviews(IInterview interview) {
+		return interviewPersistence.findPastInterviewsByUser(interview.getCandidate(), 
+				interview.getApplication(), interview.getDateObject());
 	}
 	
 }

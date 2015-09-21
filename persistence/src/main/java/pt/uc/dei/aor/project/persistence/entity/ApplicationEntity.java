@@ -70,11 +70,13 @@ public class ApplicationEntity {
 		return id;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
+		result = prime * result + ((internalCandidate == null) ? 0 : internalCandidate.hashCode());
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
@@ -92,6 +94,11 @@ public class ApplicationEntity {
 			if (other.candidate != null)
 				return false;
 		} else if (!candidate.equals(other.candidate))
+			return false;
+		if (internalCandidate == null) {
+			if (other.internalCandidate != null)
+				return false;
+		} else if (!internalCandidate.equals(other.internalCandidate))
 			return false;
 		if (position == null) {
 			if (other.position != null)

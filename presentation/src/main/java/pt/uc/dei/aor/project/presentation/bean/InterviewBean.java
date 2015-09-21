@@ -40,6 +40,8 @@ public class InterviewBean implements Serializable {
 	private List<IAnswer> answerList;
 	private List<Boolean> answersGiven;
 	
+	private List<IInterview> historic;
+	
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
@@ -152,6 +154,18 @@ public class InterviewBean implements Serializable {
 		long id = selectedInterview.getApplication().getId();
 		String letter = selectedInterview.getApplication().getLetter();
 		return "https://localhost:8443"+app+"/interview/letter/"+id+"/"+letter;
+	}
+	
+	public List<IInterview> getPreviousInterviews() {
+		return interviewService.getPreviousInterviews(selectedInterview);
+	}
+	
+	public List<IInterview> getHistoricInterviews() {
+		if (historic == null) {
+			historic = interviewService.getHistoricInterviews(selectedInterview);
+		}
+		
+		return historic;
 	}
 	
 	// getters and setters

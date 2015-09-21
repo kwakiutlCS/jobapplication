@@ -33,7 +33,9 @@ import org.hibernate.annotations.FetchMode;
 	@NamedQuery(name = "Interview.findActiveInterviewsByInterviewer", 
 	query = "from InterviewEntity u where :user member of u.interviewers and u.date >= :date"),
 	@NamedQuery(name = "Interview.findInterviewByDateAndApplication", 
-	query = "from InterviewEntity u where u.date = :date and u.application = :application"),	
+	query = "from InterviewEntity u where u.date = :date and u.application = :application"),
+	@NamedQuery(name = "Interview.findPastInterviewsByCandidate", 
+	query = "from InterviewEntity u where u.date < :date and u.application in (:applications)"),
 })
 public class InterviewEntity implements Comparable<InterviewEntity> {
 	

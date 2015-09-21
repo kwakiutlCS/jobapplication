@@ -6,40 +6,109 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">Interview</ui:define>
-	
+
 	<ui:define name="scripts">
 		<h:outputStylesheet library="css" name="interviewCandidate.css" />
 	</ui:define>
-	
+
 	<ui:define name="metadata">
 		<f:metadata>
-    		<f:viewParam name="it" value="#{interviewBean.selectedInterviewId}" />
-    		<f:viewAction action="#{interviewBean.onload}" />
+			<f:viewParam name="it" value="#{interviewBean.selectedInterviewId}" />
+			<f:viewAction action="#{interviewBean.onload}" />
 		</f:metadata>
 	</ui:define>
-	
-	
+
+
 	<ui:define name="content">
+		<div class="interviewStarter">
+			<p:link value="Start Interview"
+				outcome="startinterview.xhtml?it=#{interviewBean.selectedInterviewId}" />
+		</div>
+		
+		
+		
 		<div class="ui-grid-row">
 			<div class="ui-grid-col-12">
 				<h1>#{interviewBean.selectedInterview.application.position.title}</h1>
+				
+			</div>
+		</div>
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
 				<h2>#{interviewBean.selectedInterview.application.candidate.fullName}</h2>
 			</div>
 		</div>
 
-		<h:outputLink value="#{interviewBean.cvLink}">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<span>Email: </span> <span>#{interviewBean.selectedInterview.application.candidate.email}</span>
+			</div>
+		</div>
+		
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<span>Address: </span> <span>#{interviewBean.selectedInterview.application.candidate.address}</span>
+			</div>
+		</div>
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<span>City: </span> <span>#{interviewBean.selectedInterview.application.candidate.city}
+					- #{interviewBean.selectedInterview.application.candidate.country}
+				</span>
+			</div>
+		</div>
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<span>Phone: </span> <span>#{interviewBean.selectedInterview.application.candidate.phone}
+					-
+					#{interviewBean.selectedInterview.application.candidate.mobilePhone}</span>
+			</div>
+		</div>
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<span>Documentos: </span> <span> <h:outputLink
+						value="#{interviewBean.cvLink}">
 				cv
-			</h:outputLink>
-			
-			<h:outputLink value="#{interviewBean.letterLink}">
+			</h:outputLink> - <h:outputLink value="#{interviewBean.letterLink}">
 				cover letter
 			</h:outputLink>
-			
-			
-		<div class="interviewStarter">
-		<p:link value="Start Interview" 
-		outcome="startinterview.xhtml?it=#{interviewBean.selectedInterviewId}" />
-		</div>	
+				</span>
+			</div>
+		</div>
+
+		
+		
+		<h:panelGroup rendered="#{not empty interviewBean.previousInterviews}" layout="block" styleClass="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h2>Previous Interviews for this position</h2>
+			</div>
+		</h:panelGroup>
+		<ui:repeat value="#{interviewBean.previousInterviews}" var="interview">
+			<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h:link value="#{interview.date}" outcome="interviewResult.xhtml?it=#{interview.id}" />
+			</div>
+		</div>
+		</ui:repeat>
+		
+		
+		<h:panelGroup rendered="#{not empty interviewBean.historicInterviews}" layout="block" styleClass="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h2>Previous Interviews for this candidate</h2>
+			</div>
+		</h:panelGroup>
+		<ui:repeat value="#{interviewBean.historicInterviews}" var="interview">
+			<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				#{interview.application.position.title} - #{interview.date} - 
+				<h:link value="detail" outcome="interviewResult.xhtml?it=#{interview.id}" />
+			</div>
+		</div>
+		</ui:repeat>
 
 	</ui:define>
 
