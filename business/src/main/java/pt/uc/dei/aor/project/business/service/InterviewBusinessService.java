@@ -243,5 +243,29 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		return interviewPersistence.findPastInterviewsByUser(interview.getCandidate(), 
 				interview.getApplication(), interview.getDateObject());
 	}
+
+
+	@Override
+	public List<IInterview> findPastInterviews(IApplication application) {
+		return interviewPersistence.findPastInterviews(application);
+	}
+
+
+	@Override
+	public List<IInterview> findPresentInterviews(IApplication application) {
+		return interviewPersistence.findPresentInterviews(application);
+	}
+
+
+	@Override
+	public List<IInterview> findFutureInterviews(IApplication application) {
+		return interviewPersistence.findFutureInterviews(application);
+	}
+
+
+	@Override
+	public boolean isCompleted(IInterview interview) {
+		return interviewPersistence.isCompleted(interview);
+	}
 	
 }

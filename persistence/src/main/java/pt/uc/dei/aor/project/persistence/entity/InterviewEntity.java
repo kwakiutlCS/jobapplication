@@ -26,6 +26,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import pt.uc.dei.aor.project.business.model.IWorker;
+
 @Entity
 @Table(name="interview")
 @NamedQueries({
@@ -36,6 +38,11 @@ import org.hibernate.annotations.FetchMode;
 	query = "from InterviewEntity u where u.date = :date and u.application = :application"),
 	@NamedQuery(name = "Interview.findPastInterviewsByCandidate", 
 	query = "from InterviewEntity u where u.date < :date and u.application in (:applications)"),
+	@NamedQuery(name = "Interview.findPastInterviews", 
+	query = "from InterviewEntity u where u.date < :date and u.application = :application"),
+	@NamedQuery(name = "Interview.findFutureInterviews", 
+	query = "from InterviewEntity u where u.date > :date and u.application = :application"),
+	
 })
 public class InterviewEntity implements Comparable<InterviewEntity> {
 	
@@ -162,5 +169,9 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 		for (WorkerEntity w : interviewers) {
 			w.addInterview(this);
 		}
+	}
+
+	public Collection<AnswerEntity> getAnswers() {
+		return answers;
 	}
 }

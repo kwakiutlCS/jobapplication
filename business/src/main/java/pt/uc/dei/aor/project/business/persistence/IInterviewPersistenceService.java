@@ -27,4 +27,12 @@ public interface IInterviewPersistenceService {
 	List<IInterview> findInterviewsWithFilter(int offset, int limit, InterviewFilter filter);
 
 	List<IInterview> findPastInterviewsByUser(ICandidate candidate, IApplication application, Date date);
+
+	List<IInterview> findPastInterviews(IApplication application);
+
+	List<IInterview> findPresentInterviews(IApplication application);
+
+	List<IInterview> findFutureInterviews(IApplication application);
+
+	boolean isCompleted(IInterview interview);
 }

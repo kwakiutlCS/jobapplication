@@ -36,9 +36,29 @@
 			</h:form>
 		</h:panelGroup>
 		
+		<h:panelGroup id="interviewListPast">
+			<ui:repeat
+				value="#{interviewScheduleBean.pastInterviews}"
+				var="interview">
+				<div class="ui-grid-row">
+					<h:panelGroup
+						rendered="#{interviewScheduleBean.editing ne interview}">
+						<div class="ui-grid-col-3">#{interview.date}</div>
+						<div class="ui-grid-col-3">
+							#{interview.interviewersFormatted}</div>
+						<h:panelGroup layout="block" styleClass="ui-grid-3" 
+						rendered="#{interviewScheduleBean.completed(interview)}">
+							<p:link value="results" outcome="interview.xhtml?it=#{interview.id}" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</div>
+			</ui:repeat>
+		</h:panelGroup>
+
+			
 		<h:panelGroup id="interviewList">
 			<ui:repeat
-				value="#{interviewScheduleBean.selectedApplication.interviews}"
+				value="#{interviewScheduleBean.futureInterviews}"
 				var="interview">
 				<div class="ui-grid-row">
 					<h:panelGroup
@@ -122,9 +142,6 @@
 				</div>
 			</ui:repeat>
 		</h:panelGroup>
-
-
-
 
 		<h:panelGroup id="addInterviewPanel">
 			<h:form id="addInterviewForm"

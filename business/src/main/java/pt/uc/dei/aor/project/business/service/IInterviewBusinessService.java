@@ -54,5 +54,13 @@ public interface IInterviewBusinessService {
 	List<IInterview> getPreviousInterviews(IInterview interview);
 
 	List<IInterview> getHistoricInterviews(IInterview interview);
+
+	List<IInterview> findPastInterviews(IApplication selectedApplication);
+
+	List<IInterview> findPresentInterviews(IApplication selectedApplication);
+
+	List<IInterview> findFutureInterviews(IApplication selectedApplication);
+
+	boolean isCompleted(IInterview interview);
 	
 }

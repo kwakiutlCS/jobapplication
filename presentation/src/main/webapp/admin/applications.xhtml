@@ -138,6 +138,10 @@
 			<p:column>#{app.position.code}</p:column>
 			<p:column>#{app.position.stateFormatted}</p:column>
 			<p:column>#{app.candidate.fullName}</p:column>
+			<p:column>
+				<h:graphicImage value="/resources/img/yes.png" rendered="#{app.analyzed}"	/>
+				<h:graphicImage value="/resources/img/no.png" rendered="#{not app.analyzed}"/>
+			</p:column>
 			<p:column><p:link outcome="application.xthml?ap=#{app.id}" value="detail" /></p:column>
 		</p:dataTable>
 

@@ -190,6 +190,21 @@ public class InterviewScheduleBean implements Serializable {
 		applicationService.changeAnalyzed(selectedApplication);
 	}
 	
+	public List<IInterview> getPastInterviews() {
+		return interviewService.findPastInterviews(selectedApplication);
+	}
+	
+	
+	public List<IInterview> getFutureInterviews() {
+		return interviewService.findFutureInterviews(selectedApplication);
+	}
+	
+	public boolean completed(IInterview interview) {
+		return interviewService.isCompleted(interview);
+	}
+	
+	
+	
 	// getters and setters
 	
 	public IWorker getInterviewer() {
