@@ -20,6 +20,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -27,6 +28,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
@@ -73,8 +75,9 @@ public class PositionEntity {
 	@Column(nullable=false) 
 	private int sla;
 	
-	@Column(nullable=false)
-	private String contactPerson;
+	@JoinColumn(nullable=false)
+	@ManyToOne
+	private WorkerEntity contactPerson;
 	
 	@Column(nullable=false)
 	private String company;
@@ -98,7 +101,7 @@ public class PositionEntity {
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
-			Date closingDate, int sla, String contactPerson, String company,
+			Date closingDate, int sla, WorkerEntity contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			Collection<PublicationChannelEntity> publications, List<ScriptEntity> scripts) {
 		super();
@@ -201,11 +204,11 @@ public class PositionEntity {
 		this.sla = sla;
 	}
 
-	public String getContactPerson() {
+	public WorkerEntity getContactPerson() {
 		return contactPerson;
 	}
 
-	public void setContactPerson(String contactPerson) {
+	public void setContactPerson(WorkerEntity contactPerson) {
 		this.contactPerson = contactPerson;
 	}
 

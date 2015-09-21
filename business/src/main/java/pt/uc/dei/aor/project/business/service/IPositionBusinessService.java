@@ -8,6 +8,7 @@ import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
@@ -24,8 +25,10 @@ public interface IPositionBusinessService {
 
 	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter);
 
+	List<IPosition> findFilteredPositionsByManager(int offset, int i, PositionFilter filter, IWorker user);
+
 	IPosition createNewPosition(String title, Collection<Localization> localizations, PositionState state,
-			int vacancies, Date closingDate, int sla, String contactPerson, String company,
+			int vacancies, Date closingDate, int sla, IWorker contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels);
 		

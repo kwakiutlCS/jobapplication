@@ -41,7 +41,7 @@ public interface IModelFactory {
 	IQualification qualification(String school, String degree);
 
 	IPosition position(long code, Date openingDate, String title, Collection<Localization> localizations,
-			PositionState state, int vacancies, Date closingDate, int sla, String contactPerson, String company,
+			PositionState state, int vacancies, Date closingDate, int sla, IWorker contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels);
 }
