@@ -55,5 +55,9 @@ public interface ICandidate {
 
 	public void setApplications(List<IApplication> applications);
 
+	public void addQualification(IQualification qualification);
+
+	public void removeQualification(IQualification qualification);
+
 
 }

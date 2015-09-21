@@ -1,23 +1,39 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
-import java.util.Collection;
+import java.io.IOException;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
+import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
+
 
 @Named
 @RequestScoped
 public class RegisterBean {
 	
+	private static final Logger logger = LoggerFactory.getLogger(RegisterBean.class);
+
 	@Inject
 	private ICandidateBusinessService candidateService;
-	
+
+	@Inject
+	private IQualificationBusinessService qualificationService;
+
 	private String login;
 	private String password;
 	private String email;
@@ -28,30 +44,80 @@ public class RegisterBean {
 	private String country;
 	private String phone; 
 	private String mobilePhone;
-	private Collection<IQualification> qualifications; 
-	private Collection<IApplication> applications;
-	private String cv;
-	
+	private String school;
+	private String degree;
+	private List<IQualification> choosenQualifications;
+	private List<IApplication> applications;
+	private Part cv;
+	private String cvPath;;
+	private String oldPassword;
+	private boolean showExtra;
+
 	public RegisterBean() {
 	}
+
+
+	public void upload(AjaxBehaviorEvent event) {
+
+		if (!cv.getContentType().equals("application/pdf")) {
+			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
+			return; 
+		}
+
+		try {
+			candidateService.uploadCV(MetaUtils.getUser(), cv);
+		} catch (IOException e) {
+			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
+			cv = null;
+			logger.error("Error uploading file: "+cv.getSubmittedFileName());
+		}
+	}
+
+	public List<String> listSchools(String text) {
+		return qualificationService.listSchools(text);
+	}
+
+	public List<String> listDegrees() {
+		return qualificationService.listDegrees(school);
+	}
+
+
+	public void addQualification() {
+		qualificationService.addQualification(MetaUtils.getUser(), school, degree);
+	}
+
+	public void removeQualification(IQualification qualification) {
+		qualificationService.removeQualification(MetaUtils.getUser(), qualification);
+	}
+
+
+	public String register() throws DuplicatedUserException {
+
+		candidateService.createNewCandidate(login, name, surname, email, Encryptor.encrypt(password), address, city,
+				country, phone, mobilePhone, choosenQualifications, cvPath, applications);
+
+		return "index.xhtml";
+	}
 	
+	//getters and setters
+
 	public String getLogin() {
 		return login;
 	}
-	
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+
+
 	public String getEmail() {
 		return email;
 	}
@@ -75,7 +141,7 @@ public class RegisterBean {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	public ICandidateBusinessService getCandidateService() {
 		return candidateService;
 	}
@@ -124,41 +190,103 @@ public class RegisterBean {
 		this.mobilePhone = mobilePhone;
 	}
 
-	public Collection<IQualification> getQualifications() {
-		return qualifications;
-	}
-
-	public void setQualifications(Collection<IQualification> qualifications) {
-		this.qualifications = qualifications;
-	}
-
-	public String getCv() {
-		return cv;
-	}
-
-	public void setCv(String cv) {
-		this.cv = cv;
-	}
-
-	public Collection<IApplication> getApplications() {
+	public List<IApplication> getApplications() {
 		return applications;
 	}
 
-	public void setApplications(Collection<IApplication> applications) {
+	public void setApplications(List<IApplication> applications) {
 		this.applications = applications;
 	}
-
-	public String register() {
-		
-		System.out.println(login);
-		System.out.println(cv);
-
-		candidateService.createNewCandidate(login, name, surname, email, Encryptor.encrypt(password), address, city,
-				country, phone, mobilePhone, qualifications, cv, applications);
-		
-		System.out.println("Complete!");
-		
-		return "index.xhtml";
+	
+	public String getQualification() {
+		return school;
 	}
+
+	public void setQualification(String qualification) {
+		this.school = qualification;
+	}
+
+	public String getDegree() {
+		return degree;
+	}
+
+
+	public void setDegree(String degree) {
+		this.degree = degree;
+	}
+
+
+	public IQualificationBusinessService getQualificationService() {
+		return qualificationService;
+	}
+
+
+	public void setQualificationService(
+			IQualificationBusinessService qualificationService) {
+		this.qualificationService = qualificationService;
+	}
+
+
+	public String getSchool() {
+		return school;
+	}
+
+
+	public void setSchool(String school) {
+		this.school = school;
+	}
+
+
+	public List<IQualification> getChoosenQualifications() {
+		return choosenQualifications;
+	}
+
+
+	public void setChoosenQualifications(List<IQualification> choosenQualifications) {
+		this.choosenQualifications = choosenQualifications;
+	}
+
+
+	public Part getCv() {
+		return cv;
+	}
+
+
+	public void setCv(Part cv) {
+		this.cv = cv;
+	}
+
+
+	public String getCvPath() {
+		return cvPath;
+	}
+
+
+	public void setCvPath(String cvPath) {
+		this.cvPath = cvPath;
+	}
+
+
+	public String getOldPassword() {
+		return oldPassword;
+	}
+
+
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+
+	public boolean isShowExtra() {
+		return showExtra;
+	}
+
+
+	public void setShowExtra(boolean showExtra) {
+		this.showExtra = showExtra;
+	}
+	
+	
+	
 }
 
