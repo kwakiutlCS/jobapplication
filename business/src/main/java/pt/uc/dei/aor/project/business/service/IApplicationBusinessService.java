@@ -12,5 +12,7 @@ public interface IApplicationBusinessService {
 	IApplication findApplicationById(long id);
 
 	List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit);
+
+	IApplication changeAnalyzed(IApplication selectedApplication);
 	
 }

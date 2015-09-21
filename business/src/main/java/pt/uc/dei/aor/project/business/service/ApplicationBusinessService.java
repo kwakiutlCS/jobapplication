@@ -13,8 +13,6 @@ import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService
 @Stateless
 public class ApplicationBusinessService implements IApplicationBusinessService {
 
-	@Inject
-	private IModelFactory factory;
 	
 	@Inject
 	private IApplicationPersistenceService applicationPersistence;
@@ -28,6 +26,12 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	@Override
 	public List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit) {
 		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit);
+	}
+
+	@Override
+	public IApplication changeAnalyzed(IApplication application) {
+		application.changeAnalyzed();
+		return applicationPersistence.save(application);
 	}
 	
 }

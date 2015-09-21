@@ -21,6 +21,20 @@
 
 
 	<ui:define name="content">
+	
+		<h:panelGroup id="analyzed">
+			<h:form>
+				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
+			rendered="#{interviewScheduleBean.selectedApplication.analyzed}" update="@form">
+			<h:graphicImage value="/resources/img/yes.png" />
+			</p:commandLink>
+			
+			<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
+			rendered="#{not interviewScheduleBean.selectedApplication.analyzed}" update="@form">
+			<h:graphicImage value="/resources/img/no.png" />
+			</p:commandLink>
+			</h:form>
+		</h:panelGroup>
 		
 		<h:panelGroup id="interviewList">
 			<ui:repeat

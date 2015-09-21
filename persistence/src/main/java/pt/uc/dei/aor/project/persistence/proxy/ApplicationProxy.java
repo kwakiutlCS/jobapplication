@@ -112,5 +112,17 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		return entity.getLetter();
 	}
 
+
+	@Override
+	public boolean getAnalyzed() {
+		return entity.getAnalyzed();
+	}
+
+
+	@Override
+	public void changeAnalyzed() {
+		entity.changeAnalyzed();
+	}
+
 	
 }

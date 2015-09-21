@@ -25,4 +25,7 @@ public interface IApplication {
 
 	String getLetter();
 
+	boolean getAnalyzed();
+	
+	void changeAnalyzed();
 }

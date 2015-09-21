@@ -186,7 +186,9 @@ public class InterviewScheduleBean implements Serializable {
 		selectedInterviewers = null;
 	}
 		
-	
+	public void changeAnalyzed() {
+		applicationService.changeAnalyzed(selectedApplication);
+	}
 	
 	// getters and setters
 	

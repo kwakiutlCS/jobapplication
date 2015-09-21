@@ -44,6 +44,9 @@ public class ApplicationEntity {
 	@Column(nullable=false)
 	private Date date;
 	
+	@Column(nullable=false)
+	private boolean analyzed = false;
+	
 	@ManyToOne
 	private CandidateEntity candidate;
 	
@@ -131,5 +134,13 @@ public class ApplicationEntity {
 
 	public String getLetter() {
 		return coverLetter;
+	}
+
+	public boolean getAnalyzed() {
+		return analyzed;
+	}
+
+	public void changeAnalyzed() {
+		analyzed = !analyzed;
 	}
 }
