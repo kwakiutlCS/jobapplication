@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
@@ -23,6 +24,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -39,8 +41,6 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 	query = "from PositionEntity u where u.title like :title"),
 })
 public class PositionEntity {
-
-	
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -91,8 +91,9 @@ public class PositionEntity {
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private Set<PublicationChannelEntity> publications;
 	
+	@OrderBy("orderNumber")
     @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
-    private Set<ScriptEntity> scripts = new TreeSet<>();
+    private SortedSet<PhaseEntity> phases;
     
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
@@ -117,7 +118,12 @@ public class PositionEntity {
 		this.description = description;
 		this.publications = new TreeSet<>();
 		this.publications.addAll(publications);
-		this.scripts.addAll(scripts);
+		
+		phases = new TreeSet<>();
+		int i = 1;
+		for (ScriptEntity s : scripts)
+			this.phases.add(new PhaseEntity(s, i++));
+		
 	}
 
 	public PositionEntity() {
@@ -236,11 +242,25 @@ public class PositionEntity {
 	}
 
 	public List<ScriptEntity> getScripts() {
-		return new ArrayList<>(scripts);
+		List<ScriptEntity> scripts = new ArrayList<>();
+		SortedSet<PhaseEntity> newPhases = new TreeSet<>(phases);
+		
+		while (!newPhases.isEmpty()) {
+			PhaseEntity p = newPhases.first();
+			newPhases.remove(p);
+			scripts.add(p.getScript());
+		}
+		
+		return scripts;
 	}
 
-	public void setScripts(List<ScriptEntity> script) {
-		this.scripts.addAll(scripts);
+	public void setScripts(List<ScriptEntity> scripts) {
+		phases = new TreeSet<>();
+		
+		int i = 1;
+		for (ScriptEntity s : scripts) {
+			phases.add(new PhaseEntity(s, i++));
+		}
 	}
 
 	@Override

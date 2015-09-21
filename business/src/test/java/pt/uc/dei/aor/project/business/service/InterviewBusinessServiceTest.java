@@ -26,6 +26,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
@@ -120,21 +121,24 @@ public class InterviewBusinessServiceTest {
 	}
 	
 	@Test(expected=GenericIllegalParamsException.class)
-	public void shouldNotAddInterviewWithoutCorrectDate() throws GenericIllegalParamsException, RepeatedInterviewException {
+	public void shouldNotAddInterviewWithoutCorrectDate() 
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		date = null;
 		
 		ejb.addInterview(application, date, interviewers);
 	}
 	
 	@Test(expected=GenericIllegalParamsException.class)
-	public void shouldNotAddInterviewWithoutCorrectApplication() throws GenericIllegalParamsException, RepeatedInterviewException {
+	public void shouldNotAddInterviewWithoutCorrectApplication() 
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		application = null;
 		
 		ejb.addInterview(application, date, interviewers);
 	}
 	
 	@Test(expected=GenericIllegalParamsException.class)
-	public void shouldNotAddInterviewWithoutCorrectInterviewers() throws GenericIllegalParamsException, RepeatedInterviewException {
+	public void shouldNotAddInterviewWithoutCorrectInterviewers() 
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		interviewers = null;
 		
 		ejb.addInterview(application, date, interviewers);
@@ -142,7 +146,8 @@ public class InterviewBusinessServiceTest {
 	
 	@Ignore
 	@Test
-	public void shouldCallCorrectFunctionsWhenAddingInterviews() throws GenericIllegalParamsException, RepeatedInterviewException {
+	public void shouldCallCorrectFunctionsWhenAddingInterviews() 
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		IInterview mockedInterview = mock(IInterview.class);
 		
 		when(factory.interview(date)).thenReturn(mockedInterview);
@@ -167,7 +172,8 @@ public class InterviewBusinessServiceTest {
 
 	@Ignore
 	@Test(expected=RepeatedInterviewException.class)
-	public void shouldThrowExceptionWithRepeatedInterview() throws GenericIllegalParamsException, RepeatedInterviewException {
+	public void shouldThrowExceptionWithRepeatedInterview() 
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 IInterview mockedInterview = mock(IInterview.class);
 		
 		when(factory.interview(date)).thenReturn(mockedInterview);

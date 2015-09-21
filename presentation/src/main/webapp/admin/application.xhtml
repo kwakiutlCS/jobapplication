@@ -6,73 +6,164 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">Job Application</ui:define>
-	
-	
+
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+	</ui:define>
+
 	<ui:define name="metadata">
 		<f:metadata>
-    		<f:viewParam name="ap" value="#{interviewScheduleBean.selectedApplicationId}" />
-    		<f:viewAction action="#{interviewScheduleBean.onload}" />
+			<f:viewParam name="ap"
+				value="#{interviewScheduleBean.selectedApplicationId}" />
+			<f:viewAction action="#{interviewScheduleBean.onload}" />
 		</f:metadata>
 	</ui:define>
-	
-	
+
+
 	<ui:define name="content">
-		<p:dataTable id="interviewList" value="#{interviewScheduleBean.selectedApplication.interviews}" 
-		var="interview">
-			<p:column>
-				#{interview.date}
-			</p:column>
-			<p:column>
-				#{interview.interviewersFormatted}
-			</p:column>
-			<p:column>
-				<h:form>
-					<p:commandLink value="delete" action="#{interviewScheduleBean.delete(interview)}"
-					update=":interviewList" />
-				</h:form>
-			</p:column>
-		</p:dataTable>
 		
-		<h:form id="addInterviewForm">
-			<p:messages autoUpdate="true" />
-			
-			<p:panelGrid columns="2">
-				<p:outputLabel for="dateSelector" value="Date" />
-				<p:calendar id="dateSelector" value="#{interviewScheduleBean.interviewDate}"
-					mindate="#{interviewScheduleBean.tommorrow}" pattern="dd/MM/yyyy"
-					locale="pt" required="true" />
+		<h:panelGroup id="interviewList">
+			<ui:repeat
+				value="#{interviewScheduleBean.selectedApplication.interviews}"
+				var="interview">
+				<div class="ui-grid-row">
+					<h:panelGroup
+						rendered="#{interviewScheduleBean.editing ne interview}">
+						<div class="ui-grid-col-3">#{interview.date}</div>
+						<div class="ui-grid-col-3">
+							#{interview.interviewersFormatted}</div>
+						<div class="ui-grid-col-3">
+							<h:form>
+								<p:commandLink value="edit"
+									action="#{interviewScheduleBean.edit(interview)}"
+									update=":interviewList :addInterviewPanel" />
+							</h:form>
+						</div>
+						<div class="ui-grid-col-3">
+							<h:form>
+								<p:commandLink value="delete"
+									action="#{interviewScheduleBean.delete(interview)}"
+									update=":interviewList" />
+							</h:form>
+						</div>
+					</h:panelGroup>
 
-				<p:outputLabel for="timeSelector" value="Time" />
-				<p:inputMask id="timeSelector" value="#{interviewScheduleBean.interviewTime}"
-					mask="99h99" required="true" validator="#{timeValidator.validate}" />
-				
-				<p:outputLabel for="interviewerSelector" value="Interviewer" />
-				<p:selectOneMenu id="interviewerSelector" value="#{interviewScheduleBean.interviewer}"
-				converter="omnifaces.SelectItemsConverter">
-					<f:selectItems value="#{interviewScheduleBean.allInterviewers}"
-						var="interviewer" itemLabel="#{interviewer.fullName}" />
-				</p:selectOneMenu>
-				
-				<p:commandButton value="Add interviewer" action="#{interviewScheduleBean.addInterviewer()}"
-					update="interviewersList" process="@this interviewerSelector" />				
-			</p:panelGrid>
-			
-			<h:panelGroup id="interviewersList">
-				<ui:repeat value="#{interviewScheduleBean.selectedInterviewers}" var="interviewer">
-					<div>
-						<span id="selectedInterviewer">#{interviewer.fullName}</span>
-						<span>
-							<p:commandLink value="x" action="#{interviewScheduleBean.removeInterviewer(interviewer)}"
-							process="@this" update=":addInterviewForm:interviewersList" />
-						</span>
+					<h:panelGroup
+						rendered="#{interviewScheduleBean.editing eq interview}">
+						<h:form id="editInterviewForm">
+
+							<div class="ui-grid-col-4">
+								<p:outputLabel for="dateSelector" value="Date" />
+
+								<p:calendar id="dateSelector" value="#{interviewScheduleBean.interviewDate}"
+									mindate="#{interviewScheduleBean.tommorrow}"
+									pattern="dd/MM/yyyy" locale="pt" required="true" />
+								<p:outputLabel for="timeSelector" value="Time" />
+								<p:inputMask id="timeSelector" value="#{interviewScheduleBean.interviewTime}"
+									mask="99h99" required="true"
+									validator="#{timeValidator.validate}" />
+							</div>
+
+							<div class="ui-grid-col-8">
+								<p:selectOneMenu id="interviewerSelector"
+									value="#{interviewScheduleBean.interviewer}"
+									converter="omnifaces.SelectItemsConverter">
+									<f:selectItems value="#{interviewScheduleBean.allInterviewers}"
+										var="interviewer" itemLabel="#{interviewer.fullName}" />
+								</p:selectOneMenu>
+								<p:commandLink value="add"
+									action="#{interviewScheduleBean.addInterviewer}"
+									update="interviewersList" process="@this interviewerSelector" />
+
+								<h:panelGroup id="interviewersList">
+									<ui:repeat
+										value="#{interviewScheduleBean.selectedInterviewers}"
+										var="interviewer">
+										<div class="objectUnit">
+											<span id="selectedInterviewer">#{interviewer.fullName}</span>
+											<span> <p:commandLink value="x"
+													styleClass="removalLink"
+													action="#{interviewScheduleBean.removeInterviewer(interviewer)}"
+													process="@this" update="@form" />
+											</span>
+										</div>
+									</ui:repeat>
+								</h:panelGroup>
+							</div>
+
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									<p:commandButton value="save"
+										action="#{interviewScheduleBean.saveInterview(interview)}"
+										update=":interviewList :globalMessages :addInterviewPanel" />
+								</div>
+								<div class="ui-grid-col-4">
+									<p:commandButton value="cancel" immediate="true"
+										action="#{interviewScheduleBean.cancelAlterations}"
+										update=":interviewList :globalMessages :addInterviewPanel" />
+								</div>
+							</div>
+						</h:form>
+					</h:panelGroup>
+				</div>
+			</ui:repeat>
+		</h:panelGroup>
+
+
+
+
+		<h:panelGroup id="addInterviewPanel">
+			<h:form id="addInterviewForm"
+				rendered="#{empty interviewScheduleBean.editing}">
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4">
+						<p:outputLabel for="dateSelector" value="Date" />
+
+						<p:calendar id="dateSelector"
+							value="#{interviewScheduleBean.interviewDate}"
+							mindate="#{interviewScheduleBean.tommorrow}" pattern="dd/MM/yyyy"
+							locale="pt" required="true" />
+						<p:outputLabel for="timeSelector" value="Time" />
+						<p:inputMask id="timeSelector"
+							value="#{interviewScheduleBean.interviewTime}" mask="99h99"
+							required="true" validator="#{timeValidator.validate}" />
 					</div>
-				</ui:repeat>
-			</h:panelGroup>
-			
-			<p:commandButton value="Schedule interview"
-				action="#{interviewScheduleBean.addInterview}" update="@form :interviewList" />
-		</h:form>
 
+					<div class="ui-grid-col-8">
+						<p:selectOneMenu id="interviewerSelector"
+							value="#{interviewScheduleBean.interviewer}"
+							converter="omnifaces.SelectItemsConverter">
+							<f:selectItems value="#{interviewScheduleBean.allInterviewers}"
+								var="interviewer" itemLabel="#{interviewer.fullName}" />
+						</p:selectOneMenu>
+						<p:commandLink value="add"
+							action="#{interviewScheduleBean.addInterviewer()}"
+							update=":addInterviewForm:interviewersList" process="@this interviewerSelector" />
+
+						<h:panelGroup id="interviewersList">
+							<ui:repeat value="#{interviewScheduleBean.selectedInterviewers}"
+								var="interviewer">
+								<div class="objectUnit">
+									<span id="selectedInterviewer">#{interviewer.fullName}</span> <span>
+										<p:commandLink value="x" styleClass="removalLink"
+											action="#{interviewScheduleBean.removeInterviewer(interviewer)}"
+											process="@this" update=":addInterviewForm:interviewersList" />
+									</span>
+								</div>
+							</ui:repeat>
+						</h:panelGroup>
+					</div>
+				</div>
+
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-12">
+						<p:commandButton value="Schedule interview"
+							action="#{interviewScheduleBean.addInterview}"
+							update="@form :interviewList :globalMessages" />
+					</div>
+				</div>
+			</h:form>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>
 

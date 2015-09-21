@@ -7,6 +7,10 @@
 
 
 	<ui:define name="title">Create Position</ui:define>
+	
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+	</ui:define>
 
 	<ui:define name="content">
 
@@ -78,11 +82,28 @@
 				<p:outputLabel for="script" value="Add Script" />
 				<p:selectOneMenu id="script"
 					value="#{positionBean.script}" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="select one:" />
 					<f:selectItems value="#{scriptBean.scripts}"
 						var="scr" itemValue="#{scr}"
 						itemLabel="#{scr.title}" />
-				</p:selectOneMenu>				
-
+				</p:selectOneMenu>	
+				<p:commandLink value="add script" action="#{positionBean.addScript}" 
+				process=":newpositionform:script @this" update="scriptList" />
+				
+				<h:panelGroup id="scriptList">
+				<ui:repeat value="#{positionBean.scripts}" var="script">
+					<div class="objectUnit">
+						<span>
+						#{script.title}
+						</span>
+						<span class="removalLink">
+							<p:commandLink value="x" action="#{positionBean.removeScript(script)}"
+							process="@this" update=":newpositionform:scriptList" />
+						</span>
+					</div>
+				</ui:repeat>		
+				</h:panelGroup>
+								
 				<p:commandButton value="Submit"
 					action="#{positionBean.createPosition}" update="newpositionform" />
 			</h:panelGrid>

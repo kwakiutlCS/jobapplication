@@ -17,6 +17,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
@@ -53,6 +54,8 @@ public class InterviewScheduleBean implements Serializable {
 	private Date interviewDate;
 	private String interviewTime;
 	private Date tommorrow;
+	
+	private IInterview editing = null;
 	
 	
 	public InterviewScheduleBean() {
@@ -104,6 +107,9 @@ public class InterviewScheduleBean implements Serializable {
 			MetaUtils.setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
 		} catch (GenericIllegalParamsException | RepeatedInterviewException e) {
 			MetaUtils.setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
+		} catch (AllPhasesCompletedException e) {
+			MetaUtils.setMsg("Application reached process' final phase. Add another script to position", 
+					FacesMessage.SEVERITY_ERROR);
 		}
 		
 		selectedInterviewers.clear();
@@ -120,12 +126,66 @@ public class InterviewScheduleBean implements Serializable {
 		}
 	}
 	
+	public void edit(IInterview interview) {
+		if (interview.equals(editing)) {
+			editing = null;
+			selectedInterviewers = new ArrayList<>();
+			interviewDate = null;
+			interviewTime = null;
+		}
+		else {
+			editing = interview;
+			selectedInterviewers = interview.getInterviewers();
+			interviewDate = interview.getDateObject();
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(interviewDate);
+			
+			int h = cal.get(Calendar.HOUR_OF_DAY);
+			String hour = "";
+			if (h < 10) hour = "0";
+			hour += h;
+			
+			int m = cal.get(Calendar.MINUTE);
+			String min = "";
+			if (m < 10) min = "0";
+			min += m;
+			
+			interviewTime = hour+"h"+min;
+		}
+	}
+	
+	
 	public void onload() {
 		selectedApplication = applicationService.findApplicationById(selectedApplicationId);
 	}
 	
 	
 
+	public void saveInterview(IInterview interview) {
+		String[] hours = interviewTime.split("h");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(interviewDate);
+		calendar.set(Calendar.HOUR, Integer.parseInt(hours[0]));
+		calendar.set(Calendar.MINUTE, Integer.parseInt(hours[1]));
+		
+		interview.setDate(calendar.getTime());
+		
+		interviewService.setInterviewers(interview, selectedInterviewers);
+		
+		interviewService.saveInterview(interview);
+		editing = null;
+		interviewDate = null;
+		interviewTime = null;
+		selectedInterviewers = null;
+	}
+	
+	public void cancelAlterations() {
+		editing = null;
+		interviewDate = null;
+		interviewTime = null;
+		selectedInterviewers = null;
+	}
+		
 	
 	
 	// getters and setters
@@ -184,6 +244,15 @@ public class InterviewScheduleBean implements Serializable {
 	public void setSelectedApplicationId(long selectedApplicationId) {
 		this.selectedApplicationId = selectedApplicationId;
 	}
+
+	public IInterview getEditing() {
+		return editing;
+	}
+
+	public void setEditing(IInterview editing) {
+		this.editing = editing;
+	}
+
 	
 	
 }

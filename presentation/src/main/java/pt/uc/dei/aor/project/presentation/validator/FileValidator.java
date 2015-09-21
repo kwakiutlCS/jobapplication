@@ -16,8 +16,6 @@ public class FileValidator implements Validator {
     		throws ValidatorException {
         Part part = (Part) value;
         
-        System.out.println(part.getSize());
-        
         if(part.getSize() > 1024*1024*9){
            throw new ValidatorException(new FacesMessage(
         		   FacesMessage.SEVERITY_ERROR, "File is too large", "File is too large"));

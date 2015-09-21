@@ -41,6 +41,8 @@ import pt.uc.dei.aor.project.business.util.Role;
 	query = "from WorkerEntity u where u.login = :login or u.email = :email"),
 	@NamedQuery(name = "Worker.verifyWorker", 
 	query = "from WorkerEntity u where u.id = :id and u.password = :password"),
+	@NamedQuery(name = "Worker.countAdmins", 
+	query = "select count(u) from WorkerEntity u where 'ADMIN' member of u.roles"),
 })
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "Worker.createSuperUser", 

@@ -113,10 +113,11 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		
 		int counter = 1;
 		for (IInterview i : interviews) {
-			if (i == this) return counter;
+			if (i.equals(this)) return counter;
 			counter++;
 		}
 		
+		logger.error("Wrong phase interview");
 		return -1;
 	}
 
@@ -131,4 +132,35 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		if (!(o instanceof IInterview)) return false;
 		return entity.equals(GenericPersistenceService.getEntity(o));
 	}
+
+
+	@Override
+	public void addInterviewer(IWorker interviewer) {
+		entity.addInterviewer(GenericPersistenceService.getEntity(interviewer));
+	}
+
+
+	@Override
+	public void removeInterviewer(IWorker interviewer) {
+		entity.removeInterviewer(GenericPersistenceService.getEntity(interviewer));
+	}
+
+
+	@Override
+	public void setDate(Date date) {
+		entity.setDate(date);
+	}
+
+
+	@Override
+	public void setInterviewers(Collection<IWorker> selectedInterviewers) {
+		List<WorkerEntity> interviewers = new ArrayList<>();
+		
+		for (IWorker w : selectedInterviewers) {
+			interviewers.add(GenericPersistenceService.getEntity(w));
+		}
+		
+		entity.setInterviewers(interviewers);
+	}
+
 }

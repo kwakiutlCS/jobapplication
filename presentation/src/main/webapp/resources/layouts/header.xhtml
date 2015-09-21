@@ -5,14 +5,20 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:form id="headerForm">
-		<p:menubar id="headerMenu">
-			<p:submenu label="#{loginBean.user.name}">
-				<p:menuitem value="quit" action="#{loginBean.logout}" />
-			</p:submenu>
-			
-			<p:menuitem rendered="#{notificationBean.countUnread() gt 0}" id="notificationMsg"
-			value="#{notificationBean.countUnread()} unread notifications" outcome="/admin/notifications" />
+		<p:menubar id="headerMenu" styleClass="adminHeader">
+
+			<p:menuitem rendered="#{notificationBean.countUnread() gt 0}"
+					id="notificationMsg"
+					value="#{notificationBean.countUnread()} unread notifications"
+					outcome="/admin/notifications" />
+				
+				<p:submenu label="#{loginBean.user.name}">
+					<p:menuitem value="quit" action="#{loginBean.logout}" />
+				</p:submenu>
+
+
 		</p:menubar>
+		
 	</h:form>
 
 </ui:composition>

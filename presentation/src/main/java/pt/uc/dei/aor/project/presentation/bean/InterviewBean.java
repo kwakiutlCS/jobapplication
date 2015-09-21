@@ -20,6 +20,7 @@ import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -46,9 +47,12 @@ public class InterviewBean implements Serializable {
 	
 	public void onload() {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
+		
 		scriptEntries = findScriptEntries();
 		
+		System.out.println(scriptEntries);
 		answerList = interviewService.findAnswersByInterview(selectedInterview);
+	
 		populateAnswersGiven();
 		
 		if (scriptEntries != null || !scriptEntries.isEmpty()) {
@@ -130,6 +134,24 @@ public class InterviewBean implements Serializable {
 			if (answer.getQuestion().equals(entry.getText())) return true;
 		}
 		return false;
+	}
+	
+	public String getCvLink() {
+		String app = ((HttpServletRequest) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequest()).getContextPath();
+		
+		String login = selectedInterview.getCandidate().getLogin();
+		String cv = selectedInterview.getCandidate().getCv();
+		return "https://localhost:8443"+app+"/interview/cv/"+login+"/"+cv;
+	}
+	
+	public String getLetterLink() {
+		String app = ((HttpServletRequest) FacesContext.getCurrentInstance()
+				.getExternalContext().getRequest()).getContextPath();
+		
+		long id = selectedInterview.getApplication().getId();
+		String letter = selectedInterview.getApplication().getLetter();
+		return "https://localhost:8443"+app+"/interview/letter/"+id+"/"+letter;
 	}
 	
 	// getters and setters

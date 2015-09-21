@@ -21,4 +21,8 @@ public interface IApplication {
 	
 	String getDate();
 
+	boolean reachedAllPhases();
+
+	String getLetter();
+
 }

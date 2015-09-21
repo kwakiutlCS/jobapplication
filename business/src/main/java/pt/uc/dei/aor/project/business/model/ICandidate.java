@@ -59,5 +59,4 @@ public interface ICandidate {
 
 	public void removeQualification(IQualification qualification);
 
-
 }

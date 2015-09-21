@@ -8,6 +8,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -22,7 +23,7 @@ import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class PositionBean implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -48,6 +49,10 @@ public class PositionBean implements Serializable {
 	private List<IPublicationChannel> selectedChannels;
 	
 	public PositionBean() {
+	}
+	
+	public void removeScript(IScript script) {
+		scripts.remove(script);
 	}
 
 	public List<Localization> getLocalizations(){
@@ -218,5 +223,11 @@ public class PositionBean implements Serializable {
 		this.script = script;
 	}
 
-
+	public void addScript() {
+		if (script == null) return;
+		if (scripts == null) scripts = new ArrayList<>();
+		
+		scripts.remove(script);
+		scripts.add(script);
+	}
 }

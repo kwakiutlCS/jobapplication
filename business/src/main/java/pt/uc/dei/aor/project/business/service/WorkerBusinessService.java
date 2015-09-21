@@ -22,11 +22,14 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
+import pt.uc.dei.aor.project.business.exception.IllegalRoleChangeException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
@@ -47,6 +50,9 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	
 	@Inject
 	private IWorkerPersistenceService workerPersistence;
+	
+	@Inject
+	private IInterviewPersistenceService interviewPersistence;
 	
 	@Inject
 	private UploadUtil upload;
@@ -218,7 +224,17 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public void removeAdmin(IWorker user) {
+	public void removeAdmin(IWorker admin, IWorker user) throws IllegalRoleChangeException {
+		if (admin.equals(user)) {
+			throw new IllegalRoleChangeException(
+					"It is not possible to remove admin status from yourself");
+		}
+		
+		if (workerPersistence.countAdmins() == 1) {
+			throw new IllegalRoleChangeException(
+					"At least one admin is required in the application");
+		}
+		
 		user.removeRole(Role.ADMIN);
 		workerPersistence.save(user);
 	}
@@ -245,5 +261,16 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	public void removeInterviewer(IWorker user) {
 		user.removeRole(Role.INTERVIEWER);
 		workerPersistence.save(user);
+	}
+
+	@Override
+	public boolean interviewerHasCandidate(IWorker user, String login) {
+		List<IInterview> interviews = interviewPersistence.findActiveInterviewsByUser(user);
+		
+		for (IInterview i : interviews) {
+			if (i.getCandidate().getLogin().equals(login)) return true;
+		}
+		
+		return false;
 	}
 }

@@ -121,4 +121,8 @@ public class ApplicationEntity {
 	public Date getDate() {
 		return date;
 	}
+
+	public String getLetter() {
+		return coverLetter;
+	}
 }

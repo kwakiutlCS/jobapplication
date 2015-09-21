@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
@@ -19,7 +20,7 @@ public interface IInterviewBusinessService {
 	List<IInterview> findActiveInterviewsByUser(IWorker user);
 
 	IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) 
-			throws GenericIllegalParamsException, RepeatedInterviewException;
+			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException;
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
 
@@ -40,5 +41,13 @@ public interface IInterviewBusinessService {
 	List<IInterview> findInterviews(int offset, int limit);
 
 	List<IInterview> findInterviews(int offset, int limit, InterviewFilter filter);
+
+	IInterview saveInterview(IInterview interview);
+
+	IInterview addInterviewer(IInterview interview, IWorker interviewer);
+
+	IInterview removeInterviewer(IInterview interview, IWorker interviewer);
+
+	IInterview setInterviewers(IInterview interview, Collection<IWorker> selectedInterviewers);
 	
 }
