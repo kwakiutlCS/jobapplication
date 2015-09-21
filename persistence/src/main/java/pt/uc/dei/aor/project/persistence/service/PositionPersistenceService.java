@@ -103,13 +103,19 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 
 	@Override
-	public List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter) {
+	public List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter, IWorker user) {
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<PositionEntity> q = cb.createQuery(PositionEntity.class);
 			Root<PositionEntity> position = q.from(PositionEntity.class);
 			q.select(position);
 			
 			List<Predicate> criteriaPredicates = new ArrayList<>();
+			
+			if (user != null) {
+				
+			}
+			
+			
 			// start where
 			if (filter != null) {
 				

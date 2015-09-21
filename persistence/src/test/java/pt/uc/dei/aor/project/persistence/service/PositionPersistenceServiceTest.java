@@ -22,6 +22,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -79,7 +80,7 @@ public class PositionPersistenceServiceTest {
     	Date closingDate = new Date();
     	int sla = 2;
     	String description = "description";
-    	String person = "person";
+    	IWorker person = null;
     	String company = "company";
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.JAVA_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{
@@ -111,7 +112,7 @@ public class PositionPersistenceServiceTest {
     	Date closingDate = new Date();
     	int sla = 3;
     	String description = "description2";
-    	String person = "person2";
+    	IWorker person = null;
     	String company = "company2";
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.DOT_NET_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{

@@ -73,6 +73,10 @@ public class WorkerEntity extends User {
 	@ManyToMany
 	private Set<InterviewEntity> interviews;
 	
+	@OneToMany(mappedBy="contactPerson")
+	private Set<PositionEntity> positions;
+	
+	
 	@OneToMany(mappedBy="worker")
 	private Set<WorkerNotificationEntity> notification;
 	

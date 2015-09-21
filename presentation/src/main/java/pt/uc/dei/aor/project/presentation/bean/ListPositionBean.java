@@ -57,7 +57,7 @@ public class ListPositionBean implements Serializable{
 	
 	
 	public List<IPosition> getPositions() {
-		return positionEjb.findFilteredPositions(offset, 10, filter);
+		return positionEjb.findFilteredPositionsByManager(offset, 10, filter, MetaUtils.getUser());
 	}
 
 	

@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -240,7 +241,9 @@ public class WorkerBean implements Serializable {
 		return role;
 	}
 
-
+	public Collection<IWorker> getAllManagers() {
+		return workerService.findAllManagers();
+	}
 
 
 	public void setRole(Role role) {

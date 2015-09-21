@@ -33,8 +33,11 @@
 				<p:inputText id="sla" value="#{positionBean.sla}" />
 
 				<p:outputLabel for="contactPerson" value="Contact Person" />
-				<p:inputText id="contactPerson"
-					value="#{positionBean.contactPerson}" />
+				<p:selectOneMenu value="#{positionBean.contactPerson}" id="contactPerson"
+				converter="omnifaces.SelectItemsConverter">
+					<f:selectItems value="#{workerBean.allManagers}" var="manager" itemLabel="#{manager.fullName}" />
+				</p:selectOneMenu>
+				
 
 				<p:outputLabel for="company" value="Company" />
 				<p:inputText id="company" value="#{positionBean.company}" />

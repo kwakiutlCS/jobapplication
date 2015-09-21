@@ -87,7 +87,7 @@ public class InterviewPersistenceServiceTest {
     	Date closingDate = new Date();
     	int sla = 2;
     	String description = "description";
-    	String person = "person";
+    	IWorker person = null;
     	String company = "company";
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.JAVA_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{

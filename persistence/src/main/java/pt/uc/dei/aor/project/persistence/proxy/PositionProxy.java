@@ -12,12 +12,14 @@ import java.util.TreeSet;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.PublicationChannelEntity;
 import pt.uc.dei.aor.project.persistence.entity.ScriptEntity;
+import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 
@@ -31,7 +33,7 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 
 	public PositionProxy(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
-			int vacancies, Date closingDate, int sla, String contactPerson,
+			int vacancies, Date closingDate, int sla, IWorker contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
 			String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels){
@@ -50,10 +52,12 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 				scriptEntities.add(GenericPersistenceService.getEntity(s));
 			}
 		}
+		
+		WorkerEntity manager = GenericPersistenceService.getEntity(contactPerson);
 
 		entity = new PositionEntity(code,title, localizations,
 				state,  vacancies, openingDate,
-				closingDate,  sla,  contactPerson, company,
+				closingDate,  sla,  manager, company,
 				technicalAreas,  description, publicationChannelEntities, scriptEntities);
 	}
 
@@ -183,14 +187,13 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public String getContactPerson() {
-		
-		return entity.getContactPerson();
+	public IWorker getContactPerson() {
+		return new WorkerProxy(entity.getContactPerson());
 	}
 
 	@Override
-	public void setContactPerson(String contactPerson) {
-		entity.setContactPerson(contactPerson);
+	public void setContactPerson(IWorker contactPerson) {
+		entity.setContactPerson(GenericPersistenceService.getEntity(contactPerson));
 	}
 
 	@Override
