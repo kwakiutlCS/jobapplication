@@ -214,6 +214,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		for (IWorker w : selectedInterviewers) {
 			workerPersistence.insertInterview(w.getId(), interview);
 		}
+		for (IWorker w : interview.getInterviewers()) {
+			if (!selectedInterviewers.contains(w))
+				workerPersistence.removeInterview(w.getId(), interview.getId());
+		}
 		
 		return interviewPersistence.save(interview);
 	}

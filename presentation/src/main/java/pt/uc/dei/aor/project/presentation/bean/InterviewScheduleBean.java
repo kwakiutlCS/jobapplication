@@ -127,6 +127,9 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public void edit(IInterview interview) {
+		if (editing != null) System.out.println("editing -> "+editing.getDate());
+		if (editing != null) System.out.println("editing -> "+editing.getApplication());
+		
 		if (interview.equals(editing)) {
 			editing = null;
 			selectedInterviewers = new ArrayList<>();
