@@ -83,6 +83,12 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public ICandidate getCandidateByLogin(String login) {
 		return candidatePersistence.getCandidateByLogin(login);
 	}
+
+
+	@Override
+	public ICandidate update(ICandidate user) {
+		return candidatePersistence.save(user);
+	}
 }
 
 

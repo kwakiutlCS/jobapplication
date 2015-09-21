@@ -1,0 +1,39 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">Index</ui:define>
+
+	<ui:define name="content">
+
+
+		
+			<p:outputPanel id="registerpanel">
+				<h:form>
+
+					<p:outputLabel value="Login" />
+					<p></p>
+					<p:inputText id="login" value="#{firstRegister.login}" required="true" />
+					<p></p>
+					<p:outputLabel value="Email" />
+					<p></p>
+					<p:inputText id="email" value="#{firstRegister.email}" required="true" />
+					<p></p>
+					<h:outputText value="Password" />
+					<p></p>
+					<h:inputSecret id="password" value="#{firstRegister.password}" />
+					<p></p>
+					<h:commandButton action="#{firstRegister.register}" value="Enter" />
+
+				</h:form>
+			</p:outputPanel>
+
+	</ui:define>
+</ui:composition>
+
+
+

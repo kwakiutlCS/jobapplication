@@ -26,6 +26,8 @@ public interface ICandidateBusinessService {
 	ICandidate getCandidateByEmail(String email);
 
 	ICandidate getCandidateByLogin(String login);
+
+	ICandidate update(ICandidate user);
 	
 	
 }
