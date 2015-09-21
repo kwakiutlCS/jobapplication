@@ -200,6 +200,16 @@ public class CandidateProxy implements ICandidate, IProxyToEntity<CandidateEntit
 			applicationentities.add(GenericPersistenceService.getEntity(application));	
 	}
 
+	@Override
+	public void addQualification(IQualification qualification) {
+		entity.addQualification(GenericPersistenceService.getEntity(qualification));
+	}
+
+	@Override
+	public void removeQualification(IQualification qualification) {
+		entity.removeQualification(GenericPersistenceService.getEntity(qualification));
+	}
+
 
 
 }

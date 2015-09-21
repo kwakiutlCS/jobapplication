@@ -10,8 +10,6 @@
 			style="margin-right:200px" />
 		<p:button icon="fa-home" outcome="index" />
 		<p:button value="CAREERS" outcome="oportunities" />
-		<p:button value="ABOUT US" outcome="oportunities" />
-		<p:button value="CONTACTS" outcome="register" />
 		<p:button value="REGISTER" outcome="register" />
 		<p:commandButton value="LOGIN" oncomplete="PF('Dlg1').show()"
 			style="margin-right:10px" />
@@ -21,15 +19,15 @@
 		<p:outputPanel id="loginpanel">
 			<h:form>
 
-				<p:outputLabel value="Email" />
-				<br />
-				<p:inputText id="mail" value="#{loginBean.login}" required="true" />
-				<br />
+				<p:outputLabel value="Login" />
+				<p></p>
+				<p:inputText id="login" value="#{loginBean.login}" required="true" />
+				<p></p>
 				<h:outputText value="Password" />
-				<br />
+				<p></p>
 				<h:inputSecret id="password" value="#{loginBean.password}" />
-				<br />
-				<h:commandButton action="#{loginBean.login}" value="Login" />
+				<p></p>
+				<h:commandButton action="#{loginBean.login}" value="Enter" />
 				<br />
 				<p></p>
 				<h:commandLink value="forgotten your password?" />

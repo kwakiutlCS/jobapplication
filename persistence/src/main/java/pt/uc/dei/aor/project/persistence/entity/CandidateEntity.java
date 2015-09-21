@@ -8,11 +8,19 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="candidate")
+@NamedQueries({
+	@NamedQuery(name="candidate.findAll",query="from CandidateEntity u"),
+	@NamedQuery(name="candidate.findCandidateByEmailorLogin", query="from CandidateEntity u where u.login = :login or u.email = :email"),
+	@NamedQuery(name="candidate.findCandidateByEmail", query="from CandidateEntity u where u.email = :email"),
+	@NamedQuery(name="candidate.findCandidateByLogin", query="from CandidateEntity u where u.login = :login")
+})
 public class CandidateEntity extends User {
 
 	@Column(nullable=false)
@@ -124,6 +132,15 @@ public class CandidateEntity extends User {
 
 	public void setApplications(List<ApplicationEntity> applications) {
 		this.applications.addAll(applications);
+	}
+
+
+	public void addQualification(QualificationEntity qualification) {
+		qualifications.add(qualification);
+	}
+
+	public void removeQualification(QualificationEntity qualification) {
+		qualifications.remove(qualification);
 	}
 	
 }

@@ -7,9 +7,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
-
+import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
 @Named
@@ -41,6 +42,9 @@ public class LoginBean {
 		this.password = password;
 	}
 	
+	public ICandidate getUser() {
+		return MetaUtils.getUser();	
+	}
 	
 	public String login() {
 		String result = "";
@@ -52,7 +56,9 @@ public class LoginBean {
 			System.out.println(Encryptor.encrypt(password));
 			request.login(login, password);
 			
-			//IWorker worker = workerService.getWorkerByLogin(login);
+			ICandidate candidate = candidateService.getCandidateByLogin(login);
+			request.getSession().setAttribute("user", candidate);
+	
 			result = "/authorized/index.xhtml?faces-redirect=true";
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -81,4 +87,5 @@ public class LoginBean {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return (String) request.getSession().getAttribute("full_name");
 	}
+
 }
