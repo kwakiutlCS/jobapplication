@@ -13,6 +13,10 @@
 					outcome="/admin/notifications" />
 				
 				<p:submenu label="#{loginBean.user.name}">
+					<p:menuitem value="see as manager" outcome="/manager/index.xhtml" 
+					rendered="#{loginBean.user.manager}"/>
+					<p:menuitem value="see as interviewer" outcome="/interview/index.xhtml" 
+					rendered="#{loginBean.user.interviewer}"/>
 					<p:menuitem value="quit" action="#{loginBean.logout}" />
 				</p:submenu>
 

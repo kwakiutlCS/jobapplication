@@ -6,7 +6,13 @@
 
 	<h:form id="headerForm">
 		<p:menubar id="headerMenu">
-			<p:submenu label="#{loginBean.user.name}">
+			
+					<p:submenu label="#{loginBean.user.name}">
+			<p:menuitem value="see as admin" outcome="/admin/index.xhtml" 
+					rendered="#{loginBean.user.admin}"/>
+				<p:menuitem value="see as manager" outcome="/manager/index.xhtml" 
+					rendered="#{loginBean.user.manager}"/>
+					
 				<p:menuitem value="quit" action="#{loginBean.logout}" />
 			</p:submenu>
 			
