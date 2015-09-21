@@ -2,7 +2,9 @@ package pt.uc.dei.aor.project.persistence.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -39,7 +41,7 @@ public class CandidateEntity extends User {
 	private String mobilePhone;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<QualificationEntity> qualifications;
+	private Set<QualificationEntity> qualifications;
 	
 	@Column
 	private String cv;
@@ -58,7 +60,7 @@ public class CandidateEntity extends User {
 		this.country = country;
 		this.phone = phone;
 		this.mobilePhone = mobilePhone;
-		this.qualifications = new ArrayList<>();
+		this.qualifications = new HashSet<>();
 		this.qualifications.addAll(qualifications);
 		this.cv = cv;
 		this.applications = new ArrayList<>();

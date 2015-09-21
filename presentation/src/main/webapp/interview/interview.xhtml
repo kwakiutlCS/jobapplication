@@ -80,6 +80,16 @@
 			</div>
 		</div>
 
+		<h:panelGroup rendered="#{not empty interviewBean.selectedInterview.candidate.qualifications}">
+			<h2>Qualifications</h2>
+		</h:panelGroup>
+		<ui:repeat value="#{interviewBean.selectedInterview.candidate.qualifications}" var="qual">
+		<div class="ui-grid-row">
+		<div class="ui-grid-col-12">
+				<span>#{qual.school} - #{qual.degree}</span>
+			</div>
+		</div>
+		</ui:repeat>
 		
 		
 		<h:panelGroup rendered="#{not empty interviewBean.previousInterviews}" layout="block" styleClass="ui-grid-row">
