@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication}">
+		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication
+		and not interviewScheduleBean.selectedApplication.refused}">
 			<h:form>
 				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
 			rendered="#{interviewScheduleBean.selectedApplication.analyzed}" update=":analyzed">
@@ -17,10 +18,20 @@
 			</p:commandLink>
 			</h:form>
 			
+			
+			<h:panelGroup rendered="#{interviewScheduleBean.preRefused}">
+				<span>Status: </span><span>Application was analyzed. No interview was scheduled 
+				and no job proposition was made. Click 
+				<p:commandLink value="here" action="#{interviewScheduleBean.refuseApplication}"
+				update=":analyzed" />
+				 to confirm application refuse.</span>
+			</h:panelGroup>
+			
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refused}">
+				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Refused</span>
 			</h:panelGroup>
-			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.waitingInterview}">
+			<h:panelGroup rendered="#{interviewScheduleBean.waitingInterview}">
 				<span>Status: </span><span>Waiting for interview</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{not interviewScheduleBean.selectedApplication.analyzed}">

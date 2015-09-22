@@ -211,7 +211,44 @@ public class InterviewScheduleBean implements Serializable {
 		return interviewService.isCompleted(interview);
 	}
 	
+	public void refuseApplication() {
+		applicationService.refuse(selectedApplication);
+	}
 	
+	public boolean isWaitingInterview() {
+		IInterview last = null;
+		List<IInterview> interviews = selectedApplication.getInterviews();
+		
+		Calendar lastCal = Calendar.getInstance();
+		Calendar otherCal = Calendar.getInstance();
+		for (IInterview i : interviews) {
+			if (last == null) {
+				last = i;
+				lastCal.setTime(last.getDateObject());
+			}
+			else {
+				otherCal.setTime(i.getDateObject());
+				if (otherCal.after(lastCal)) {
+					last = i;
+					lastCal.setTime(last.getDateObject());
+				}
+			}
+		}
+		
+		if (last == null) return false;
+		return !interviewService.isCompleted(last);
+	}
+	
+	public boolean isPreRefused() {
+		if (selectedApplication.isRefused() ||
+				selectedApplication.isAccepted() ||
+				selectedApplication.isPropositionSent() ||
+				selectedApplication.isRefusedByCandidate()) return false;
+		
+		if (isWaitingInterview()) return false;
+		
+		return true;
+	}
 	
 	// getters and setters
 	

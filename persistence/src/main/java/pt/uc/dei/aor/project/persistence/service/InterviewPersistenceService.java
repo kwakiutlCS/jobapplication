@@ -301,6 +301,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		int questions = entity.getApplication().getPosition().getScripts().get(interview.getInterviewPhase()-1).
 				getEntries().size()+1;
 		
+		System.out.println(answers+" "+questions);
 		return answers == questions;
 	}
 
