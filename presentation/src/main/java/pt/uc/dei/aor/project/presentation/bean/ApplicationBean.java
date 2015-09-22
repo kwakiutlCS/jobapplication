@@ -13,6 +13,7 @@ import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.util.PositionState;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -45,6 +46,10 @@ public class ApplicationBean implements Serializable {
 	
 	public List<IApplication> getActiveApplications() {
 		return applicationService.findApplicationsWithFilter(filter, 0, 10);
+	}
+
+	public List<IApplication> getActiveApplicationsByManager() {
+		return applicationService.findApplicationsWithFilterByManager(filter, 0, 10, MetaUtils.getUser());
 	}
 
 	

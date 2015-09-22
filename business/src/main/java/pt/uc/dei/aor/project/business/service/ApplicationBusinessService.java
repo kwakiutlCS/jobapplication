@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 
 @Stateless
@@ -25,13 +26,19 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 
 	@Override
 	public List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit) {
-		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit);
+		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit, null);
 	}
 
 	@Override
 	public IApplication changeAnalyzed(IApplication application) {
 		application.changeAnalyzed();
 		return applicationPersistence.save(application);
+	}
+
+	@Override
+	public List<IApplication> findApplicationsWithFilterByManager(ApplicationFilter filter, int offset, int limit,
+			IWorker user) {
+		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit, user);
 	}
 	
 }

@@ -59,13 +59,22 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 
 
 	@Override
-	public List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit) {
+	public List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit, IWorker manager) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ApplicationEntity> q = cb.createQuery(ApplicationEntity.class);
 		Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
 		q.select(application);
 		
 		List<Predicate> criteriaPredicates = new ArrayList<>();
+		
+		if (manager != null) {
+			Root<PositionEntity> position = q.from(PositionEntity.class);
+			Predicate predicate = cb.equal(position.get("id"), application.get("position"));
+			WorkerEntity w = GenericPersistenceService.getEntity(manager);
+			predicate = cb.and(predicate, cb.equal(position.get("contactPerson"), w));
+			criteriaPredicates.add(predicate);
+		}
+		
 		
 		// start where
 		if (filter != null) {
