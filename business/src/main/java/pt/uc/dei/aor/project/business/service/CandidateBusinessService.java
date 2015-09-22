@@ -19,13 +19,13 @@ import pt.uc.dei.aor.project.business.util.UploadUtil;
 
 @Stateless
 public class CandidateBusinessService implements ICandidateBusinessService {
-	
+
 	@Inject
 	private IModelFactory factory;
-	
+
 	@Inject
 	private ICandidatePersistenceService candidatePersistence;
-	
+
 	@Inject
 	private UploadUtil upload;
 
@@ -37,7 +37,7 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 
 		if (findCandidateByEmailorLogin(email, login)) 
 			throw new DuplicatedUserException();
-	
+
 		ICandidate candidateProxy = factory.candidate(login, name, surname, email, encrypt,address,
 				city, country, phone, mobilePhone, qualifications, cv, applications);
 
@@ -64,10 +64,10 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public void uploadCV(ICandidate candidate, Part cv) throws IOException {
 		String filename = cv.getSubmittedFileName();
 		String dir = "cv/"+candidate.getLogin();
-		
+
 		upload.delete(dir);
 		upload.upload(dir, filename, cv.getInputStream());
-		
+
 		candidate.setCv(filename);
 		candidatePersistence.save(candidate);
 	}
@@ -89,6 +89,7 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public ICandidate update(ICandidate user) {
 		return candidatePersistence.save(user);
 	}
+
 }
 
 

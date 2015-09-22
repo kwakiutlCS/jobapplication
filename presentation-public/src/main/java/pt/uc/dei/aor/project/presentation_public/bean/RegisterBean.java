@@ -56,26 +56,23 @@ public class RegisterBean {
 	private boolean showExtra;
 
 
+	public RegisterBean() {
+	}
+
 	@PostConstruct
 	public void init() {
 		ICandidate user = MetaUtils.getUser();
 		login = user.getLogin();
-		email = user.getEmail();
 		name = user.getName();
 		surname = user.getSurname();
+		email = user.getEmail();
+
 		address = user.getAddress();
 		city = user.getCity();
 		country = user.getCountry();
 		phone = user.getPhone();
 		mobilePhone = user.getMobilePhone();
-		
 	}
-
-
-	public RegisterBean() {
-	}
-
-
 
 	public void upload(AjaxBehaviorEvent event) {
 
@@ -94,10 +91,11 @@ public class RegisterBean {
 	}
 
 	public List<String> listSchools(String text) {
+
 		return qualificationService.listSchools(text);
 	}
 
-	public List<String> listDegrees() {
+	public List<String> listDegrees(String School) {
 		return qualificationService.listDegrees(school);
 	}
 
@@ -120,15 +118,20 @@ public class RegisterBean {
 	}
 
 	public void updateCandidate() {
-			ICandidate user = MetaUtils.getUser();
-			user.setName(name);
-			user.setSurname(surname);
-			user.setAddress(address);
-			user.setCity(city);
-			user.setCountry(country);
-			user.setPhone(phone);
-			user.setMobilePhone(mobilePhone);
-			user = candidateService.update(user);
+		ICandidate user = MetaUtils.getUser();
+		System.out.println("nome antigo:" +user.getName());
+		user.setName(name);
+		System.out.println("novo nome:"+name);
+		System.out.println("nome atual:"+user.getName());
+		user.setSurname(surname);
+		user.setAddress(address);
+		user.setCity(city);
+		user.setCountry(country);
+		user.setPhone(phone);
+		user.setMobilePhone(mobilePhone);
+
+		user = candidateService.update(user);
+
 	}
 
 	//getters and setters
