@@ -20,10 +20,13 @@
 
 
 	<ui:define name="content">
+		<h:panelGroup  layout="block"
+		rendered="#{not empty interviewBean.selectedInterview}">
+			
 		<div class="interviewStarter">
 			<p:link value="Start Interview"
 				outcome="startinterview.xhtml?it=#{interviewBean.selectedInterviewId}" />
-		</div>
+		</div>	
 		
 		
 		
@@ -120,6 +123,7 @@
 		</div>
 		</ui:repeat>
 
+		</h:panelGroup>
 	</ui:define>
 
 </ui:composition>

@@ -10,6 +10,7 @@ import javax.inject.Named;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -32,6 +33,7 @@ public class InterviewResultBean implements Serializable {
 	
 	public void onload() {
 		selectedInterview = interviewService.findInterviewById(selectedInterviewId);
+		
 		setAnswerList(interviewService.findAnswersByInterview(selectedInterview));
 		title = selectedInterview.getApplication().getPosition().getTitle();
 		setAreas(selectedInterview.getApplication().getPosition().getTechnicalAreasFormatted());

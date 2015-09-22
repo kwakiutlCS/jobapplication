@@ -4,7 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:panelGroup id="analyzed">
+	<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication}">
 			<h:form>
 				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
 			rendered="#{interviewScheduleBean.selectedApplication.analyzed}" update="@form">
@@ -18,7 +18,7 @@
 			</h:form>
 		</h:panelGroup>
 		
-		<h:panelGroup id="interviewListPast">
+		<h:panelGroup id="interviewListPast"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
 			<ui:repeat
 				value="#{interviewScheduleBean.pastInterviews}"
 				var="interview">
@@ -38,7 +38,7 @@
 		</h:panelGroup>
 
 			
-		<h:panelGroup id="interviewList">
+		<h:panelGroup id="interviewList"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
 			<ui:repeat
 				value="#{interviewScheduleBean.futureInterviews}"
 				var="interview">
@@ -125,7 +125,7 @@
 			</ui:repeat>
 		</h:panelGroup>
 
-		<h:panelGroup id="addInterviewPanel">
+		<h:panelGroup id="addInterviewPanel"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
 			<h:form id="addInterviewForm"
 				rendered="#{empty interviewScheduleBean.editing}">
 				<div class="ui-grid-row">

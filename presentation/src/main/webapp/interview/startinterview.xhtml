@@ -21,7 +21,7 @@
 	
 	<ui:define name="content">
 		
-		<h:panelGroup id="navigationPanel">
+		<h:panelGroup id="navigationPanel" rendered="#{not empty interviewBean.selectedInterview}">
 			<ui:repeat value="#{interviewBean.scriptEntries}" var="entry"
 				varStatus="status">
 				<h:panelGroup styleClass="inlineForm 
@@ -44,7 +44,7 @@
 			</ui:repeat>
 		</h:panelGroup>
 		
-		<h:form id="answerForm">
+		<h:form id="answerForm" rendered="#{not empty interviewBean.selectedInterview}">
 			<h:panelGroup layout="block" styleClass="questionTitle">
 				#{interviewBean.selectedEntry.text}
 			</h:panelGroup>

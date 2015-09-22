@@ -160,6 +160,11 @@ public class InterviewScheduleBean implements Serializable {
 	
 	public void onload() {
 		selectedApplication = applicationService.findApplicationById(selectedApplicationId);
+		IWorker user = MetaUtils.getUser();
+		
+		if (!user.isAdmin() && !selectedApplication.getPosition().getContactPerson().equals(user))
+			selectedApplication = null;
+		
 	}
 	
 	

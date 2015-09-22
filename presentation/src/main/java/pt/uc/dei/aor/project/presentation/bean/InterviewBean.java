@@ -50,6 +50,11 @@ public class InterviewBean implements Serializable {
 	public void onload() {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
 		
+		if (!selectedInterview.getInterviewers().contains(MetaUtils.getUser())) {
+			selectedInterview = null;
+			return;
+		}
+		
 		scriptEntries = findScriptEntries();
 		
 		System.out.println(scriptEntries);
