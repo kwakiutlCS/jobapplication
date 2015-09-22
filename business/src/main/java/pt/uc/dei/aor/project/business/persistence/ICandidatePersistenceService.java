@@ -20,5 +20,5 @@ public interface ICandidatePersistenceService {
 	ICandidate getCandidateByEmail(String email);
 
 	ICandidate getCandidateByLogin(String login);
-	
+
 }

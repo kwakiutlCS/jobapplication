@@ -29,7 +29,6 @@ public interface ICandidateBusinessService {
 
 	ICandidate update(ICandidate user);
 	
-	
 }
 
 

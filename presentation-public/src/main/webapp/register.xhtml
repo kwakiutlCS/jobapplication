@@ -23,7 +23,7 @@
 								value="#{registerWizard.registerBean.login}" required="true" />
 
 							<p:outputLabel value="Email" for="email" />
-							<p:inputText id="email"
+							<p:outputLabel id="email"
 								value="#{registerWizard.registerBean.email}" required="true" />
 
 							<p:outputLabel value="First name" for="name" />
@@ -34,8 +34,6 @@
 							<p:inputText id="surname"
 								value="#{registerWizard.registerBean.surname}" required="true" />
 
-
-							<h:selectBooleanCheckbox value="#{registerWizard.skip}" />
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
@@ -65,7 +63,6 @@
 							<p:inputMask mask="999 999 999" id="mobile"
 								value="#{registerWizard.registerBean.mobilePhone}" />
 
-							<h:selectBooleanCheckbox value="#{registerWizard.skip}" />
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
@@ -84,7 +81,7 @@
 										<div>#{qualification.degree}</div>
 										<div>
 											<p:commandLink value="delete" update="@form"
-												action="#{registerWizard.registerBean.removeQualification(qualification)}" />
+												action="#{registerBean.removeQualification(qualification)}" />
 										</div>
 									</div>
 								</ui:repeat>
@@ -94,9 +91,9 @@
 							<p:outputLabel for="institution" value="Institution" />
 							<p></p>
 							<p:autoComplete id="institution"
-								value="#{registerWizard.registerBean.qualification}"
+								value="#{registerBean.qualification}"
 								forceSelection="false"
-								completeMethod="#{registerWizard.registerBean.listSchools}"
+								completeMethod="#{registerBean.listSchools}"
 								style="width:600px" maxResults="8">
 							</p:autoComplete>
 
@@ -108,8 +105,7 @@
 							<p></p>
 							<p:commandButton value="Add qualification"
 								action="#{registerBean.addQualification}" update="@form" />
-							<p></p>
-							<h:selectBooleanCheckbox value="#{registerWizard.skip}" />
+							
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
@@ -129,8 +125,6 @@
 								actionListener="#{registerWizard.save}" update="growl"
 								process="@this" />
 
-
-							<h:selectBooleanCheckbox value="#{registerWizard.skip}" />
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>

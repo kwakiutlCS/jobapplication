@@ -27,23 +27,32 @@ public class FirstRegister {
 
 	@Inject
 	private IQualificationBusinessService qualificationService;
-
+	
+	private LoginBean loginbean= new LoginBean();
 	private String login;
 	private String email;
 	private String password;
 	private String temp;
 
 
+	
+	
 	public FirstRegister() {
 	}
 
+	public String defaultString(){
+		
+		return "defaultString";
+	}
+	
+	
 	public String register() throws DuplicatedUserException {
 
-		temp="nulo";
+		temp=defaultString();
 
 		candidateService.createNewCandidate(login,temp,temp,email , Encryptor.encrypt(password),temp,temp,temp,temp,temp,null,null, null);
-
-		return "register.xhtml";
+		
+		return "index.xhtml";
 	}
 
 	//getters and setters
