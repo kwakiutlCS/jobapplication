@@ -112,7 +112,9 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			List<Predicate> criteriaPredicates = new ArrayList<>();
 			
 			if (user != null) {
-				
+				Expression<WorkerEntity> userField = position.get("contactPerson");
+				WorkerEntity w = GenericPersistenceService.getEntity(user);
+				criteriaPredicates.add(cb.equal(userField, w));
 			}
 			
 			
