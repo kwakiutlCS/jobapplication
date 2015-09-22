@@ -195,7 +195,7 @@ public class InterviewScheduleBean implements Serializable {
 	}
 		
 	public void changeAnalyzed() {
-		applicationService.changeAnalyzed(selectedApplication);
+		applicationService.changeAnalyzed(selectedApplication, !selectedApplication.getAnalyzed());
 	}
 	
 	public List<IInterview> getPastInterviews() {

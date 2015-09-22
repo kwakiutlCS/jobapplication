@@ -14,8 +14,8 @@ public interface IApplicationBusinessService {
 
 	List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit);
 
-	IApplication changeAnalyzed(IApplication selectedApplication);
-
 	List<IApplication> findApplicationsWithFilterByManager(ApplicationFilter filter, int offset, int limit, IWorker user);
+
+	IApplication changeAnalyzed(IApplication application, boolean value);
 	
 }

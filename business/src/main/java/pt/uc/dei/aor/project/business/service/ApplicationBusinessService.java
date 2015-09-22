@@ -30,8 +30,8 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	}
 
 	@Override
-	public IApplication changeAnalyzed(IApplication application) {
-		application.changeAnalyzed();
+	public IApplication changeAnalyzed(IApplication application, boolean value) {
+		application.changeAnalyzed(value);
 		return applicationPersistence.save(application);
 	}
 

@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,18 +25,21 @@ public class JobProposalEntity {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column
-	private int id;
+	private long id;
 	
 	@Enumerated(EnumType.STRING)
 	@Column
 	private ProposalSituation situation;
 	
 	@Column
-	private LocalDate date;
+	private Date date;
 	
 	
 	@OneToOne
 	private ApplicationEntity application;
 	
 
+	public ProposalSituation getSituation() {
+		return situation;
+	}
 }

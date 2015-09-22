@@ -27,5 +27,15 @@ public interface IApplication {
 
 	boolean getAnalyzed();
 	
-	void changeAnalyzed();
+	void changeAnalyzed(boolean value);
+	
+	boolean isRefused();
+	
+	boolean isAccepted();
+	
+	boolean isWaitingInterview();
+	
+	boolean isPropositionSent();
+
+	boolean isRefusedByCandidate();
 }

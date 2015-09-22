@@ -7,10 +7,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 
+import javax.inject.Inject;
+
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
@@ -120,8 +123,37 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 
 
 	@Override
-	public void changeAnalyzed() {
-		entity.changeAnalyzed();
+	public void changeAnalyzed(boolean value) {
+		entity.changeAnalyzed(value);
+	}
+
+
+	@Override
+	public boolean isRefused() {
+		return entity.isRefused();
+	}
+
+
+	@Override
+	public boolean isAccepted() {
+		return entity.isAccepted();
+	}
+
+
+	@Override
+	public boolean isWaitingInterview() {
+		return false;
+	}
+
+
+	@Override
+	public boolean isPropositionSent() {
+		return entity.isPropositionSent();
+	}
+
+	@Override
+	public boolean isRefusedByCandidate() {
+		return entity.isRefusedByCandidate();
 	}
 
 	

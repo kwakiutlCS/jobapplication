@@ -20,6 +20,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import pt.uc.dei.aor.project.business.util.ProposalSituation;
+
 
 @Entity
 @Table(name="application")
@@ -46,6 +48,9 @@ public class ApplicationEntity {
 	
 	@Column(nullable=false)
 	private boolean analyzed = false;
+	
+	@Column(nullable=false)
+	private boolean refused = false;
 	
 	@ManyToOne
 	private CandidateEntity candidate;
@@ -140,7 +145,26 @@ public class ApplicationEntity {
 		return analyzed;
 	}
 
-	public void changeAnalyzed() {
-		analyzed = !analyzed;
+	public void changeAnalyzed(boolean value) {
+		analyzed = value;
+	}
+
+	public boolean isRefused() {
+		return refused;
+	}
+
+	public boolean isAccepted() {
+		if (proposal == null) return false;
+		return proposal.getSituation() == ProposalSituation.ACCEPTED;
+	}
+
+	public boolean isPropositionSent() {
+		if (proposal == null) return false;
+		return proposal.getSituation() == ProposalSituation.ONHOLD;
+	}
+	
+	public boolean isRefusedByCandidate() {
+		if (proposal == null) return false;
+		return proposal.getSituation() == ProposalSituation.REFUSED;
 	}
 }
