@@ -28,11 +28,7 @@ public interface IInterviewPersistenceService {
 
 	List<IInterview> findPastInterviewsByUser(ICandidate candidate, IApplication application, Date date);
 
-	List<IInterview> findPastInterviews(IApplication application);
-
-	List<IInterview> findPresentInterviews(IApplication application);
-
-	List<IInterview> findFutureInterviews(IApplication application);
-
 	boolean isCompleted(IInterview interview);
+
+	List<IInterview> findInterviewsByApplication(IApplication application);
 }

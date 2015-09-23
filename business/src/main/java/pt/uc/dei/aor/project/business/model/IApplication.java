@@ -33,9 +33,9 @@ public interface IApplication {
 	
 	boolean isAccepted();
 	
-	boolean isWaitingInterview();
-	
 	boolean isPropositionSent();
 
 	boolean isRefusedByCandidate();
+	
+	void refuse();
 }

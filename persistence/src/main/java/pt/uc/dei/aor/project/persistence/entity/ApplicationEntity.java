@@ -167,4 +167,8 @@ public class ApplicationEntity {
 		if (proposal == null) return false;
 		return proposal.getSituation() == ProposalSituation.REFUSED;
 	}
+
+	public void setRefused(boolean b) {
+		refused = b;
+	}
 }
