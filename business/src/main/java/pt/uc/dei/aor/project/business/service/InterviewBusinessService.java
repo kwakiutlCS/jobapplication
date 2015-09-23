@@ -159,9 +159,6 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		if (answerProxy == null) answerProxy = factory.answer(interview, answer.trim(), entry);
 		else answerProxy.setAnswer(answer);
 		
-		if (isCompleted(interview))
-			applicationService.changeAnalyzed(interview.getApplication(), false);
-		
 		return answerPersistence.save(answerProxy);
 	}
 

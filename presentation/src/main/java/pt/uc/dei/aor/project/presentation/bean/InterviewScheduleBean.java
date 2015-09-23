@@ -119,6 +119,9 @@ public class InterviewScheduleBean implements Serializable {
 		}
 		
 		selectedInterviewers.clear();
+		
+		selectedApplication = applicationService.changeAnalyzed(selectedApplication, true);
+		
 		interviewDate = null;
 		interviewTime = null;
 	}
@@ -142,7 +145,7 @@ public class InterviewScheduleBean implements Serializable {
 		}
 		else {
 			editing = interview;
-			selectedInterviewers = new HashSet(interview.getInterviewers());
+			selectedInterviewers = new HashSet<>(interview.getInterviewers());
 			interviewDate = interview.getDateObject();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(interviewDate);
