@@ -9,6 +9,7 @@ import java.util.EnumSet;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +24,7 @@ import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -36,9 +38,9 @@ public class PositionBean implements Serializable {
 	private IPositionBusinessService position;
 		
 	private String title;
-	private int vacancies; 
+	private int vacancies = 1; 
 	private Date closingDate;
-	private int sla;
+	private int sla = 1;
 	private IWorker contactPerson;
 	private String company;
 	private String description;
@@ -212,9 +214,25 @@ public class PositionBean implements Serializable {
 	}
 
 	public void createPosition() {
+		if (scripts == null || scripts.isEmpty()) {
+			MetaUtils.setMsg("Please select at least a script", FacesMessage.SEVERITY_ERROR);
+		}
 		position.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
 				company, selectedTechnicalAreas, description, scripts, selectedChannels);
+		title = null;
+		selectedLocalizations = null;
+		state = null;
+		vacancies = 1;
+		closingDate = null;
+		sla = 1;
+		contactPerson = null;
+		company = null;
+		selectedTechnicalAreas = null;
+		description = null;
+		script = null;
+		selectedChannels = null;
 		
+		MetaUtils.setMsg("Position created", FacesMessage.SEVERITY_INFO);
 	}
 
 	public IScript getScript() {
