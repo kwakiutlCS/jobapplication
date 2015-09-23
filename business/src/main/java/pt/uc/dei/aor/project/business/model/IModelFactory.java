@@ -44,4 +44,6 @@ public interface IModelFactory {
 			PositionState state, int vacancies, Date closingDate, int sla, IWorker contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels);
+
+	IProposition proposition();
 }

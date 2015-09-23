@@ -3,6 +3,8 @@ package pt.uc.dei.aor.project.business.model;
 import java.util.Date;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.util.ProposalSituation;
+
 public interface IApplication {
 
 	ICandidate getCandidate();
@@ -37,5 +39,11 @@ public interface IApplication {
 
 	boolean isRefusedByCandidate();
 	
+	boolean isProposed();
+	
 	void refuse();
+
+	void sendProposition(IProposition proposition);
+
+	ProposalSituation getProposition();
 }
