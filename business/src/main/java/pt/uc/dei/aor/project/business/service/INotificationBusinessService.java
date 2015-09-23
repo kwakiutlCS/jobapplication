@@ -4,6 +4,7 @@ import java.util.List;
 
 import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 
 
 public interface INotificationBusinessService {
@@ -21,5 +22,7 @@ public interface INotificationBusinessService {
 	public <T extends INotification,U> List<T> findAllReadNotifications(U person, int offset, int limit);
 
 	long countUnreadNotifications(IWorker worker);
+
+	IWorkerNotification notify(IWorker person, String msg, String type, String subject, String content);
 
 }

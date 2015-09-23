@@ -27,15 +27,10 @@ public class NotificationBusinessService implements INotificationBusinessService
 	private IModelFactory factory;
 
 	@Inject
-	private IWorkerPersistenceService workerPersistence;
-	
-	@Inject
-	private ICandidatePersistenceService candidatePersistence;
-	
-	@Inject
 	private INotificationPersistenceService notificationPersistence;
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends INotification, U> T notify(U person, String msg, String type, 
 			String subject, String content) {
@@ -52,6 +47,20 @@ public class NotificationBusinessService implements INotificationBusinessService
 		return null;
 	}
 
+	@Override
+	public IWorkerNotification notify(IWorker person, String msg, String type, 
+			String subject, String content) {
+		IWorker worker = (IWorker) person;
+			
+			IWorkerNotification notification = factory.workerNotification(msg, worker, type);
+			
+			emailUtil.send(worker.getEmail(), subject, content);
+			
+			return notificationPersistence.save(notification);
+		
+		//if (person instanceof ICandidate) return candidatePersistence.notify((ICandidate) person, msg);
+	}
+	
 	@Override
 	public <T extends INotification> T markNotificationAsViewed(T notification) {
 		notification.markAsViewed();

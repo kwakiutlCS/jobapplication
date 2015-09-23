@@ -19,5 +19,6 @@ public interface IPositionPersistenceService {
 
 	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter, IWorker user);
 
+	List<IPosition> findOpenPositions();
 	
 }

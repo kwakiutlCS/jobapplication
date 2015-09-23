@@ -261,4 +261,19 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			return proxies;
 		
 	}
+
+
+	@Override
+	public List<IPosition> findOpenPositions() {
+		TypedQuery<PositionEntity> query = em.createNamedQuery("Position.findOpenPositions", PositionEntity.class);
+		List<PositionEntity> entities = query.getResultList();
+		
+		List<IPosition> proxies = new ArrayList<>();
+		
+		for (PositionEntity pe : entities) {
+			proxies.add(new PositionProxy(pe));
+		}
+		
+		return proxies;
+	}
 }
