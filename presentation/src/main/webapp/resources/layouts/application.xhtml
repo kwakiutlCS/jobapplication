@@ -4,9 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication
-		and not interviewScheduleBean.selectedApplication.refused}">
-			<h:form>
+		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication}">
+			<h:form rendered="#{not interviewScheduleBean.selectedApplication.refused}">
 				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
 			rendered="#{interviewScheduleBean.selectedApplication.analyzed}" update=":analyzed">
 			<h:graphicImage value="/resources/img/yes.png" />
@@ -28,6 +27,7 @@
 			</h:panelGroup>
 			
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refused}">
+				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Refused</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.waitingInterview}">
@@ -85,7 +85,7 @@
 							<h:form>
 								<p:commandLink value="delete"
 									action="#{interviewScheduleBean.delete(interview)}"
-									update=":interviewList" />
+									update=":interviewList :globalMessages" />
 							</h:form>
 						</div>
 					</h:panelGroup>

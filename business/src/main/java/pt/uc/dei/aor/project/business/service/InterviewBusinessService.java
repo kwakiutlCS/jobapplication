@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -59,6 +61,9 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	private IModelFactory factory;
 	
 	@Inject
+	private IApplicationBusinessService applicationService;
+	
+	@Inject
 	private INotificationBusinessService notificationService;
 	
 	
@@ -81,19 +86,24 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		IInterview interview = factory.interview(date);
 		
 		application.addInterview(interview);
-		application = applicationPersistence.save(application);
 		
-		interview = application.getInterviewByDate(date);
-		
-		for (IWorker w : interviewers) {
-			workerPersistence.insertInterview(w.getId(), interview);
+		try {
+			application = applicationPersistence.save(application);
+			interview = application.getInterviewByDate(date);
+			
+			for (IWorker w : interviewers) {
+				workerPersistence.insertInterview(w.getId(), interview);
 
-			// notify user
-			notificationService.notify(w, "Interview scheduled", "Interview Scheduled",
-					"Interview scheduled", "Interview scheduled");
+				// notify user
+				notificationService.notify(w, "Interview scheduled", "Interview Scheduled",
+						"Interview scheduled", "Interview scheduled");
+			}
+			
+			return application;
 		}
-		
-		return application;
+		catch (Exception e) {
+			throw new GenericIllegalParamsException();
+		}
 	}
 
 	@Override
@@ -128,7 +138,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public List<IScriptEntry> getScriptEntries(IInterview interview) {
+	public List<IScriptEntry> getScriptEntries(IInterview interview) throws AllPhasesCompletedException {
 		IApplication application = interview.getApplication();
 		IPosition position = application.getPosition();
 		int phase = interview.getInterviewPhase();
@@ -143,11 +153,14 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) {
+	public IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) throws AllPhasesCompletedException {
 		IAnswer answerProxy = answerPersistence.findAnswerByInterviewAndQuestion(interview, entry.getText());
 		
 		if (answerProxy == null) answerProxy = factory.answer(interview, answer.trim(), entry);
 		else answerProxy.setAnswer(answer);
+		
+		if (isCompleted(interview))
+			applicationService.changeAnalyzed(interview.getApplication(), false);
 		
 		return answerPersistence.save(answerProxy);
 	}
@@ -168,7 +181,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public List<IScriptEntry> getCompleteScriptEntries(IInterview interview) {
+	public List<IScriptEntry> getCompleteScriptEntries(IInterview interview) throws AllPhasesCompletedException {
 		List<IScriptEntry> entries = getScriptEntries(interview);
 		entries.add(factory.scriptEntry(QuestionType.LONG_ANSWER, 
 				"Interview's Global Appreciation", entries.size()));
@@ -190,7 +203,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IInterview saveInterview(IInterview interview) {
+	public IInterview saveInterview(IInterview interview) throws IllegalInterviewDeletionException {
+		List<IAnswer> answers = findAnswersByInterview(interview);
+		if (!answers.isEmpty()) throw new IllegalInterviewDeletionException();
+		
 		return interviewPersistence.save(interview);
 	}
 
@@ -250,8 +266,8 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public List<IInterview> findPastInterviews(IApplication application) {
-		List<IInterview> past = new ArrayList<>();
+	public Set<IInterview> findPastInterviews(IApplication application) throws AllPhasesCompletedException {
+		Set<IInterview> past = new TreeSet<>();
 		List<IInterview> all = interviewPersistence.findInterviewsByApplication(application);
 		
 		for (IInterview i : all) {
@@ -262,8 +278,8 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	}
 
 	@Override
-	public List<IInterview> findFutureInterviews(IApplication application) {
-		List<IInterview> future = new ArrayList<>();
+	public Set<IInterview> findFutureInterviews(IApplication application) throws AllPhasesCompletedException {
+		Set<IInterview> future = new TreeSet<>();
 		List<IInterview> all = interviewPersistence.findInterviewsByApplication(application);
 		
 		for (IInterview i : all) {
@@ -275,7 +291,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public boolean isCompleted(IInterview interview) {
+	public boolean isCompleted(IInterview interview) throws AllPhasesCompletedException {
 		return interviewPersistence.isCompleted(interview);
 	}
 	

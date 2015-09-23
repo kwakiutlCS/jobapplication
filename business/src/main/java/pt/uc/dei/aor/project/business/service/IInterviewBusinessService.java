@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.business.service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
@@ -29,21 +30,21 @@ public interface IInterviewBusinessService {
 
 	IInterview findInterviewById(long id);
 
-	List<IScriptEntry> getScriptEntries(IInterview interview);
+	List<IScriptEntry> getScriptEntries(IInterview interview) throws AllPhasesCompletedException;
 
-	IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry);
+	IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) throws AllPhasesCompletedException;
 
 	String findAnswerByInterviewAndQuestion(IInterview interview, String text);
 
 	List<IAnswer> findAnswersByInterview(IInterview interview);
 
-	List<IScriptEntry> getCompleteScriptEntries(IInterview interview);
+	List<IScriptEntry> getCompleteScriptEntries(IInterview interview) throws AllPhasesCompletedException;
 
 	List<IInterview> findInterviews(int offset, int limit);
 
 	List<IInterview> findInterviews(int offset, int limit, InterviewFilter filter);
 
-	IInterview saveInterview(IInterview interview);
+	IInterview saveInterview(IInterview interview) throws IllegalInterviewDeletionException;
 
 	IInterview addInterviewer(IInterview interview, IWorker interviewer);
 
@@ -55,10 +56,10 @@ public interface IInterviewBusinessService {
 
 	List<IInterview> getHistoricInterviews(IInterview interview);
 
-	List<IInterview> findPastInterviews(IApplication selectedApplication);
+	Set<IInterview> findPastInterviews(IApplication selectedApplication) throws AllPhasesCompletedException;
 
-	List<IInterview> findFutureInterviews(IApplication selectedApplication);
+	Set<IInterview> findFutureInterviews(IApplication selectedApplication) throws AllPhasesCompletedException;
 
-	boolean isCompleted(IInterview interview);
+	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
 	
 }

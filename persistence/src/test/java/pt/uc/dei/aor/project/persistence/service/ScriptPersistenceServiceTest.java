@@ -12,6 +12,7 @@ import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
 import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,7 +52,7 @@ public class ScriptPersistenceServiceTest {
     @Inject
     private IModelFactory factory;
     
-
+    @Ignore
     @Test
     @Transactional(TransactionMode.ROLLBACK)
     public void shouldReturnListOfScripts() {

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
@@ -75,10 +76,18 @@ public class InterviewBean implements Serializable {
 	
 	public void saveAnswer() {
 		if (selectedEntry.getQuestionType() != QuestionType.DATE)
-			interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+			try {
+				interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+			} catch (AllPhasesCompletedException e) {
+				return;
+			}
 		else {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
+			try {
+				interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
+			} catch (AllPhasesCompletedException e) {
+				return;
+			}
 		}
 		
 		int index = scriptEntries.indexOf(selectedEntry);
@@ -90,7 +99,11 @@ public class InterviewBean implements Serializable {
 	
 	
 	private List<IScriptEntry> findScriptEntries() {
-		return interviewService.getCompleteScriptEntries(selectedInterview);
+		try {
+			return interviewService.getCompleteScriptEntries(selectedInterview);
+		} catch (AllPhasesCompletedException e) {
+			return new ArrayList<>();
+		}
 	}
 	
 	private IScriptEntry nextQuestion() {

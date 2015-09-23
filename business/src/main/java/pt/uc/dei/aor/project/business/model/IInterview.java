@@ -3,6 +3,8 @@ package pt.uc.dei.aor.project.business.model;
 import java.util.Collection;
 import java.util.Date;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
+
 public interface IInterview {
 
 	public String getDate();
@@ -21,7 +23,7 @@ public interface IInterview {
 	
 	public String getInterviewersFormatted();
 	
-	public int getInterviewPhase();
+	public int getInterviewPhase() throws AllPhasesCompletedException;
 
 	public void addInterviewer(IWorker interviewer);
 	
@@ -30,5 +32,6 @@ public interface IInterview {
 	public void setDate(Date date);
 
 	public void setInterviewers(Collection<IWorker> selectedInterviewers);
+
 	
 }

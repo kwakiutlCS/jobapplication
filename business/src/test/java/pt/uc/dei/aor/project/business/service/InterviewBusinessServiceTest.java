@@ -259,7 +259,7 @@ IInterview mockedInterview = mock(IInterview.class);
 	}
 	
 	@Test
-	public void shouldCallCorrectFunctionsWhenFindScriptEntries() {
+	public void shouldCallCorrectFunctionsWhenFindScriptEntries() throws AllPhasesCompletedException {
 		IInterview interview = mock(IInterview.class);
 		List<IScript> scripts = new ArrayList<>();
 		scripts.add(script);
@@ -276,7 +276,7 @@ IInterview mockedInterview = mock(IInterview.class);
 	}
 	
 	@Test
-	public void shouldReturnNullWhenPositionHasNoScriptInFindScriptEntries() {
+	public void shouldReturnNullWhenPositionHasNoScriptInFindScriptEntries() throws AllPhasesCompletedException {
 		IInterview interview = mock(IInterview.class);
 		List<IScript> scripts = new ArrayList<>();
 		
