@@ -118,7 +118,7 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		}
 		
 		logger.error("Wrong phase interview");
-		return -1;
+		return interviews.size()+1;
 	}
 
 	@Override

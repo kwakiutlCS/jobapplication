@@ -42,8 +42,9 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 	query = "from InterviewEntity u where u.date < :date and u.application in (:applications)"),
 	@NamedQuery(name = "Interview.findPastInterviews", 
 	query = "from InterviewEntity u where u.date < :date and u.application = :application"),
-	@NamedQuery(name = "Interview.findFutureInterviews", 
-	query = "from InterviewEntity u where u.date > :date and u.application = :application"),
+	@NamedQuery(name = "Interview.findInterviewsByApplication", 
+	query = "from InterviewEntity u where u.application = :application"),
+	
 	
 })
 public class InterviewEntity implements Comparable<InterviewEntity> {

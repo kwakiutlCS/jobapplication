@@ -141,12 +141,6 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 
 
 	@Override
-	public boolean isWaitingInterview() {
-		return false;
-	}
-
-
-	@Override
 	public boolean isPropositionSent() {
 		return entity.isPropositionSent();
 	}
@@ -154,6 +148,11 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	@Override
 	public boolean isRefusedByCandidate() {
 		return entity.isRefusedByCandidate();
+	}
+
+	@Override
+	public void refuse() {
+		entity.setRefused(true);
 	}
 
 	

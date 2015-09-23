@@ -40,5 +40,11 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 			IWorker user) {
 		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit, user);
 	}
+
+	@Override
+	public IApplication refuse(IApplication selectedApplication) {
+		selectedApplication.refuse();
+		return applicationPersistence.save(selectedApplication);
+	}
 	
 }

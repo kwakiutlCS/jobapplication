@@ -57,8 +57,6 @@ public interface IInterviewBusinessService {
 
 	List<IInterview> findPastInterviews(IApplication selectedApplication);
 
-	List<IInterview> findPresentInterviews(IApplication selectedApplication);
-
 	List<IInterview> findFutureInterviews(IApplication selectedApplication);
 
 	boolean isCompleted(IInterview interview);
