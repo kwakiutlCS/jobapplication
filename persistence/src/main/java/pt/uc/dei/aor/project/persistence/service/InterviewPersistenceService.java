@@ -234,63 +234,6 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	}
 
 
-	@Override
-	public List<IInterview> findPastInterviews(IApplication application) {
-		TypedQuery<InterviewEntity> query = em.createNamedQuery(
-				"Interview.findPastInterviews", InterviewEntity.class);
-		
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR_OF_DAY, 22);
-		
-		query.setParameter("date", cal.getTime());
-		query.setParameter("application", GenericPersistenceService.getEntity(application));
-		
-		List<InterviewEntity> list = query.getResultList();
-		
-		List<IInterview> proxies = new ArrayList<>();
-		for (InterviewEntity ie : list) {
-			proxies.add(new InterviewProxy(ie));
-		}
-		
-		return proxies;
-	}
-
-
-	@Override
-	public List<IInterview> findPresentInterviews(IApplication application) {
-		TypedQuery<InterviewEntity> query = em.createNamedQuery(
-				"Interview.findInterviewByDateAndApplication", InterviewEntity.class);
-		query.setParameter("date", new Date());
-		query.setParameter("application", GenericPersistenceService.getEntity(application));
-		
-		List<InterviewEntity> list = query.getResultList();
-		
-		List<IInterview> proxies = new ArrayList<>();
-		for (InterviewEntity ie : list) {
-			proxies.add(new InterviewProxy(ie));
-		}
-		
-		return proxies;
-	}
-
-
-	@Override
-	public List<IInterview> findFutureInterviews(IApplication application) {
-		TypedQuery<InterviewEntity> query = em.createNamedQuery(
-				"Interview.findFutureInterviews", InterviewEntity.class);
-		query.setParameter("date", new Date());
-		query.setParameter("application", GenericPersistenceService.getEntity(application));
-		
-		List<InterviewEntity> list = query.getResultList();
-		
-		List<IInterview> proxies = new ArrayList<>();
-		for (InterviewEntity ie : list) {
-			proxies.add(new InterviewProxy(ie));
-		}
-		
-		return proxies;
-	}
-
 
 	@Override
 	public boolean isCompleted(IInterview interview) {
@@ -301,8 +244,25 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		int questions = entity.getApplication().getPosition().getScripts().get(interview.getInterviewPhase()-1).
 				getEntries().size()+1;
 		
-		System.out.println(answers+" "+questions);
 		return answers == questions;
+	}
+
+
+	@Override
+	public List<IInterview> findInterviewsByApplication(IApplication application) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findInterviewsByApplication",
+				InterviewEntity.class);
+		query.setParameter("application", GenericPersistenceService.getEntity(application));
+		
+		List<InterviewEntity> entities = query.getResultList();
+		
+		List<IInterview> proxies = new ArrayList<>();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
 	}
 
 }

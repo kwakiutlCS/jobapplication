@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
@@ -49,7 +50,7 @@ public class InterviewScheduleBean implements Serializable {
 	private IApplication selectedApplication;
 	private long selectedApplicationId;
 		
-	private Collection<IWorker> selectedInterviewers;
+	private Set<IWorker> selectedInterviewers;
 	private IWorker interviewer;
 	private Date interviewDate;
 	private String interviewTime;
@@ -132,13 +133,13 @@ public class InterviewScheduleBean implements Serializable {
 		
 		if (interview.equals(editing)) {
 			editing = null;
-			selectedInterviewers = new ArrayList<>();
+			selectedInterviewers = new HashSet<>();
 			interviewDate = null;
 			interviewTime = null;
 		}
 		else {
 			editing = interview;
-			selectedInterviewers = interview.getInterviewers();
+			selectedInterviewers = new HashSet(interview.getInterviewers());
 			interviewDate = interview.getDateObject();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(interviewDate);
@@ -236,10 +237,12 @@ public class InterviewScheduleBean implements Serializable {
 		}
 		
 		if (last == null) return false;
-		return !interviewService.isCompleted(last);
+		boolean result = !interviewService.isCompleted(last);
+		return result;
 	}
 	
 	public boolean isPreRefused() {
+		if (!selectedApplication.getAnalyzed()) return false;
 		if (selectedApplication.isRefused() ||
 				selectedApplication.isAccepted() ||
 				selectedApplication.isPropositionSent() ||
