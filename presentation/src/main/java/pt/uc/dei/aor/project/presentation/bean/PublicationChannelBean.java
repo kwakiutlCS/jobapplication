@@ -3,22 +3,21 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 
 
 @Named
-@SessionScoped
+@ViewScoped
 public class PublicationChannelBean implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -27,6 +26,7 @@ public class PublicationChannelBean implements Serializable {
 
 	private String channel;
 	private String editchannel;
+	private List<IPublicationChannel> channels;
 	
 	
 	public String getChannel() {
@@ -52,20 +52,35 @@ public class PublicationChannelBean implements Serializable {
 	}
 
 	public List<IPublicationChannel> getiPublicationChannels() {
-		return publicationChannel.getIPublicationChannels();
+		if (channels == null || channels.isEmpty()) {
+			channels = publicationChannel.getIPublicationChannels();
+		}
+		return channels;
 	}
 
 
 	public void createNewPublicationChannel(){
-
-		publicationChannel.createNewPublicationChannel(editchannel);
+		for (IPublicationChannel c : channels) {
+			if (c.getChannel().equals(editchannel)) {
+				MetaUtils.setMsg("Publication channel "+editchannel+" already exists", FacesMessage.SEVERITY_ERROR,
+						"channelMessage");
+				return;
+			}
+		}
+		channels.add(publicationChannel.createNewPublicationChannel(editchannel));
+		
+		editchannel = null;
 
 	}
 
 	public void deletePublicationChannel(IPublicationChannel ipchannel){
-
-		publicationChannel.deletePublicationChannel(ipchannel);
-
+		try {
+			publicationChannel.deletePublicationChannel(ipchannel);
+			channels = publicationChannel.getIPublicationChannels();
+		}
+		catch (Exception e) {
+			MetaUtils.setMsg("Channel is being used in a position", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	public String getEditchannel() {
@@ -74,6 +89,14 @@ public class PublicationChannelBean implements Serializable {
 
 	public void setEditchannel(String editchannel) {
 		this.editchannel = editchannel;
+	}
+
+	public List<IPublicationChannel> getChannels() {
+		return channels;
+	}
+
+	public void setChannels(List<IPublicationChannel> channels) {
+		this.channels = channels;
 	}
 
 

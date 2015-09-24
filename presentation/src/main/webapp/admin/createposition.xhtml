@@ -26,8 +26,8 @@
 				<p:spinner id="vacancies" value="#{positionBean.vacancies}" min="1" required="true" />
 
 				<p:outputLabel for="closdate" value="Closing Date" />
-				<p:calendar id="closdate" style="width: 100%;"
-					value="#{positionBean.closingDate}" required="true" />
+				<p:calendar id="closdate" style="width: 100%;" locale="pt" mindate="#{positionBean.today}"
+					value="#{positionBean.closingDate}" required="true" pattern="dd/MM/yyyy" />
 
 				<p:outputLabel for="sla" value="SLA (days)" />
 				<p:spinner id="sla" value="#{positionBean.sla}" min="1" required="true" />
@@ -74,11 +74,17 @@
 
 				<p:outputLabel for="chan" value="Publication Channel" />
 				<p:selectManyCheckbox id="chan" value="#{positionBean.selectedChannels}" required="true"
-					converter="omnifaces.SelectItemsConverter" layout="grid" columns="3">
+					converter="omnifaces.SelectItemsConverter" layout="grid" columns="4">
 						<f:selectItems value="#{publicationChannelBean.iPublicationChannels}"
 						var="channel" itemValue="#{channel}"
 						itemLabel="#{channel.channel}" />    			
 				</p:selectManyCheckbox>
+				
+				<p:outputLabel for="newChannel" value="New channel" />
+				<p:inputText id="newChannel" value="#{publicationChannelBean.editchannel}" />
+				<p:message for="newChannel" id="channelMessage" autoUpdate="true" />
+				<p:commandLink value="add channel" action="#{publicationChannelBean.createNewPublicationChannel}"
+				process="@this newChannel" update="newChannel chan channelMessage" />
 
 				<p:outputLabel for="script" value="Add Script" />
 				<p:selectOneMenu id="script"

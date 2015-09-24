@@ -51,6 +51,7 @@ public class PositionBean implements Serializable {
 	private List<Localization> selectedLocalizations;
 	private List<TechnicalArea> selectedTechnicalAreas;
 	private List<IPublicationChannel> selectedChannels;
+	private Date today = new Date();
 	
 	public PositionBean() {
 	}
@@ -249,6 +250,14 @@ public class PositionBean implements Serializable {
 		
 		scripts.remove(script);
 		scripts.add(script);
+	}
+
+	public Date getToday() {
+		return today;
+	}
+
+	public void setToday(Date today) {
+		this.today = today;
 	}
 	
 	

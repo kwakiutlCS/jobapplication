@@ -22,6 +22,12 @@ public class MetaUtils {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 	
+	public static void setMsg(String text, Severity severity, String component) {
+		FacesMessage msg = new FacesMessage(severity,
+				text, text);
+		FacesContext.getCurrentInstance().addMessage(component, msg);
+	}
+	
 	public static HttpSession getSession() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
