@@ -35,11 +35,14 @@ public class JobProposalEntity {
 	private Date date;
 	
 	
-	@OneToOne
-	private ApplicationEntity application;
+	public JobProposalEntity() {
+		situation = ProposalSituation.ONHOLD;
+		date = new Date();
+	}
 	
-
+	
 	public ProposalSituation getSituation() {
 		return situation;
 	}
+
 }

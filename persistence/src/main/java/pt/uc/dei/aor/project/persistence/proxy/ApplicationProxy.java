@@ -13,9 +13,12 @@ import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
+import pt.uc.dei.aor.project.business.util.ProposalSituation;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
+import pt.uc.dei.aor.project.persistence.entity.JobProposalEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
@@ -150,9 +153,30 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		return entity.isRefusedByCandidate();
 	}
 
+	@Override 
+	public boolean isProposed() {
+		return isAccepted() || isPropositionSent() || isRefusedByCandidate();		
+	};
+	
+	
 	@Override
 	public void refuse() {
 		entity.setRefused(true);
+	}
+
+
+	@Override
+	public void sendProposition(IProposition proposition) {
+		entity.setProposition(GenericPersistenceService.getEntity(proposition));
+	}
+
+
+	@Override
+	public ProposalSituation getProposition() {
+		JobProposalEntity p = entity.getProposition();
+		if (p == null) return null;
+		
+		return p.getSituation();
 	}
 
 	

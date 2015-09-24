@@ -66,7 +66,7 @@ public class ApplicationEntity {
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private SortedSet<InterviewEntity> interviews = new TreeSet<>();
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private JobProposalEntity proposal;
 
 	
@@ -170,5 +170,13 @@ public class ApplicationEntity {
 
 	public void setRefused(boolean b) {
 		refused = b;
+	}
+
+	public void setProposition(JobProposalEntity proposition) {
+		proposal = proposition;
+	}
+
+	public JobProposalEntity getProposition() {
+		return proposal;
 	}
 }

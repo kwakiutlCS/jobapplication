@@ -18,6 +18,7 @@ import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
@@ -236,7 +237,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 
 	@Override
-	public boolean isCompleted(IInterview interview) {
+	public boolean isCompleted(IInterview interview) throws AllPhasesCompletedException {
 		InterviewEntity entity = em.find(InterviewEntity.class, interview.getId());
 		
 		int answers = entity.getAnswers().size();

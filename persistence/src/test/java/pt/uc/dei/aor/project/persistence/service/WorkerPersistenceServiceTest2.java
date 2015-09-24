@@ -35,7 +35,7 @@ import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
 
 @RunWith(Arquillian.class)
-public class WorkerPersistenceServiceTest {
+public class WorkerPersistenceServiceTest2 {
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -47,7 +47,7 @@ public class WorkerPersistenceServiceTest {
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
        		.addPackage(InterviewFilter.class.getPackage())
-            .addClass(IWorker.class)
+            .addPackage(IWorker.class.getPackage())
             .addPackage(IllegalRoleException.class.getPackage())
             .addPackage(WorkerPersistenceService.class.getPackage())
             .addPackage(IWorkerPersistenceService.class.getPackage());

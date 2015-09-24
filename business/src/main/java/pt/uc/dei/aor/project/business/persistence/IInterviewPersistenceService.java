@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
@@ -28,7 +29,7 @@ public interface IInterviewPersistenceService {
 
 	List<IInterview> findPastInterviewsByUser(ICandidate candidate, IApplication application, Date date);
 
-	boolean isCompleted(IInterview interview);
+	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
 
 	List<IInterview> findInterviewsByApplication(IApplication application);
 }

@@ -1,0 +1,45 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h1>#{interviewResultBean.title}</h1>
+			</div>
+		</div>
+		
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h3>#{interviewResultBean.interviewers}</h3>
+			</div>
+		</div>
+	
+	<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h3>#{interviewResultBean.areas}</h3>
+			</div>
+		</div>
+		
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				<h3>#{interviewResultBean.date}</h3>
+			</div>
+		</div>
+		
+		<ui:repeat value="#{interviewResultBean.answerList}" var="answer">
+			<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				#{answer.question}
+			</div>
+		</div>
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-12">
+				#{answer.answer}
+			</div>
+		</div>
+		</ui:repeat>
+
+		
+</ui:composition>

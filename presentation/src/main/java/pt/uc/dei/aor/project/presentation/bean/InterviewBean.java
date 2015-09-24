@@ -14,10 +14,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IAnswer;
+import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
@@ -45,7 +48,8 @@ public class InterviewBean implements Serializable {
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
-	
+	@Inject 
+	private IApplicationBusinessService applicationService;
 	
 	public void onload() {
 		setSelectedInterview(interviewService.findInterviewById(selectedInterviewId));
@@ -75,22 +79,43 @@ public class InterviewBean implements Serializable {
 	
 	public void saveAnswer() {
 		if (selectedEntry.getQuestionType() != QuestionType.DATE)
-			interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+			try {
+				interviewService.saveAnswer(selectedInterview, answer, selectedEntry);
+			} catch (AllPhasesCompletedException e) {
+				return;
+			}
 		else {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
+			try {
+				interviewService.saveAnswer(selectedInterview, sdf.format(answerDate).toString(), selectedEntry);
+			} catch (AllPhasesCompletedException e) {
+				return;
+			}
 		}
 		
 		int index = scriptEntries.indexOf(selectedEntry);
 		answersGiven.set(index, true);
 		selectedEntry = nextQuestion();
 		getPreviousAnswer();
+		
+		try {
+			if (interviewService.isCompleted(selectedInterview)) {
+				IApplication application = selectedInterview.getApplication();
+				applicationService.changeAnalyzed(application, false);
+			}
+		} catch (AllPhasesCompletedException e) {
+			return;
+		}
 	}
 	
 	
 	
 	private List<IScriptEntry> findScriptEntries() {
-		return interviewService.getCompleteScriptEntries(selectedInterview);
+		try {
+			return interviewService.getCompleteScriptEntries(selectedInterview);
+		} catch (AllPhasesCompletedException e) {
+			return new ArrayList<>();
+		}
 	}
 	
 	private IScriptEntry nextQuestion() {

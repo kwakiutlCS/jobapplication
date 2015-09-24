@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -18,7 +22,7 @@ import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
-public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntity> {
+public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntity>, Comparable<IInterview> {
 	
 	private static Logger logger = LoggerFactory.getLogger(InterviewProxy.class);
 	
@@ -107,18 +111,19 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 
 
 	@Override
-	public int getInterviewPhase() {
+	public int getInterviewPhase() throws AllPhasesCompletedException {
 		IApplication application = this.getApplication();
-		List<IInterview> interviews = application.getInterviews();
+		
+		Set<IInterview> interviews = new TreeSet<>(application.getInterviews());
+		interviews.add(this);
 		
 		int counter = 1;
 		for (IInterview i : interviews) {
 			if (i.equals(this)) return counter;
 			counter++;
 		}
-		
 		logger.error("Wrong phase interview");
-		return interviews.size()+1;
+		throw new AllPhasesCompletedException();
 	}
 
 	@Override
@@ -162,6 +167,13 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 		
 		entity.setInterviewers(interviewers);
 	}
+
+
+	@Override
+	public int compareTo(IInterview o) {
+		return entity.compareTo(GenericPersistenceService.getEntity(o));
+	}
+
 
 	
 

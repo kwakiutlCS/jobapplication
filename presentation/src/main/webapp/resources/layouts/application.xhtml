@@ -4,9 +4,9 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication
-		and not interviewScheduleBean.selectedApplication.refused}">
-			<h:form>
+		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication}">
+			<h:form rendered="#{not interviewScheduleBean.selectedApplication.refused and
+			not interviewScheduleBean.selectedApplication.proposed}">
 				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
 			rendered="#{interviewScheduleBean.selectedApplication.analyzed}" update=":analyzed">
 			<h:graphicImage value="/resources/img/yes.png" />
@@ -23,11 +23,12 @@
 				<span>Status: </span><span>Application was analyzed. No interview was scheduled 
 				and no job proposition was made. Click 
 				<p:commandLink value="here" action="#{interviewScheduleBean.refuseApplication}"
-				update=":analyzed" />
+				update=":analyzed :propositionPanel :addInterviewPanel" />
 				 to confirm application refuse.</span>
 			</h:panelGroup>
 			
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refused}">
+				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Refused</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.waitingInterview}">
@@ -37,10 +38,16 @@
 				<span>Status: </span><span>Waiting analysis</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.accepted}">
+				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Accepted</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.propositionSent}">
+				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Proposition sent (waiting answer by candidate)</span>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refusedByCandidate}">
+				<h:graphicImage value="/resources/img/yes.png" />
+				<span>Status: </span><span>Proposition refused by candidate</span>
 			</h:panelGroup>
 		</h:panelGroup>
 		
@@ -85,7 +92,7 @@
 							<h:form>
 								<p:commandLink value="delete"
 									action="#{interviewScheduleBean.delete(interview)}"
-									update=":interviewList" />
+									update=":interviewList :globalMessages" />
 							</h:form>
 						</div>
 					</h:panelGroup>
@@ -150,8 +157,11 @@
 				</div>
 			</ui:repeat>
 		</h:panelGroup>
-
-		<h:panelGroup id="addInterviewPanel"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
+		
+		<h:panelGroup id="addInterviewPanel" >
+		<h:panelGroup rendered="#{not empty interviewScheduleBean.selectedApplication
+		and not interviewScheduleBean.selectedApplication.refused and 
+		not interviewScheduleBean.selectedApplication.proposed}">
 			<h:form id="addInterviewForm"
 				rendered="#{empty interviewScheduleBean.editing}">
 				<div class="ui-grid-row">
@@ -198,10 +208,26 @@
 					<div class="ui-grid-col-12">
 						<p:commandButton value="Schedule interview"
 							action="#{interviewScheduleBean.addInterview}"
-							update="@form :interviewList :globalMessages" />
+							update="@form :interviewList :globalMessages :analyzed" />
 					</div>
 				</div>
 			</h:form>
 		</h:panelGroup>
-		
+		</h:panelGroup>
+
+	<h:panelGroup id="propositionPanel">
+		<h:form	rendered="#{not interviewScheduleBean.selectedApplication.refused and 
+		not interviewScheduleBean.selectedApplication.proposed}">
+			<p:commandLink value="Send Proposition" 
+			update=":globalMessages :analyzed :propositionPanel :addInterviewPanel"
+				action="#{propositionBean.sendProposition(interviewScheduleBean.selectedApplication)}">
+				<p:confirm header="Sending Proposition" message="Please enter confirmation" icon="ui-icon-alert" />
+			</p:commandLink>
+			
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    </p:confirmDialog>
+		</h:form>
+	</h:panelGroup>
 </ui:composition>

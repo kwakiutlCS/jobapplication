@@ -18,6 +18,9 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
@@ -37,6 +40,8 @@ public class InterviewScheduleBean implements Serializable {
 	
 	private static final long serialVersionUID = -4484148866779896144L;
 
+	private static final Logger logger = LoggerFactory.getLogger(InterviewScheduleBean.class);
+	
 	@Inject
 	private IInterviewBusinessService interviewService;
 	
@@ -114,6 +119,9 @@ public class InterviewScheduleBean implements Serializable {
 		}
 		
 		selectedInterviewers.clear();
+		
+		selectedApplication = applicationService.changeAnalyzed(selectedApplication, true);
+		
 		interviewDate = null;
 		interviewTime = null;
 	}
@@ -123,13 +131,11 @@ public class InterviewScheduleBean implements Serializable {
 			selectedApplication = interviewService.delete(selectedApplication, interview);
 			MetaUtils.setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
 		} catch (IllegalInterviewDeletionException e) {
-			MetaUtils.setMsg("Interview already occurred", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("Interview already started", FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
 	public void edit(IInterview interview) {
-		if (editing != null) System.out.println("editing -> "+editing.getDate());
-		if (editing != null) System.out.println("editing -> "+editing.getApplication());
 		
 		if (interview.equals(editing)) {
 			editing = null;
@@ -139,7 +145,7 @@ public class InterviewScheduleBean implements Serializable {
 		}
 		else {
 			editing = interview;
-			selectedInterviewers = new HashSet(interview.getInterviewers());
+			selectedInterviewers = new HashSet<>(interview.getInterviewers());
 			interviewDate = interview.getDateObject();
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(interviewDate);
@@ -181,11 +187,17 @@ public class InterviewScheduleBean implements Serializable {
 		
 		interviewService.setInterviewers(interview, selectedInterviewers);
 		
-		interviewService.saveInterview(interview);
+		try {
+			interviewService.saveInterview(interview);
+		} catch (IllegalInterviewDeletionException e) {
+			MetaUtils.setMsg("Interview already started", FacesMessage.SEVERITY_ERROR);
+		}
 		editing = null;
 		interviewDate = null;
 		interviewTime = null;
 		selectedInterviewers = null;
+		
+		applicationService.changeAnalyzed(selectedApplication, true);
 	}
 	
 	public void cancelAlterations() {
@@ -200,16 +212,32 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public List<IInterview> getPastInterviews() {
-		return interviewService.findPastInterviews(selectedApplication);
+		try {
+			return new ArrayList<>(interviewService.findPastInterviews(selectedApplication));
+		} catch (AllPhasesCompletedException e) {
+			MetaUtils.setMsg("An error occurred with the interviews of this application", FacesMessage.SEVERITY_FATAL);
+			logger.error("Illegal interview scheduling");
+			return new ArrayList<>();
+		}
 	}
 	
 	
 	public List<IInterview> getFutureInterviews() {
-		return interviewService.findFutureInterviews(selectedApplication);
+		try {
+			return new ArrayList<>(interviewService.findFutureInterviews(selectedApplication));
+		} catch (AllPhasesCompletedException e) {
+			MetaUtils.setMsg("An error occurred with the interviews of this application", FacesMessage.SEVERITY_FATAL);
+			logger.error("Illegal interview scheduling");
+			return new ArrayList<>();
+		}
 	}
 	
 	public boolean completed(IInterview interview) {
-		return interviewService.isCompleted(interview);
+		try {
+			return interviewService.isCompleted(interview);
+		} catch (AllPhasesCompletedException e) {
+			return false;
+		}
 	}
 	
 	public void refuseApplication() {
@@ -237,7 +265,12 @@ public class InterviewScheduleBean implements Serializable {
 		}
 		
 		if (last == null) return false;
-		boolean result = !interviewService.isCompleted(last);
+		boolean result;
+		try {
+			result = !interviewService.isCompleted(last);
+		} catch (AllPhasesCompletedException e) {
+			return false;
+		}
 		return result;
 	}
 	

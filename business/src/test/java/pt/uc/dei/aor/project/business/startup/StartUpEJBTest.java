@@ -41,7 +41,7 @@ public class StartUpEJBTest {
 		String surname = "admin";
 		String email = "admin@admin";
 		
-		startUp.init(); 
+		//startUp.init(); 
 		
 		Mockito.verify(workerEjb).createNewWorker(login, name, surname, email, roles);
 	}

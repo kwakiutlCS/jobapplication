@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
@@ -53,7 +54,7 @@ public class InterviewBeanTest {
 	}
 	
 	@Test
-	public void shouldGetNextQuestionCorrectly(){
+	public void shouldGetNextQuestionCorrectly() throws AllPhasesCompletedException{
 		int index = 1;
 		
 		when(selectedEntry.getQuestionType()).thenReturn(QuestionType.LONG_ANSWER);
@@ -71,7 +72,7 @@ public class InterviewBeanTest {
 	}
 	
 	@Test
-	public void shouldIgnoreQuestionsCorrectly(){
+	public void shouldIgnoreQuestionsCorrectly() throws AllPhasesCompletedException{
 		int index = 0;
 		
 		when(selectedEntry.getQuestionType()).thenReturn(QuestionType.LONG_ANSWER);
@@ -92,7 +93,7 @@ public class InterviewBeanTest {
 	
 	
 	@Test
-	public void shouldRestartCorrectly(){
+	public void shouldRestartCorrectly() throws AllPhasesCompletedException{
 		IScriptEntry otherEntry = mock(IScriptEntry.class);
 		
 		int index = 2;
@@ -116,7 +117,7 @@ public class InterviewBeanTest {
 	}
 	
 	@Test
-	public void shouldGiveLastQuestionIfFinish(){
+	public void shouldGiveLastQuestionIfFinish() throws AllPhasesCompletedException{
 		IScriptEntry otherEntry = mock(IScriptEntry.class);
 		
 		int index = 1;
