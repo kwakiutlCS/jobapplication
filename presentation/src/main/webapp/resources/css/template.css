@@ -127,8 +127,26 @@ ul>li {
 .content {
 	background-color: white;
 	margin-right: 15px;
+	padding: 0 20px;
 }
 
 header {
 	margin: 0 15px;
+}
+
+.dropdown > a:active {
+	background-color: white;
+    color: #6A943F;
+}
+
+.logoutLink {
+	margin: auto;
+    display: block;
+    text-align: center;
+    color: #333;
+}
+
+.logoutLink:hover {
+	background-color: #e7e7e7;
+	color: #333;
 }

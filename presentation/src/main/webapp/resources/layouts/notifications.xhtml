@@ -20,13 +20,13 @@
 				<span>#{notification.type}</span>
 				<span>
 					<h:form>
-						<p:commandButton value="view" update=":notificationList :headerForm:headerMenu"
+						<p:commandButton value="view" update=":notificationList :headerBar"
 						action="#{notificationBean.viewNotification(status.index, notification)}" />
 					</h:form>
 				</span>
 				<span>
 					<h:form>
-						<p:commandButton value="delete" update=":notificationList  :headerForm:headerMenu"
+						<p:commandButton value="delete" update=":notificationList  :headerBar"
 						action="#{notificationBean.deleteNotification(notification)}" />
 					</h:form>
 				</span>

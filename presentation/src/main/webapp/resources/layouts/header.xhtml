@@ -4,6 +4,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
+	<h:panelGroup id="headerBar">
 	<nav class="navbar navbar-default" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -39,7 +40,7 @@
 							</h:panelGroup>
 							<li role="separator" class="divider"></li>
 							<li><h:form>
-									<p:commandLink action="#{loginBean.logout()}" value="logout" />
+									<p:commandLink styleClass="logoutLink" action="#{loginBean.logout()}" value="logout" />
 								</h:form></li>
 						</ul></li>
 				</ul>
@@ -48,5 +49,5 @@
 			</div>
 		</div>
 	</nav>
-
+	</h:panelGroup>
 </ui:composition>
