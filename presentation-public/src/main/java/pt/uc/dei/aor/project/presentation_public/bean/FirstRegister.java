@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
-import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 
 
@@ -25,10 +24,8 @@ public class FirstRegister {
 	@Inject
 	private ICandidateBusinessService candidateService;
 
-	@Inject
-	private IQualificationBusinessService qualificationService;
+	private LoginBean logged;
 	
-	private LoginBean loginbean= new LoginBean();
 	private String login;
 	private String email;
 	private String password;

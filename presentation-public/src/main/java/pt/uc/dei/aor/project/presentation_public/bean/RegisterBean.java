@@ -66,12 +66,12 @@ public class RegisterBean {
 		name = user.getName();
 		surname = user.getSurname();
 		email = user.getEmail();
-
 		address = user.getAddress();
 		city = user.getCity();
 		country = user.getCountry();
 		phone = user.getPhone();
 		mobilePhone = user.getMobilePhone();
+		
 	}
 
 	public void upload(AjaxBehaviorEvent event) {
@@ -117,19 +117,17 @@ public class RegisterBean {
 		return "index.xhtml";
 	}
 
-	public void updateCandidate() {
-		ICandidate user = MetaUtils.getUser();
-		System.out.println("nome antigo:" +user.getName());
+	public void updateCandidate(ICandidate user) throws DuplicatedUserException {
 		user.setName(name);
-		System.out.println("novo nome:"+name);
-		System.out.println("nome atual:"+user.getName());
 		user.setSurname(surname);
 		user.setAddress(address);
 		user.setCity(city);
 		user.setCountry(country);
 		user.setPhone(phone);
 		user.setMobilePhone(mobilePhone);
-
+	
+		choosenQualifications = user.getQualifications();
+		
 		user = candidateService.update(user);
 
 	}

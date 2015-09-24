@@ -38,7 +38,8 @@ public class RegisterWizard implements Serializable {
     }
      
     public void save() throws DuplicatedUserException {  
-    	onregist.updateCandidate();
+    	System.out.println("MeatUtil getUser: "+MetaUtils.getUser().getName());
+    	onregist.updateCandidate(MetaUtils.getUser());
         FacesMessage msg = new FacesMessage("Successful", "Welcome :" + MetaUtils.getUser().getName());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
