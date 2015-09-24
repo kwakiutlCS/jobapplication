@@ -131,11 +131,12 @@
 								value="#{listPositionBean.selectedPosition.vacancies}" />
 						</p:inplace>
 
-						<h:outputText value="Contact person:" />
-						<p:inplace>
-							<p:inputText
-								value="#{listPositionBean.selectedPosition.contactPerson}" />
-						</p:inplace>
+						<p:outputLabel for="contactPerson" value="Contact Person" />
+							<p:selectOneMenu value="#{listPositionBean.selectedPosition.contactPerson}" id="contactPerson"
+							converter="omnifaces.SelectItemsConverter" required="true">
+							<f:selectItems value="#{workerBean.allManagers}" var="manager" 
+							itemLabel="#{manager.fullName}" />
+						</p:selectOneMenu>
 
 						<h:outputText value="Description" />
 						<p:inputTextarea
