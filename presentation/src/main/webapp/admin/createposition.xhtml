@@ -20,30 +20,30 @@
 			<h:panelGrid columns="2" cellpadding="5">
 
 				<p:outputLabel for="title" value="Title" />
-				<p:inputText id="title" value="#{positionBean.title}" />
+				<p:inputText id="title" value="#{positionBean.title}" required="true" />
 
 				<p:outputLabel for="vacancies" value="Vacancies" />
-				<p:spinner id="vacancies" value="#{positionBean.vacancies}" />
+				<p:spinner id="vacancies" value="#{positionBean.vacancies}" min="1" required="true" />
 
 				<p:outputLabel for="closdate" value="Closing Date" />
-				<p:calendar id="closdate" style="width: 100%;"
-					value="#{positionBean.closingDate}" />
+				<p:calendar id="closdate" style="width: 100%;" locale="pt" mindate="#{positionBean.today}"
+					value="#{positionBean.closingDate}" required="true" pattern="dd/MM/yyyy" />
 
-				<p:outputLabel for="sla" value="SLA" />
-				<p:inputText id="sla" value="#{positionBean.sla}" />
+				<p:outputLabel for="sla" value="SLA (days)" />
+				<p:spinner id="sla" value="#{positionBean.sla}" min="1" required="true" />
 
 				<p:outputLabel for="contactPerson" value="Contact Person" />
 				<p:selectOneMenu value="#{positionBean.contactPerson}" id="contactPerson"
-				converter="omnifaces.SelectItemsConverter">
+				converter="omnifaces.SelectItemsConverter" required="true">
 					<f:selectItems value="#{workerBean.allManagers}" var="manager" itemLabel="#{manager.fullName}" />
 				</p:selectOneMenu>
 				
 
 				<p:outputLabel for="company" value="Company" />
-				<p:inputText id="company" value="#{positionBean.company}" />
+				<p:inputText id="company" value="#{positionBean.company}" required="true"/>
 
 				<p:outputLabel for="local" value="Location" />
-				<p:selectManyCheckbox id="local"
+				<p:selectManyCheckbox id="local"  required="true"
 					value="#{positionBean.selectedLocalizations}"
 					converter="localizationConverter">
 					<f:selectItems value="#{positionBean.localizations}"
@@ -52,11 +52,11 @@
 				</p:selectManyCheckbox>
 
 				<p:outputLabel for="description" value="Description" />
-				<p:inputTextarea id="description"
+				<p:inputTextarea id="description" required="true"
 					value="#{positionBean.description}" rows="5" cols="30" />
 
 				<p:outputLabel for="area" value="Technical Area" />
-				<p:selectManyCheckbox id="area"
+				<p:selectManyCheckbox id="area" required="true"
 					value="#{positionBean.selectedTechnicalAreas}"
 					converter="technicalAreaConverter">
 					<f:selectItems value="#{positionBean.technicalAreas}"
@@ -65,7 +65,7 @@
 				</p:selectManyCheckbox>
 
 				<p:outputLabel for="positionState" value="Position State" />
-				<p:selectOneMenu id="positionState"
+				<p:selectOneMenu id="positionState" required="true"
 					value="#{positionBean.positionState}">
 					<f:selectItems value="#{positionBean.positionStates}"
 						var="positionState" itemValue="#{positionState}"
@@ -73,14 +73,18 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel for="chan" value="Publication Channel" />
-				<p:selectCheckboxMenu id="chan"
-					value="#{positionBean.selectedChannels}"
-					converter="omnifaces.SelectItemsConverter">
-					<f:selectItems
-						value="#{publicationChannelBean.iPublicationChannels}"
+				<p:selectManyCheckbox id="chan" value="#{positionBean.selectedChannels}" required="true"
+					converter="omnifaces.SelectItemsConverter" layout="grid" columns="4">
+						<f:selectItems value="#{publicationChannelBean.iPublicationChannels}"
 						var="channel" itemValue="#{channel}"
-						itemLabel="#{channel.channel}" />
-				</p:selectCheckboxMenu>
+						itemLabel="#{channel.channel}" />    			
+				</p:selectManyCheckbox>
+				
+				<p:outputLabel for="newChannel" value="New channel" />
+				<p:inputText id="newChannel" value="#{publicationChannelBean.editchannel}" />
+				<p:message for="newChannel" id="channelMessage" autoUpdate="true" />
+				<p:commandLink value="add channel" action="#{publicationChannelBean.createNewPublicationChannel}"
+				process="@this newChannel" update="newChannel chan channelMessage" />
 
 				<p:outputLabel for="script" value="Add Script" />
 				<p:selectOneMenu id="script"
@@ -108,7 +112,7 @@
 				</h:panelGroup>
 								
 				<p:commandButton value="Submit"
-					action="#{positionBean.createPosition}" update="newpositionform" />
+					action="#{positionBean.createPosition}" update="newpositionform :globalMessages" />
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

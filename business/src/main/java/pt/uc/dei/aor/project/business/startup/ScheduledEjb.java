@@ -27,7 +27,7 @@ public class ScheduledEjb {
 	private INotificationBusinessService notificationService;
 	
     @PostConstruct
-    @Schedule(hour="*", minute="0", second="0", persistent=false)
+    @Schedule(hour="8", minute="0", second="0", persistent=false)
     public void run() {
        for (IPosition p : positionPersistence.findOpenPositions()) {
     	   if (isOverdue(p))

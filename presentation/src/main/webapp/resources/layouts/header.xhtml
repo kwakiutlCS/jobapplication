@@ -4,25 +4,50 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:form id="headerForm">
-		<p:menubar id="headerMenu" styleClass="adminHeader">
+	<h:panelGroup id="headerBar">
+	<nav class="navbar navbar-default" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
 
-			<p:menuitem rendered="#{notificationBean.countUnread() gt 0}"
-					id="notificationMsg"
-					value="#{notificationBean.countUnread()} unread notifications"
-					outcome="/admin/notifications" />
-				
-				<p:submenu label="#{loginBean.user.name}">
-					<p:menuitem value="see as manager" outcome="/manager/index.xhtml" 
-					rendered="#{loginBean.user.manager}"/>
-					<p:menuitem value="see as interviewer" outcome="/interview/index.xhtml" 
-					rendered="#{loginBean.user.interviewer}"/>
-					<p:menuitem value="quit" action="#{loginBean.logout}" />
-				</p:submenu>
+			</div>
+
+			<div class="collapse navbar-collapse"
+				id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right">
+					<h:panelGroup rendered="#{notificationBean.countUnread() gt 0}">
+						<li><p:link
+								value="#{notificationBean.countUnread()} unread notifications"
+								outcome="/admin/notifications" /></li>
+					</h:panelGroup>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false">#{loginBean.user.name} <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<h:panelGroup rendered="#{loginBean.user.manager}">
+								<li><p:link value="see as manager"
+										outcome="/manager/index.xhtml" /></li>
+							</h:panelGroup>
+							<h:panelGroup rendered="#{loginBean.user.interviewer}">
+								<li><p:link value="see as interviewer"
+										outcome="/interview/index.xhtml" /></li>
+							</h:panelGroup>
+							<li role="separator" class="divider"></li>
+							<li><h:form>
+									<p:commandLink styleClass="logoutLink" action="#{loginBean.logout()}" value="logout" />
+								</h:form></li>
+						</ul></li>
+				</ul>
 
 
-		</p:menubar>
-		
-	</h:form>
-
+			</div>
+		</div>
+	</nav>
+	</h:panelGroup>
 </ui:composition>

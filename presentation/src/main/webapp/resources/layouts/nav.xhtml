@@ -4,22 +4,81 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-		<p:growl id="messages" showDetail="true" />
-
-		<p:tieredMenu style="width:200px">
-			<p:menuitem value="Scripts" outcome="/admin/scripts"
-					update="messages" />
-			<p:menuitem value="Users" outcome="/admin/users" />
-			<p:submenu label="Positions">
-				<p:menuitem value="New Position" outcome="/admin/createposition" />
-				<p:menuitem value="List Positions" outcome="/admin/listpositions" />
-			</p:submenu>
-			<p:menuitem value="Publication Channels" outcome="/admin/channels" />
-			<p:menuitem value="Interviews" outcome="/admin/interviews.xhtml?ofs=0" />
-			<p:menuitem value="Job Applications" outcome="/admin/applications" />
-			<p:menuitem value="Notifications" outcome="/admin/notifications" />
-			<p:menuitem value="User account" outcome="/admin/useraccount" />
-	
-		</p:tieredMenu>
 		
+		<div class="lateralNav">
+      		<ul>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="Scripts" outcome="/admin/scripts" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="Users" outcome="/admin/users" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+			
+				
+	<li>
+	  <div>
+		<div class="topico leftSideHeading inactive">
+		Positions
+		</div>
+	      <div>
+		<ul class="lista">
+			<li><h:link value="New Position" outcome="/admin/createposition" /></li>
+			<li><h:link value="List Position" outcome="/admin/listpositions" /></li>
+		</ul>
+	      </div>
+	  </div>
+	</li>
+	<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="Publication Channels" outcome="/admin/channels" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="Interviews" outcome="/admin/interviews.xhtml?ofs=0" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="Job Applications" outcome="/admin/applications" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="Notifications" outcome="/admin/notifications" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading">
+              				<h:link value="User Account" outcome="/admin/useraccount" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+      </ul>
+    </div>
+   
 </ui:composition>
