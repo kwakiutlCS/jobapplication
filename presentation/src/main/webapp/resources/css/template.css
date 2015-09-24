@@ -54,3 +54,81 @@ nav.navbar-default.navbar {
 	background-color: #fff;
 	color: #6A943F;
 }
+
+.leftSideHeading {
+	background: #6A943F;
+	line-height: 35px;
+	padding: 0px 10px;
+}
+
+.leftSideHeading > a {
+	font-weight: bold;
+	color: #fff;
+	border-radius: 6px;
+	padding: 3px 5px;
+}
+
+.leftSideHeading > a:hover {
+	color:#6A943F;
+	background-color: #fff;
+	
+}
+
+.lista {
+	border: 1px solid #6A943F;
+	background-color: #fff;
+	
+}
+
+ul.lista > li > a {
+	color: #777;
+}
+ul.lista > li > a:hover {
+	color: #000;
+}
+
+ul.lista > li {
+	margin: 8px 0 8px -15px;
+}
+
+a:active, a:hover, a:visited, a:link {
+	outline: 0px solid white;
+	text-decoration:none !important;
+}
+
+ul>li {
+	list-style-type: none;
+}
+
+.lateralNav li {
+	margin: 7px 0;
+}
+
+.lateralNav> ul {
+	    padding: 0;
+    margin: 15px;
+}
+
+.lateralNav {
+	margin: -15px 15px 0 0;
+}
+
+.lateralNav .inactive {
+	    font-weight: bold;
+    color: #fff;
+    padding: 0px 14px;
+    cursor: default;
+}
+
+.canvas {
+	background-color: #51504D;
+}
+
+.content {
+	background-color: white;
+	margin-right: 15px;
+}
+
+header {
+	margin: 0 15px;
+}
