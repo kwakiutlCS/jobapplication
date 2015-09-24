@@ -30,4 +30,5 @@ public class MetaUtils {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return request.getSession();
 	}
+	
 }

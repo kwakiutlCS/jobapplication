@@ -24,9 +24,14 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 
 	@Override
 	public ICandidate save(ICandidate candidateProxy) {
+		
+		System.out.println("Candidate proxy "+candidateProxy);
+		
 		CandidateEntity entity = GenericPersistenceService.getEntity(candidateProxy);
 
 		entity = em.merge(entity);
+		
+		System.out.println("merge update --- user"+candidateProxy);
 
 		return new CandidateProxy(entity);
 	}

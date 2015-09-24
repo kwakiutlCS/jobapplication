@@ -6,17 +6,28 @@
 
 	<h:form id="headerForm">
 
-		<p:outputLabel value="OurCompany RH Services"
-			style="margin-right:200px" />
-		<p:button icon="fa-home" outcome="index" />
-		<p:button value="CAREERS" outcome="oportunities" />
-		<p:button value="REGISTER" outcome="firstregister" />
-		<p:commandButton value="LOGIN" oncomplete="PF('Dlg1').show()"
-			style="margin-right:10px" />
-		<p:commandButton value="LOGOUT" action="#{loginBean.logout}" />
+		<p:menubar id="headerMenu">
+
+			<p:menuitem value="OurCompany RH Services" style="margin-right:200px" />
+
+			<p:menuitem value="CAREERS" outcome="oportunities" />
+
+			<p:menuitem value="REGISTER" outcome="firstregister"
+				rendered="#{applicationBean.verifyLogin() eq 0}" />
+
+			<p:menuitem value="LOGIN" oncomplete="PF('loginDlg').show()"
+				style="margin-right:10px"
+				rendered="#{applicationBean.verifyLogin() eq 0}" />
+				
+			<p:submenu label="#{loginBean.user.name}" rendered="#{applicationBean.verifyLogin() gt 0}">
+				<p:menuitem value="Sign Out" action="#{loginBean.logout}" />
+				<p:menuitem value="Jobs applied for" action="#{loginBean.logout}" />
+			</p:submenu>
+
+		</p:menubar>
 	</h:form>
 
-	<p:dialog header="Login" widgetVar="Dlg1">
+	<p:dialog header="Login" widgetVar="loginDlg">
 		<p:outputPanel id="loginpanel">
 			<h:form>
 

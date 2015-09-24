@@ -87,6 +87,7 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 
 	@Override
 	public ICandidate update(ICandidate user) {
+		System.out.println("Candidate business persistence --- user: "+user);
 		return candidatePersistence.save(user);
 	}
 
