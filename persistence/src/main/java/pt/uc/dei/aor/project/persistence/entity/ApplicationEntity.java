@@ -27,6 +27,10 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 @Table(name="application")
 @NamedQueries({
 	@NamedQuery(name = "Application.dummyQuery", query = "from ApplicationEntity u"),
+	@NamedQuery(name = "Application.numberCandidatesByPeriod", 
+	query = "select count(u) from ApplicationEntity u where u.date >= :startDate and u.date < :finishDate"),
+	@NamedQuery(name = "Application.numberCandidatesByPosition", 
+	query = "select count(u) from ApplicationEntity u where u.position = :position"),
 })
 public class ApplicationEntity {
 	

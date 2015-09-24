@@ -14,9 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
+import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.service.IPropositionBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
@@ -33,8 +36,23 @@ public class PropositionBean implements Serializable {
 	@Inject
 	private IApplicationBusinessService applicationService;
 	
+	@Inject
+	private IInterviewBusinessService interviewService;
+	
 	
 	public void sendProposition(IApplication application) {
+		List<IInterview> interviews = application.getInterviews();
+		for (IInterview i : interviews) {
+			try {
+				if (!interviewService.isCompleted(i)) {
+					MetaUtils.setMsg("An interview is still scheduled for this candidate", FacesMessage.SEVERITY_ERROR);
+					return;
+				}
+			} catch (AllPhasesCompletedException e) {
+				MetaUtils.setMsg("Error sending proposion", FacesMessage.SEVERITY_ERROR);
+			}
+		}
+		
 		propositionService.sendProposition(application);
 		applicationService.changeAnalyzed(application, true);
 	}

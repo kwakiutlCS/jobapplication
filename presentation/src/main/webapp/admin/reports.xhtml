@@ -1,0 +1,30 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Reports</ui:define>
+	
+	<ui:define name="content">
+		
+		<h:form>
+			<p>Number of applications by date period</p>
+			<p:selectOneMenu value="#{reportBean.period}">
+			<f:selectItem itemLabel="Mensal" itemValue="1" />
+			<f:selectItem itemLabel="Trimestral" itemValue="3" />
+			<f:selectItem itemLabel="Anual" itemValue="12" />
+			</p:selectOneMenu>
+			<p:commandButton value="Generate report" action="#{reportBean.generatePeriodicApp}" 
+			update="@form" />
+			
+			<h:panelGroup rendered="#{reportBean.periodicAppVisible}">
+			<p:chart type="line" model="#{reportBean.periodicAppModel}" style="height:300px;" />
+			</h:panelGroup>
+		</h:form>
+		
+	</ui:define>
+	
+</ui:composition>
+
