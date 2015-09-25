@@ -25,19 +25,14 @@ import javax.persistence.Table;
 })
 public class CandidateEntity extends User {
 
-	@Column(nullable=false)
 	private String address;
 	
-	@Column(nullable=false)
 	private String city;
 	
-	@Column(nullable=false)
 	private String country;
 	
-	@Column
 	private String phone;
 	
-	@Column(nullable=false)
 	private String mobilePhone;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
