@@ -15,6 +15,8 @@ public interface IReportBusinessService {
 
 	DataModel<String, Long> generatePositionAppReport();
 
+	DataModel<String, Long> generateSpontaneousAppReport(int period);
+
 	
 	
 }

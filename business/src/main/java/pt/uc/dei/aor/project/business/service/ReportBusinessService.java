@@ -49,18 +49,30 @@ public class ReportBusinessService implements IReportBusinessService {
 	@Override
 	public DataModel<String, Long> generatePeriodicaAppReport(int period) {
 		if (period == 12) {
-			return generateYearlyAppReport();
+			return generateYearlyAppReport(false);
 		}
 		if (period == 3) {
-			return generateTrimonthAppReport();
+			return generateTrimonthAppReport(false);
 		}
 		else {
-			return generateMonthlyAppReport();
+			return generateMonthlyAppReport(false);
 		}
 	}
 
+	@Override
+	public DataModel<String, Long> generateSpontaneousAppReport(int period) {
+		if (period == 12) {
+			return generateYearlyAppReport(true);
+		}
+		if (period == 3) {
+			return generateTrimonthAppReport(true);
+		}
+		else {
+			return generateMonthlyAppReport(true);
+		}
+	}
 	
-	private DataModel<String, Long> generateMonthlyAppReport() {
+	private DataModel<String, Long> generateMonthlyAppReport(boolean spontaneous) {
 		DataModel<String, Long> data = new DataModel<>();
 		
 		Calendar cal = Calendar.getInstance();
@@ -76,7 +88,10 @@ public class ReportBusinessService implements IReportBusinessService {
 			Date startDate = cal.getTime();
 			Date finishDate = finish.getTime();
 			
-			long y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
+			long y;
+			
+			if (spontaneous) y =reportPersistence.generateSpontaneousAppReport(startDate, finishDate);
+			else y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
 			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], y));
 			cal.add(Calendar.MONTH, 1);
 		}
@@ -85,7 +100,7 @@ public class ReportBusinessService implements IReportBusinessService {
 	}
 
 
-	private DataModel<String, Long> generateYearlyAppReport() {
+	private DataModel<String, Long> generateYearlyAppReport(boolean spontaneous) {
 		int year = (Calendar.getInstance().get(Calendar.YEAR));
 		DataModel<String, Long> data = new DataModel<>();
 		
@@ -96,14 +111,17 @@ public class ReportBusinessService implements IReportBusinessService {
 			cal.add(Calendar.YEAR, 1);
 			Date finishDate = cal.getTime();
 			
-			long y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
+			long y;
+			
+			if (spontaneous) y =reportPersistence.generateSpontaneousAppReport(startDate, finishDate);
+			else y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
 			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"", y));
 		}
 		
 		return data;
 	}
 	
-	private DataModel<String, Long> generateTrimonthAppReport() {
+	private DataModel<String, Long> generateTrimonthAppReport(boolean spontaneous) {
 		DataModel<String, Long> data = new DataModel<>();
 		
 		Calendar cal = Calendar.getInstance();
@@ -120,7 +138,10 @@ public class ReportBusinessService implements IReportBusinessService {
 			Date startDate = cal.getTime();
 			Date finishDate = finish.getTime();
 			
-			long y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
+			long y;
+			
+			if (spontaneous) y =reportPersistence.generateSpontaneousAppReport(startDate, finishDate);
+			else y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
 			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], y));
 			cal.add(Calendar.MONTH, 3);
 		}

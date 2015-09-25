@@ -31,6 +31,9 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 	query = "select count(u) from ApplicationEntity u where u.date >= :startDate and u.date < :finishDate"),
 	@NamedQuery(name = "Application.numberCandidatesByPosition", 
 	query = "select count(u) from ApplicationEntity u where u.position = :position"),
+	@NamedQuery(name = "Application.numberSpontaneousByPeriod", 
+	query = "select count(u) from ApplicationEntity u where u.spontaneous is true and"
+			+ " u.date >= :startDate and u.date < :finishDate"),
 })
 public class ApplicationEntity {
 	
@@ -63,8 +66,10 @@ public class ApplicationEntity {
 	private WorkerEntity internalCandidate;
 	
 	@ManyToOne
-	@JoinColumn(nullable=false)
 	private PositionEntity position;
+	
+	@Column
+	private boolean spontaneous = false;
 	
 	@OrderBy("date")
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)

@@ -37,6 +37,19 @@ public class ReportPersistenceService implements IReportPersistenceService {
 		return result.get(0);
 	}
 
+
+	@Override
+	public long generateSpontaneousAppReport(Date startDate, Date finishDate) {
+		TypedQuery<Long> query = em.createNamedQuery("Application.numberSpontaneousByPeriod", Long.class);
+		query.setParameter("startDate", startDate);
+		query.setParameter("finishDate", finishDate);
+		
+		List<Long> result = query.getResultList();
+		
+		if (result.isEmpty()) return 0;
+		return result.get(0);
+	}
+
 	
 
 

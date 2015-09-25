@@ -25,13 +25,17 @@ public class ReportBean implements Serializable {
 	
 	@Inject
 	private ChartBean chart;
+	
+	private int period;
 
 	private DataModel<String, Long> periodicAppModel;
-	private int period;
 	private boolean periodicAppVisible;
 
 	private DataModel<String, Long> positionAppModel;
 	private boolean positionAppVisible;
+	
+	private DataModel<String, Long> spontaneousAppModel;
+	private boolean spontaneousAppVisible;
 	
 	
 
@@ -39,13 +43,19 @@ public class ReportBean implements Serializable {
 	public void generatePeriodicApp() {
 		periodicAppModel = reportService.generatePeriodicaAppReport(period);
 		periodicAppVisible = true;
-		chart.createChart(periodicAppModel, "", "", "", "Applications");
+		chart.createChart(periodicAppModel, "Applications", "", "", "Applications");
 	}
 	
 	public void generatePositionApp() {
 		setPositionAppModel(reportService.generatePositionAppReport());
 		setPositionAppVisible(true);
-		chart.createChart(positionAppModel, "", "", "", "Applications");
+		chart.createChart(positionAppModel, "Applications", "", "", "Applications");
+	}
+	
+	public void generateSpontaneousApp() {
+		setSpontaneousAppModel(reportService.generateSpontaneousAppReport(period));
+		setSpontaneousAppVisible(true);
+		chart.createChart(spontaneousAppModel, "Applications", "", "", "Applications");
 	}
 	
 	
@@ -90,6 +100,22 @@ public class ReportBean implements Serializable {
 
 	public void setPositionAppVisible(boolean positionAppVisible) {
 		this.positionAppVisible = positionAppVisible;
+	}
+
+	public DataModel<String, Long> getSpontaneousAppModel() {
+		return spontaneousAppModel;
+	}
+
+	public void setSpontaneousAppModel(DataModel<String, Long> spontaneousAppModel) {
+		this.spontaneousAppModel = spontaneousAppModel;
+	}
+
+	public boolean isSpontaneousAppVisible() {
+		return spontaneousAppVisible;
+	}
+
+	public void setSpontaneousAppVisible(boolean spontaneousAppVisible) {
+		this.spontaneousAppVisible = spontaneousAppVisible;
 	}
 
 

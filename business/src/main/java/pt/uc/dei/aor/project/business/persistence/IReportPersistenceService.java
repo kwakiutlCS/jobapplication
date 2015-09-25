@@ -8,4 +8,6 @@ public interface IReportPersistenceService {
 
 	long generatePeriodicAppReport(Date startDate, Date finishDate);
 
+	long generateSpontaneousAppReport(Date startDate, Date finishDate);
+
 }

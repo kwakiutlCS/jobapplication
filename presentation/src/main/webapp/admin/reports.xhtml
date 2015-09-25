@@ -3,9 +3,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="title">Reports</ui:define>
 	
@@ -44,7 +42,24 @@
 			</h:panelGroup>
 		</h:form>
 		
-		
+		<h:form>
+			<p>Number of spontaneous applications by date period</p>
+			<p:selectOneMenu value="#{reportBean.period}">
+			<f:selectItem itemLabel="Monthly" itemValue="1" />
+			<f:selectItem itemLabel="Quarterly" itemValue="3" />
+			<f:selectItem itemLabel="Yearly" itemValue="12" />
+			</p:selectOneMenu>
+			<p:commandButton value="Generate report" action="#{reportBean.generateSpontaneousApp}" 
+			update="@form" />
+			
+			<h:panelGroup rendered="#{reportBean.spontaneousAppVisible}">
+				<p:dataTable value="#{reportBean.spontaneousAppModel.points}" var="p">
+					<p:column>#{p.x}</p:column>
+					<p:column>#{p.y}</p:column>
+				</p:dataTable>
+				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+			</h:panelGroup>
+		</h:form>
 	
 	</ui:define>
 	
