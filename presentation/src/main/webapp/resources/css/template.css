@@ -4,36 +4,6 @@ html, body {
 }
 
 
-.ui-menubar.adminHeader {
-	background: #3C8DBC;
-	height: 50px;
-	box-shadow: none;
-}
-
-.ui-menubar.adminHeader .ui-menuitem {
-	background: #3C8DBC;
-	box-shadow: none;
-}
-
-.ui-menubar.adminHeader .ui-menuitem-active {
-	background: #3C8DBC;
-	box-shadow: none;
-}
-
-.ui-menubar.adminHeader .ui-menu-list {
-	background: #3C8DBC;
-	border: none;
-	box-shadow: none;
-}
-
-.ui-menubar.adminHeader .ui-menuitem-link {
-	background: #3C8DBC;
-	border: none;
-	box-shadow: none;
-}
-
-
-
 
 nav.navbar-default.navbar {
 	background-color: #6A943F;
@@ -61,12 +31,14 @@ nav.navbar-default.navbar {
 	padding: 0px 10px;
 }
 
-.leftSideHeading > a {
+.leftSideHeading > a, .leftSideHeading > a:visited {
 	font-weight: bold;
 	color: #fff;
 	border-radius: 6px;
 	padding: 3px 5px;
+	font-size: 13px;
 }
+
 
 .leftSideHeading > a:hover {
 	color:#6A943F;

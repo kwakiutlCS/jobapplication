@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.PositionState;
@@ -165,6 +166,19 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		}
 		
 		return proxies;
+	}
+
+
+	@Override
+	public long findApplicationsByPosition(IPosition p) {
+		TypedQuery<Long> query = em.createNamedQuery("Application.numberCandidatesByPosition", Long.class);
+		query.setParameter("position", GenericPersistenceService.getEntity(p));
+		
+		List<Long> result = query.getResultList();
+		
+		if (result.isEmpty()) return 0;
+		return result.get(0);
+		
 	}
 	
 	

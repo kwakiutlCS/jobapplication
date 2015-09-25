@@ -12,11 +12,13 @@ import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.INotification;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
 import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.util.DataModel;
@@ -26,12 +28,22 @@ import pt.uc.dei.aor.project.business.util.EmailUtil;
 @Stateless
 public class ReportBusinessService implements IReportBusinessService {
 
+	private static final String[] MONTHS = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+			"Jul", "Ago", "Sep", "Oct", "Nov", "Dec"};
+	
+
 	@Inject
 	private EmailUtil emailUtil;
 	
 	
 	@Inject
 	private IReportPersistenceService reportPersistence;
+	
+	@Inject
+	private IPositionPersistenceService positionPersistence;
+	
+	@Inject
+	private IApplicationPersistenceService applicationPersistence;
 
 	
 	@Override
@@ -65,7 +77,7 @@ public class ReportBusinessService implements IReportBusinessService {
 			Date finishDate = finish.getTime();
 			
 			long y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
-			data.addPoint(new DataPoint<>(String.valueOf(cal.get(Calendar.YEAR)), y));
+			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], y));
 			cal.add(Calendar.MONTH, 1);
 		}
 		
@@ -85,7 +97,7 @@ public class ReportBusinessService implements IReportBusinessService {
 			Date finishDate = cal.getTime();
 			
 			long y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
-			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+1, y));
+			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"", y));
 		}
 		
 		return data;
@@ -109,10 +121,24 @@ public class ReportBusinessService implements IReportBusinessService {
 			Date finishDate = finish.getTime();
 			
 			long y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
-			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+cal.get(Calendar.MONTH)+1, y));
+			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], y));
 			cal.add(Calendar.MONTH, 3);
 		}
 		
 		return data;
+	}
+
+
+	@Override
+	public DataModel<String, Long> generatePositionAppReport() {
+		List<IPosition> positions = positionPersistence.findOpenPositions();
+		
+		DataModel<String, Long> model = new DataModel<>();
+		for (IPosition p : positions) {
+			model.addPoint(new DataPoint<>(p.getTitle(), 
+					applicationPersistence.findApplicationsByPosition(p)));
+		}
+		
+		return model;
 	}
 }

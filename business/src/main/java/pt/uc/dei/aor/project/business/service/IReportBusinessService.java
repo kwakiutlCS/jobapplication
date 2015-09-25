@@ -13,6 +13,8 @@ public interface IReportBusinessService {
 
 	DataModel<String, Long> generatePeriodicaAppReport(int period);
 
+	DataModel<String, Long> generatePositionAppReport();
+
 	
 	
 }
