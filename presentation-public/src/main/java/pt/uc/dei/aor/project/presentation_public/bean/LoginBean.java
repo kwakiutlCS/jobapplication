@@ -61,12 +61,6 @@ public class LoginBean {
 
 			result = "/authorized/index.xhtml?faces-redirect=true";
 			
-			if(candidate.getName().equals("defaultString")){
-				System.out.println("Default String set");
-				result = "/register.xhtml?faces-redirect=true";
-			}
-		
-			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

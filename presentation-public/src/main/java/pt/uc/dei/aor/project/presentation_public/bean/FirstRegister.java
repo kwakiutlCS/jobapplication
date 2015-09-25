@@ -29,6 +29,8 @@ public class FirstRegister {
 	private String login;
 	private String email;
 	private String password;
+	private String name;
+	private String surname;
 	private String temp;
 
 
@@ -47,7 +49,7 @@ public class FirstRegister {
 
 		temp=defaultString();
 
-		candidateService.createNewCandidate(login,temp,temp,email , Encryptor.encrypt(password),temp,temp,temp,temp,temp,null,null, null);
+		candidateService.createNewCandidate(login,name,surname,email , Encryptor.encrypt(password),temp,temp,temp,temp,temp,null,null, null);
 		
 		return "index.xhtml";
 	}
@@ -77,5 +79,23 @@ public class FirstRegister {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+
 }
 

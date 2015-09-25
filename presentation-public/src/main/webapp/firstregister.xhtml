@@ -19,6 +19,14 @@
 					<p></p>
 					<p:inputText id="login" value="#{firstRegister.login}" required="true" />
 					<p></p>
+					<h:outputText value="Name" required="true"/>
+					<p></p>
+					<h:inputText id="name" value="#{firstRegister.name}" />
+					<p></p>
+					<h:outputText value="Surname" required="true"/>
+					<p></p>
+					<h:inputText id="surname" value="#{firstRegister.surname}" />
+					<p></p>
 					<p:outputLabel value="Email" />
 					<p></p>
 					<p:inputText id="email" value="#{firstRegister.email}" required="true" />
@@ -26,8 +34,10 @@
 					<h:outputText value="Password" />
 					<p></p>
 					<h:inputSecret id="password" value="#{firstRegister.password}" />
+					<p></p>				
 					<p></p>
 					<h:commandButton action="#{firstRegister.register}" value="Enter" />
+					
 
 				</h:form>
 			</p:outputPanel>
