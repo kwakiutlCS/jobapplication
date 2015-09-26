@@ -35,9 +35,9 @@ public interface IPosition  {
 	
 	public String getStateFormatted();
 	
-	public String getVacancies();
+	public int getVacancies();
 	
-	public void setVacancies(String vacancies);
+	public void setVacancies(int vacancies);
 	
 	public String getClosingDateFormatted();
 	
@@ -45,9 +45,9 @@ public interface IPosition  {
 	
 	public void setClosingDate(Date closingDate);
 	
-	public String getSla();
+	public int getSla();
 	
-	public void setSLA(int Sla);
+	public void setSla(int Sla);
 	
 	public String getCompany();
 	

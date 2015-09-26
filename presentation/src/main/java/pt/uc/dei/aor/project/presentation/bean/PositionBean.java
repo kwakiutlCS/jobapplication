@@ -17,6 +17,7 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
@@ -35,7 +36,7 @@ public class PositionBean implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
 	
 	@Inject
-	private IPositionBusinessService position;
+	private IPositionBusinessService positionService;
 		
 	private String title;
 	private int vacancies = 1; 
@@ -52,6 +53,13 @@ public class PositionBean implements Serializable {
 	private List<TechnicalArea> selectedTechnicalAreas;
 	private List<IPublicationChannel> selectedChannels;
 	private Date today = new Date();
+	
+	private long posId;
+	private IPosition position;
+	
+	public void onload() {
+		position = positionService.findPositionById(posId);
+	}
 	
 	public PositionBean() {
 	}
@@ -92,6 +100,10 @@ public class PositionBean implements Serializable {
 				
 	}
 	
+	public void updatePosition() {
+		position = positionService.updatePosition(position);
+		MetaUtils.setMsg("Position updated", FacesMessage.SEVERITY_INFO);
+	}
 
 	public String getTitle() {
 		return title;
@@ -218,7 +230,7 @@ public class PositionBean implements Serializable {
 		if (scripts == null || scripts.isEmpty()) {
 			MetaUtils.setMsg("Please select at least a script", FacesMessage.SEVERITY_ERROR);
 		}
-		position.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
+		positionService.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
 				company, selectedTechnicalAreas, description, scripts, selectedChannels);
 		title = null;
 		selectedLocalizations = null;
@@ -259,7 +271,20 @@ public class PositionBean implements Serializable {
 	public void setToday(Date today) {
 		this.today = today;
 	}
+
+	public long getPosId() {
+		return posId;
+	}
+
+	public void setPosId(long posId) {
+		this.posId = posId;
+	}
+
+	public IPosition getPosition() {
+		return position;
+	}
 	
-	
-	
+	public void setPosition(IPosition position) {
+		this.position = position;
+	}
 }

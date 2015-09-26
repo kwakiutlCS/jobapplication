@@ -36,7 +36,7 @@ nav.navbar-default.navbar {
 	color: #fff;
 	border-radius: 6px;
 	padding: 3px 5px;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 
@@ -99,7 +99,7 @@ ul>li {
 .content {
 	background-color: white;
 	margin-right: 15px;
-	padding: 0 20px;
+	padding: 40px;
 }
 
 header {
@@ -121,4 +121,19 @@ header {
 .logoutLink:hover {
 	background-color: #e7e7e7;
 	color: #333;
+}
+
+
+.defaultGrid {
+	margin:auto;
+
+}
+
+.defaultGrid .defLbl2 {
+	margin-left: 80px;
+	display:inline-block;
+}
+
+.defaultGrid td {
+	padding: 15px 0;
 }

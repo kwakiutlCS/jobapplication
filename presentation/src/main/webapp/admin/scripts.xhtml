@@ -25,7 +25,9 @@
 				<p:column headerText="Number of questions">#{script.entries.size()}</p:column>
 				<p:column>
 					<p:link value="view" outcome="script.xhtml?sc=#{script.id}" />
-					<p:link value="edit" outcome="editscript.xhtml?sc=#{script.id}" />
+					<p:link value="edit" outcome="editscript">
+						<f:param name="sc" value="#{script.id}" />
+					</p:link>
 					<p:commandButton value="delete" icon="ui-icon-trash"
 						action="#{scriptBean.delete(script)}" update="@form" />
 				</p:column>

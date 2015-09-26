@@ -55,7 +55,7 @@ public class ScheduledEjb {
     	Calendar limit = Calendar.getInstance();
     	limit.setTime(position.getOpeningDate());
     	
-    	limit.add(Calendar.DAY_OF_YEAR, Integer.parseInt(position.getSla()));
+    	limit.add(Calendar.DAY_OF_YEAR, position.getSla());
     	
     	Calendar today = Calendar.getInstance();
     	
