@@ -1,0 +1,82 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	
+	<ui:define name="title">Position</ui:define>
+
+	<ui:define name="metadata">
+		<f:metadata>
+    		<f:viewParam name="pos" value="#{positionBean.posId}" />
+    		<f:viewAction action="#{positionBean.onload}" />
+		</f:metadata>
+	</ui:define>
+	
+	<ui:define name="content">
+		<h:form>
+		<h:panelGrid columns="4" styleClass="defaultGrid" columnClasses="defLbl1, defData, defLbl2, defData"
+		rowClasses="row">
+			<p:outputLabel value="Code" for="code" />
+			<p:inputText id="code" value="#{positionBean.position.code}" disabled="true" />
+		
+			<p:outputLabel value="Title" for="title" />
+			<p:inputText id="title" value="#{positionBean.position.title}" required="true" />
+
+			<p:outputLabel value="Opening date" for="openingDate" />
+			<p:inputText id="openingDate" value="#{positionBean.position.openingDate}" disabled="true">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</p:inputText>
+			
+			<p:outputLabel value="Closing date" for="closingDate" />
+			<p:inputText id="closingDate" value="#{positionBean.position.closingDate}" disabled="true">
+				<f:convertDateTime pattern="dd/MM/yyyy" />
+			</p:inputText>
+			
+			<p:outputLabel value="Localization" for="localization" />
+			<p:selectManyCheckbox id="localization" value="#{positionBean.position.localizations}" 
+			required="true" converter="omnifaces.SelectItemsConverter">
+				<f:selectItems value="#{positionBean.localizations}" var="local" 
+				itemLabel="#{local.localizationLabel}" />
+			</p:selectManyCheckbox> 
+			
+			<p:outputLabel value="Technical areas" for="areas" />
+			<p:inputText id="areas" value="#{positionBean.position.technicalAreasFormatted}" 
+			disabled="true" />
+			
+			<p:outputLabel value="State" for="state" />
+			<p:selectOneMenu id="state" value="#{positionBean.position.state}" 
+			required="true" converter="omnifaces.SelectItemsConverter">
+				<f:selectItems value="#{positionBean.positionStates}" var="state" 
+				itemLabel="#{state.positionStateLabel}" />
+			</p:selectOneMenu> 
+			
+			<p:outputLabel value="Vacancies" for="vacancies" />
+			<p:spinner id="vacancies" value="#{positionBean.position.vacancies}" required="true"
+			min="1" />
+			
+			<p:outputLabel for="contactPerson" value="Contact Person" />
+			<p:selectOneMenu value="#{positionBean.position.contactPerson}" id="contactPerson"
+				converter="omnifaces.SelectItemsConverter" required="true">
+			<f:selectItems value="#{workerBean.allManagers}" var="manager" 
+				itemLabel="#{manager.fullName}" />
+			</p:selectOneMenu>
+			
+			<p:outputLabel value="SLA (days)" for="sla" />
+			<p:inputText id="sla" value="#{positionBean.position.sla}" disabled="true" />
+			
+			<p:outputLabel value="Company" for="company" />
+			<p:inputText id="company" value="#{positionBean.position.company}" disabled="true" />
+			
+			<p:outputLabel value="Description" for="description" />
+			<p:inputTextarea value="#{positionBean.description}" required="true" id="description" />
+			
+			<p:commandButton value="Save changes" update="@form :globalMessages"
+				action="#{positionBean.updatePosition}"	styleClass="ui-priority-primary" />
+						
+		</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

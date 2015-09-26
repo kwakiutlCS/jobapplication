@@ -32,8 +32,9 @@
 				</span>
 			</div>
 			<h:panelGroup rendered="#{notificationBean.visibleNotification eq status.index}">
-				<span>#{notification.message}</span>
+				<h:outputText value="#{notification.message}" />
 			</h:panelGroup>
+			
 		</ui:repeat>
 	</h:panelGroup>
 

@@ -18,16 +18,32 @@
 			</p:selectOneMenu>
 			<p:commandButton value="Generate report" action="#{reportBean.generatePeriodicApp}" 
 			update="@form" />
-			
+
 			<h:panelGroup rendered="#{reportBean.periodicAppVisible}">
 				<p:dataTable value="#{reportBean.periodicAppModel.points}" var="p">
 					<p:column>#{p.x}</p:column>
 					<p:column>#{p.y}</p:column>
 				</p:dataTable>
-				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<p:chart type="bar" model="#{chartBean.barModel}"
+					style="height:300px" widgetVar="chart" />
+				<p:commandButton id="exp" value="Export" icon="ui-icon-extlink"
+					onclick="exportChart();"
+					actionListener="#{reportBean.submittedBase64Str}" />
+				<h:inputHidden id="b64" value="#{reportBean.base64Str}" />
+				<script type="text/javascript">
+        function exportChart() {
+        // exportAsImage() will return a base64 png encoded string
+        alert("here");
+        alert(chart);
+        img = chart.exportAsImage();
+        alert(img);
+        document.getElementById('hform:b64').value = img.src;
+        }
+    </script>
 			</h:panelGroup>
 		</h:form>
 		
+				
 		<h:form>
 			<p>Number of applications by position</p>
 			<p:commandButton value="Generate report" action="#{reportBean.generatePositionApp}" 
@@ -42,6 +58,7 @@
 			</h:panelGroup>
 		</h:form>
 		
+		
 		<h:form>
 			<p>Number of spontaneous applications by date period</p>
 			<p:selectOneMenu value="#{reportBean.period}">
@@ -54,6 +71,26 @@
 			
 			<h:panelGroup rendered="#{reportBean.spontaneousAppVisible}">
 				<p:dataTable value="#{reportBean.spontaneousAppModel.points}" var="p">
+					<p:column>#{p.x}</p:column>
+					<p:column>#{p.y}</p:column>
+				</p:dataTable>
+				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+			</h:panelGroup>
+		</h:form>
+		
+		
+		<h:form>
+			<p>Number of spontaneous applications by date period</p>
+			<p:selectOneMenu value="#{reportBean.period}">
+			<f:selectItem itemLabel="Monthly" itemValue="1" />
+			<f:selectItem itemLabel="Quarterly" itemValue="3" />
+			<f:selectItem itemLabel="Yearly" itemValue="12" />
+			</p:selectOneMenu>
+			<p:commandButton value="Generate report" action="#{reportBean.generateInterviewTime}" 
+			update="@form" />
+			
+			<h:panelGroup rendered="#{reportBean.interviewTimeVisible}">
+				<p:dataTable value="#{reportBean.interviewTimeModel.points}" var="p">
 					<p:column>#{p.x}</p:column>
 					<p:column>#{p.y}</p:column>
 				</p:dataTable>

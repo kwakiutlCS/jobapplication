@@ -133,13 +133,13 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public String getVacancies() {
-		return Integer.toString(entity.getVacancies());
+	public int getVacancies() {
+		return entity.getVacancies();
 	}
 
 	@Override
-	public void setVacancies(String vacancies) {
-		entity.setVacancies(Integer.parseInt(vacancies));
+	public void setVacancies(int vacancies) {
+		entity.setVacancies(vacancies);
 	}
 	
 	@Override
@@ -163,14 +163,12 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 	}
 
 	@Override
-	public String getSla() {
-		
-		return Integer.toString(entity.getSla());
+	public int getSla() {
+		return entity.getSla();
 	}
 
 	@Override
-	public void setSLA(int sla) {
-		
+	public void setSla(int sla) {
 		entity.setSla(sla);
 	}
 

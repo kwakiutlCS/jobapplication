@@ -32,14 +32,12 @@ public class NotificationBusinessService implements INotificationBusinessService
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends INotification, U> T notify(U person, String msg, String type, 
-			String subject, String content) {
+	public <T extends INotification, U> T notify(U person, String msg, String type) {
 		if (person instanceof IWorker) {
 			IWorker worker = (IWorker) person;
 			
 			IWorkerNotification notification = factory.workerNotification(msg, worker, type);
 			
-			emailUtil.send(worker.getEmail(), subject, content);
 			
 			return (T) notificationPersistence.save(notification);
 		}
@@ -48,13 +46,11 @@ public class NotificationBusinessService implements INotificationBusinessService
 	}
 
 	@Override
-	public IWorkerNotification notify(IWorker person, String msg, String type, 
-			String subject, String content) {
+	public IWorkerNotification notify(IWorker person, String msg, String type) {
 		IWorker worker = (IWorker) person;
 			
 			IWorkerNotification notification = factory.workerNotification(msg, worker, type);
 			
-			emailUtil.send(worker.getEmail(), subject, content);
 			
 			return notificationPersistence.save(notification);
 		

@@ -276,4 +276,13 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 		
 		return proxies;
 	}
+
+
+	@Override
+	public IPosition findPositionById(long id) {
+		PositionEntity entity = em.find(PositionEntity.class, id);
+		if (entity == null) return null;
+		
+		return new PositionProxy(entity);
+	}
 }

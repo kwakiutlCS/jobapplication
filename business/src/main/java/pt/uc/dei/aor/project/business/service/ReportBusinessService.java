@@ -162,4 +162,18 @@ public class ReportBusinessService implements IReportBusinessService {
 		
 		return model;
 	}
+
+	@Override
+	public DataModel<String, Long> generateInterviewTimeReport(int period) {
+		
+		if (period == 12) {
+			return generateYearlyAppReport(false);
+		}
+		if (period == 3) {
+			return generateTrimonthAppReport(false);
+		}
+		else {
+			return generateMonthlyAppReport(false);
+		}
+	}
 }
