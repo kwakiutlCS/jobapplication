@@ -19,18 +19,16 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.PositionState;
-import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ApplicationProxy;
-import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
-import pt.uc.dei.aor.project.persistence.proxy.WorkerProxy;
 
 @Stateless
 public class ApplicationPersistenceService implements IApplicationPersistenceService {
@@ -170,6 +168,7 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 
 
 	@Override
+
 	public long findApplicationsByPosition(IPosition p) {
 		TypedQuery<Long> query = em.createNamedQuery("Application.numberCandidatesByPosition", Long.class);
 		query.setParameter("position", GenericPersistenceService.getEntity(p));
@@ -178,7 +177,28 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		
 		if (result.isEmpty()) return 0;
 		return result.get(0);
+	}
 		
+
+	public boolean findApplicationbyCandidateAndPosition(ICandidate candidate,
+			IPosition position) {
+		
+		PositionEntity positionEntity = GenericPersistenceService.getEntity(position);
+		CandidateEntity candidateEntity = GenericPersistenceService.getEntity(candidate);
+		
+		TypedQuery<ApplicationEntity> q = em.createNamedQuery("application.findApplicationbyCandidateAndPosition", ApplicationEntity.class);
+		
+		q.setParameter("position", positionEntity);
+		q.setParameter("candidate", candidateEntity);
+		
+		List<ApplicationEntity> applied = q.getResultList();
+		
+		boolean result = false;
+		
+		if (applied.size()>0)
+			result= true;
+		
+		return result;
 	}
 	
 	

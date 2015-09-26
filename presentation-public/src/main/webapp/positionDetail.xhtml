@@ -1,0 +1,128 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">Index</ui:define>
+
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="pos"
+				value="#{listPositionBean.selectedPositionId}" />
+			<f:viewAction action="#{listPositionBean.findPosition()}" />
+		</f:metadata>
+
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="positionDetailForm">
+
+			<p:panelGrid columns="2"
+				rendered="#{not empty listPositionBean.selectedPosition}"
+				columnClasses="label,value">
+
+				<h:outputText value="Title:" />
+				<h:outputText value="#{listPositionBean.selectedPosition.title}" />
+
+				<h:outputText value="Opening date:" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
+
+				<h:outputText value="Code:" />
+				<h:outputText value="#{listPositionBean.selectedPosition.code}" />
+
+				<h:outputText value="Closing date:" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.closingDateFormatted}" />
+
+				<h:outputText value="Company" />
+				<h:outputText value="#{listPositionBean.selectedPosition.company}" />
+
+				<h:outputText value="Technical Area" />
+				<p:column headerText="Technical Area">
+					<ui:repeat
+						value="#{listPositionBean.selectedPosition.technicalAreasFormatted}"
+						var="t">
+  						  		  #{t}
+							</ui:repeat>
+				</p:column>
+
+				<h:outputText value="Location:" />
+				<p:column headerText="Location">
+					<ui:repeat
+						value="#{listPositionBean.selectedPosition.localizationsFormatted}"
+						var="l">
+  							    #{l}
+							</ui:repeat>
+				</p:column>
+
+				<h:outputText value="Situation:" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.stateFormatted}" />
+
+				<h:outputText value="Vacancies:" />
+				<h:outputText value="#{listPositionBean.selectedPosition.vacancies}" />
+
+				<h:outputText value="Contact person:" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.contactPerson}" />
+
+				<h:outputText value="Description" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.description}" />
+
+				<h:outputText value="Publication channels" />
+				<p:column headerText="Publication Channels">
+					<ui:repeat
+						value="#{listPositionBean.selectedPosition.publicationChannels}"
+						var="l">
+  							    #{l}
+							</ui:repeat>
+				</p:column>
+
+				<p:column>
+					<p:commandButton update=":positionDetailForm" value="Apply Now"
+						action="#{viewManager.swapDialog()}">
+					</p:commandButton>
+					<p:link value="Exit" outcome="listPosition" />
+				</p:column>
+
+			</p:panelGrid>
+		</h:form>
+
+
+		<p:dialog widgetVar="identifyDlg" modal="true">
+			<p:outputPanel id="identifyPanel" style="text-align:left;">
+				<h:form id="identifyForm">
+					<h:outputText value="Application for" />
+					<h:outputText value="#{listPositionBean.selectedPosition.title}" />
+					<p></p>
+					<p:outputLabel value="Login" />
+					<p></p>
+					<p:inputText id="login" value="#{loginBean.login}" required="true" />
+					<p></p>
+					<h:outputText value="Password" />
+					<p></p>
+					<h:inputSecret id="password" value="#{loginBean.password}" />
+					<p></p>
+					<h:commandLink value="recover password" />
+					<p></p>
+					<h:commandButton action="#{viewManager.loginOnApply}" value="Enter">
+						<f:param name="position"
+							value="#{listPositionBean.selectedPosition.id}" />
+					</h:commandButton>
+					<p></p>
+					<h:outputText value="Don't have an account?" />
+					<p></p>
+					<h:commandButton outcome="firstregister" value="Register" />
+
+				</h:form>
+			</p:outputPanel>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

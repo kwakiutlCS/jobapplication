@@ -107,6 +107,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 	@Override
 	public IPosition findPositionById(long id) {
 		return positionPersistence.findPositionById(id);
+
 	}
 
 

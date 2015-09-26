@@ -136,14 +136,14 @@
 
 						<p:column>
 							<p:commandButton
-								update=":listPositionForm :positionDetailForm :applyForm" 
-								value="Apply Now" actionListener="#{applicationBean.swapDialog()}">
+								update=":listPositionForm :positionDetailForm :applyForm"
+								value="Apply Now" actionListener="#{viewManager.swapDialog()}">
 								<f:setPropertyActionListener value="#{position}"
 									target="#{applicationBean.position}" />
 							</p:commandButton>
 							<p:commandButton value="Exit" onclick="positionDetailDlg.hide()" />
 						</p:column>
- 
+
 					</p:panelGrid>
 				</h:form>
 			</p:outputPanel>
@@ -158,10 +158,150 @@
 					<h:outputText value="#{listPositionBean.selectedPosition.title}" />
 					<p></p>
 				</h:form>
+
+
+				<h:form>
+					<p:fieldset legend="Personal Details" toggleable="true"
+						toggleSpeed="500">
+						<h:panelGrid columns="2">
+
+							<p:outputLabel value="Email" />
+							<p:inputText id="email" value="#{registerBean.email}" />
+
+							<p:outputLabel value="First name" for="name" />
+							<p:inputText id="name" value="#{registerBean.name}" />
+
+							<p:outputLabel value="Surname" />
+							<p:inputText id="surname" value="#{registerBean.surname}" />
+
+						</h:panelGrid>
+
+						<p:commandButton value="Save changes"
+							actionListener="#{registerBean.updateCandidate()}" />
+					</p:fieldset>
+				</h:form>
+
+
+				<h:form>
+					<p:fieldset legend="Contact Details" toggleable="true"
+						toggleSpeed="500">
+						<h:panelGrid columns="2">
+
+							<p:outputLabel value="Address" for="address" />
+							<p:inputText id="address" value="#{registerBean.address}" />
+
+							<p:outputLabel value="City" for="city" />
+							<p:inputText id="city" value="#{registerBean.city}" />
+
+							<p:outputLabel value="Country" for="country" />
+							<p:inputText id="country" value="#{registerBean.country}" />
+
+							<p:outputLabel value="Phone number" for="phone" />
+							<p:inputMask mask="999 999 999" id="phone"
+								value="#{registerBean.phone}" />
+
+							<p:outputLabel value="Mobile number" for="mobile" />
+							<p:inputMask mask="999 999 999" id="mobile"
+								value="#{registerBean.mobilePhone}" />
+
+						</h:panelGrid>
+
+						<p:commandButton value="Submit"
+							actionListener="#{registerBean.updateCandidate()}" />
+					</p:fieldset>
+				</h:form>
+
+
+
+				<h:form>
+					<p:fieldset legend="Qualifications" toggleable="true"
+						toggleSpeed="500">
+						<p:messages />
+						<h:panelGrid columns="1">
+
+							<h:panelGroup id="qualificationsList">
+								<ui:repeat value="#{loginBean.user.qualifications}"
+									var="qualification">
+									<div>
+										<div>#{qualification.school}</div>
+										<div>#{qualification.degree}</div>
+										<div>
+											<p:commandLink value="delete" update="@form"
+												action="#{registerBean.removeQualification(qualification)}" />
+										</div>
+									</div>
+								</ui:repeat>
+
+							</h:panelGroup>
+							<p></p>
+							<p:outputLabel for="institution" value="Institution" />
+							<p></p>
+							<p:autoComplete id="institution"
+								value="#{registerBean.qualification}" forceSelection="false"
+								completeMethod="#{registerBean.listSchools}" style="width:600px"
+								maxResults="8">
+							</p:autoComplete>
+
+							<p></p>
+							<p:outputLabel for="degreeField" value="Course" />
+							<p:autoComplete id="degreeField" style="width:600px"
+								value="#{registerBean.degree}"
+								completeMethod="#{registerBean.listDegrees()}" maxResults="8" />
+							<p></p>
+							<p:commandButton value="Add qualification"
+								action="#{registerBean.addQualification}" update="@form" />
+
+						</h:panelGrid>
+
+						<p:commandButton value="Save changes"
+							actionListener="#{registerBean.updateCandidate()}" />
+					</p:fieldset>
+				</h:form>
+
+				<h:form>
+					<p:fieldset legend="Cover Letter" toggleable="true"
+						toggleSpeed="500">
+						<p:editor id="editor" widgetVar="editorWidget"
+							value="#{applicationBean.coverLetter}" width="600" />
+
+						<h:panelGrid columns="2" style="margin-top: 10px">
+							<p:commandButton value="Submit" update="display"
+								oncomplete="PF('letterDlg').show()" icon="ui-icon-disk" />
+
+							<p:commandButton value="Clear" type="button"
+								onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
+						</h:panelGrid>
+
+						<p:dialog header="Cover Letter Preview" widgetVar="letterDlg"
+							showEffect="fade" hideEffect="fade">
+							<h:outputText id="display" value="#{applicationBean.coverLetter}"
+								escape="false" />
+						</p:dialog>
+					</p:fieldset>
+				</h:form>
+
+
+				<h:form enctype="multipart/form-data" type="file">
+					<p:fieldset legend="Curriculum Vitae" toggleable="true"
+						toggleSpeed="500">
+						<p:messages />
+						<h:panelGrid columns="1">
+							<h:inputFile value="#{registerBean.cv}" required="true"
+								id="fileUploader">
+								<f:ajax listener="#{registerBean.upload}"
+									render=":globalMessages" />
+							</h:inputFile>
+
+						</h:panelGrid>
+						<p></p>
+						<p:commandButton value="Send"
+							actionListener="#{registerBean.updateCandidate()}" />
+					</p:fieldset>
+				</h:form>
+
 			</p:outputPanel>
+
 		</p:dialog>
-
-
 
 	</ui:define>
 </ui:composition>

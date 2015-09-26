@@ -33,8 +33,6 @@ public class FirstRegister {
 	private String surname;
 	private String temp;
 
-
-	
 	
 	public FirstRegister() {
 	}

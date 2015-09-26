@@ -1,8 +1,7 @@
 package pt.uc.dei.aor.project.persistence.service;
 
-import java.util.Date;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -18,22 +17,15 @@ import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
-import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
-import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
-import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
-import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
 import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
-import pt.uc.dei.aor.project.persistence.proxy.IProxyToEntity;
-import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
 import pt.uc.dei.aor.project.persistence.proxy.PositionProxy;
 
 @Stateless
@@ -282,7 +274,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 	public IPosition findPositionById(long id) {
 		PositionEntity entity = em.find(PositionEntity.class, id);
 		if (entity == null) return null;
-		
 		return new PositionProxy(entity);
+
 	}
 }

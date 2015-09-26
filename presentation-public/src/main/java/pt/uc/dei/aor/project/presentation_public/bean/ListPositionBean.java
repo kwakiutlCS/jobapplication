@@ -24,8 +24,16 @@ public class ListPositionBean implements Serializable{
 	
 	private List<IPosition> filteredPositions;
 	private IPosition selectedPosition;
+	private long selectedPositionId;
 	
 
+	public void findPosition(){
+		System.out.println("Find selected position");
+		selectedPosition =  position.find(selectedPositionId);
+		System.out.println("Found selected position "+selectedPosition.getTitle());
+	}
+	
+	
 	public List<IPosition> getPositions() {
 			
 		return position.getIPositions();
@@ -49,6 +57,16 @@ public class ListPositionBean implements Serializable{
 	
 	public void setSelectedPosition(IPosition selectedPosition) {
 		this.selectedPosition = selectedPosition;
+	}
+
+
+	public long getSelectedPositionId() {
+		return selectedPositionId;
+	}
+
+
+	public void setSelectedPositionId(long selectedPositionId) {
+		this.selectedPositionId = selectedPositionId;
 	}
 
 }
