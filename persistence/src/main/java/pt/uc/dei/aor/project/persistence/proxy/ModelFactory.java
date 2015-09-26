@@ -10,6 +10,7 @@ import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
+import pt.uc.dei.aor.project.business.model.IColor;
 import pt.uc.dei.aor.project.business.model.IDegree;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -120,6 +121,12 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IProposition proposition() {
 		return new PropositionProxy();
+	}
+
+	@Override
+	public IColor color(String page, String header, String content, String contentText, String contentTitle,
+			String headerText, String background) {
+		return new ColorProxy(page, header, content, contentText, contentTitle, headerText, background);
 	}
 
 

@@ -46,4 +46,7 @@ public interface IModelFactory {
 			Collection<IPublicationChannel> channels);
 
 	IProposition proposition();
+
+	IColor color(String page, String header, String content, String contentText, String contentTitle, String headerText,
+			String background);
 }
