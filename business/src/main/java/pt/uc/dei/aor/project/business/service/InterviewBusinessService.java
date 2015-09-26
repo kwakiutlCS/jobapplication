@@ -61,7 +61,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	private IModelFactory factory;
 	
 	@Inject
-	private IApplicationBusinessService applicationService;
+	private EmailUtil emailUtil;
 	
 	@Inject
 	private INotificationBusinessService notificationService;
@@ -95,8 +95,20 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 				workerPersistence.insertInterview(w.getId(), interview);
 
 				// notify user
-				notificationService.notify(w, "Interview scheduled", "Interview Scheduled",
-						"Interview scheduled", "Interview scheduled");
+				String title = "Interview Scheduled";
+				String msgEmail = "Interview for position "+
+						interview.getApplication().getPosition().getTitle()+" was created.\n\n\nDate: "+
+						interview.getDate()+
+						"\nCandidate: "+interview.getCandidate().getFullName();
+				
+				String msg = "Interview for position "+
+						interview.getApplication().getPosition().getTitle()+" was created.<br /><br /><br />Date: "+interview.getDate()+
+						".<br />Candidate: "+interview.getCandidate().getFullName();
+				
+				notificationService.notify(w, msg, title);
+				
+				emailUtil.send(w.getEmail(), msgEmail, title, interview.getCandidate().getLogin()+"/",
+						interview.getCandidate().getCv());
 			}
 			
 			return application;

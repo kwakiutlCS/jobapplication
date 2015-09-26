@@ -9,7 +9,7 @@ import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 
 public interface INotificationBusinessService {
 
-	public <T extends INotification ,U> T notify(U person, String msg, String type, String subject, String content);
+	public <T extends INotification ,U> T notify(U person, String msg, String type);
 	
 	public <T extends INotification> T markNotificationAsViewed(T notification);
 	
@@ -23,6 +23,7 @@ public interface INotificationBusinessService {
 
 	long countUnreadNotifications(IWorker worker);
 
-	IWorkerNotification notify(IWorker person, String msg, String type, String subject, String content);
+	IWorkerNotification notify(IWorker person, String msg, String type);
 
+	
 }

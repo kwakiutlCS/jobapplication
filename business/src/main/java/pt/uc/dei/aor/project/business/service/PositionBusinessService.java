@@ -14,6 +14,7 @@ import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
+import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
@@ -27,6 +28,12 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 	@Inject
 	private IPositionPersistenceService positionPersistence;
+	
+	@Inject
+	private INotificationBusinessService notificationService;
+	
+	@Inject
+	private EmailUtil emailUtil;
 
 	private long code;
 	private Date openingDate;
@@ -45,6 +52,13 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 		IPosition position = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, sla, 
 				contactPerson, company, technicalAreas, description, scripts, channels);
+		
+		String msgTitle = "Position opening";
+		String message = "Position: "+title+" was created with you as manager";
+		notificationService.notify(contactPerson, message, msgTitle);
+		
+		emailUtil.send(contactPerson.getEmail(), msgTitle, message);
+		
 
 		return positionPersistence.save(position);
 	}

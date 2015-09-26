@@ -3,6 +3,7 @@ package pt.uc.dei.aor.project.persistence.entity;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -42,6 +43,8 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 	@NamedQuery(name = "Position.findPositionByTitle", 
 	query = "from PositionEntity u where u.title like :title"),
 	@NamedQuery(name="Position.findOpenPositions", query = "from PositionEntity p where p.state like 'OPEN'"),
+	@NamedQuery(name = "Position.findPositionByDate", 
+	query = "from PositionEntity p where p.openingDate >= :startDate and p.openingDate < :finishDate"),
 })
 public class PositionEntity {
 	
@@ -58,7 +61,7 @@ public class PositionEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="localization", indexes={@Index(columnList="positionentity_id")})
 	@Enumerated(EnumType.STRING)
-	private List<Localization> localizations;
+	private Set<Localization> localizations;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable=true)
@@ -86,7 +89,7 @@ public class PositionEntity {
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="technical_area", indexes={@Index(columnList="positionentity_id")})
 	@Enumerated(EnumType.STRING)
-	private List<TechnicalArea> technicalAreas;
+	private Set<TechnicalArea> technicalAreas;
 	
 	@Column
 	private String description;
@@ -108,7 +111,7 @@ public class PositionEntity {
 		super();
 		this.code=code;
 		this.title = title;
-		this.localizations = new ArrayList<>();
+		this.localizations = new HashSet<>();
 		this.localizations.addAll(localizations);
 		this.state = state;
 		this.vacancies = vacancies;
@@ -117,7 +120,7 @@ public class PositionEntity {
 		this.sla = sla;
 		this.contactPerson = contactPerson;
 		this.company = company;
-		this.technicalAreas = new ArrayList<>();
+		this.technicalAreas = new HashSet<>();
 		this.technicalAreas.addAll(technicalAreas);
 		this.description = description;
 		this.publications = new TreeSet<>();
