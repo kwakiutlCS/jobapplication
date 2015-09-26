@@ -31,23 +31,16 @@ public class FirstRegister {
 	private String password;
 	private String name;
 	private String surname;
-	private String temp;
 
 	
 	public FirstRegister() {
 	}
 
-	public String defaultString(){
-		
-		return "defaultString";
-	}
-	
-	
+
 	public String register() throws DuplicatedUserException {
 
-		temp=defaultString();
 
-		candidateService.createNewCandidate(login,name,surname,email , Encryptor.encrypt(password),temp,temp,temp,temp,temp,null,null, null);
+		candidateService.createNewCandidate(login,name,surname,email , Encryptor.encrypt(password),null,null,null,null,null,null,null, null);
 		
 		return "index.xhtml";
 	}

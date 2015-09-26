@@ -74,16 +74,17 @@
 							</ui:repeat>
 					</p:column>
 
-				
+					
 						<p:commandButton update=":positionDetailForm" value="Apply Now"
 							action="#{viewManager.swapDialog()}">
 						</p:commandButton>
+						
 						<p:link value="Exit" outcome="listPosition" />
 					
-
 				</h:panelGrid>
 			</p:panel>
 		</h:form>
+
 
 
 		<p:dialog widgetVar="identifyDlg" modal="true">
@@ -110,6 +111,7 @@
 					<h:outputText value="Don't have an account?" />
 					<p></p>
 					<h:commandButton outcome="firstregister" value="Register" />
+
 				</h:form>
 			</p:outputPanel>
 		</p:dialog>

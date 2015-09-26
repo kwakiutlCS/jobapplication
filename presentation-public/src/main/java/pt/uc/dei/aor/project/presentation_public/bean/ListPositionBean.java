@@ -68,5 +68,11 @@ public class ListPositionBean implements Serializable{
 	public void setSelectedPositionId(long selectedPositionId) {
 		this.selectedPositionId = selectedPositionId;
 	}
+	
+	public String contactPersonName(){
+		
+		return selectedPosition.getContactPerson().getFullName();
+		
+	}
 
 }
