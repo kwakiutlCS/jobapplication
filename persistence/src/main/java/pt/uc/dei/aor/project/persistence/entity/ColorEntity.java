@@ -13,6 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="color")
+@NamedQueries({
+	@NamedQuery(name="Color.findColorByTitle", query = "from ColorEntity c where c.page = :title"),
+})
 public class ColorEntity {
 	
 	public ColorEntity() {
@@ -54,5 +57,54 @@ public class ColorEntity {
 	
 	@Column(nullable=false)
 	private String background;
+
+	public String getHeader() {
+		return header;
+	}
+
+	public void setHeader(String header) {
+		this.header = "#"+header;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = "#"+content;
+	}
+
+	public String getContentText() {
+		return contentText;
+	}
+
+	public void setContentText(String contentText) {
+		this.contentText = "#"+contentText;
+	}
+
+	public String getContentTitle() {
+		return contentTitle;
+	}
+
+	public void setContentTitle(String contentTitle) {
+		this.contentTitle = "#"+contentTitle;
+	}
+
+	public String getHeaderText() {
+		return headerText;
+	}
+
+	public void setHeaderText(String headerText) {
+		this.headerText = "#"+headerText;
+	}
+
+	public String getBackground() {
+		return background;
+	}
+
+	public void setBackground(String background) {
+		this.background = "#"+background;
+	}
+	
 	
 }

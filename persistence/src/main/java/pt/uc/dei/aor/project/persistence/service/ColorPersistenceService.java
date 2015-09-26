@@ -33,6 +33,8 @@ public class ColorPersistenceService implements IColorPersistenceService {
 		
 		List<ColorEntity> entities = query.getResultList();
 		
+		if (entities.isEmpty()) return null;
+		
 		return new ColorProxy(entities.get(0));
 	}
 

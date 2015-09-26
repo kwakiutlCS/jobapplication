@@ -29,4 +29,76 @@ public class ColorProxy implements IColor, IProxyToEntity<ColorEntity> {
 	}
 
 
+	@Override
+	public String getBackground() {
+		return entity.getBackground();
+	}
+
+
+	@Override
+	public String getContent() {
+		return entity.getContent();
+	}
+
+
+	@Override
+	public String getHeader() {
+		return entity.getHeader();
+	}
+
+
+	@Override
+	public String getContentText() {
+		return entity.getContentText();
+	}
+
+
+	@Override
+	public String getContentTitle() {
+		return entity.getContentTitle();
+	}
+
+
+	@Override
+	public String getHeaderText() {
+		return entity.getHeaderText();
+	}
+
+
+	@Override
+	public void setBackground(String background) {
+		entity.setBackground(background);
+	}
+
+
+	@Override
+	public void setContent(String content) {
+		entity.setContent(content);
+	}
+
+
+	@Override
+	public void setHeader(String header) {
+		entity.setHeader(header);
+	}
+
+
+	@Override
+	public void setContentText(String contentText) {
+		entity.setContentText(contentText);
+	}
+
+
+	@Override
+	public void setContentTitle(String contentTitle) {
+		entity.setContentTitle(contentTitle);
+	}
+
+
+	@Override
+	public void setHeaderText(String headerText) {
+		entity.setHeaderText(headerText);
+	}
+
+
 }

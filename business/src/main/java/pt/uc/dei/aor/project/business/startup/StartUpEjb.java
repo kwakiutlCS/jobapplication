@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -23,6 +25,10 @@ import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 
+
+
+@Singleton
+@Startup
 public class StartUpEjb {
 	
 	private static Logger logger = LoggerFactory.getLogger(StartUpEjb.class);
@@ -38,7 +44,6 @@ public class StartUpEjb {
 	
 	@Inject
 	private IColorBusinessService colorEjb;
-	
 	
 	@PostConstruct
 	public void init() {
@@ -77,8 +82,8 @@ public class StartUpEjb {
 		
 		// publication channels
 
-		//System.out.println("Adding Channels...");
-		
+//		System.out.println("Adding Channels...");
+//		
 //		try { channelEjb.createNewPublicationChannel("Critical Software website"); } 
 //		catch (Exception e) {System.out.println(e.getMessage());}
 //		
@@ -92,13 +97,12 @@ public class StartUpEjb {
 //		catch (Exception e) {System.out.println(e.getMessage());}
 
 		
-		// add colors
+		// color
 		colorEjb.save("admin", "red", "white", "black", "green", "white", "grey");
 		colorEjb.save("manager", "red", "white", "black", "green", "white", "grey");
 		colorEjb.save("interview", "red", "white", "black", "green", "white", "grey");
 		colorEjb.save("public", "red", "white", "black", "green", "white", "grey");
-		
-		
+		 
 		try {
 			createFileSystemStructure();
 		} catch (IOException e1) {
