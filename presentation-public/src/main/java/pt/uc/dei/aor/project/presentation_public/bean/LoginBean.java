@@ -64,7 +64,8 @@ public class LoginBean {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
-			result = "loginerror";
+			result = "/loginerror.xhtml?faces-redirect=true";
+			
 		}
 		return result;
 	}
