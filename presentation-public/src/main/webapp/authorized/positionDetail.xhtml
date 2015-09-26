@@ -19,80 +19,73 @@
 
 	<ui:define name="content">
 
+
 		<h:form id="positionDetailForm">
+			<p:panel header="#{listPositionBean.selectedPosition.title}">
 
-			<p:panelGrid columns="2"
-				rendered="#{not empty listPositionBean.selectedPosition}"
-				columnClasses="label,value">
+				<h:panelGrid columns="2">
 
-				<h:outputText value="Title:" />
-				<h:outputText value="#{listPositionBean.selectedPosition.title}" />
+					<h:outputText value="Opening date:" />
+					<h:outputText
+						value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
 
-				<h:outputText value="Opening date:" />
-				<h:outputText
-					value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
+					<h:outputText value="Code:" />
+					<h:outputText value="#{listPositionBean.selectedPosition.code}" />
 
-				<h:outputText value="Code:" />
-				<h:outputText value="#{listPositionBean.selectedPosition.code}" />
+					<h:outputText value="Company" />
+					<h:outputText value="#{listPositionBean.selectedPosition.company}" />
 
-				<h:outputText value="Closing date:" />
-				<h:outputText
-					value="#{listPositionBean.selectedPosition.closingDateFormatted}" />
-
-				<h:outputText value="Company" />
-				<h:outputText value="#{listPositionBean.selectedPosition.company}" />
-
-				<h:outputText value="Technical Area" />
-				<p:column headerText="Technical Area">
-					<ui:repeat
-						value="#{listPositionBean.selectedPosition.technicalAreasFormatted}"
-						var="t">
+					<h:outputText value="Technical Area" />
+					<p:column headerText="Technical Area">
+						<ui:repeat
+							value="#{listPositionBean.selectedPosition.technicalAreasFormatted}"
+							var="t">
   						  		  #{t}
 							</ui:repeat>
-				</p:column>
+					</p:column>
 
-				<h:outputText value="Location:" />
-				<p:column headerText="Location">
-					<ui:repeat
-						value="#{listPositionBean.selectedPosition.localizationsFormatted}"
-						var="l">
+					<h:outputText value="Location:" />
+					<p:column headerText="Location">
+						<ui:repeat
+							value="#{listPositionBean.selectedPosition.localizationsFormatted}"
+							var="l">
   							    #{l}
 							</ui:repeat>
-				</p:column>
+					</p:column>
 
-				<h:outputText value="Situation:" />
-				<h:outputText
-					value="#{listPositionBean.selectedPosition.stateFormatted}" />
+					<h:outputText value="Vacancies:" />
+					<h:outputText
+						value="#{listPositionBean.selectedPosition.vacancies}" />
 
-				<h:outputText value="Vacancies:" />
-				<h:outputText value="#{listPositionBean.selectedPosition.vacancies}" />
+					<h:outputText value="Contact person:" />
+					<h:outputText
+						value="#{listPositionBean.contactPersonName()}" />
 
-				<h:outputText value="Contact person:" />
-				<h:outputText
-					value="#{listPositionBean.selectedPosition.contactPerson}" />
+					<h:outputText value="Description" />
+					<h:outputText
+						value="#{listPositionBean.selectedPosition.description}" />
 
-				<h:outputText value="Description" />
-				<h:outputText
-					value="#{listPositionBean.selectedPosition.description}" />
-
-				<h:outputText value="Publication channels" />
-				<p:column headerText="Publication Channels">
-					<ui:repeat
-						value="#{listPositionBean.selectedPosition.publicationChannels}"
-						var="l">
+					<h:outputText value="Publication channels" />
+					<p:column headerText="Publication Channels">
+						<ui:repeat
+							value="#{listPositionBean.selectedPosition.publicationChannels}"
+							var="l">
   							    #{l}
 							</ui:repeat>
-				</p:column>
+					</p:column>
 
-				<p:column>
-					<p:commandButton update=":positionDetailForm" value="Apply Now"
-						action="#{viewManager.swapDialog()}">
-					</p:commandButton>
-					<p:link value="Exit" outcome="listPosition" />
-				</p:column>
-
-			</p:panelGrid>
+					
+						<p:commandButton update=":positionDetailForm" value="Apply Now"
+							action="#{viewManager.swapDialog()}">
+						</p:commandButton>
+						
+						<p:link value="Exit" outcome="listPosition" />
+					
+				</h:panelGrid>
+			</p:panel>
 		</h:form>
+
+
 
 		<p:dialog widgetVar="identifyDlg" modal="true">
 			<p:outputPanel id="identifyPanel" style="text-align:left;">
@@ -122,6 +115,7 @@
 				</h:form>
 			</p:outputPanel>
 		</p:dialog>
+
 
 	</ui:define>
 </ui:composition>
