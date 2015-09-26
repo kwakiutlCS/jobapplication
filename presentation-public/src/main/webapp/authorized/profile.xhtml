@@ -10,6 +10,22 @@
 
 	<ui:define name="content">
 
+		<p:panel header="Password">
+			<h:form>
+				<h:panelGrid columns="2">
+
+					<p:outputLabel value="Your Login" />
+					<p:outputText value="#{registerBean.login}" />
+
+					<h:link value="Change Password" />
+
+					<p:commandButton value="Delete Account"
+						actionListener="#{registerBean.deleteAccount}" />
+
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+
 		<p:panel header="Personal Details">
 			<h:form>
 				<h:panelGrid columns="2">
@@ -102,42 +118,6 @@
 					actionListener="#{registerBean.updateCandidate()}" />
 			</h:form>
 		</p:panel>
-
-		<p:panel header="Curriculum Vitae">
-			<h:form enctype="multipart/form-data">
-				<p:messages />
-				<h:panelGrid columns="1">
-					<h:inputFile value="#{registerBean.cv}" required="true"
-						id="fileUploader">
-						<f:ajax listener="#{registerBean.upload}" render=":globalMessages" />
-					</h:inputFile>
-
-				</h:panelGrid>
-				<p></p>
-				<p:commandButton value="Send"
-					actionListener="#{registerBean.updateCandidate()}" />
-			</h:form>
-		</p:panel>
-
-		<h:form>
-			<p:editor id="editor" widgetVar="editorWidget"
-				value="#{applicationBean.coverLetter}" width="600" />
-
-			<h:panelGrid columns="2" style="margin-top: 10px">
-				<p:commandButton value="Submit" update="display"
-					oncomplete="PF('letterDlg').show()" icon="ui-icon-disk" />
-
-				<p:commandButton value="Clear" type="button"
-					onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
-			</h:panelGrid>
-
-			<p:dialog header="Cover Letter Preview" widgetVar="letterDlg"
-				showEffect="fade" hideEffect="fade">
-				<h:outputText id="display" value="#{applicationBean.coverLetter}"
-					escape="false" />
-			</p:dialog>
-
-		</h:form>
 
 		<p:panel header="Curriculum Vitae">
 			<h:form enctype="multipart/form-data">

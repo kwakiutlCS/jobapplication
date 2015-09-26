@@ -32,4 +32,5 @@ public interface IPositionBusinessService {
 			Collection<TechnicalArea> technicalAreas, String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels);
 		
+	IPosition find(long id);
 }

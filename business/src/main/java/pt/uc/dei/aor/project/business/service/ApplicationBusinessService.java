@@ -7,9 +7,11 @@ import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.ICandidate;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
+import pt.uc.dei.aor.project.business.util.UploadUtil;
 
 @Stateless
 public class ApplicationBusinessService implements IApplicationBusinessService {
@@ -17,6 +19,9 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	
 	@Inject
 	private IApplicationPersistenceService applicationPersistence;
+	
+	@Inject
+	private UploadUtil upload;
 		
 	@Override
 	public IApplication findApplicationById(long id) {
@@ -46,5 +51,13 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		selectedApplication.refuse();
 		return applicationPersistence.save(selectedApplication);
 	}
+
+	@Override
+	public boolean findApplicationByCandidateAndPosition(ICandidate candidate,
+			IPosition position) {
+		return applicationPersistence.findApplicationbyCandidateAndPosition(candidate, position);
+	}
+
+
 	
 }

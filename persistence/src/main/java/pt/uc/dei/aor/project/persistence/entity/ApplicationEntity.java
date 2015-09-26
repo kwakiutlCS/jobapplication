@@ -27,6 +27,7 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 @Table(name="application")
 @NamedQueries({
 	@NamedQuery(name = "Application.dummyQuery", query = "from ApplicationEntity u"),
+	@NamedQuery(name = "application.findApplicationbyCandidateAndPosition", query = "from ApplicationEntity u where u.candidate = :candidate and u.position = :position")
 })
 public class ApplicationEntity {
 	

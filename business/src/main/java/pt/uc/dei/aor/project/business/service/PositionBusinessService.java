@@ -90,5 +90,11 @@ public class PositionBusinessService implements IPositionBusinessService {
 	}
 
 
+	@Override
+	public IPosition find(long id) {
+		return positionPersistence.find(id);
+	}
+
+
 
 }

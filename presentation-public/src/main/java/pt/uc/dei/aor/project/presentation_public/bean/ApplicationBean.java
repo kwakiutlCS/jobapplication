@@ -4,23 +4,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
-
-import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
+import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 
-@ViewScoped
+
 @Named
+@ViewScoped
 public class ApplicationBean implements Serializable {
 
 
 	private static final long serialVersionUID = 1L;
+	
+	@Inject
+	private IApplicationBusinessService applicationService;
 
 	private String cv;
-	private String coverletter;
+	private String coverLetter;
 	private String sourceInfo;
 	private Date date;
 	private boolean analyzed;
@@ -32,42 +35,27 @@ public class ApplicationBean implements Serializable {
 	public ApplicationBean() {
 	}
 
-	public int verifyLogin(){
-
-		int logged = 0;
-
-		if(MetaUtils.getUser()!=null){
-			logged = 1;	
-		}
-		return logged;
-	}
-
+//
+//	public void upload(AjaxBehaviorEvent event) {
+//
+//		if (!cv.getContentType().equals("application/pdf")) {
+//			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
+//			return; 
+//		}
+//
+//		try {
+//			applicationService.uploadCV(MetaUtils.getUser(), cv);
+//		} catch (IOException e) {
+//			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
+//			cv = null;
+//			logger.error("Error uploading file: "+cv.getSubmittedFileName());
+//		}
+//	}
+//	
 	
 	
 	
-	public String applyNow(){
-
-		String result="/authorized/apply.xhtml?faces-redirect=true";
-
-		if(MetaUtils.getUser()==null){
-			result = "/firstregister.xhtml?faces-redirect=true";	
-		}
-		return result;
-	}
-
-	public void swapDialog(){
-
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-		requestContext.execute("PF('positionDetailDlg').hide()"); 
-
-		if(MetaUtils.getUser()==null){
-		System.out.println("Swaping dialogs");	
-			requestContext.execute("PF('identifyDlg').show()");
-		}
-		else 
-			requestContext.execute("PF('applyDlg').show()");
-	}
-
+	
 	public String getCv() {
 		return cv;
 	}
@@ -75,15 +63,15 @@ public class ApplicationBean implements Serializable {
 	public void setCv(String cv) {
 		this.cv = cv;
 	}
+	
 
-
-	public String getCoverletter() {
-		return coverletter;
+	public String getCoverLetter() {
+		return coverLetter;
 	}
 
 
-	public void setCoverletter(String coverletter) {
-		this.coverletter = coverletter;
+	public void setCoverLetter(String coverLetter) {
+		this.coverLetter = coverLetter;
 	}
 
 

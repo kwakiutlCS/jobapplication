@@ -21,4 +21,6 @@ public interface IPositionPersistenceService {
 
 	List<IPosition> findOpenPositions();
 	
+	IPosition find(long id);
+	
 }

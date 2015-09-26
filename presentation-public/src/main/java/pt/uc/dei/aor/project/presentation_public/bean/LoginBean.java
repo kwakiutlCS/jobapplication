@@ -88,5 +88,6 @@ public class LoginBean {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return (String) request.getSession().getAttribute("full_name");
 	}
+	
 
 }

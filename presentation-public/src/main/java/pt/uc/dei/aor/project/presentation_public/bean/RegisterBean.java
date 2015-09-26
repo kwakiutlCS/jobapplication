@@ -41,6 +41,7 @@ public class RegisterBean {
 	private String email;
 	private String name;
 	private String surname;
+	
 	private String address;
 	private String city;
 	private String country;
@@ -48,12 +49,12 @@ public class RegisterBean {
 	private String mobilePhone;
 	private String school;
 	private String degree;
+	
 	private List<IQualification> choosenQualifications;
 	private List<IApplication> applications;
 	private Part cv;
-	private String cvPath;;
+	private String cvPath;
 	private String oldPassword;
-	private boolean showExtra;
 
 
 	public RegisterBean() {
@@ -117,7 +118,8 @@ public class RegisterBean {
 		return "index.xhtml";
 	}
 
-	public void updateCandidate(ICandidate user) throws DuplicatedUserException {
+	public void updateCandidate() throws DuplicatedUserException {
+		ICandidate user = MetaUtils.getUser();
 		user.setName(name);
 		user.setSurname(surname);
 		user.setAddress(address);
@@ -130,6 +132,11 @@ public class RegisterBean {
 		
 		user = candidateService.update(user);
 
+	}
+	
+	public void deleteAccount(){
+		
+		
 	}
 
 	//getters and setters
@@ -308,17 +315,6 @@ public class RegisterBean {
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
-
-
-	public boolean isShowExtra() {
-		return showExtra;
-	}
-
-
-	public void setShowExtra(boolean showExtra) {
-		this.showExtra = showExtra;
-	}
-
 
 
 }

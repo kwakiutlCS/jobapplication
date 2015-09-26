@@ -10,16 +10,16 @@
 
 			<p:menuitem value="OurCompany RH Services" style="margin-right:200px" />
 
-			<p:menuitem value="CAREERS" outcome="oportunities" />
+			<p:menuitem value="CAREERS" outcome="listPosition" />
 
 			<p:menuitem value="REGISTER" outcome="firstregister"
-				rendered="#{applicationBean.verifyLogin() eq 0}" />
+				rendered="#{viewManager.verifyLogin() eq 0}" />
 
 			<p:menuitem value="LOGIN" oncomplete="PF('loginDlg').show()"
 				style="margin-right:10px"
-				rendered="#{applicationBean.verifyLogin() eq 0}" />
+				rendered="#{viewManager.verifyLogin() eq 0}" />
 				
-			<p:submenu label="#{loginBean.user.name}" rendered="#{applicationBean.verifyLogin() gt 0}">
+			<p:submenu label="#{loginBean.user.name}" rendered="#{viewManager.verifyLogin() gt 0}">
 				<p:menuitem value="Sign Out" action="#{loginBean.logout}" />
 				<p:menuitem value="Jobs applied for" action="#{loginBean.logout}" />
 			</p:submenu>
