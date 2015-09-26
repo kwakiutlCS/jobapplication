@@ -89,6 +89,7 @@ public class LoginBean {
 		return (String) request.getSession().getAttribute("full_name");
 	}
 	
+
 	
 	public boolean isLoggedIn() {
 		return MetaUtils.getUser() != null;

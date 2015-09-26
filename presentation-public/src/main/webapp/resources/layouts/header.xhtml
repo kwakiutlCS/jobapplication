@@ -19,7 +19,7 @@
 			
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><p:link	value="CAREERS" outcome="oportunities" /></li>
+					<li><p:link	value="CAREERS" outcome="listPosition" /></li>
 					<h:panelGroup rendered="#{not loginBean.loggedIn}">
 						<li><p:link	value="REGISTER" outcome="firstregister" /></li>
 						<li><h:form><p:commandLink value="LOGIN" onclick="PF('loginDlg').show()" /></h:form></li>
@@ -44,14 +44,17 @@
 				</ul>
 
 
+
 			</h:panelGroup>
 			</div>
 		</div>
 	</nav>
 	</h:panelGroup>
 	
+
 	<p:dialog header="Login" widgetVar="loginDlg" modal="true" draggable="false"
 	minimizable="false" resizable="false">
+
 	<p:outputPanel id="loginpanel">
 			<h:form>
 

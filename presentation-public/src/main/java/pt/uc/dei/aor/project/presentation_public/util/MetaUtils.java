@@ -13,9 +13,7 @@ public class MetaUtils {
 	public static ICandidate getUser() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		
-		System.out.println("ALI"+(ICandidate) request.getSession().getAttribute("user"));
-		
+				
 		return (ICandidate) request.getSession().getAttribute("user");	
 	}
 	
