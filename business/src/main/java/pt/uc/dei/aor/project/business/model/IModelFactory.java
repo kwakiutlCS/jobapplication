@@ -12,11 +12,7 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 
 public interface IModelFactory {
 
-	ICandidate candidate(String login, String email, String password, String name, String surname, String address, String city,
-			String country, String phone, String mobilePhone, Collection<IQualification> qualifications, String cv,
-			Collection<IApplication> applications);	
-
-	IWorker worker(String login, String email, String password, String name, String surname, Collection<Role> roles);	
+	IUser user(String login, String email, String password, String name, String surname, Collection<Role> roles);	
 	
 	IPublicationChannel publicationChannel(String channel);
 
@@ -32,7 +28,7 @@ public interface IModelFactory {
 
 	IScriptEntry scriptEntry(QuestionType questionType, String question, int position);
 
-	IWorkerNotification workerNotification(String msg, IWorker worker, String type);
+	INotification workerNotification(String msg, IUser worker, String type);
 
 	ISchool school(String school);
 
@@ -41,7 +37,7 @@ public interface IModelFactory {
 	IQualification qualification(String school, String degree);
 
 	IPosition position(long code, Date openingDate, String title, Collection<Localization> localizations,
-			PositionState state, int vacancies, Date closingDate, int sla, IWorker contactPerson, String company,
+			PositionState state, int vacancies, Date closingDate, int sla, IUser contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels);
 

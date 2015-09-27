@@ -15,8 +15,8 @@ import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
-import pt.uc.dei.aor.project.persistence.entity.WorkerNotificationEntity;
-import pt.uc.dei.aor.project.persistence.proxy.WorkerNotificationProxy;
+import pt.uc.dei.aor.project.persistence.entity.NotificationEntity;
+import pt.uc.dei.aor.project.persistence.proxy.NotificationProxy;
 
 @Stateless
 public class ReportPersistenceService implements IReportPersistenceService {

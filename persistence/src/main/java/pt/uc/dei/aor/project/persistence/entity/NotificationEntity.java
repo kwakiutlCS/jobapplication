@@ -25,17 +25,17 @@ import javax.persistence.Table;
 	@NamedQuery(name = "WorkerNotification.countUnread", 
 	query = "select count(u) from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
 })
-public class WorkerNotificationEntity {
+public class NotificationEntity {
 	
-	public WorkerNotificationEntity(String msg, WorkerEntity entity, String type) {
+	public NotificationEntity(String msg, UserEntity entity, String type) {
 		this.msg = msg;
-		this.worker = entity;
+		this.user = entity;
 		this.date = new Date();
 		this.read = false;
 		this.type = type;
 	}
 
-	public WorkerNotificationEntity() {
+	public NotificationEntity() {
 	}
 
 	@Id 
@@ -56,7 +56,7 @@ public class WorkerNotificationEntity {
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
-	private WorkerEntity worker;
+	private UserEntity user;
 
 	
 	// getters and setters

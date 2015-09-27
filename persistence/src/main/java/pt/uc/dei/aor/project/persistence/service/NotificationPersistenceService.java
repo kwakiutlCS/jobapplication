@@ -12,8 +12,8 @@ import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
-import pt.uc.dei.aor.project.persistence.entity.WorkerNotificationEntity;
-import pt.uc.dei.aor.project.persistence.proxy.WorkerNotificationProxy;
+import pt.uc.dei.aor.project.persistence.entity.NotificationEntity;
+import pt.uc.dei.aor.project.persistence.proxy.NotificationProxy;
 
 @Stateless
 public class NotificationPersistenceService implements INotificationPersistenceService {
@@ -25,11 +25,11 @@ public class NotificationPersistenceService implements INotificationPersistenceS
 	@Override
 	public <T extends INotification> T save(T notification) {
 		if (notification instanceof IWorkerNotification) {
-			WorkerNotificationEntity entity = GenericPersistenceService
+			NotificationEntity entity = GenericPersistenceService
 					.getEntity((IWorkerNotification) notification);
 			
 			entity = em.merge(entity);
-			return (T) new WorkerNotificationProxy(entity);
+			return (T) new NotificationProxy(entity);
 		}
 		
 		return null;
@@ -68,16 +68,16 @@ public class NotificationPersistenceService implements INotificationPersistenceS
 		List<INotification> proxies = new ArrayList<>();
 
 		if (person instanceof IWorker) {
-			TypedQuery<WorkerNotificationEntity> query = em.createNamedQuery(
-					queryString, WorkerNotificationEntity.class);
+			TypedQuery<NotificationEntity> query = em.createNamedQuery(
+					queryString, NotificationEntity.class);
 			query.setParameter("worker", GenericPersistenceService.getEntity(person));
 			query.setFirstResult(offset);
 			query.setMaxResults(limit);
 			
-			List<WorkerNotificationEntity> entities = query.getResultList();
+			List<NotificationEntity> entities = query.getResultList();
 			System.out.println(entities);
-			for (WorkerNotificationEntity wne : entities) {
-				proxies.add(new WorkerNotificationProxy(wne));
+			for (NotificationEntity wne : entities) {
+				proxies.add(new NotificationProxy(wne));
 			}
 			
 			return (List<T>) proxies;

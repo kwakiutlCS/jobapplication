@@ -7,7 +7,7 @@ import javax.resource.spi.IllegalStateException;
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
 import pt.uc.dei.aor.project.business.util.Role;
 
-public interface IWorker {
+public interface IUser {
 
 	public String getFullName();
 	
