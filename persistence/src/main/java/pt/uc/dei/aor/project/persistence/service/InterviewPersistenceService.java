@@ -2,34 +2,29 @@ package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TemporalType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
-import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
-import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.proxy.InterviewProxy;
 
 @Stateless
@@ -71,11 +66,11 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 	}
 
 	@Override
-	public List<IInterview> findActiveInterviewsByUser(IWorker user) {
+	public List<IInterview> findActiveInterviewsByUser(IUser user) {
 		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findActiveInterviewsByInterviewer", 
 				InterviewEntity.class);
 		
-		WorkerEntity userEntity = GenericPersistenceService.getEntity(user);
+		UserEntity userEntity = GenericPersistenceService.getEntity(user);
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		
@@ -132,9 +127,9 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		if (filter != null) {
 			
 			// interviewers
-			List<List<IWorker>> interviewerSets = filter.getInterviewerSets();
+			List<List<IUser>> interviewerSets = filter.getInterviewerSets();
 			if (interviewerSets.size() > 0) {
-				Expression<List<WorkerEntity>> interviewers = interview.get("interviewers");
+				Expression<List<UserEntity>> interviewers = interview.get("interviewers");
 				criteriaPredicates.add(GenericPersistenceService
 						.andOrEntityPredicate(interviewerSets, interviewers, cb));
 			}
@@ -152,7 +147,7 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 			
 			// candidate 
 			if (filter.getCandidate() != null) {
-				Root<CandidateEntity> candidate = q.from(CandidateEntity.class);
+				Root<UserEntity> candidate = q.from(UserEntity.class);
 				Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
 				criteriaPredicates.add(cb.equal(interview.get("application"), application.get("id")));
 				criteriaPredicates.add(cb.equal(application.get("candidate"), candidate.get("id")));
@@ -200,9 +195,9 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 
 
 	@Override
-	public List<IInterview> findPastInterviewsByUser(ICandidate candidate, IApplication application, Date date) {
+	public List<IInterview> findPastInterviewsByUser(IUser candidate, IApplication application, Date date) {
 		List<ApplicationEntity> appEntities =  
-				em.find(CandidateEntity.class, candidate.getId()).getApplications();
+				em.find(UserEntity.class, candidate.getId()).getApplications();
 		
 		long appId = application.getId();
 		

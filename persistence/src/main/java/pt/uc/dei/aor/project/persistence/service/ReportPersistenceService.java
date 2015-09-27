@@ -1,6 +1,5 @@
 package pt.uc.dei.aor.project.persistence.service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,14 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import pt.uc.dei.aor.project.business.model.IAnswerChoice;
-import pt.uc.dei.aor.project.business.model.INotification;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.model.IWorkerNotification;
-import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
-import pt.uc.dei.aor.project.persistence.entity.NotificationEntity;
-import pt.uc.dei.aor.project.persistence.proxy.NotificationProxy;
 
 @Stateless
 public class ReportPersistenceService implements IReportPersistenceService {

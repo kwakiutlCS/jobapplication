@@ -42,7 +42,7 @@ public class ScriptPersistenceServiceTest {
        		.addPackage(ModelFactory.class.getPackage())
        		.addPackage(InterviewFilter.class.getPackage())
             .addClass(IWorker.class)
-            .addPackage(WorkerPersistenceService.class.getPackage())
+            .addPackage(UserPersistenceService.class.getPackage())
             .addPackage(IWorkerPersistenceService.class.getPackage());
     }
 

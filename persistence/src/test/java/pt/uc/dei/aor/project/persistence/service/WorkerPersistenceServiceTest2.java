@@ -49,7 +49,7 @@ public class WorkerPersistenceServiceTest2 {
        		.addPackage(InterviewFilter.class.getPackage())
             .addPackage(IWorker.class.getPackage())
             .addPackage(IllegalRoleException.class.getPackage())
-            .addPackage(WorkerPersistenceService.class.getPackage())
+            .addPackage(UserPersistenceService.class.getPackage())
             .addPackage(IWorkerPersistenceService.class.getPackage());
             //.addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
