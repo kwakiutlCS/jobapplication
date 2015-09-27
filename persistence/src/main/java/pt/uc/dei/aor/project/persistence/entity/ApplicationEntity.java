@@ -42,9 +42,6 @@ public class ApplicationEntity {
 	private long id;
 	
 	@Column(nullable=false)
-	private String cv;
-	
-	@Column(nullable=false)
 	private String coverLetter;
 	
 	@Column(nullable=false)
