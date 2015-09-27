@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -106,8 +105,12 @@ public class UserBusinessService implements IUserBusinessService {
 
 	@Override
 	public List<Role> getRoles() {
-		List<Role> roles = Arrays.asList(Role.values());
-		roles.remove(Role.CANDIDATE);
+		List<Role> roles = new ArrayList<>();
+		for (Role r : Role.values()) {
+			if (r != Role.CANDIDATE)
+				roles.add(r);
+		}
+		
 		return roles;
 	}
 

@@ -63,7 +63,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public IUser getUserByEmail(String email) {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findWorkerByEmail", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findUserByEmail", UserEntity.class);
 		query.setParameter("email", email);
 		
 		List<UserEntity> entities = query.getResultList();
@@ -77,7 +77,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 	
 	@Override
 	public List<IUser> findAllUsers() {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findAllWorkers", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findAllWorkers", UserEntity.class);
 		
 		List<UserEntity> entities = query.getResultList();
 		List<IUser> proxies = new ArrayList<>();
@@ -92,7 +92,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public Collection<IUser> findAllAdmins() {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findAllAdmins", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findAllAdmins", UserEntity.class);
 		
 		List<UserEntity> entities = query.getResultList();
 		List<IUser> proxies = new ArrayList<>();
@@ -106,7 +106,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public Collection<IUser> findAllManagers() {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findAllManagers", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findAllManagers", UserEntity.class);
 		
 		List<UserEntity> entities = query.getResultList();
 		List<IUser> proxies = new ArrayList<>();
@@ -120,7 +120,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public Collection<IUser> findAllInterviewers() {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findAllInterviewers", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findAllInterviewers", UserEntity.class);
 		
 		List<UserEntity> entities = query.getResultList();
 		List<IUser> proxies = new ArrayList<>();
@@ -142,7 +142,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 	
 	@Override
 	public boolean findUserByEmailOrLogin(String email, String login) {
-		TypedQuery<UserEntity> q = em.createNamedQuery("Worker.findWorkerByEmailOrLogin", UserEntity.class);
+		TypedQuery<UserEntity> q = em.createNamedQuery("User.findUserByEmailOrLogin", UserEntity.class);
 		q.setParameter("email", email);
 		q.setParameter("login", login);
 		
@@ -163,7 +163,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public IUser findWorkerByEmail(String email) {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findWorkerByEmail", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findUserByEmail", UserEntity.class);
 		query.setParameter("email", email);
 		
 		List<UserEntity> entities = query.getResultList();
@@ -174,7 +174,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public IUser verifyUser(long id, String password) {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.verifyWorker", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.verifyUser", UserEntity.class);
 		query.setParameter("id", id);
 		query.setParameter("password", password);
 		
@@ -192,8 +192,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 		q.select(worker);
 		
 		List<Predicate> criteriaPredicates = new ArrayList<>();
-		criteriaPredicates.add(cb.notLike(worker.get("name"), "SU"));
-		
+			
 		// start where
 		if (filter != null) {
 			
@@ -247,7 +246,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 
 	@Override
 	public long countAdmins() {
-		TypedQuery<Long> query = em.createNamedQuery("Worker.countAdmins", Long.class);
+		TypedQuery<Long> query = em.createNamedQuery("User.countAdmins", Long.class);
 		
 		List<Long> result = query.getResultList();
 		
