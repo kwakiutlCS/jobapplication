@@ -94,21 +94,26 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			for (IWorker w : interviewers) {
 				workerPersistence.insertInterview(w.getId(), interview);
 
+				String company = interview.getApplication().getPosition().getCompany();
+
 				// notify user
 				String title = "Interview Scheduled";
-				String msgEmail = "Interview for position "+
+				String msg = "Interview for position "+
 						interview.getApplication().getPosition().getTitle()+" was created.\n\n\nDate: "+
 						interview.getDate()+
 						"\nCandidate: "+interview.getCandidate().getFullName();
 				
-				String msg = "Interview for position "+
-						interview.getApplication().getPosition().getTitle()+" was created.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;Date: "+interview.getDate()+
-						".&lt;br/&gt;Candidate: "+interview.getCandidate().getFullName();
+				String msgEmail = "<h1>"+company+"</h1>"+
+						"<p>Interview for position "+
+						interview.getApplication().getPosition().getTitle()+" was created and assigned you as manager.</p>"+
+						"<p>Date: "+interview.getDate()+"</p>"+
+						"<p>Candidate: "+interview.getCandidate().getFullName()+"</p>";
 				
-				notificationService.notify(w, msgEmail, title);
+				notificationService.notify(w, msg, title);
 				
-				emailUtil.send(w.getEmail(), msgEmail, title, interview.getCandidate().getLogin()+"/",
-						interview.getCandidate().getCv());
+				emailUtil.send(w.getEmail(), msgEmail, title);
+//				, interview.getCandidate().getLogin()+"/",
+//				interview.getCandidate().getCv()
 			}
 			
 			return application;
