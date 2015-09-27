@@ -69,7 +69,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IApplication addInterview(IApplication application, Date date, Collection<IUserr> interviewers) 
+	public IApplication addInterview(IApplication application, Date date, Collection<IUser> interviewers) 
 			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		if (date == null || application == null 
 				|| interviewers == null) throw new GenericIllegalParamsException();
@@ -86,11 +86,11 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			application = applicationPersistence.save(application);
 			interview = application.getInterviewByDate(date);
 			
-			for (IWorker w : interviewers) {
+			for (IUser w : interviewers) {
 				workerPersistence.insertInterview(w.getId(), interview);
 			}
 			
-			for (IWorker w : interviewers) {
+			for (IUser w : interviewers) {
 				String company = interview.getApplication().getPosition().getCompany();
 
 				// notify user
@@ -139,7 +139,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		application.remove(interview);
 		application = applicationPersistence.save(application);
 		
-		for (IWorker w : interview.getInterviewers()) {
+		for (IUser w : interview.getInterviewers()) {
 			workerPersistence.removeInterview(w.getId(), interview.getId());
 		}
 		
@@ -227,25 +227,25 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 
 
 	@Override
-	public IInterview addInterviewer(IInterview interview, IWorker interviewer) {
+	public IInterview addInterviewer(IInterview interview, IUser interviewer) {
 		interview.addInterviewer(interviewer);
 		return interviewPersistence.save(interview);
 	}
 
 
 	@Override
-	public IInterview removeInterviewer(IInterview interview, IWorker interviewer) {
+	public IInterview removeInterviewer(IInterview interview, IUser interviewer) {
 		interview.removeInterviewer(interviewer);
 		return interviewPersistence.save(interview);
 	}
 
 
 	@Override
-	public IInterview setInterviewers(IInterview interview, Collection<IWorker> selectedInterviewers) {
-		for (IWorker w : selectedInterviewers) {
+	public IInterview setInterviewers(IInterview interview, Collection<IUser> selectedInterviewers) {
+		for (IUser w : selectedInterviewers) {
 			workerPersistence.insertInterview(w.getId(), interview);
 		}
-		for (IWorker w : interview.getInterviewers()) {
+		for (IUser w : interview.getInterviewers()) {
 			if (!selectedInterviewers.contains(w))
 				workerPersistence.removeInterview(w.getId(), interview.getId());
 		}

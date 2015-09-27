@@ -27,7 +27,7 @@ public class NotificationBusinessService implements INotificationBusinessService
 	@Override
 	public INotification notify(IUser person, String msg, String type) {
 				
-		INotification notification = factory.workerNotification(msg, person, type);
+		INotification notification = factory.notification(msg, person, type);
 			
 		return notificationPersistence.save(notification);
 	}
