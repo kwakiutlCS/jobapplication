@@ -58,8 +58,7 @@
 						value="#{listPositionBean.selectedPosition.vacancies}" />
 
 					<h:outputText value="Contact person:" />
-					<h:outputText
-						value="#{listPositionBean.contactPersonName()}" />
+					<h:outputText value="#{listPositionBean.contactPersonName()}" />
 
 					<h:outputText value="Description" />
 					<h:outputText
@@ -74,12 +73,13 @@
 							</ui:repeat>
 					</p:column>
 
-				
+					<p:column>
 						<p:commandButton update=":positionDetailForm" value="Apply Now"
-							action="#{viewManager.swapDialog()}">
+							onclick="PF('identifyDlg').show()">
 						</p:commandButton>
-						<p:link value="Exit" outcome="listPosition" />
-					
+					</p:column>
+					<p:link value="Exit" outcome="listPosition" />
+
 
 				</h:panelGrid>
 			</p:panel>

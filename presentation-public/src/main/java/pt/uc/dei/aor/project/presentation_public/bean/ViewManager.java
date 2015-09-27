@@ -48,11 +48,9 @@ public class ViewManager implements Serializable {
 
 	public String swapDialog(){
 		
-		RequestContext requestContext = RequestContext.getCurrentInstance();
-		requestContext.execute("PF('positionDetailDlg').hide()"); 
-
 		if(MetaUtils.getUser()==null){
 			System.out.println("Swaping dialogs");	
+			RequestContext requestContext = RequestContext.getCurrentInstance();
 			requestContext.execute("PF('identifyDlg').show()");
 			return null;
 		}
@@ -75,24 +73,19 @@ public class ViewManager implements Serializable {
 		//check if Candidate already applied for given position
 		if(duplicateApplication(candidate, position))
 			redirect = "/authorized/oportunities.xhtml?faces-redirect=true";
-		
-		
-				
+					
 		return redirect;
 	}
 	
-	
-
 	public String loginOnApply(){
 
-		String redirect="";
-
 		//login error - unregistered candidate 
-		if(loginBeanI.login().equals("loginerror")){
+		if(loginBeanI.login().equals("error")){
 			RequestContext requestContext = RequestContext.getCurrentInstance();
-			requestContext.execute("PF('identifyDlg').show()");
+			requestContext.execute("PF('loginDlg').show()");
 			MetaUtils.setMsg("Login or password wrong", FacesMessage.SEVERITY_INFO);
 
+			return null;
 		}
 		//login well succeeded
 		else{
@@ -106,13 +99,12 @@ public class ViewManager implements Serializable {
 			IPosition position = positionService.findPositionById(positionId);
 
 			//check if Candidate already applied for given position
-			if(duplicateApplication(candidate, position))
-				redirect = "/authorized/oportunities.xhtml?faces-redirect=true";
+			if(duplicateApplication(candidate, position)){
+				return "/authorized/oportunities.xhtml?faces-redirect=true";
+			}
 
-			redirect = "/authorized/apply.xhtml?faces-redirect=true";
+			return "/authorized/apply.xhtml?faces-redirect=true";
 		}
-
-		return redirect;
 	}
 
 	public boolean duplicateApplication(ICandidate candidate, IPosition position){
@@ -123,7 +115,6 @@ public class ViewManager implements Serializable {
 			MetaUtils.setMsg("You have already applied for this position", FacesMessage.SEVERITY_INFO);
 			duplicateApplication = true;
 		}
-
 		return duplicateApplication;
 	}
 	
