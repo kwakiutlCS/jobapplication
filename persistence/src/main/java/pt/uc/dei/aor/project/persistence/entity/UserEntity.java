@@ -105,7 +105,7 @@ public class UserEntity {
 	private Set<QualificationEntity> qualifications;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name="role", indexes={@Index(columnList="workerentity_id")})
+	@CollectionTable(name="role", indexes={@Index(columnList="userentity_id")})
 	@Enumerated(EnumType.STRING)
 	@Column(name="role")
 	private Set<Role> roles;

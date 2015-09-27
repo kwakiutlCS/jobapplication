@@ -9,29 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PostConstruct;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import org.slf4j.Logger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.slf4j.LoggerFactory;
 
-import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.service.IColorBusinessService;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
-import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
-import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
-import pt.uc.dei.aor.project.business.util.Role;
-
-
 
 @Singleton
 @Startup
