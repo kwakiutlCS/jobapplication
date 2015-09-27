@@ -19,13 +19,13 @@ import org.junit.runner.RunWith;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IScript;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.QuestionType;
 import pt.uc.dei.aor.project.business.util.Role;
-import pt.uc.dei.aor.project.persistence.entity.User;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 
 @RunWith(Arquillian.class)
@@ -35,15 +35,15 @@ public class ScriptPersistenceServiceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
         	.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
-       		.addPackage(User.class.getPackage())
+       		.addPackage(UserEntity.class.getPackage())
        		.addPackage(Role.class.getPackage())
        		.addPackage(Localization.class.getPackage())
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
        		.addPackage(InterviewFilter.class.getPackage())
-            .addClass(IWorker.class)
+            .addClass(IUser.class)
             .addPackage(UserPersistenceService.class.getPackage())
-            .addPackage(IWorkerPersistenceService.class.getPackage());
+            .addPackage(IUserPersistenceService.class.getPackage());
     }
 
     @Inject

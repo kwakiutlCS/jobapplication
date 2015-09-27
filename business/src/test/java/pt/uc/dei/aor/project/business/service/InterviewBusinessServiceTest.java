@@ -9,11 +9,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,30 +21,23 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
-import pt.uc.dei.aor.project.business.exception.IllegalAnswerOptionsException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
-import pt.uc.dei.aor.project.business.exception.IllegalQuestionTypeException;
-import pt.uc.dei.aor.project.business.exception.IllegalScaleException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IAnswer;
-import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IScript;
-import pt.uc.dei.aor.project.business.model.IScriptEntry;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IScriptPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
-import pt.uc.dei.aor.project.business.util.QuestionType;
+import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 
 
 
@@ -64,7 +54,7 @@ public class InterviewBusinessServiceTest {
 	private IInterviewPersistenceService interviewEjb;
 	
 	@Mock
-	private IWorkerPersistenceService workerEjb;
+	private IUserPersistenceService workerEjb;
 	
 	@Mock
 	private IApplicationPersistenceService applicationEjb;
@@ -78,7 +68,7 @@ public class InterviewBusinessServiceTest {
 	@InjectMocks
 	InterviewBusinessService ejb;
 	
-	private List<IWorker> interviewers;
+	private List<IUser> interviewers;
 	private Date date;
 	private IApplication application;
 	private List<IAnswer> answers;
@@ -89,11 +79,11 @@ public class InterviewBusinessServiceTest {
 	@Before
 	public void init() {
 		interviewers = new ArrayList<>();
-		interviewers.add(Mockito.mock(IWorker.class));
-		interviewers.add(Mockito.mock(IWorker.class));
+		interviewers.add(Mockito.mock(IUser.class));
+		interviewers.add(Mockito.mock(IUser.class));
 		
 		long counter = 1;
-		for (IWorker w : interviewers) {
+		for (IUser w : interviewers) {
 			when(w.getId()).thenReturn(counter++);
 		}
 		
@@ -114,7 +104,7 @@ public class InterviewBusinessServiceTest {
 	
 	@Test
 	public void shouldCallCorrectFunctionWhenSearchingActiveInterviews() {
-		IWorker user = mock(IWorker.class);
+		IUser user = mock(IUser.class);
 		
 		ejb.findActiveInterviewsByUser(user);
 		verify(interviewEjb).findActiveInterviewsByUser(user);
@@ -156,7 +146,7 @@ public class InterviewBusinessServiceTest {
 		doNothing().when(logger).info(Mockito.anyString());
 		
 		long counter = 1;
-		for (IWorker w : interviewers) {
+		for (IUser w : interviewers) {
 			when(w.getId()).thenReturn(counter++);
 		}
 		
@@ -166,7 +156,7 @@ public class InterviewBusinessServiceTest {
 		verify(interviewEjb).save(mockedInterview);
 		verify(applicationEjb).find(application.getId());
 		
-		for (IWorker w : interviewers) 
+		for (IUser w : interviewers) 
 			verify(workerEjb).insertInterview(w.getId(), mockedInterview);
 	}
 
@@ -186,7 +176,7 @@ IInterview mockedInterview = mock(IInterview.class);
 		verify(interviewEjb, Mockito.never()).save(mockedInterview);
 		verify(applicationEjb, Mockito.never()).find(application.getId());
 		
-		for (IWorker w : interviewers) 
+		for (IUser w : interviewers) 
 			verify(workerEjb, Mockito.never()).insertInterview(w.getId(), mockedInterview);
 	}
 	
@@ -219,7 +209,7 @@ IInterview mockedInterview = mock(IInterview.class);
 		
 		verify(answerEjb).findAnswersByInterview(interview);
 		
-		for (IWorker w : interviewers) {
+		for (IUser w : interviewers) {
 			verify(workerEjb).removeInterview(w.getId(), interview_id);
 		}
 		
@@ -241,7 +231,7 @@ IInterview mockedInterview = mock(IInterview.class);
 		
 		verify(answerEjb).findAnswersByInterview(interview);
 		
-		for (IWorker w : interviewers) {
+		for (IUser w : interviewers) {
 			verify(workerEjb).removeInterview(w.getId(), interview_id);
 		}
 		
