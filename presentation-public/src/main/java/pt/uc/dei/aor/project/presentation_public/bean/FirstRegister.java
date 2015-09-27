@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
-import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
-import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
@@ -24,7 +24,7 @@ public class FirstRegister {
 	private static final Logger logger = LoggerFactory.getLogger(FirstRegister.class);
 
 	@Inject
-	private ICandidateBusinessService candidateService;
+	private IUserBusinessService candidateService;
 
 	private LoginBean logged;
 	
@@ -42,11 +42,13 @@ public class FirstRegister {
 	public String register() {
 		try {
 			System.out.println("registering");
-			candidateService.createNewCandidate(login,name,surname,email , Encryptor.encrypt(password),null,null,null,null,null,null,null, null);
+			candidateService.createNewUser(login,name,surname,email , null);
 			MetaUtils.setMsg("User created with success", FacesMessage.SEVERITY_INFO);
 			login = name = surname = email = password = null;
 		} catch (DuplicatedUserException e) {
 			MetaUtils.setMsg("User already exists", FacesMessage.SEVERITY_ERROR);
+		} catch (NoRoleException e) {
+			System.out.println("miss a logmessage here");
 		}
 		
 		return "index.xhtml";
