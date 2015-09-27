@@ -210,6 +210,11 @@ public class CandidateProxy implements ICandidate, IProxyToEntity<CandidateEntit
 		entity.removeQualification(GenericPersistenceService.getEntity(qualification));
 	}
 
+	@Override
+	public void setPassword(String password) {
+		entity.setPassword(password);
+	}
+
 
 
 }

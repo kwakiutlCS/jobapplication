@@ -59,4 +59,6 @@ public interface ICandidate {
 
 	public void removeQualification(IQualification qualification);
 
+	public void setPassword(String encrypt);
+
 }

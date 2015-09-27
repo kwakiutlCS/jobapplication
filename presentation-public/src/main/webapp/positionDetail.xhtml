@@ -100,7 +100,7 @@
 					<p></p>
 					<h:inputSecret id="password" value="#{loginBean.password}" />
 					<p></p>
-					<h:commandLink value="recover password" />
+					<h:link value="recover password" />
 					<p></p>
 					<h:commandButton action="#{viewManager.loginOnApply}" value="Enter">
 						<f:param name="position"
@@ -109,7 +109,7 @@
 					<p></p>
 					<h:outputText value="Don't have an account?" />
 					<p></p>
-					<h:commandButton outcome="firstregister" value="Register" />
+					<h:link outcome="firstregister" value="Register" />
 				</h:form>
 			</p:outputPanel>
 		</p:dialog>

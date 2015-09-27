@@ -21,7 +21,8 @@ import javax.persistence.Table;
 	@NamedQuery(name="candidate.findAll",query="from CandidateEntity u"),
 	@NamedQuery(name="candidate.findCandidateByEmailorLogin", query="from CandidateEntity u where u.login = :login or u.email = :email"),
 	@NamedQuery(name="candidate.findCandidateByEmail", query="from CandidateEntity u where u.email = :email"),
-	@NamedQuery(name="candidate.findCandidateByLogin", query="from CandidateEntity u where u.login = :login")
+	@NamedQuery(name="candidate.findCandidateByLogin", query="from CandidateEntity u where u.login = :login"),
+	@NamedQuery(name="candidate.verifyCandidate", query="from CandidateEntity u where u.password = :password and u.id = :id")
 })
 public class CandidateEntity extends User {
 

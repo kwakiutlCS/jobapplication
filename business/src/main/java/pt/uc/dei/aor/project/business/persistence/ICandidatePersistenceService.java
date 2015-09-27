@@ -21,4 +21,6 @@ public interface ICandidatePersistenceService {
 
 	ICandidate getCandidateByLogin(String login);
 
+	ICandidate verifyUser(long id, String encrypt);
+
 }

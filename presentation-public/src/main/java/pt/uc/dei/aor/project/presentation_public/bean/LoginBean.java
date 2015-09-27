@@ -100,13 +100,13 @@ public class LoginBean {
 		return null;
 	}
 
+	
 	public String getName() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return (String) request.getSession().getAttribute("full_name");
 	}
 	
-
 	
 	public boolean isLoggedIn() {
 		return MetaUtils.getUser() != null;

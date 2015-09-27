@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IQualification;
@@ -54,8 +55,8 @@ public class RegisterBean {
 	private List<IApplication> applications;
 	private Part cv;
 	private String cvPath;
+	
 	private String oldPassword;
-
 
 	public RegisterBean() {
 	}
@@ -110,14 +111,6 @@ public class RegisterBean {
 	}
 
 
-	public String register() throws DuplicatedUserException {
-
-		candidateService.createNewCandidate(login, name, surname, email, Encryptor.encrypt(password), address, city,
-				country, phone, mobilePhone, choosenQualifications, cvPath, applications);
-
-		return "index.xhtml";
-	}
-
 	public void updateCandidate() throws DuplicatedUserException {
 		ICandidate user = MetaUtils.getUser();
 		user.setName(name);
@@ -137,6 +130,22 @@ public class RegisterBean {
 	public void deleteAccount(){
 		
 		
+	}
+	
+	public void updatePassword() {
+		try {
+			ICandidate user = MetaUtils.getUser();
+			
+			user.setPassword(Encryptor.encrypt(password));
+			user = candidateService.updatePassword(user, oldPassword);
+			
+			password = null;
+			oldPassword = null;
+			MetaUtils.getSession().setAttribute("user", user);
+			MetaUtils.setMsg("Password updated", FacesMessage.SEVERITY_INFO);
+		} catch (WrongPasswordException e) {
+			MetaUtils.setMsg("Password is incorrect", FacesMessage.SEVERITY_ERROR);
+		}
 	}
 
 	//getters and setters
@@ -306,16 +315,14 @@ public class RegisterBean {
 		this.cvPath = cvPath;
 	}
 
-
 	public String getOldPassword() {
 		return oldPassword;
 	}
-
 
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
 
-
+	
 }
 
