@@ -102,10 +102,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 						"\nCandidate: "+interview.getCandidate().getFullName();
 				
 				String msg = "Interview for position "+
-						interview.getApplication().getPosition().getTitle()+" was created.<br /><br /><br />Date: "+interview.getDate()+
-						".<br />Candidate: "+interview.getCandidate().getFullName();
+						interview.getApplication().getPosition().getTitle()+" was created.&lt;br/&gt;&lt;br/&gt;&lt;br/&gt;Date: "+interview.getDate()+
+						".&lt;br/&gt;Candidate: "+interview.getCandidate().getFullName();
 				
-				notificationService.notify(w, msg, title);
+				notificationService.notify(w, msgEmail, title);
 				
 				emailUtil.send(w.getEmail(), msgEmail, title, interview.getCandidate().getLogin()+"/",
 						interview.getCandidate().getCv());

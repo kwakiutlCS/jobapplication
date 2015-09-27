@@ -111,6 +111,8 @@ public class InterviewScheduleBean implements Serializable {
 		try {
 			selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
 			MetaUtils.setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
+			selectedApplication = applicationService.changeAnalyzed(selectedApplication, true);
+			
 		} catch (GenericIllegalParamsException | RepeatedInterviewException e) {
 			MetaUtils.setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
 		} catch (AllPhasesCompletedException e) {
@@ -120,7 +122,6 @@ public class InterviewScheduleBean implements Serializable {
 		
 		selectedInterviewers.clear();
 		
-		selectedApplication = applicationService.changeAnalyzed(selectedApplication, true);
 		
 		interviewDate = null;
 		interviewTime = null;
