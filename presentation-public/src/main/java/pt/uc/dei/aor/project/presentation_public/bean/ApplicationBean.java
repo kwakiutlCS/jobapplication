@@ -7,8 +7,8 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 
 
@@ -28,7 +28,7 @@ public class ApplicationBean implements Serializable {
 	private Date date;
 	private boolean analyzed;
 	private boolean refused;
-	private ICandidate candidate;
+	private IUser candidate;
 	private IPosition position;
 
 
@@ -125,12 +125,12 @@ public class ApplicationBean implements Serializable {
 	}
 
 
-	public ICandidate getCandidate() {
+	public IUser getCandidate() {
 		return candidate;
 	}
 
 
-	public void setCandidate(ICandidate candidate) {
+	public void setCandidate(IUser candidate) {
 		this.candidate = candidate;
 	}
 

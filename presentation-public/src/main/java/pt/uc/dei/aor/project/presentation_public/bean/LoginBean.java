@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.context.RequestContext;
 
-import pt.uc.dei.aor.project.business.model.ICandidate;
-import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
+import pt.uc.dei.aor.project.business.model.IUser;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
@@ -20,7 +20,7 @@ import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 public class LoginBean {
 
 	@Inject
-	private ICandidateBusinessService candidateService;
+	private IUserBusinessService candidateService;
 
 	private String login;
 	private String password;
@@ -44,7 +44,7 @@ public class LoginBean {
 		this.password = password;
 	}
 
-	public ICandidate getUser() {
+	public IUser getUser() {
 		return MetaUtils.getUser();	
 	}
 
@@ -59,8 +59,8 @@ public class LoginBean {
 			System.out.println(Encryptor.encrypt(password));
 			request.login(login, password);
 
-			ICandidate candidate = candidateService.getCandidateByLogin(login);
-			request.getSession().setAttribute("user", candidate);
+			IUser user = candidateService.getUserByLogin(login);
+			request.getSession().setAttribute("user", user);
 			
 			return "success";
 			
