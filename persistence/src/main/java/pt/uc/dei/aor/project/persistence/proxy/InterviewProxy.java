@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,11 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
-import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntity>, Comparable<IInterview> {
@@ -59,18 +57,18 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 
 
 	@Override
-	public ICandidate getCandidate() {
+	public IUser getCandidate() {
 		return getApplication().getCandidate();
 	}
 
 
 	@Override
-	public Collection<IWorker> getInterviewers() {
-		List<IWorker> proxies = new ArrayList<>();
-		Collection<WorkerEntity> entities = entity.getInterviewers();
+	public Collection<IUser> getInterviewers() {
+		List<IUser> proxies = new ArrayList<>();
+		Collection<UserEntity> entities = entity.getInterviewers();
 		
-		for (WorkerEntity we : entities) 
-			proxies.add(new WorkerProxy(we));
+		for (UserEntity we : entities) 
+			proxies.add(new UserProxy(we));
 		
 		return proxies;
 	}
@@ -95,7 +93,7 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 	@Override
 	public String getInterviewersFormatted() {
 		StringBuilder s = new StringBuilder("");
-		for (IWorker interviewer : getInterviewers()) {
+		for (IUser interviewer : getInterviewers()) {
 			if (s.length() > 0) s.append(", ");
 			s.append(interviewer.getFullName());
 		}
@@ -140,13 +138,13 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 
 
 	@Override
-	public void addInterviewer(IWorker interviewer) {
+	public void addInterviewer(IUser interviewer) {
 		entity.addInterviewer(GenericPersistenceService.getEntity(interviewer));
 	}
 
 
 	@Override
-	public void removeInterviewer(IWorker interviewer) {
+	public void removeInterviewer(IUser interviewer) {
 		entity.removeInterviewer(GenericPersistenceService.getEntity(interviewer));
 	}
 
@@ -158,10 +156,10 @@ public class InterviewProxy implements IInterview, IProxyToEntity<InterviewEntit
 
 
 	@Override
-	public void setInterviewers(Collection<IWorker> selectedInterviewers) {
-		List<WorkerEntity> interviewers = new ArrayList<>();
+	public void setInterviewers(Collection<IUser> selectedInterviewers) {
+		List<UserEntity> interviewers = new ArrayList<>();
 		
-		for (IWorker w : selectedInterviewers) {
+		for (IUser w : selectedInterviewers) {
 			interviewers.add(GenericPersistenceService.getEntity(w));
 		}
 		

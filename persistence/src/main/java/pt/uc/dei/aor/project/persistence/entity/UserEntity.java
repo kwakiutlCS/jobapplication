@@ -118,7 +118,7 @@ public class UserEntity {
 	private Set<PositionEntity> positions;
 	
 	
-	@OneToMany(mappedBy="worker")
+	@OneToMany(mappedBy="user")
 	private Set<NotificationEntity> notification;
 	
 	@Column

@@ -26,14 +26,14 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 @Table(name="application")
 @NamedQueries({
 	@NamedQuery(name = "Application.dummyQuery", query = "from ApplicationEntity u"),
-	@NamedQuery(name = "Application.numberCandidatesByPeriod", 
+	@NamedQuery(name = "Application.numberUsersByPeriod", 
 	query = "select count(u) from ApplicationEntity u where u.date >= :startDate and u.date < :finishDate"),
-	@NamedQuery(name = "Application.numberCandidatesByPosition", 
+	@NamedQuery(name = "Application.numberUsersByPosition", 
 	query = "select count(u) from ApplicationEntity u where u.position = :position"),
 	@NamedQuery(name = "Application.numberSpontaneousByPeriod", 
 	query = "select count(u) from ApplicationEntity u where u.spontaneous is true and"
 			+ " u.date >= :startDate and u.date < :finishDate"),
-	@NamedQuery(name = "application.findApplicationbyCandidateAndPosition", query = "from ApplicationEntity u where u.candidate = :candidate and u.position = :position")
+	@NamedQuery(name = "application.findApplicationbyUserAndPosition", query = "from ApplicationEntity u where u.user = :user and u.position = :position")
 })
 public class ApplicationEntity {
 	

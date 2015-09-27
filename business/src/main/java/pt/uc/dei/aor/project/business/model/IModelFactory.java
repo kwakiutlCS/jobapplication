@@ -28,7 +28,7 @@ public interface IModelFactory {
 
 	IScriptEntry scriptEntry(QuestionType questionType, String question, int position);
 
-	INotification workerNotification(String msg, IUser worker, String type);
+	INotification notification(String msg, IUser worker, String type);
 
 	ISchool school(String school);
 
@@ -45,4 +45,5 @@ public interface IModelFactory {
 
 	IColor color(String page, String header, String content, String contentText, String contentTitle, String headerText,
 			String background);
+
 }
