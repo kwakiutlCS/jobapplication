@@ -14,7 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="worker_notification")
+@Table(name="notification")
 @NamedQueries({
 	@NamedQuery(name = "Notification.findNotificationsByUser", 
 			query = "from NotificationEntity u where u.user = :user"),
