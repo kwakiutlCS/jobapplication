@@ -13,9 +13,9 @@ public interface IInterview {
 	
 	public IApplication getApplication();
 	
-	public ICandidate getCandidate();
+	public IUser getCandidate();
 	
-	public Collection<IWorker> getInterviewers();
+	public Collection<IUser> getInterviewers();
 
 	public long getId();
 	
@@ -25,13 +25,13 @@ public interface IInterview {
 	
 	public int getInterviewPhase() throws AllPhasesCompletedException;
 
-	public void addInterviewer(IWorker interviewer);
+	public void addInterviewer(IUser interviewer);
 	
-	public void removeInterviewer(IWorker interviewer);
+	public void removeInterviewer(IUser interviewer);
 
 	public void setDate(Date date);
 
-	public void setInterviewers(Collection<IWorker> selectedInterviewers);
+	public void setInterviewers(Collection<IUser> selectedInterviewers);
 
 	
 }

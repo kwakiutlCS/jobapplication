@@ -7,9 +7,8 @@ import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.UploadUtil;
 
@@ -42,8 +41,8 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 
 	@Override
 	public List<IApplication> findApplicationsWithFilterByManager(ApplicationFilter filter, int offset, int limit,
-			IWorker user) {
-		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit, user);
+			IUser worker) {
+		return applicationPersistence.findApplicationsWithFilter(filter, offset, limit, worker);
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	}
 
 	@Override
-	public boolean findApplicationByCandidateAndPosition(ICandidate candidate,
+	public boolean findApplicationByCandidateAndPosition(IUser candidate,
 			IPosition position) {
 		return applicationPersistence.findApplicationbyCandidateAndPosition(candidate, position);
 	}

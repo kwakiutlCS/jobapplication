@@ -44,7 +44,7 @@ public class WorkerBusinessServiceTest {
 	private IWorker iWorker;
 	
 	@InjectMocks
-	WorkerBusinessService ejb;
+	UserBusinessService ejb;
 	
 	@Test
 	public void shouldCallCorrectMethodWhenFindUserByLogin() {

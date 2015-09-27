@@ -4,31 +4,30 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import pt.uc.dei.aor.project.business.model.INotification;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.model.IWorkerNotification;
-import pt.uc.dei.aor.project.persistence.entity.WorkerNotificationEntity;
+import pt.uc.dei.aor.project.business.model.IUser;
+import pt.uc.dei.aor.project.persistence.entity.NotificationEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
-public class WorkerNotificationProxy implements 
-	IWorkerNotification, IProxyToEntity<WorkerNotificationEntity> {
+public class NotificationProxy implements 
+	INotification, IProxyToEntity<NotificationEntity> {
 
-	private WorkerNotificationEntity entity;
+	private NotificationEntity entity;
 	
-	public WorkerNotificationProxy(WorkerNotificationEntity entity) {
-		this.entity = entity != null ? entity : new WorkerNotificationEntity();
+	public NotificationProxy(NotificationEntity entity) {
+		this.entity = entity != null ? entity : new NotificationEntity();
 	}
 
-	public WorkerNotificationProxy() {
+	public NotificationProxy() {
 		this(null);
 	}
 
-	public WorkerNotificationProxy(String msg, IWorker worker, String type) {
-		entity = new WorkerNotificationEntity(msg, GenericPersistenceService.getEntity(worker),
+	public NotificationProxy(String msg, IUser worker, String type) {
+		entity = new NotificationEntity(msg, GenericPersistenceService.getEntity(worker),
 				type);
 	}
 
 	@Override
-	public WorkerNotificationEntity getEntity() {
+	public NotificationEntity getEntity() {
 		return entity;
 	}
 

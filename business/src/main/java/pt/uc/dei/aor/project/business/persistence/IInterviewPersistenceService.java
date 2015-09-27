@@ -7,9 +7,8 @@ import java.util.List;
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 public interface IInterviewPersistenceService {
 
@@ -19,7 +18,7 @@ public interface IInterviewPersistenceService {
 
 	Collection<IInterview> findAllInterviews();
 
-	List<IInterview> findActiveInterviewsByUser(IWorker user);
+	List<IInterview> findActiveInterviewsByUser(IUser interviewer);
 
 	IInterview findInterviewById(long id);
 
@@ -27,7 +26,7 @@ public interface IInterviewPersistenceService {
 
 	List<IInterview> findInterviewsWithFilter(int offset, int limit, InterviewFilter filter);
 
-	List<IInterview> findPastInterviewsByUser(ICandidate candidate, IApplication application, Date date);
+	List<IInterview> findPastInterviewsByUser(IUser candidate, IApplication application, Date date);
 
 	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
 

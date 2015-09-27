@@ -2,11 +2,10 @@ package pt.uc.dei.aor.project.business.service;
 
 import java.util.List;
 
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IDegree;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.ISchool;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 
 public interface IQualificationBusinessService {
@@ -23,11 +22,8 @@ public interface IQualificationBusinessService {
 
 	List<String> listDegrees(String school);
 
-	void addQualification(IWorker user, String school, String degree);
+	void addQualification(IUser user, String school, String degree);
 
-	void removeQualification(IWorker user, IQualification qualification);
+	void removeQualification(IUser user, IQualification qualification);
 	
-	void addQualification(ICandidate user, String school, String degree);
-
-	void removeQualification(ICandidate user, IQualification qualification);
 }

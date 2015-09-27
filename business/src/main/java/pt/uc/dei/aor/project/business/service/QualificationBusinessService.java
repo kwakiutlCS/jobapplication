@@ -9,12 +9,11 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IDegree;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.ISchool;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IQualificationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
@@ -96,7 +95,7 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 	}
 
 	@Override
-	public void addQualification(IWorker user, String school, String degree) {
+	public void addQualification(IUser user, String school, String degree) {
 		IQualification qualification = factory.qualification(school, degree);
 		user.addQualification(qualification);
 
@@ -104,26 +103,10 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 	}
 
 	@Override
-	public void removeQualification(IWorker user, IQualification qualification) {
+	public void removeQualification(IUser user, IQualification qualification) {
 		user.removeQualification(qualification);
 
 		workerPersistence.save(user);
 	}
-
-	@Override
-	public void addQualification(ICandidate user, String school, String degree) {
-		IQualification qualification = factory.qualification(school, degree);
-		user.addQualification(qualification);
-
-		candidatePersistence.save(user);
-	}
-
-	@Override
-	public void removeQualification(ICandidate user,
-			IQualification qualification) {
-		user.removeQualification(qualification);
-
-		candidatePersistence.save(user);
-	}
-
+	
 }

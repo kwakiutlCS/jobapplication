@@ -60,10 +60,7 @@ public class ApplicationEntity {
 	private boolean refused = false;
 	
 	@ManyToOne
-	private CandidateEntity candidate;
-	
-	@ManyToOne
-	private WorkerEntity internalCandidate;
+	private UserEntity candidate;
 	
 	@ManyToOne
 	private PositionEntity position;
@@ -88,12 +85,28 @@ public class ApplicationEntity {
 	}
 
 	
+	public PositionEntity getPosition() {
+		return position;
+	}
+
+	public void addInterview(InterviewEntity interview) {
+		interview.setApplication(this);
+		interviews.add(interview);
+	}
+
+	public void remove(InterviewEntity interview) {
+		interviews.remove(interview);
+	}
+
+	public UserEntity getCandidate() {
+		return candidate;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((candidate == null) ? 0 : candidate.hashCode());
-		result = prime * result + ((internalCandidate == null) ? 0 : internalCandidate.hashCode());
 		result = prime * result + ((position == null) ? 0 : position.hashCode());
 		return result;
 	}
@@ -112,11 +125,6 @@ public class ApplicationEntity {
 				return false;
 		} else if (!candidate.equals(other.candidate))
 			return false;
-		if (internalCandidate == null) {
-			if (other.internalCandidate != null)
-				return false;
-		} else if (!internalCandidate.equals(other.internalCandidate))
-			return false;
 		if (position == null) {
 			if (other.position != null)
 				return false;
@@ -125,23 +133,6 @@ public class ApplicationEntity {
 		return true;
 	}
 
-	public PositionEntity getPosition() {
-		return position;
-	}
-
-	public void addInterview(InterviewEntity interview) {
-		interview.setApplication(this);
-		interviews.add(interview);
-	}
-
-	public void remove(InterviewEntity interview) {
-		interviews.remove(interview);
-	}
-
-	public CandidateEntity getCandidate() {
-		return candidate;
-	}
-	
 	public Date getDate() {
 		return date;
 	}

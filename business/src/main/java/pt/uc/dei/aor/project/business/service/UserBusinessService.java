@@ -8,10 +8,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.EnumSet;
 import java.util.List;
 
-import javax.ejb.Asynchronous;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -28,7 +26,7 @@ import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
@@ -38,9 +36,9 @@ import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.UploadUtil;
 
 @Stateless
-public class WorkerBusinessService implements IWorkerBusinessService {
+public class UserBusinessService implements IUserBusinessService {
 	
-	private static Logger logger = LoggerFactory.getLogger(WorkerBusinessService.class);
+	private static Logger logger = LoggerFactory.getLogger(UserBusinessService.class);
 	
 	@Inject
 	private EmailUtil emailUtil;
@@ -58,7 +56,7 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	private UploadUtil upload;
 	
 	@Override
-	public IWorker createNewWorker(String login, String name, String surname, String email,
+	public IUser createNewWorker(String login, String name, String surname, String email,
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException {
 		if (roles.isEmpty()) throw new NoRoleException();
 		if (findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
@@ -74,7 +72,7 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 			emailUtil.send(email, "test", "other");
 		}
 		
-		IWorker worker = factory.worker(login, email, 
+		IUser worker = factory.user(login, email, 
 				password, name, surname, roles);
 		
 		try {
@@ -86,45 +84,41 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public IWorker getWorkerByLogin(String login) {
+	public IUser getWorkerByLogin(String login) {
 		return workerPersistence.getWorkerByLogin(login);
 	}
 
 	@Override
-	public IWorker getWorkerByEmail(String email) {
+	public IUser getWorkerByEmail(String email) {
 		return workerPersistence.getWorkerByEmail(email);
 	}
 
 	
 	@Override
-	public void deleteWorker(IWorker worker) {
-		workerPersistence.delete(worker);
+	public void deleteUser(IUser user) {
+		workerPersistence.delete(user);
 	}
 
 	@Override
-	public List<IWorker> findAllUsers() {
+	public List<IUser> findAllUsers() {
 		return workerPersistence.findAllUsers();
 	}
 
 	@Override
 	public List<Role> getRoles() {
-		List<Role> roles = new ArrayList<>(EnumSet.allOf(Role.class));
+		List<Role> roles = Arrays.asList(Role.values());
 		roles.remove(Role.CANDIDATE);
 		return roles;
 	}
 
+	
 	@Override
-	public IWorker createSuperUser() {
-		return workerPersistence.createSuperUser();
-	}
-
-	@Override
-	public Collection<IWorker> findAllInterviewers() {
+	public Collection<IUser> findAllInterviewers() {
 		return workerPersistence.findAllInterviewers();
 	}
 
 	@Override
-	public Collection<IWorker> findAllManagers() {
+	public Collection<IUser> findAllManagers() {
 		return workerPersistence.findAllManagers();
 	}
 	
@@ -134,7 +128,7 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 
 	@Override
 	public void recoverPassword(String email) {
-		IWorker worker = workerPersistence.findWorkerByEmail(email);
+		IUser worker = workerPersistence.findUserByEmail(email);
 		if (worker == null) return;
 		
 		String password = PasswordUtil.generate(8);
@@ -145,8 +139,8 @@ public class WorkerBusinessService implements IWorkerBusinessService {
 	}
 
 	@Override
-	public IWorker update(IWorker updatedUser, String password) throws WrongPasswordException {
-		IWorker user = workerPersistence.verifyUser(updatedUser.getId(), Encryptor.encrypt(password));
+	public IUser update(IUser updatedUser, String password) throws WrongPasswordException {
+		IUser user = workerPersistence.verifyUser(updatedUser.getId(), Encryptor.encrypt(password));
 		
 		if (user == null) throw new WrongPasswordException(); 
 		

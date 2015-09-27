@@ -8,34 +8,37 @@ import java.util.List;
 import javax.resource.spi.IllegalStateException;
 
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
+import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IQualification;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.QualificationEntity;
-import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
-public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
+public class UserProxy implements IUser, IProxyToEntity<UserEntity> {
 
-	private WorkerEntity entity;
+	private UserEntity entity;
 	
-	public WorkerProxy(WorkerEntity entity) {
-		this.entity = entity != null ? entity : new WorkerEntity();
+	public UserProxy(UserEntity entity) {
+		this.entity = entity != null ? entity : new UserEntity();
 	}
 
-	public WorkerProxy(String login, String email, String password, String name, 
+	public UserProxy(String login, String email, String password, String name, 
 			String surname, Collection<Role> roles) {
-		entity = new WorkerEntity(login, email, password, name, surname, roles);
+		entity = new UserEntity(login, email, password, name, surname, roles);
 	}
 	
-	public WorkerProxy() {
+	public UserProxy() {
 		this(null);
 	}
 
+	
+
 	@Override
-	public WorkerEntity getEntity() {
+	public UserEntity getEntity() {
 		return entity;
 	}
 
@@ -90,7 +93,7 @@ public class WorkerProxy implements IWorker, IProxyToEntity<WorkerEntity> {
 	
 	@Override
 	public boolean equals(Object o) {
-		WorkerEntity oe = null;
+		UserEntity oe = null;
 		
 		if (o instanceof IProxyToEntity<?>)
 			oe = GenericPersistenceService.getEntity(o);
