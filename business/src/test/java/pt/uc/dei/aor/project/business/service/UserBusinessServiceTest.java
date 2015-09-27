@@ -180,6 +180,6 @@ public class UserBusinessServiceTest {
 		String email = "email";
 		
 		ejb.getUserByEmail(email);
-		verify(userEjb).getUserByEmail(email);
+		verify(userEjb).findUserByEmail(email);
 	}
 }
