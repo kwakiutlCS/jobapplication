@@ -13,7 +13,6 @@ import java.util.List;
 
 import javax.ejb.EJBException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -108,11 +107,11 @@ public class UserBusinessServiceTest {
     	
 		IUser worker = factory.user("other", email, password, name, surname, roles);
 		when(factory.user(login, email, password, name, surname, roles)).thenReturn(worker);
-		when(userEjb.findWorkerByEmailOrLogin(email, login)).thenReturn(true);
+		when(userEjb.findUserByEmailOrLogin(email, login)).thenReturn(true);
 		
 		ejb.createNewUser(login, name, surname, email, roles);
 		
-		verify(userEjb).findWorkerByEmailOrLogin(email, login);
+		verify(userEjb).findUserByEmailOrLogin(email, login);
 	}
 	
 	@Test
@@ -126,11 +125,11 @@ public class UserBusinessServiceTest {
     	
 		IUser worker = factory.user("other", email, password, name, surname, roles);
 		when(factory.user(login, email, password, name, surname, roles)).thenReturn(worker);
-		when(userEjb.findWorkerByEmailOrLogin(email, login)).thenReturn(false);
+		when(userEjb.findUserByEmailOrLogin(email, login)).thenReturn(false);
 		
 		ejb.createNewUser(login, name, surname, email, roles);
 		
-		verify(userEjb).findWorkerByEmailOrLogin(email, login);
+		verify(userEjb).findUserByEmailOrLogin(email, login);
 	}
 	
 	@Test
@@ -157,7 +156,6 @@ public class UserBusinessServiceTest {
 		verify(userEjb).findAllUsers();
 	}
 	
-	@Ignore
 	@Test
 	public void shouldReturnListRoles() {
 		List<Role> roles = ejb.getRoles();
@@ -182,6 +180,6 @@ public class UserBusinessServiceTest {
 		String email = "email";
 		
 		ejb.getUserByEmail(email);
-		verify(userEjb).getUserByEmail(email);
+		verify(userEjb).findUserByEmail(email);
 	}
 }
