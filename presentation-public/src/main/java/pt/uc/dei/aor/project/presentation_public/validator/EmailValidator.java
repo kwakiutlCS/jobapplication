@@ -26,13 +26,8 @@ public class EmailValidator implements Validator {
             return;
         }
         
-        
         if (!org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)) {
         	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email format is incorrect", null));
-        }
-        
-        if (ejb.getCandidateByEmail(email) != null) {
-        	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email is already registed", null));
         }
     }
 

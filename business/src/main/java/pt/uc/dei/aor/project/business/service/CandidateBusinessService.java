@@ -34,13 +34,13 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 	public ICandidate createNewCandidate(String login, String name, String surname, String email, String encrypt, String address,
 			String city, String country, String phone, String mobilePhone, Collection<IQualification> qualifications, String cv,
 			Collection<IApplication> applications) throws DuplicatedUserException {
-
+		System.out.println("facade");
 		if (findCandidateByEmailorLogin(email, login)) 
 			throw new DuplicatedUserException();
 
 		ICandidate candidateProxy = factory.candidate(login, name, surname, email, encrypt,address,
 				city, country, phone, mobilePhone, qualifications, cv, applications);
-
+		System.out.println(candidateProxy);
 		return candidatePersistence.save(candidateProxy);
 	}
 

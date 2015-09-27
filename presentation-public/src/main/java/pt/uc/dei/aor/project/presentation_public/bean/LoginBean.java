@@ -78,8 +78,8 @@ public class LoginBean {
 		if(login().equals("error")){
 			RequestContext requestContext = RequestContext.getCurrentInstance();
 			requestContext.execute("PF('loginDlg').show()");
-			MetaUtils.setMsg("Login or password wrong", FacesMessage.SEVERITY_INFO);
-			return "";
+			MetaUtils.setMsg("Login or password wrong", FacesMessage.SEVERITY_ERROR, "loginMsg");
+			return null;
 		}
 		
 		else

@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
 
@@ -37,10 +39,15 @@ public class FirstRegister {
 	}
 
 
-	public String register() throws DuplicatedUserException {
-
-
-		candidateService.createNewCandidate(login,name,surname,email , Encryptor.encrypt(password),null,null,null,null,null,null,null, null);
+	public String register() {
+		try {
+			System.out.println("registering");
+			candidateService.createNewCandidate(login,name,surname,email , Encryptor.encrypt(password),null,null,null,null,null,null,null, null);
+			MetaUtils.setMsg("User created with success", FacesMessage.SEVERITY_INFO);
+			login = name = surname = email = password = null;
+		} catch (DuplicatedUserException e) {
+			MetaUtils.setMsg("User already exists", FacesMessage.SEVERITY_ERROR);
+		}
 		
 		return "index.xhtml";
 	}
