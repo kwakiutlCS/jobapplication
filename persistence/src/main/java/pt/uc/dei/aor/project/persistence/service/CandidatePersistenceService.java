@@ -24,14 +24,10 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 
 	@Override
 	public ICandidate save(ICandidate candidateProxy) {
-		
-		System.out.println("Candidate proxy "+candidateProxy);
-		
+
 		CandidateEntity entity = GenericPersistenceService.getEntity(candidateProxy);
 
 		entity = em.merge(entity);
-		
-		System.out.println("merge update --- user"+candidateProxy);
 
 		return new CandidateProxy(entity);
 	}
@@ -85,7 +81,7 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 
 	@Override
 	public ICandidate getCandidateByEmail(String email) {
-		
+
 		TypedQuery<CandidateEntity> q =  em.createNamedQuery("candidate.findCandidateByEmail", CandidateEntity.class);
 		q.setParameter("email", email);
 
@@ -93,23 +89,39 @@ public class CandidatePersistenceService implements ICandidatePersistenceService
 
 		if(candidates.isEmpty())
 			return null;
-		
+
 		return new CandidateProxy(candidates.get(0));
 	}
 
 
 	@Override
 	public ICandidate getCandidateByLogin(String login) {
-		
+
 		TypedQuery<CandidateEntity> q =  em.createNamedQuery("candidate.findCandidateByLogin", CandidateEntity.class);
 		q.setParameter("login", login);
-		
+
 		List<CandidateEntity> candidates = q.getResultList();
-		
+
 		if(candidates.isEmpty())
 			return null;
 
 		return new CandidateProxy(candidates.get(0));
+	}
+
+
+	@Override
+	public ICandidate verifyUser(long id, String password) {
+
+		TypedQuery<CandidateEntity> query = em.createNamedQuery("candidate.verifyCandidate", CandidateEntity.class);
+		query.setParameter("id", id);
+		query.setParameter("password", password);
+
+		List<CandidateEntity> entities = query.getResultList();
+
+		if (entities.isEmpty()) 
+			return null;
+
+		return new CandidateProxy(entities.get(0));
 	}
 
 }

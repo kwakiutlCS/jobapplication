@@ -5,61 +5,66 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<h:panelGroup id="headerBar">
-	<nav class="navbar navbar-default" role="navigation">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse"
+						data-target="#bs-example-navbar-collapse-1">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
 
-			</div>
-			
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li><p:link	value="CAREERS" outcome="listPosition" /></li>
-					<h:panelGroup rendered="#{not loginBean.loggedIn}">
-						<li><p:link	value="REGISTER" outcome="firstregister" /></li>
-						<li><h:form><p:commandLink value="LOGIN" onclick="PF('loginDlg').show()" /></h:form></li>
-					</h:panelGroup>
-				</ul>
-			<h:panelGroup rendered="#{loginBean.loggedIn}">
-				<ul class="nav navbar-nav navbar-right">
-					<h:panelGroup rendered="#{notificationBean.countUnread() gt 0}">
-						<li><p:link
-								value="#{notificationBean.countUnread()} unread notifications"
-								outcome="" /></li>
-					</h:panelGroup>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">#{loginBean.user.name} <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
+				</div>
+
+				<div class="collapse navbar-collapse"
+					id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li><p:link value="CAREERS" outcome="listPosition" /></li>
+						<h:panelGroup rendered="#{not loginBean.loggedIn}">
+							<li><p:link value="REGISTER" outcome="firstregister" /></li>
 							<li><h:form>
-									<p:commandLink styleClass="logoutLink" action="#{loginBean.logout()}" value="logout" />
+									<p:commandLink value="LOGIN" onclick="PF('loginDlg').show()" />
 								</h:form></li>
-						</ul></li>
-				</ul>
+						</h:panelGroup>
+					</ul>
+					<h:panelGroup rendered="#{loginBean.loggedIn}">
+						<ul class="nav navbar-nav navbar-right">
+							<h:panelGroup rendered="#{notificationBean.countUnread() gt 0}">
+								<li><p:link
+										value="#{notificationBean.countUnread()} unread notifications"
+										outcome="" /></li>
+							</h:panelGroup>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">#{loginBean.user.name} <span
+									class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><h:form>
+											<p:link outcome="profile" value="profile" />
+											<p:commandLink styleClass="logoutLink"
+												action="#{loginBean.logout()}" value="logout" />
+										</h:form></li>
+								</ul></li>
+						</ul>
 
 
 
-			</h:panelGroup>
+					</h:panelGroup>
+				</div>
 			</div>
-		</div>
-	</nav>
+		</nav>
 	</h:panelGroup>
-	
 
-	<p:dialog header="Login" widgetVar="loginDlg" modal="true" draggable="false"
-	minimizable="false" resizable="false">
 
-	<p:outputPanel id="loginpanel">
+	<p:dialog header="Login" widgetVar="loginDlg" modal="true"
+		draggable="false" minimizable="false" resizable="false">
+
+		<p:outputPanel id="loginpanel">
 			<h:form>
 
 				<p:outputLabel value="Login" />
-			<p></p>
+				<p></p>
 				<p:inputText id="login" value="#{loginBean.login}" required="true" />
 				<p></p>
 				<h:outputText value="Password" />
@@ -68,7 +73,7 @@
 				<p></p>
 				<h:commandButton action="#{loginBean.headerLogin}" value="Enter" />
 				<br />
-			<p></p>
+				<p></p>
 				<h:commandLink value="forgotten your password?" />
 			</h:form>
 		</p:outputPanel>

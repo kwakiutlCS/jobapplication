@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IQualification;
@@ -28,6 +29,11 @@ public interface ICandidateBusinessService {
 	ICandidate getCandidateByLogin(String login);
 
 	ICandidate update(ICandidate user);
+
+	void recoverPassword(String email);
+
+	ICandidate updatePassword(ICandidate updatedUser, String password)
+			throws WrongPasswordException;
 	
 }
 

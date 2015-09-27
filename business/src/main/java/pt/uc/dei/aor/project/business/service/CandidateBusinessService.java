@@ -10,11 +10,14 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.business.util.PasswordUtil;
 import pt.uc.dei.aor.project.business.util.UploadUtil;
 
 @Stateless
@@ -87,9 +90,31 @@ public class CandidateBusinessService implements ICandidateBusinessService {
 
 	@Override
 	public ICandidate update(ICandidate user) {
-		System.out.println("Candidate business persistence --- user: "+user);
 		return candidatePersistence.save(user);
 	}
+
+
+	@Override
+	public ICandidate updatePassword(ICandidate updatedUser, String oldPassword) throws WrongPasswordException{
+		ICandidate user = candidatePersistence.verifyUser(updatedUser.getId(), Encryptor.encrypt(oldPassword));
+
+		if (user == null) throw new WrongPasswordException(); 
+
+		return candidatePersistence.save(updatedUser);
+	}
+
+	@Override
+	public void recoverPassword(String email) {
+		ICandidate user = candidatePersistence.getCandidateByEmail(email);
+		if (user == null) 
+			return;
+
+		String password = PasswordUtil.generate(8);
+		user.setPassword(Encryptor.encrypt(password));
+		candidatePersistence.save(user);
+
+	}
+
 
 }
 

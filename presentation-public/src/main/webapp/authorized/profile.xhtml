@@ -10,14 +10,23 @@
 
 	<ui:define name="content">
 
-		<p:panel header="Password">
-			<h:form>
+		<p:panel header="Basics">
+			<h:form id="basics">
 				<h:panelGrid columns="2">
 
-					<p:outputLabel value="Your Login" />
-					<p:outputText value="#{registerBean.login}" />
+					<h:outputText value="Your Login" />
+					<h:outputText value="#{registerBean.login}" />
 
-					<h:link value="Change Password" />
+
+					<h:outputText value="Old Password" />
+					<h:inputSecret value="#{registerBean.oldPassword}" />
+
+					<h:outputText value="New Password" />
+					<h:inputSecret value="#{registerBean.password}" />
+
+					<p:commandButton value="save"
+						action="#{registerBean.updatePassword()}" ajax="false" update=":globalMessages @form"/>
+					<p:outputLabel value=" " />
 
 					<p:commandButton value="Delete Account"
 						actionListener="#{registerBean.deleteAccount}" />
