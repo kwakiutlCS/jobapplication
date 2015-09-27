@@ -93,21 +93,27 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			
 			for (IWorker w : interviewers) {
 				workerPersistence.insertInterview(w.getId(), interview);
-
+			}
+			
+			for (IWorker w : interviewers) {
 				String company = interview.getApplication().getPosition().getCompany();
 
 				// notify user
 				String title = "Interview Scheduled";
 				String msg = "Interview for position "+
-						interview.getApplication().getPosition().getTitle()+" was created.\n\n\nDate: "+
+						interview.getApplication().getPosition().getTitle()+" was created and assigned you as interviewer.\n\nDate: "+
 						interview.getDate()+
-						"\nCandidate: "+interview.getCandidate().getFullName();
+						"\nCandidate: "+interview.getCandidate().getFullName()+
+						"\nInterviewers: "+interview.getInterviewersFormatted();
 				
 				String msgEmail = "<h1>"+company+"</h1>"+
 						"<p>Interview for position "+
-						interview.getApplication().getPosition().getTitle()+" was created and assigned you as manager.</p>"+
+						interview.getApplication().getPosition().getTitle()+" was created and assigned you as interviewer.</p>"+
 						"<p>Date: "+interview.getDate()+"</p>"+
-						"<p>Candidate: "+interview.getCandidate().getFullName()+"</p>";
+						"<p>Candidate: "+interview.getCandidate().getFullName()+"</p>"+
+						"<p>Interviewers: "+interview.getInterviewersFormatted()+
+						"<p><a href='http://localhost:8080/jobmanagement/interview/interview.xhtml?it="+
+						interview.getId()+"'>Details</a></p>";
 				
 				notificationService.notify(w, msg, title);
 				
