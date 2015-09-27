@@ -19,18 +19,18 @@ import pt.uc.dei.aor.project.business.util.Role;
 
 public interface IUserBusinessService {
 	
-	IUser createNewWorker(String login, String name, String surname, String email, 
+	IUser createNewUser(String login, String name, String surname, String email, 
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException;
 	
-	IUser getWorkerByLogin(String login);
+	IUser getUserByLogin(String login);
 
-	void deleteWorker(IUser worker);
+	void deleteUser(IUser worker);
 
 	public List<IUser> findAllUsers();
 
 	public List<Role> getRoles();
 	
-	IUser getWorkerByEmail(String email);
+	IUser getUserByEmail(String email);
 	
 	Collection<IUser> findAllInterviewers();
 	
@@ -42,7 +42,7 @@ public interface IUserBusinessService {
 
 	IUser update(IUser user);
 
-	void uploadWorkers(InputStream inputStream) 
+	void uploadUsers(InputStream inputStream) 
 			throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException;
 
 	List<IUser> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
