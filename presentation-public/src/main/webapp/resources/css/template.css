@@ -12,15 +12,23 @@ nav.navbar-default.navbar {
 }
 
 
-.navbar-default ul.navbar-nav > li > a, .navbar-default ul.navbar-nav > li > a:focus {
+.navbar-default ul.navbar-nav > li > a, .navbar-default ul.navbar-nav > li > a:focus,
+.navbar-default ul.navbar-nav > li > form > a, .navbar-default ul.navbar-nav > li > form > a:focus {
 	color: #fff;
 	font-weight: bold;
 	padding: 3px 5px;
 	margin: 12px 10px;
 	border-radius: 6px;
+	display: block;
 }
 
-.navbar-default ul.navbar-nav > li > a:hover {
+
+.navbar-default ul.navbar-nav > li > form > a, .navbar-default ul.navbar-nav > li > form > a:focus {
+	display: block;
+	margin-top:11px
+}
+
+.navbar-default ul.navbar-nav > li > a:hover, .navbar-default ul.navbar-nav > li > form > a:hover {
 	background-color: #fff;
 	color: #6A943F;
 }
@@ -98,8 +106,9 @@ ul>li {
 
 .content {
 	background-color: white;
-	margin-right: 15px;
-	padding: 0 20px;
+	margin: 0 15px;
+	padding: 40px;
+	height: 100%;
 }
 
 header {
