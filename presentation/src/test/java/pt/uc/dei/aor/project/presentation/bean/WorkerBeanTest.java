@@ -13,15 +13,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
-import pt.uc.dei.aor.project.business.startup.Encryptor;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @RunWith(MockitoJUnitRunner.class)
 public class WorkerBeanTest {
 	
 	@Mock
-	IWorkerBusinessService ejb;
+	IUserBusinessService ejb;
 	
 	@InjectMocks
 	WorkerBean bean;
@@ -42,7 +41,7 @@ public class WorkerBeanTest {
 		bean.setRoles(roles);
 		bean.register();
 		
-		verify(ejb).createNewWorker(login, name, surname, email, roles);
+		verify(ejb).createNewUser(login, name, surname, email, roles);
 	}
 
 }
