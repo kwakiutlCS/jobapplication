@@ -90,7 +90,7 @@ public class UserBusinessService implements IUserBusinessService {
 
 	@Override
 	public IUser getUserByEmail(String email) {
-		return userPersistence.getUserByEmail(email);
+		return userPersistence.findUserByEmail(email);
 	}
 
 	
@@ -128,7 +128,7 @@ public class UserBusinessService implements IUserBusinessService {
 
 	@Override
 	public void recoverPassword(String email) {
-		IUser worker = userPersistence.getUserByEmail(email);
+		IUser worker = userPersistence.findUserByEmail(email);
 		if (worker == null) return;
 		
 		String password = PasswordUtil.generate(8);

@@ -8,7 +8,6 @@ import java.util.List;
 import javax.resource.spi.IllegalStateException;
 
 import pt.uc.dei.aor.project.business.exception.IllegalRoleException;
-import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
@@ -50,8 +49,10 @@ public class UserProxy implements IUser, IProxyToEntity<UserEntity> {
 	@Override
 	public List<String> getRoles() {
 		List<String> roles = new LinkedList<>();
+		System.out.println("nome da entity "+entity.getName());
 		for (Role r : entity.getRoles()) {
 			roles.add(r.toString());
+			System.out.println("add roles");
 		}
 		return roles;
 	}

@@ -16,8 +16,6 @@ public interface IUserPersistenceService {
 	void delete(IUser worker);
 
 	List<IUser> findAllUsers();
-
-	IUser getUserByEmail(String email);
 	
 	Collection<IUser> findAllAdmins();
 	
@@ -31,7 +29,7 @@ public interface IUserPersistenceService {
 
 	void removeInterview(long worker_id, long interview_id);
 
-	IUser findWorkerByEmail(String email);
+	IUser findUserByEmail(String email);
 
 	IUser verifyUser(long id, String encrypt);
 

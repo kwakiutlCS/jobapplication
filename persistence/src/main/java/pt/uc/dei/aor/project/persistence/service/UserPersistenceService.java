@@ -60,21 +60,6 @@ public class UserPersistenceService implements IUserPersistenceService {
 		return null;
 	}
 	
-
-	@Override
-	public IUser getUserByEmail(String email) {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findWorkerByEmail", UserEntity.class);
-		query.setParameter("email", email);
-		
-		List<UserEntity> entities = query.getResultList();
-		
-		if (!entities.isEmpty()) {
-			return new UserProxy(entities.get(0));
-		}
-		
-		return null;
-	}
-	
 	@Override
 	public List<IUser> findAllUsers() {
 		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findAllWorkers", UserEntity.class);
@@ -162,8 +147,8 @@ public class UserPersistenceService implements IUserPersistenceService {
 	}
 
 	@Override
-	public IUser findWorkerByEmail(String email) {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findWorkerByEmail", UserEntity.class);
+	public IUser findUserByEmail(String email) {
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findUserByEmail", UserEntity.class);
 		query.setParameter("email", email);
 		
 		List<UserEntity> entities = query.getResultList();
