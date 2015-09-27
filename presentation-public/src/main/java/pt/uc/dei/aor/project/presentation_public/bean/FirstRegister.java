@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.service.IUserBusinessService;
+import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
@@ -41,7 +42,7 @@ public class FirstRegister {
 	public String register() {
 		try {
 			System.out.println("registering");
-			candidateService.createNewCandidate(login,name,surname,email, password );
+			candidateService.createNewCandidate(login,name,surname,email, Encryptor.encrypt(password) );
 			MetaUtils.setMsg("User created with success", FacesMessage.SEVERITY_INFO);
 			
 		} catch (DuplicatedUserException e) {
