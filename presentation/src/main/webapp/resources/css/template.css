@@ -1,6 +1,11 @@
-html, body {
+html {
 	margin: 0px;
-	background-color: #51504D;
+	height: 100%;
+}
+
+body {
+	margin: 0px;
+	min-height: 100%;
 }
 
 

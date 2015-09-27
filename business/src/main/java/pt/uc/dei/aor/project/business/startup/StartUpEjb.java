@@ -9,33 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
-import pt.uc.dei.aor.project.business.exception.NoRoleException;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
-import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
-import pt.uc.dei.aor.project.business.util.Role;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
+import javax.inject.Inject;
 
 import org.slf4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
+import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.service.IColorBusinessService;
+import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
+import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.Role;
 
 
@@ -54,6 +52,10 @@ public class StartUpEjb {
 	
 	@Inject
 	private IQualificationBusinessService qualificationEjb;
+	
+
+	@Inject
+	private IColorBusinessService colorEjb;
 	
 
 	@PostConstruct
@@ -109,11 +111,11 @@ public class StartUpEjb {
 
 		
 		// color
-//		colorEjb.save("admin", "red", "white", "black", "green", "white", "grey");
-//		colorEjb.save("manager", "red", "white", "black", "green", "white", "grey");
-//		colorEjb.save("interview", "red", "white", "black", "green", "white", "grey");
-//		colorEjb.save("public", "red", "white", "black", "green", "white", "grey");
-		 
+
+		colorEjb.save("admin", "red", "white", "black", "green", "white", "grey");
+		colorEjb.save("manager", "red", "white", "black", "green", "white", "grey");
+		colorEjb.save("interview", "red", "white", "black", "green", "white", "grey");
+		colorEjb.save("public", "red", "white", "black", "green", "white", "grey");
 
 		try {
 			createFileSystemStructure();
