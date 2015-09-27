@@ -31,7 +31,8 @@
 					</h:form>
 				</span>
 			</div>
-			<h:panelGroup rendered="#{notificationBean.visibleNotification eq status.index}">
+			<h:panelGroup layout="block" rendered="#{notificationBean.visibleNotification eq status.index}"
+			style="white-space: pre;" >
 				<h:outputText value="#{notification.message}" />
 			</h:panelGroup>
 			

@@ -111,6 +111,8 @@ public class InterviewScheduleBean implements Serializable {
 		try {
 			selectedApplication = interviewService.addInterview(selectedApplication, calendar.getTime(), selectedInterviewers);
 			MetaUtils.setMsg("Interview scheduled", FacesMessage.SEVERITY_INFO);
+			selectedApplication = applicationService.changeAnalyzed(selectedApplication, true);
+			
 		} catch (GenericIllegalParamsException | RepeatedInterviewException e) {
 			MetaUtils.setMsg("Error scheduling interview", FacesMessage.SEVERITY_ERROR);
 		} catch (AllPhasesCompletedException e) {
@@ -120,8 +122,6 @@ public class InterviewScheduleBean implements Serializable {
 		
 		selectedInterviewers.clear();
 		
-		selectedApplication = applicationService.changeAnalyzed(selectedApplication, true);
-		
 		interviewDate = null;
 		interviewTime = null;
 	}
@@ -130,6 +130,7 @@ public class InterviewScheduleBean implements Serializable {
 		try {
 			selectedApplication = interviewService.delete(selectedApplication, interview);
 			MetaUtils.setMsg("Interview deleted", FacesMessage.SEVERITY_INFO);
+			applicationService.changeAnalyzed(selectedApplication, false);
 		} catch (IllegalInterviewDeletionException e) {
 			MetaUtils.setMsg("Interview already started", FacesMessage.SEVERITY_ERROR);
 		}
@@ -189,6 +190,7 @@ public class InterviewScheduleBean implements Serializable {
 		
 		try {
 			interviewService.saveInterview(interview);
+			applicationService.changeAnalyzed(selectedApplication, true);
 		} catch (IllegalInterviewDeletionException e) {
 			MetaUtils.setMsg("Interview already started", FacesMessage.SEVERITY_ERROR);
 		}
@@ -197,7 +199,6 @@ public class InterviewScheduleBean implements Serializable {
 		interviewTime = null;
 		selectedInterviewers = null;
 		
-		applicationService.changeAnalyzed(selectedApplication, true);
 	}
 	
 	public void cancelAlterations() {
