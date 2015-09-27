@@ -11,7 +11,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@Entity
+@Entity 
 @Table(name="color")
 @NamedQueries({
 	@NamedQuery(name="Color.findColorByTitle", query = "from ColorEntity c where c.page = :title"),
@@ -63,7 +63,10 @@ public class ColorEntity {
 	}
 
 	public void setHeader(String header) {
-		this.header = "#"+header;
+		if (header.charAt(0) != '#')
+			this.header = "#"+header;
+		else
+			this.header = header;
 	}
 
 	public String getContent() {
@@ -71,7 +74,10 @@ public class ColorEntity {
 	}
 
 	public void setContent(String content) {
-		this.content = "#"+content;
+		if (content.charAt(0) != '#')
+			this.content = "#"+content;
+		else
+			this.content = content;
 	}
 
 	public String getContentText() {
@@ -79,7 +85,10 @@ public class ColorEntity {
 	}
 
 	public void setContentText(String contentText) {
-		this.contentText = "#"+contentText;
+		if (contentText.charAt(0) != '#')
+			this.contentText = "#"+contentText;
+		else
+			this.contentText = contentText;
 	}
 
 	public String getContentTitle() {
@@ -87,7 +96,10 @@ public class ColorEntity {
 	}
 
 	public void setContentTitle(String contentTitle) {
-		this.contentTitle = "#"+contentTitle;
+		if (contentTitle.charAt(0) != '#')
+			this.contentTitle = "#"+contentTitle;
+		else
+			this.contentTitle = contentTitle;
 	}
 
 	public String getHeaderText() {
@@ -95,7 +107,10 @@ public class ColorEntity {
 	}
 
 	public void setHeaderText(String headerText) {
-		this.headerText = "#"+headerText;
+		if (headerText.charAt(0) != '#')
+			this.headerText = "#"+headerText;
+		else
+			this.headerText = headerText;
 	}
 
 	public String getBackground() {
@@ -103,7 +118,10 @@ public class ColorEntity {
 	}
 
 	public void setBackground(String background) {
-		this.background = "#"+background;
+		if (background.charAt(0) != '#')
+			this.background = "#"+background;
+		else
+			this.background = background;
 	}
 	
 	
