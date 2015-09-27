@@ -1,6 +1,5 @@
 package pt.uc.dei.aor.project.business.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -8,19 +7,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
-import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.model.IWorkerNotification;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
-import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.util.DataModel;
 import pt.uc.dei.aor.project.business.util.DataPoint;
 import pt.uc.dei.aor.project.business.util.EmailUtil;

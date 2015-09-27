@@ -28,7 +28,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.PasswordUtil;
@@ -47,7 +47,7 @@ public class UserBusinessService implements IUserBusinessService {
 	private IModelFactory factory;
 	
 	@Inject
-	private IWorkerPersistenceService workerPersistence;
+	private IUserPersistenceService userPersistence;
 	
 	@Inject
 	private IInterviewPersistenceService interviewPersistence;
@@ -56,10 +56,10 @@ public class UserBusinessService implements IUserBusinessService {
 	private UploadUtil upload;
 	
 	@Override
-	public IUser createNewWorker(String login, String name, String surname, String email,
+	public IUser createNewUser(String login, String name, String surname, String email,
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException {
 		if (roles.isEmpty()) throw new NoRoleException();
-		if (findWorkerByEmailOrLogin(email, login)) throw new DuplicatedUserException();
+		if (findUserByEmailOrLogin(email, login)) throw new DuplicatedUserException();
 		
 		String password = null;
 		if (login.equals("admin")) {
@@ -76,7 +76,7 @@ public class UserBusinessService implements IUserBusinessService {
 				password, name, surname, roles);
 		
 		try {
-			return workerPersistence.save(worker);
+			return userPersistence.save(worker);
 		}
 		catch(EJBException e) {
 			return null;
@@ -84,24 +84,24 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-	public IUser getWorkerByLogin(String login) {
-		return workerPersistence.getWorkerByLogin(login);
+	public IUser getUserByLogin(String login) {
+		return userPersistence.getUserByLogin(login);
 	}
 
 	@Override
-	public IUser getWorkerByEmail(String email) {
-		return workerPersistence.getWorkerByEmail(email);
+	public IUser getUserByEmail(String email) {
+		return userPersistence.getUserByEmail(email);
 	}
 
 	
 	@Override
 	public void deleteUser(IUser user) {
-		workerPersistence.delete(user);
+		userPersistence.delete(user);
 	}
 
 	@Override
 	public List<IUser> findAllUsers() {
-		return workerPersistence.findAllUsers();
+		return userPersistence.findAllUsers();
 	}
 
 	@Override
@@ -114,46 +114,46 @@ public class UserBusinessService implements IUserBusinessService {
 	
 	@Override
 	public Collection<IUser> findAllInterviewers() {
-		return workerPersistence.findAllInterviewers();
+		return userPersistence.findAllInterviewers();
 	}
 
 	@Override
 	public Collection<IUser> findAllManagers() {
-		return workerPersistence.findAllManagers();
+		return userPersistence.findAllManagers();
 	}
 	
 	private	boolean findWorkerByEmailOrLogin(String email, String login) {
-		return workerPersistence.findWorkerByEmailOrLogin(email, login);
+		return userPersistence.findWorkerByEmailOrLogin(email, login);
 	}
 
 	@Override
 	public void recoverPassword(String email) {
-		IUser worker = workerPersistence.findUserByEmail(email);
+		IUser worker = userPersistence.findUserByEmail(email);
 		if (worker == null) return;
 		
 		String password = PasswordUtil.generate(8);
 		worker.setPassword(Encryptor.encrypt(password));
-		workerPersistence.save(worker);
+		userPersistence.save(worker);
 		
 		logger.trace("New password: "+password);
 	}
 
 	@Override
 	public IUser update(IUser updatedUser, String password) throws WrongPasswordException {
-		IUser user = workerPersistence.verifyUser(updatedUser.getId(), Encryptor.encrypt(password));
+		IUser user = userPersistence.verifyUser(updatedUser.getId(), Encryptor.encrypt(password));
 		
 		if (user == null) throw new WrongPasswordException(); 
 		
-		return workerPersistence.save(updatedUser);
+		return userPersistence.save(updatedUser);
 	}
 
 	@Override
-	public IWorker update(IWorker user) {
-		return workerPersistence.save(user);
+	public IUser update(IUser user) {
+		return userPersistence.save(user);
 	}
 
 	@Override
-	public void uploadWorkers(InputStream in) throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException {
+	public void uploadUsers(InputStream in) throws IllegalFormatUploadException, NoRoleException, DuplicatedUserException, IOException {
 		Path path =	upload.upload("usersImport", in);
 		
 		BufferedReader reader = null;
@@ -195,12 +195,12 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-	public List<IWorker> findUsersWithFilter(WorkerFilter filter, int offset, int limit) {
-		return workerPersistence.findUsersWithFilter(filter, offset, limit);
+	public List<IUser> findUsersWithFilter(WorkerFilter filter, int offset, int limit) {
+		return userPersistence.findUsersWithFilter(filter, offset, limit);
 	}
 
 	@Override
-	public void uploadCV(IWorker worker, Part cv) throws IOException {
+	public void uploadCV(IUser user, Part cv) throws IOException {
 		String filename = cv.getSubmittedFileName();
 		String dir = "cv/"+worker.getLogin();
 		
@@ -208,57 +208,57 @@ public class UserBusinessService implements IUserBusinessService {
 		upload.upload(dir, filename, cv.getInputStream());
 		
 		worker.setCv(filename);
-		workerPersistence.save(worker);
+		userPersistence.save(worker);
 	}
 
 	@Override
-	public void addAdmin(IWorker user) {
+	public void addAdmin(IUser user) {
 		user.addRole(Role.ADMIN);
-		workerPersistence.save(user);
+		userPersistence.save(user);
 	}
 
 	@Override
-	public void removeAdmin(IWorker admin, IWorker user) throws IllegalRoleChangeException {
+	public void removeAdmin(IUser admin, IUser user) throws IllegalRoleChangeException {
 		if (admin.equals(user)) {
 			throw new IllegalRoleChangeException(
 					"It is not possible to remove admin status from yourself");
 		}
 		
-		if (workerPersistence.countAdmins() == 1) {
+		if (userPersistence.countAdmins() == 1) {
 			throw new IllegalRoleChangeException(
 					"At least one admin is required in the application");
 		}
 		
 		user.removeRole(Role.ADMIN);
-		workerPersistence.save(user);
+		userPersistence.save(user);
 	}
 
 	@Override
-	public void addManager(IWorker user) {
+	public void addManager(IUser user) {
 		user.addRole(Role.MANAGER);
-		workerPersistence.save(user);
+		userPersistence.save(user);
 	}
 
 	@Override
-	public void removeManager(IWorker user) {
+	public void removeManager(IUser user) {
 		user.removeRole(Role.MANAGER);
-		workerPersistence.save(user);
+		userPersistence.save(user);
 	}
 
 	@Override
-	public void addInterviewer(IWorker user) {
+	public void addInterviewer(IUser user) {
 		user.addRole(Role.INTERVIEWER);
-		workerPersistence.save(user);
+		userPersistence.save(user);
 	}
 
 	@Override
-	public void removeInterviewer(IWorker user) {
+	public void removeInterviewer(IUser user) {
 		user.removeRole(Role.INTERVIEWER);
-		workerPersistence.save(user);
+		userPersistence.save(user);
 	}
 
 	@Override
-	public boolean interviewerHasCandidate(IWorker user, String login) {
+	public boolean interviewerHasCandidate(IUser user, String login) {
 		List<IInterview> interviews = interviewPersistence.findActiveInterviewsByUser(user);
 		
 		for (IInterview i : interviews) {

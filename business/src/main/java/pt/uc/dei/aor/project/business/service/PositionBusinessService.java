@@ -12,7 +12,7 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -41,7 +41,7 @@ public class PositionBusinessService implements IPositionBusinessService {
 	@Override
 	public IPosition createNewPosition(String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date closingDate, int sla,
-			IWorker contactPerson, String company,
+			IUser contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			List<IScript> scripts, Collection<IPublicationChannel> channels) {
 		
@@ -99,7 +99,8 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 
 	@Override
-	public List<IPosition> findFilteredPositionsByManager(int offset, int limit, PositionFilter filter, IWorker user) {
+	public List<IPosition> findFilteredPositionsByManager(int offset, int limit, PositionFilter filter, 
+			IUser user) {
 		return positionPersistence.findFilteredPositions(offset, limit, filter, user);
 	}
 
