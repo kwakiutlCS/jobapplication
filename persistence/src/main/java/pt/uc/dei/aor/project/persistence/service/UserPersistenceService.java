@@ -48,7 +48,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 	
 	@Override
 	public IUser getUserByLogin(String login) {
-		TypedQuery<UserEntity> query = em.createNamedQuery("Worker.findWorkerByLogin", UserEntity.class);
+		TypedQuery<UserEntity> query = em.createNamedQuery("User.findUserByLogin", UserEntity.class);
 		query.setParameter("login", login);
 		
 		List<UserEntity> entities = query.getResultList();
@@ -141,7 +141,7 @@ public class UserPersistenceService implements IUserPersistenceService {
 	}
 	
 	@Override
-	public boolean findWorkerByEmailOrLogin(String email, String login) {
+	public boolean findUserByEmailOrLogin(String email, String login) {
 		TypedQuery<UserEntity> q = em.createNamedQuery("Worker.findWorkerByEmailOrLogin", UserEntity.class);
 		q.setParameter("email", email);
 		q.setParameter("login", login);

@@ -123,7 +123,7 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 	
 	private	boolean findUserByEmailOrLogin(String email, String login) {
-		return userPersistence.findWorkerByEmailOrLogin(email, login);
+		return userPersistence.findUserByEmailOrLogin(email, login);
 	}
 
 	@Override

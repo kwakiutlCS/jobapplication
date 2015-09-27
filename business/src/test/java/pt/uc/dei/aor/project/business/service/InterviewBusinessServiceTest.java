@@ -37,7 +37,6 @@ import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 
 
 

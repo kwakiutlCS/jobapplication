@@ -27,7 +27,7 @@ public interface IUserPersistenceService {
 
 	void insertInterview(long worker_id, IInterview interview);
 
-	boolean findWorkerByEmailOrLogin(String email, String login);
+	boolean findUserByEmailOrLogin(String email, String login);
 
 	void removeInterview(long worker_id, long interview_id);
 
@@ -38,6 +38,8 @@ public interface IUserPersistenceService {
 	List<IUser> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
 	long countAdmins();
+
+
 
 	
 }
