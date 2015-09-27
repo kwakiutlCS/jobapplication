@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 @WebServlet("/cv/*")
 public class CvServlet extends HttpServlet {
@@ -31,7 +31,7 @@ public class CvServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
 		
-		IWorker user = (IWorker) request.getSession().getAttribute("user");
+		IUser user = (IUser) request.getSession().getAttribute("user");
 		
 		if (user != null) {
 			Path path = DOWNLOADS.resolve(Paths.get(user.getLogin())).resolve(Paths.get(filename));

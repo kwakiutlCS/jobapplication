@@ -22,6 +22,9 @@ public interface IUserBusinessService {
 	IUser createNewUser(String login, String name, String surname, String email, 
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException;
 	
+	IUser createNewCandidate(String login, String name, String surname, String email, 
+			String password) throws DuplicatedUserException;
+	
 	IUser getUserByLogin(String login);
 
 	void deleteUser(IUser worker);

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.model.IUser;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
@@ -23,7 +23,7 @@ public class LoginBean {
 	private static final Logger logger = LoggerFactory.getLogger(LoginBean.class);
 	
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IUserBusinessService userService;
 	
 	private String username;
 	private String password;
@@ -39,7 +39,7 @@ public class LoginBean {
 		try {
 			request.login(username, password);
 			
-			IWorker worker = workerService.getWorkerByLogin(username);
+			IUser worker = userService.getUserByLogin(username);
 			request.getSession().setAttribute("user", worker);
 			
 			List<String> roles = worker.getRoles();
@@ -74,12 +74,12 @@ public class LoginBean {
 	}
 	
 	public void recover() {
-		workerService.recoverPassword(email);
+		userService.recoverPassword(email);
 	}
 	
 	
 	
-	public IWorker getUser() {
+	public IUser getUser() {
 		return MetaUtils.getUser();	
 	}
 

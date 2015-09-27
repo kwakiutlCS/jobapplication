@@ -122,13 +122,13 @@ public class UserBusinessService implements IUserBusinessService {
 		return userPersistence.findAllManagers();
 	}
 	
-	private	boolean findWorkerByEmailOrLogin(String email, String login) {
+	private	boolean findUserByEmailOrLogin(String email, String login) {
 		return userPersistence.findWorkerByEmailOrLogin(email, login);
 	}
 
 	@Override
 	public void recoverPassword(String email) {
-		IUser worker = userPersistence.findUserByEmail(email);
+		IUser worker = userPersistence.getUserByEmail(email);
 		if (worker == null) return;
 		
 		String password = PasswordUtil.generate(8);
@@ -187,7 +187,7 @@ public class UserBusinessService implements IUserBusinessService {
 			if (lineFields[4].indexOf("interviewer") != -1)
 				roles.add(Role.INTERVIEWER);
 			
-			createNewWorker(lineFields[0], lineFields[2], lineFields[3], lineFields[1], roles);
+			createNewUser(lineFields[0], lineFields[2], lineFields[3], lineFields[1], roles);
 				
 		}
 		
@@ -202,13 +202,13 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public void uploadCV(IUser user, Part cv) throws IOException {
 		String filename = cv.getSubmittedFileName();
-		String dir = "cv/"+worker.getLogin();
+		String dir = "cv/"+user.getLogin();
 		
 		upload.delete(dir);
 		upload.upload(dir, filename, cv.getInputStream());
 		
-		worker.setCv(filename);
-		userPersistence.save(worker);
+		user.setCv(filename);
+		userPersistence.save(user);
 	}
 
 	@Override
@@ -266,5 +266,13 @@ public class UserBusinessService implements IUserBusinessService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public IUser createNewCandidate(String login, String name, String surname, String email, String password)
+			throws DuplicatedUserException {
+		IUser user = factory.user(login, email, password, name, surname, new ArrayList<Role>());
+		
+		return userPersistence.save(user);
 	}
 }

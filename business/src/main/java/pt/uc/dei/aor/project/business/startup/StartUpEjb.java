@@ -27,8 +27,7 @@ import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -41,7 +40,7 @@ public class StartUpEjb {
 	private static Logger logger = LoggerFactory.getLogger(StartUpEjb.class);
 	
 	@Inject
-	private IWorkerBusinessService workerEjb;
+	private IUserBusinessService userEjb;
 	
 	@Inject
 	private IPublicationChannelBusService channelEjb;
@@ -64,7 +63,7 @@ public class StartUpEjb {
 		List<Role> roles = new ArrayList<>();
 		roles.add(Role.ADMIN);
 		try {
-			workerEjb.createNewWorker("admin", "admin", "admin", "admin@admin.pt", roles);
+			userEjb.createNewUser("admin", "admin", "admin", "admin@admin.pt", roles);
 				
 			logger.info("Admin added with sucess.");
 		} catch (DuplicatedUserException e) {
@@ -75,16 +74,6 @@ public class StartUpEjb {
 		}
 		
 				
-		// super user
-		logger.info("Adding super user...");
-		IWorker su = workerEjb.createSuperUser();
-		if (su == null) {
-			logger.info("Super user already exists. Nothing to be done here.");
-		}
-		else {
-			logger.info("Super user created successfully.");
-		}
-		
 		
 		// publication channels
 

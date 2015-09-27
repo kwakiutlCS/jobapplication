@@ -5,25 +5,22 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
@@ -38,7 +35,7 @@ public class InterviewListBean implements Serializable {
 	private List<IInterview> interviews;
 	
 	// filter params
-	private IWorker filterInterviewer;
+	private IUser filterInterviewer;
 	private String filterPosition;
 	private String filterCandidate;
 	private Date startDate;
@@ -48,7 +45,7 @@ public class InterviewListBean implements Serializable {
 	private IInterviewBusinessService interviewService;
 	
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IUserBusinessService userService;
 	
 	@Inject
 	private IPositionBusinessService positionService;
@@ -203,22 +200,22 @@ public class InterviewListBean implements Serializable {
 		this.interviews = interviews;
 	}
 	
-	public Collection<IWorker> getAllInterviewers() {
-		return workerService.findAllInterviewers();
+	public Collection<IUser> getAllInterviewers() {
+		return userService.findAllInterviewers();
 	}
 
 
-	public IWorker getFilterInterviewer() {
+	public IUser getFilterInterviewer() {
 		return filterInterviewer;
 	}
 
 
-	public void setFilterInterviewer(IWorker filterInterviewer) {
+	public void setFilterInterviewer(IUser filterInterviewer) {
 		this.filterInterviewer = filterInterviewer;
 	}
 
 		
-	public List<List<IWorker>> getInterviewerSets() {
+	public List<List<IUser>> getInterviewerSets() {
 		return filter.getInterviewerSets();
 	}
 

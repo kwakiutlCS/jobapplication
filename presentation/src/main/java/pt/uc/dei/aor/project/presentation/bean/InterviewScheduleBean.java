@@ -10,13 +10,9 @@ import java.util.List;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.application.FacesMessage.Severity;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +23,11 @@ import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionExceptio
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 
@@ -49,14 +46,14 @@ public class InterviewScheduleBean implements Serializable {
 	private IApplicationBusinessService applicationService;
 	
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IUserBusinessService userService;
 	
 	
 	private IApplication selectedApplication;
 	private long selectedApplicationId;
 		
-	private Set<IWorker> selectedInterviewers;
-	private IWorker interviewer;
+	private Set<IUser> selectedInterviewers;
+	private IUser interviewer;
 	private Date interviewDate;
 	private String interviewTime;
 	private Date tommorrow;
@@ -71,7 +68,7 @@ public class InterviewScheduleBean implements Serializable {
 	}
 	
 	public Collection<IInterview> getActiveInterviews() {
-		IWorker user = MetaUtils.getUser();
+		IUser user = MetaUtils.getUser();
 		return interviewService.findActiveInterviewsByUser(user);
 	}
 	
@@ -81,8 +78,8 @@ public class InterviewScheduleBean implements Serializable {
 	
 	
 	
-	public Collection<IWorker> getAllInterviewers() {
-		return workerService.findAllInterviewers();
+	public Collection<IUser> getAllInterviewers() {
+		return userService.findAllInterviewers();
 	}
 	
 	public void addInterviewer() {
@@ -91,7 +88,7 @@ public class InterviewScheduleBean implements Serializable {
 		selectedInterviewers.add(interviewer);
 	}
 	
-	public void removeInterviewer(IWorker interviewer) {
+	public void removeInterviewer(IUser interviewer) {
 		selectedInterviewers.remove(interviewer);
 	}
 	
@@ -168,7 +165,7 @@ public class InterviewScheduleBean implements Serializable {
 	
 	public void onload() {
 		selectedApplication = applicationService.findApplicationById(selectedApplicationId);
-		IWorker user = MetaUtils.getUser();
+		IUser user = MetaUtils.getUser();
 		
 		if (!user.isAdmin() && !selectedApplication.getPosition().getContactPerson().equals(user))
 			selectedApplication = null;
@@ -289,12 +286,12 @@ public class InterviewScheduleBean implements Serializable {
 	
 	// getters and setters
 	
-	public IWorker getInterviewer() {
+	public IUser getInterviewer() {
 		return interviewer;
 	}
 
 
-	public void setInterviewer(IWorker interviewer) {
+	public void setInterviewer(IUser interviewer) {
 		this.interviewer = interviewer;
 	}
 
@@ -313,10 +310,10 @@ public class InterviewScheduleBean implements Serializable {
 		return tommorrow;
 	}
 
-	public List<IWorker> getSelectedInterviewers() {
-		if (selectedInterviewers == null) return new ArrayList<IWorker>();
+	public List<IUser> getSelectedInterviewers() {
+		if (selectedInterviewers == null) return new ArrayList<IUser>();
 		
-		List<IWorker> list = new ArrayList<>(selectedInterviewers);
+		List<IUser> list = new ArrayList<>(selectedInterviewers);
 		return list;
 	}
 

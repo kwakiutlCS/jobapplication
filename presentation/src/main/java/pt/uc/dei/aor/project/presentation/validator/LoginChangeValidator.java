@@ -4,13 +4,12 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 
@@ -20,7 +19,7 @@ import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 public class LoginChangeValidator implements Validator {
 	
 	@Inject 
-	private IWorkerBusinessService ejb;
+	private IUserBusinessService ejb;
 	  
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -30,7 +29,7 @@ public class LoginChangeValidator implements Validator {
             return;
         }
         
-        if (!MetaUtils.getUser().getLogin().equals(login) && ejb.getWorkerByLogin(login) != null) {
+        if (!MetaUtils.getUser().getLogin().equals(login) && ejb.getUserByLogin(login) != null) {
         	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login already registered", null));
         }
     }
