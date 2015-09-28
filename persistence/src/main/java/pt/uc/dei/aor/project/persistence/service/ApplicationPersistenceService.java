@@ -19,15 +19,13 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
-import pt.uc.dei.aor.project.persistence.entity.CandidateEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
-import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ApplicationProxy;
 
 @Stateless
@@ -58,7 +56,7 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 
 
 	@Override
-	public List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit, IWorker manager) {
+	public List<IApplication> findApplicationsWithFilter(ApplicationFilter filter, int offset, int limit, IUser manager) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<ApplicationEntity> q = cb.createQuery(ApplicationEntity.class);
 		Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
@@ -69,7 +67,7 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		if (manager != null) {
 			Root<PositionEntity> position = q.from(PositionEntity.class);
 			Predicate predicate = cb.equal(position.get("id"), application.get("position"));
-			WorkerEntity w = GenericPersistenceService.getEntity(manager);
+			UserEntity w = GenericPersistenceService.getEntity(manager);
 			predicate = cb.and(predicate, cb.equal(position.get("contactPerson"), w));
 			criteriaPredicates.add(predicate);
 		}
@@ -118,7 +116,7 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 			// candidate filter
 			String candidateFilter = filter.getCandidate();
 			if (candidateFilter != null) {
-				Root<CandidateEntity> candidate = q.from(CandidateEntity.class);
+				Root<UserEntity> candidate = q.from(UserEntity.class);
 				Predicate candidatePredicate = cb.equal(candidate.get("id"), application.get("candidate"));
 				candidatePredicate = cb.and(candidatePredicate, cb.like(
 						cb.lower(candidate.get("completeName")), "%"+candidateFilter.toLowerCase()+"%"));
@@ -180,11 +178,11 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 	}
 		
 
-	public boolean findApplicationbyCandidateAndPosition(ICandidate candidate,
+	public boolean findApplicationbyCandidateAndPosition(IUser candidate,
 			IPosition position) {
 		
 		PositionEntity positionEntity = GenericPersistenceService.getEntity(position);
-		CandidateEntity candidateEntity = GenericPersistenceService.getEntity(candidate);
+		UserEntity candidateEntity = GenericPersistenceService.getEntity(candidate);
 		
 		TypedQuery<ApplicationEntity> q = em.createNamedQuery("application.findApplicationbyCandidateAndPosition", ApplicationEntity.class);
 		

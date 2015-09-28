@@ -10,19 +10,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.slf4j.Logger;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StartUpEJBTest {
 
 	@Mock
-	private IWorkerBusinessService workerEjb;
+	private IUserBusinessService userEjb;
 	
 	@Mock
 	private IQualificationBusinessService qualificationEjb;
@@ -43,6 +42,6 @@ public class StartUpEJBTest {
 		
 		//startUp.init(); 
 		
-		Mockito.verify(workerEjb).createNewWorker(login, name, surname, email, roles);
+		Mockito.verify(userEjb).createNewUser(login, name, surname, email, roles);
 	}
 }

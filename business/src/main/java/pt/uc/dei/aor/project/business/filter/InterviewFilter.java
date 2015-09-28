@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Set;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 public class InterviewFilter extends GenericFilter {
 	
-	private List<Set<IWorker>> interviewerSets;
+	private List<Set<IUser>> interviewerSets;
 	private Set<String> positions;
 	private String candidate;
 	private Date startDate;
@@ -26,7 +26,7 @@ public class InterviewFilter extends GenericFilter {
 	}
 	
 	
-	public void addInterviewerSet(IWorker interviewer) {
+	public void addInterviewerSet(IUser interviewer) {
 		addGenericSet(interviewerSets, interviewer);
 	}
 
@@ -43,7 +43,7 @@ public class InterviewFilter extends GenericFilter {
 		splitElements(interviewerSets, setPos, pos);
 	}
 	
-	public List<List<IWorker>> getInterviewerSets() {
+	public List<List<IUser>> getInterviewerSets() {
 		return getGenericSets(interviewerSets);
 	}
 

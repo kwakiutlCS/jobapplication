@@ -18,25 +18,23 @@ import org.jboss.arquillian.transaction.api.annotation.Transactional;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
-import pt.uc.dei.aor.project.persistence.entity.User;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.proxy.ModelFactory;
 import pt.uc.dei.aor.project.persistence.proxy.PublicationChannelProxy;
 
@@ -48,15 +46,15 @@ public class PositionPersistenceServiceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
         	.addAsResource("test-persistence.xml", "META-INF/persistence.xml")
-       		.addPackage(User.class.getPackage())
+       		.addPackage(UserEntity.class.getPackage())
        		.addPackage(Role.class.getPackage())
        		.addPackage(Localization.class.getPackage())
        		.addPackage(IModelFactory.class.getPackage())
        		.addPackage(ModelFactory.class.getPackage())
        		.addPackage(InterviewFilter.class.getPackage())
-            .addClass(IWorker.class)
-            .addPackage(WorkerPersistenceService.class.getPackage())
-            .addPackage(IWorkerPersistenceService.class.getPackage());
+            .addClass(IUser.class)
+            .addPackage(UserPersistenceService.class.getPackage())
+            .addPackage(IUserPersistenceService.class.getPackage());
     }
 
     @Inject
@@ -80,7 +78,7 @@ public class PositionPersistenceServiceTest {
     	Date closingDate = new Date();
     	int sla = 2;
     	String description = "description";
-    	IWorker person = null;
+    	IUser person = null;
     	String company = "company";
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.JAVA_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{
@@ -112,7 +110,7 @@ public class PositionPersistenceServiceTest {
     	Date closingDate = new Date();
     	int sla = 3;
     	String description = "description2";
-    	IWorker person = null;
+    	IUser person = null;
     	String company = "company2";
     	List<TechnicalArea> tech = Arrays.asList(new TechnicalArea[]{TechnicalArea.DOT_NET_DEVELOPMENT});
     	List<IPublicationChannel> pub = Arrays.asList(new PublicationChannelProxy[]{

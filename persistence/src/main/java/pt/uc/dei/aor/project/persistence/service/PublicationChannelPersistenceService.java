@@ -54,4 +54,17 @@ public class PublicationChannelPersistenceService implements IPublicationChannel
 		em.remove(em.merge(entity));
 	}
 
+
+	@Override
+	public IPublicationChannel findByName(String channel) {
+		TypedQuery<PublicationChannelEntity> q =  em.createNamedQuery("publicationChannel.findByName",
+				PublicationChannelEntity.class);
+		q.setParameter("name", channel);
+		
+		List<PublicationChannelEntity> channels = q.getResultList();
+
+		if (channels.isEmpty()) return null;
+		return new PublicationChannelProxy(channels.get(0));
+	}
+
 }

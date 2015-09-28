@@ -7,7 +7,7 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 
 public interface IApplication {
 
-	ICandidate getCandidate();
+	IUser getCandidate();
 	
 	IPosition getPosition();
 	

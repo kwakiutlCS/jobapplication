@@ -4,7 +4,7 @@ import java.util.List;
 
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 
 public interface IPositionPersistenceService {
@@ -17,7 +17,7 @@ public interface IPositionPersistenceService {
 
 	List<IPosition> findPositionByTitle(String title);
 
-	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter, IWorker user);
+	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter, IUser worker);
 
 	List<IPosition> findOpenPositions();
 

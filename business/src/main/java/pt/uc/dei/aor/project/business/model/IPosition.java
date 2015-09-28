@@ -53,7 +53,7 @@ public interface IPosition  {
 	
 	public void setCompany(String company);
 	
-	public IWorker getContactPerson();
+	public IUser getContactPerson();
 	
 	public String getTechnicalAreasFormatted();
 	
@@ -75,6 +75,6 @@ public interface IPosition  {
 
 	List<IScript> getScripts();
 
-	void setContactPerson(IWorker contactPerson);
+	void setContactPerson(IUser contactPerson);
 
 }

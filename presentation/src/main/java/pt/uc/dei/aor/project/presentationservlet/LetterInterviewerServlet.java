@@ -15,9 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import pt.uc.dei.aor.project.business.model.IInterview;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
 
 @WebServlet("/interview/letter/*")
 public class LetterInterviewerServlet extends HttpServlet {
@@ -48,7 +47,7 @@ public class LetterInterviewerServlet extends HttpServlet {
 			return;
 		}
 				
-		IWorker user = (IWorker) request.getSession().getAttribute("user");
+		IUser user = (IUser) request.getSession().getAttribute("user");
 		
 		if (user != null) {
 			boolean invalid = true;

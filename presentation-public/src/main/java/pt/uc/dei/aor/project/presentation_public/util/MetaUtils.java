@@ -6,15 +6,14 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import pt.uc.dei.aor.project.business.model.ICandidate;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 public class MetaUtils {
 	
-	public static ICandidate getUser() {
+	public static IUser getUser() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-				
-		return (ICandidate) request.getSession().getAttribute("user");	
+		return (IUser) request.getSession().getAttribute("user");	
 	}
 	
 	public static void setMsg(String text, Severity severity) {
@@ -23,10 +22,15 @@ public class MetaUtils {
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 	
+	public static void setMsg(String text, Severity severity, String component) {
+		FacesMessage msg = new FacesMessage(severity,
+				text, text);
+		FacesContext.getCurrentInstance().addMessage(component, msg);
+	}
+	
 	public static HttpSession getSession() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		return request.getSession();
 	}
-	
 }

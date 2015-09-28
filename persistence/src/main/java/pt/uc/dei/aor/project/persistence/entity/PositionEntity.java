@@ -29,7 +29,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
@@ -81,7 +80,7 @@ public class PositionEntity {
 	
 	@JoinColumn(nullable=false)
 	@ManyToOne
-	private WorkerEntity contactPerson;
+	private UserEntity contactPerson;
 	
 	@Column(nullable=false)
 	private String company;
@@ -105,7 +104,7 @@ public class PositionEntity {
     
 	public PositionEntity(long code,String title, Collection<Localization> localizations,
 			PositionState state, int vacancies, Date openingDate,
-			Date closingDate, int sla, WorkerEntity contactPerson, String company,
+			Date closingDate, int sla, UserEntity contactPerson, String company,
 			Collection<TechnicalArea> technicalAreas, String description,
 			Collection<PublicationChannelEntity> publications, List<ScriptEntity> scripts) {
 		super();
@@ -208,11 +207,11 @@ public class PositionEntity {
 		this.sla = sla;
 	}
 
-	public WorkerEntity getContactPerson() {
+	public UserEntity getContactPerson() {
 		return contactPerson;
 	}
 
-	public void setContactPerson(WorkerEntity contactPerson) {
+	public void setContactPerson(UserEntity contactPerson) {
 		this.contactPerson = contactPerson;
 	}
 
@@ -296,11 +295,6 @@ public class PositionEntity {
 	public String toString() {
 		return "PositionEntity [code=" + code + ", title=" + title + "]";
 	}
-
-	
-    
-    
-    
-    
+   
 }
 

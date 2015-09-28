@@ -12,16 +12,15 @@ import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.filter.InterviewFilter;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 public interface IInterviewBusinessService {
 	
-	List<IInterview> findActiveInterviewsByUser(IWorker user);
+	List<IInterview> findActiveInterviewsByUser(IUser worker);
 
-	IApplication addInterview(IApplication application, Date date, Collection<IWorker> interviewers) 
+	IApplication addInterview(IApplication application, Date date, Collection<IUser> interviewers) 
 			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException;
 
 	List<IInterview> findInterviewsByApplication(IApplication selected);
@@ -46,11 +45,11 @@ public interface IInterviewBusinessService {
 
 	IInterview saveInterview(IInterview interview) throws IllegalInterviewDeletionException;
 
-	IInterview addInterviewer(IInterview interview, IWorker interviewer);
+	IInterview addInterviewer(IInterview interview, IUser interviewer);
 
-	IInterview removeInterviewer(IInterview interview, IWorker interviewer);
+	IInterview removeInterviewer(IInterview interview, IUser interviewer);
 
-	IInterview setInterviewers(IInterview interview, Collection<IWorker> selectedInterviewers);
+	IInterview setInterviewers(IInterview interview, Collection<IUser> selectedInterviewers);
 
 	List<IInterview> getPreviousInterviews(IInterview interview);
 
@@ -61,5 +60,6 @@ public interface IInterviewBusinessService {
 	Set<IInterview> findFutureInterviews(IApplication selectedApplication) throws AllPhasesCompletedException;
 
 	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
+
 	
 }

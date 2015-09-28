@@ -9,11 +9,11 @@ import javax.ejb.Stateless;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IColor;
 import pt.uc.dei.aor.project.business.model.IDegree;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
@@ -21,8 +21,7 @@ import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.ISchool;
 import pt.uc.dei.aor.project.business.model.IScript;
 import pt.uc.dei.aor.project.business.model.IScriptEntry;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.model.IWorkerNotification;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.QuestionType;
@@ -34,15 +33,15 @@ public class ModelFactory implements IModelFactory {
 
 
 	@Override
-	public IWorker worker(String login, String email, String password, String name, 
+	public IUser user(String login, String email, String password, String name, 
 			String surname, Collection<Role> roles) {
-		return new WorkerProxy(login, email, password, name, surname, roles);
+		return new UserProxy(login, email, password, name, surname, roles);
 	}
 
 	@Override
 	public IPosition position(long code, Date openingDate, String title,
 			Collection<Localization> localizations, PositionState state,
-			int vacancies, Date closingDate, int sla, IWorker contactPerson,
+			int vacancies, Date closingDate, int sla, IUser contactPerson,
 			String company, Collection<TechnicalArea> technicalAreas,
 			String description, List<IScript> scripts,
 			Collection<IPublicationChannel> channels) {
@@ -68,17 +67,6 @@ public class ModelFactory implements IModelFactory {
 
 
 	@Override
-	public ICandidate candidate(String login, String name, String surname,
-			String email, String password, String address, String city,
-			String country, String phone, String mobilePhone,
-			Collection<IQualification> qualifications, String cv,
-			Collection<IApplication> applications) {
-
-		return new CandidateProxy(login, email, password,name, surname, address, city,country, 
-				phone, mobilePhone,	qualifications, cv, applications);
-	}
-
-	@Override
 	public IInterview interview(Date date) {
 		return new InterviewProxy(date);
 	}
@@ -99,8 +87,8 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IWorkerNotification workerNotification(String msg, IWorker worker, String type) {
-		return new WorkerNotificationProxy(msg, worker, type);
+	public INotification notification(String msg, IUser worker, String type) {
+		return new NotificationProxy(msg, worker, type);
 	}
 
 	@Override

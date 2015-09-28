@@ -21,8 +21,8 @@ import pt.uc.dei.aor.project.business.exception.IllegalFormatUploadException;
 import pt.uc.dei.aor.project.business.exception.IllegalRoleChangeException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.model.IUser;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
@@ -35,7 +35,7 @@ public class WorkerBean implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(WorkerBean.class);
 	
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IUserBusinessService userService;
 	
 	private String login;
 	private String email;
@@ -59,7 +59,7 @@ public class WorkerBean implements Serializable {
 
 	public void register() {
 		try {
-			workerService.createNewWorker(login, name, surname, email, roles);
+			userService.createNewUser(login, name, surname, email, roles);
 			login = null;
 			email = null;
 			name = null;
@@ -74,13 +74,13 @@ public class WorkerBean implements Serializable {
 	
 	public void upload() {
 		String filename = file.getFileName();
-		if (!filename.substring(filename.length()-4).equals(".csv")) {
+		if (filename.length() > 4 && !filename.substring(filename.length()-4).equals(".csv")) {
 			MetaUtils.setMsg("Please upload a csv file", FacesMessage.SEVERITY_ERROR);
 			return; 
 		}
 		
 		try {
-			workerService.uploadWorkers(file.getInputstream());
+			userService.uploadUsers(file.getInputstream());
 		} catch (IOException e) {
 			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
 		} catch (IllegalFormatUploadException e) {
@@ -94,32 +94,32 @@ public class WorkerBean implements Serializable {
 	}
 	
 	
-	public void addAdmin(IWorker user) {
-		workerService.addAdmin(user);
+	public void addAdmin(IUser user) {
+		userService.addAdmin(user);
 	}
 	
-	public void removeAdmin(IWorker user) {
+	public void removeAdmin(IUser user) {
 		try {
-			workerService.removeAdmin(MetaUtils.getUser(), user);
+			userService.removeAdmin(MetaUtils.getUser(), user);
 		} catch (IllegalRoleChangeException e) {
 			MetaUtils.setMsg(e.getMessage(), FacesMessage.SEVERITY_ERROR);
 		}
 	}
 	
-	public void addManager(IWorker user) {
-		workerService.addManager(user);
+	public void addManager(IUser user) {
+		userService.addManager(user);
 	}
 	
-	public void removeManager(IWorker user) {
-		workerService.removeManager(user);
+	public void removeManager(IUser user) {
+		userService.removeManager(user);
 	}
 	
-	public void addInterviewer(IWorker user) {
-		workerService.addInterviewer(user);
+	public void addInterviewer(IUser user) {
+		userService.addInterviewer(user);
 	}
 	
-	public void removeInterviewer(IWorker user) {
-		workerService.removeInterviewer(user);
+	public void removeInterviewer(IUser user) {
+		userService.removeInterviewer(user);
 	}
 	
 	
@@ -164,12 +164,12 @@ public class WorkerBean implements Serializable {
 		}
 	}
 	
-	public List<IWorker> getUsers() {
-		return workerService.findUsersWithFilter(filter, 0, 10);
+	public List<IUser> getUsers() {
+		return userService.findUsersWithFilter(filter, 0, 10);
 	}
 	
 	public List<Role> getPossibleRoles() {
-		return workerService.getRoles();
+		return userService.getRoles();
 	}
 	
 	public String getLogin() {
@@ -241,8 +241,8 @@ public class WorkerBean implements Serializable {
 		return role;
 	}
 
-	public Collection<IWorker> getAllManagers() {
-		return workerService.findAllManagers();
+	public Collection<IUser> getAllManagers() {
+		return userService.findAllManagers();
 	}
 
 

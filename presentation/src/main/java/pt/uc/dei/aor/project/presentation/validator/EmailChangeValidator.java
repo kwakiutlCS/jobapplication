@@ -4,20 +4,19 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @RequestScoped
 public class EmailChangeValidator implements Validator {
 	
-	@Inject IWorkerBusinessService ejb;
+	@Inject IUserBusinessService ejb;
 	
 	
     @Override
@@ -33,7 +32,7 @@ public class EmailChangeValidator implements Validator {
         	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email format is incorrect", null));
         }
         
-        if (!MetaUtils.getUser().getEmail().equals(email) && ejb.getWorkerByEmail(email) != null) {
+        if (!MetaUtils.getUser().getEmail().equals(email) && ejb.getUserByEmail(email) != null) {
         	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email is already registed", null));
         }
     }

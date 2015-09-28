@@ -1,6 +1,5 @@
 package pt.uc.dei.aor.project.business.service;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -8,26 +7,26 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
-import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.INotification;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.model.IWorkerNotification;
+import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.ICandidatePersistenceService;
-import pt.uc.dei.aor.project.business.persistence.INotificationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
 import pt.uc.dei.aor.project.business.util.DataModel;
 import pt.uc.dei.aor.project.business.util.DataPoint;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
 
 @Stateless
 public class ReportBusinessService implements IReportBusinessService {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(ReportBusinessService.class);
+	
 	private static final String[] MONTHS = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 			"Jul", "Ago", "Sep", "Oct", "Nov", "Dec"};
 	
@@ -44,6 +43,9 @@ public class ReportBusinessService implements IReportBusinessService {
 	
 	@Inject
 	private IApplicationPersistenceService applicationPersistence;
+	
+	@Inject 
+	private IAnswerPersistenceService answerPersistence;
 
 	
 	@Override
@@ -175,5 +177,54 @@ public class ReportBusinessService implements IReportBusinessService {
 		else {
 			return generateMonthlyAppReport(false);
 		}
+	}
+
+	@Override
+	public DataModel<String, Long> generateRejectedCandidatesReport(int period) {
+		List<IApplication> applications;
+		Date startDate;
+		Calendar cal = Calendar.getInstance();
+		
+		if (period == 3) {
+			cal.add(Calendar.MONTH, -3);
+		}
+		else if (period == 12) {
+			cal.add(Calendar.YEAR, -1);
+		}
+		else {
+			cal.add(Calendar.YEAR, -1000); // all applications
+		}
+		
+		startDate = cal.getTime();
+		
+		applications = reportPersistence.findAllCloseApplicationsByDate(startDate);
+		
+		long rejected = 0;
+		long interviewed = 0;
+		long missedInterview = 0;
+		
+		for (IApplication app : applications) {
+			if (app.getInterviews().isEmpty()) rejected++;
+			else {
+				boolean missed = false;
+				for (IInterview i : app.getInterviews()) {
+					List<IAnswer> answers = answerPersistence.findAnswersByInterview(i);
+					if (answers.isEmpty()) {
+						missedInterview++;
+						missed = true;
+						break;
+					}
+				}
+				if (!missed) interviewed++;
+			}
+		}
+		
+		
+		DataModel<String, Long> model = new DataModel<>();
+		model.addPoint(new DataPoint<String, Long>("Curriculum analysis", rejected));
+		model.addPoint(new DataPoint<String, Long>("Interview unattended", missedInterview));
+		model.addPoint(new DataPoint<String, Long>("Interview analysis", interviewed));
+		
+		return model;
 	}
 }

@@ -14,28 +14,28 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="worker_notification")
+@Table(name="notification")
 @NamedQueries({
-	@NamedQuery(name = "WorkerNotification.findNotificationsByWorker", 
-			query = "from WorkerNotificationEntity u where u.worker = :worker"),
-	@NamedQuery(name = "WorkerNotification.findUnreadByWorker", 
-		query = "from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
-	@NamedQuery(name = "WorkerNotification.findReadByWorker", 
-	query = "from WorkerNotificationEntity u where u.worker = :worker and u.read is TRUE"),
-	@NamedQuery(name = "WorkerNotification.countUnread", 
-	query = "select count(u) from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
+	@NamedQuery(name = "Notification.findNotificationsByUser", 
+			query = "from NotificationEntity u where u.user = :user"),
+	@NamedQuery(name = "Notification.findUnreadByUser", 
+		query = "from NotificationEntity u where u.user = :user and u.read is FALSE"),
+	@NamedQuery(name = "Notification.findReadByUser", 
+	query = "from NotificationEntity u where u.user = :user and u.read is TRUE"),
+	@NamedQuery(name = "Notification.countUnread", 
+	query = "select count(u) from NotificationEntity u where u.user = :user and u.read is FALSE"),
 })
-public class WorkerNotificationEntity {
+public class NotificationEntity {
 	
-	public WorkerNotificationEntity(String msg, WorkerEntity entity, String type) {
+	public NotificationEntity(String msg, UserEntity entity, String type) {
 		this.msg = msg;
-		this.worker = entity;
+		this.user = entity;
 		this.date = new Date();
 		this.read = false;
 		this.type = type;
 	}
 
-	public WorkerNotificationEntity() {
+	public NotificationEntity() {
 	}
 
 	@Id 
@@ -56,7 +56,7 @@ public class WorkerNotificationEntity {
 	
 	@ManyToOne
 	@JoinColumn(nullable=false)
-	private WorkerEntity worker;
+	private UserEntity user;
 
 	
 	// getters and setters

@@ -6,9 +6,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,13 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
-import pt.uc.dei.aor.project.business.model.IWorker;
 
 @Entity
 @Table(name="interview")
@@ -65,17 +56,15 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	@JoinColumn(nullable=false)
 	private ApplicationEntity application;
 	
-	@Column
-	private String classification;
 	
 	@Column(nullable=false)
 	private Date date;
 	
 	@ManyToMany(mappedBy="interviews", fetch=FetchType.EAGER)
-	private Set<WorkerEntity> interviewers;
+	private Set<UserEntity> interviewers;
 
 	@OneToMany(mappedBy="interview")
-	private List<AnswerEntity> answers;
+	private Set<AnswerEntity> answers;
 	
 	
 	// getters and setters
@@ -85,7 +74,7 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	}
 
 
-	public Set<WorkerEntity> getInterviewers() {
+	public Set<UserEntity> getInterviewers() {
 		if (interviewers == null) interviewers = new HashSet<>();
 		return interviewers;
 	}
@@ -152,12 +141,12 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 		this.application = application;
 	}
 
-	public void addInterviewer(WorkerEntity interviewer) {
+	public void addInterviewer(UserEntity interviewer) {
 		if (this.interviewers == null) this.interviewers = new HashSet<>();
 		this.interviewers.add(interviewer);
 	}
 	
-	public void removeInterviewer(WorkerEntity interviewer) {
+	public void removeInterviewer(UserEntity interviewer) {
 		this.interviewers.remove(interviewer);
 	}
 
@@ -165,11 +154,11 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 		this.date = date;
 	}
 
-	public void setInterviewers(List<WorkerEntity> interviewers) {
+	public void setInterviewers(List<UserEntity> interviewers) {
 		this.interviewers = new HashSet<>();
 		this.interviewers.addAll(interviewers);
 		
-		for (WorkerEntity w : interviewers) {
+		for (UserEntity w : interviewers) {
 			w.addInterview(this);
 		}
 	}

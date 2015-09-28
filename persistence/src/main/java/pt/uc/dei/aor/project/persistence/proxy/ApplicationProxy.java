@@ -4,17 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 
-import javax.inject.Inject;
-
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IProposition;
-import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.util.ProposalSituation;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
@@ -43,8 +39,8 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 
 
 	@Override
-	public ICandidate getCandidate() {
-		return new CandidateProxy(entity.getCandidate());
+	public IUser getCandidate() {
+		return new UserProxy(entity.getCandidate());
 	}
 
 

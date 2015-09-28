@@ -11,6 +11,8 @@ public interface IPublicationChannelPersistenceService {
 	List<IPublicationChannel> findAllPublicationChannels();
 	
 	void delete(IPublicationChannel publicationChannel);
+
+	IPublicationChannel findByName(String channel);
 	
 	
 	
