@@ -22,7 +22,6 @@ public class ApplicationBean implements Serializable {
 	@Inject
 	private IApplicationBusinessService applicationService;
 
-	private String cv;
 	private String coverLetter;
 	private String sourceInfo;
 	private Date date;
@@ -33,35 +32,6 @@ public class ApplicationBean implements Serializable {
 
 
 	public ApplicationBean() {
-	}
-
-//
-//	public void upload(AjaxBehaviorEvent event) {
-//
-//		if (!cv.getContentType().equals("application/pdf")) {
-//			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
-//			return; 
-//		}
-//
-//		try {
-//			applicationService.uploadCV(MetaUtils.getUser(), cv);
-//		} catch (IOException e) {
-//			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
-//			cv = null;
-//			logger.error("Error uploading file: "+cv.getSubmittedFileName());
-//		}
-//	}
-//	
-	
-	
-	
-	
-	public String getCv() {
-		return cv;
-	}
-
-	public void setCv(String cv) {
-		this.cv = cv;
 	}
 	
 
