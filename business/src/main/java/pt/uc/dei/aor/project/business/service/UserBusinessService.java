@@ -67,7 +67,7 @@ public class UserBusinessService implements IUserBusinessService {
 		else {
 			String p = PasswordUtil.generate(8);
 			password = Encryptor.encrypt(p);
-			logger.trace("User: "+login+" with password: "+p+" created");
+			logger.debug("User: "+login+" with password: "+p+" created");
 			emailUtil.send(email, "test", "other");
 		}
 		

@@ -74,7 +74,7 @@ public class WorkerBean implements Serializable {
 	
 	public void upload() {
 		String filename = file.getFileName();
-		if (!filename.substring(filename.length()-4).equals(".csv")) {
+		if (filename.length() > 4 && !filename.substring(filename.length()-4).equals(".csv")) {
 			MetaUtils.setMsg("Please upload a csv file", FacesMessage.SEVERITY_ERROR);
 			return; 
 		}
