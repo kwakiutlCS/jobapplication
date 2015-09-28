@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -214,6 +215,27 @@ public class UserBusinessService implements IUserBusinessService {
 		userPersistence.save(user);
 	}
 
+	@Override
+	public String uploadTempCV(Part cv) throws IOException {
+		Random rand = new Random();
+		
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < 11; i++) {
+			s.append(""+rand.nextInt(10));
+		}
+		
+		String tmpDir = s.toString();
+		
+		String filename = cv.getSubmittedFileName();
+		String dir = "cv/temp/"+tmpDir;
+		
+		upload.delete(dir);
+		upload.upload(dir, filename, cv.getInputStream());
+		
+		return tmpDir;
+	}
+	
+	
 	@Override
 	public void addAdmin(IUser user) {
 		user.addRole(Role.ADMIN);

@@ -9,9 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import javax.ejb.Asynchronous;
 import javax.ejb.Stateless;
 
 import org.slf4j.Logger;
@@ -37,6 +35,7 @@ public class UploadUtil {
 		
 	}
 		
+	
 	public Path upload(String path, String filename, InputStream in) throws IOException {
 		Path dir = UPLOADS.resolve(Paths.get(path));
 		
@@ -48,6 +47,22 @@ public class UploadUtil {
 		Files.createFile(file);
 		Files.copy(in, file, StandardCopyOption.REPLACE_EXISTING);
 		return file;
+	}
+	
+	
+	public Path mv(String from, String to, String filename) throws IOException {
+		Path fromFile = UPLOADS.resolve(Paths.get(from+"/"+filename));
+		Path toFile = UPLOADS.resolve(Paths.get(to));
+		
+		if (Files.notExists(toFile))
+			Files.createDirectories(toFile);
+		
+		toFile = toFile.resolve(filename);
+		
+		Files.createFile(toFile);
+		Files.copy(fromFile, toFile);
+		
+		return toFile;
 	}
 	
 	

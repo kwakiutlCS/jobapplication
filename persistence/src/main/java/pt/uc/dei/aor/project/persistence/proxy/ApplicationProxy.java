@@ -175,5 +175,11 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		return p.getSituation();
 	}
 
+
+	@Override
+	public void setCv(String filename) {
+		entity.setCv(filename);
+	}
+
 	
 }

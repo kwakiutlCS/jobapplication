@@ -180,4 +180,8 @@ public class ApplicationEntity {
 	public JobProposalEntity getProposition() {
 		return proposal;
 	}
+
+	public void setCv(String filename) {
+		cv = filename;
+	}
 }

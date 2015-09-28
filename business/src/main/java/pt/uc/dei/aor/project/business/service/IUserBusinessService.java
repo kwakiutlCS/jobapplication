@@ -66,5 +66,7 @@ public interface IUserBusinessService {
 
 	boolean interviewerHasCandidate(IUser user, String string);
 
+	String uploadTempCV(Part cv) throws IOException;
+
 
 }

@@ -1,6 +1,9 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
@@ -21,6 +24,8 @@ public interface IApplicationBusinessService {
 	IApplication refuse(IApplication selectedApplication);
 	
 	boolean findApplicationByCandidateAndPosition(IUser candidate , IPosition position);
+
+	void uploadCV(IApplication application, Part cv) throws IOException;
 
 
 }

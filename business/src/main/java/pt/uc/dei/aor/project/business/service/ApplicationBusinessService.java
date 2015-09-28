@@ -1,9 +1,11 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
@@ -58,5 +60,15 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	}
 
 
-	
+	@Override
+	public void uploadCV(IApplication application, Part cv) throws IOException {
+		String filename = cv.getSubmittedFileName();
+		String dir = "cv/applications/"+application.getId();
+		
+		upload.delete(dir);
+		upload.upload(dir, filename, cv.getInputStream());
+		
+		application.setCv(filename);
+		applicationPersistence.save(application);
+	}
 }
