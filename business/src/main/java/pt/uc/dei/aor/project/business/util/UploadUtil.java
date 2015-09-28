@@ -51,16 +51,17 @@ public class UploadUtil {
 	
 	
 	public Path mv(String from, String to, String filename) throws IOException {
-		Path fromFile = UPLOADS.resolve(Paths.get(from+"/"+filename));
-		Path toFile = UPLOADS.resolve(Paths.get(to));
-		
+		Path fromFile = UPLOADS.resolve(Paths.get("cv/"+from+"/"+filename));
+		Path toFile = UPLOADS.resolve(Paths.get("cv/"+to));
+			
 		if (Files.notExists(toFile))
 			Files.createDirectories(toFile);
 		
 		toFile = toFile.resolve(filename);
+		Files.move(fromFile, toFile);
 		
-		Files.createFile(toFile);
-		Files.copy(fromFile, toFile);
+		fromFile = fromFile.resolve(Paths.get("..")).normalize();
+		Files.delete(fromFile);
 		
 		return toFile;
 	}
