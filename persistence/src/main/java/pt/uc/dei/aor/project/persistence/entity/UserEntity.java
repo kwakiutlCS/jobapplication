@@ -78,6 +78,8 @@ public class UserEntity {
 		this.qualifications.addAll(qualifications);
 		this.cv = cv;
 		this.completeName = name+" "+surname;
+		this.phone=phone;
+		this.mobilePhone=mobilePhone;
 	}
 
 

@@ -37,6 +37,14 @@ public class ApplicationBean implements Serializable {
 	private long selectedPositionId;
 
 
+	public long getSelectedPositionId() {
+		return selectedPositionId;
+	}
+
+	public void setSelectedPositionId(long selectedPositionId) {
+		this.selectedPositionId = selectedPositionId;
+	}
+
 	public ApplicationBean() {
 	}
 	

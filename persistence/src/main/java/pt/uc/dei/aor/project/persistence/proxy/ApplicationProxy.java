@@ -27,7 +27,7 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		this.entity = entity != null ? entity : new ApplicationEntity();
 	}
 
-
+	
 	public ApplicationProxy(String coverLetter, String sourceInfo, Date date, IUser candidate, IPosition position) {
 		
 		UserEntity candidateEntity = GenericPersistenceService.getEntity(candidate);
