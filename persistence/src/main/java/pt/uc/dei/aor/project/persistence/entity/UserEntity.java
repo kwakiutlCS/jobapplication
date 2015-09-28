@@ -64,7 +64,7 @@ public class UserEntity {
 
 
 
-	public UserEntity(String login, String email, String password, String name, String surname, String address,
+	public UserEntity(String login, String email, String password, String name, String surname, String phone, String mobilePhone, String address,
 			String city, String country, List<QualificationEntity> qualifications, String cv) {
 		this.login = login;
 		this.email = email;
@@ -77,6 +77,7 @@ public class UserEntity {
 		this.qualifications = new HashSet<>();
 		this.qualifications.addAll(qualifications);
 		this.cv = cv;
+		this.completeName = name+" "+surname;
 	}
 
 

@@ -24,7 +24,7 @@ public interface IUserBusinessService {
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException;
 	
 	IUser createNewCandidate(String login, String name, String surname,
-			String email, String encrypt, String address, String city,
+			String email, String encrypt, String phone, String mobilePhone, String address, String city,
 			String country, List<IQualification> qualifications, String cv, String provisoryCv) throws IOException;
 	
 	IUser getUserByLogin(String login);
@@ -69,7 +69,6 @@ public interface IUserBusinessService {
 	boolean interviewerHasCandidate(IUser user, String string);
 
 	String uploadTempCV(Part cv) throws IOException;
-
 
 
 

@@ -15,7 +15,7 @@ public interface IModelFactory {
 	IUser user(String login, String email, String password, String name, String surname, Collection<Role> roles);	
 	
 	IUser user(String login, String email, String encrypt, String name,
-			String surname, String address, String city, String country,
+			String surname, String phone, String mobilePhone, String address, String city, String country,
 			List<IQualification> qualifications, String cv);
 	
 	IPublicationChannel publicationChannel(String channel);

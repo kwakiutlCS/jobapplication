@@ -118,9 +118,9 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IUser user(String login, String email, String encrypt, String name, String surname, String address,
+	public IUser user(String login, String email, String encrypt, String name, String surname, String phone, String mobilePhone, String address,
 			String city, String country, List<IQualification> qualifications, String cv) {
-		return new UserProxy(login, email, encrypt, name, surname, address, city, country, qualifications, 
+		return new UserProxy(login, email, encrypt, name, surname, phone, mobilePhone, address, city, country, qualifications, 
 				cv);
 	}
 

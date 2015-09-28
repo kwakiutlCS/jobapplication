@@ -70,7 +70,7 @@ public class RegisterBean implements Serializable {
 
 	public String register() {
 		try {
-			candidateService.createNewCandidate(login,name,surname,email, Encryptor.encrypt(password), 
+			candidateService.createNewCandidate(login,name,surname,email, Encryptor.encrypt(password),phone, mobilePhone, 
 					address, city, country, choosenQualifications, cvPath, provisoryCv);
 			MetaUtils.setMsg("User registered with success", FacesMessage.SEVERITY_INFO);
 			return "index.xhtml";
