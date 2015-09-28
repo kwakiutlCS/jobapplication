@@ -25,6 +25,7 @@ import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
@@ -81,6 +82,18 @@ public class UserBusinessService implements IUserBusinessService {
 			return null;
 		}
 	}
+	
+	@Override
+	public IUser createNewCandidate(String login, String name, String surname,
+			String email, String encrypt, String address, String city,
+			String country, List<IQualification> qualifications, Part cv) {
+		IUser user = factory.user(login, email, encrypt, name, surname, address, city,
+				country, qualifications,cv);
+		
+		return userPersistence.save(user);
+		
+	}
+	
 
 	@Override
 	public IUser getUserByLogin(String login) {
@@ -271,11 +284,5 @@ public class UserBusinessService implements IUserBusinessService {
 		return false;
 	}
 
-	@Override
-	public IUser createNewCandidate(String login, String name, String surname, String email, String password)
-			throws DuplicatedUserException {
-		IUser user = factory.user(login, email, password, name, surname, new ArrayList<Role>());
-		
-		return userPersistence.save(user);
-	}
+
 }

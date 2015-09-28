@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -7,6 +8,7 @@ import javax.inject.Inject;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
@@ -21,6 +23,22 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	
 	@Inject
 	private UploadUtil upload;
+	
+	@Inject
+	private IModelFactory factory;
+	
+	
+	@Override
+	public IApplication createApplication(String coverLetter,
+			String sourceInfo, IUser candidate, IPosition position) {
+	
+		Date date = new Date();
+		
+		IApplication application = factory.application(coverLetter, sourceInfo, date, candidate, position);
+		
+		return applicationPersistence.save(application);
+	}
+
 		
 	@Override
 	public IApplication findApplicationById(long id) {

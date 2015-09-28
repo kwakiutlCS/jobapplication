@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.Part;
+
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.QuestionType;
@@ -14,13 +16,18 @@ public interface IModelFactory {
 
 	IUser user(String login, String email, String password, String name, String surname, Collection<Role> roles);	
 	
+	IUser user(String login, String email, String encrypt, String name,
+			String surname, String address, String city, String country,
+			List<IQualification> qualifications, Part cv);
+	
 	IPublicationChannel publicationChannel(String channel);
 
 	IScript script(String title);	
 
 	IAnswerChoice answerChoice(String answer);
 
-	IApplication application();
+	IApplication application(String coverLetter, String sourceInfo, Date date,
+			IUser candidate, IPosition position);
 
 	IInterview interview(Date date);
 
@@ -45,5 +52,7 @@ public interface IModelFactory {
 
 	IColor color(String page, String header, String content, String contentText, String contentTitle, String headerText,
 			String background);
+
+	
 
 }

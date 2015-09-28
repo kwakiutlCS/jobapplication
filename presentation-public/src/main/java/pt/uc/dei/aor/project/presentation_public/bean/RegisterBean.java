@@ -3,10 +3,9 @@ package pt.uc.dei.aor.project.presentation_public.bean;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
@@ -16,7 +15,6 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
-import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
@@ -26,7 +24,7 @@ import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
 @Named
-@RequestScoped
+@ViewScoped
 public class RegisterBean {
 
 	private static final Logger logger = LoggerFactory.getLogger(RegisterBean.class);
@@ -42,38 +40,35 @@ public class RegisterBean {
 	private String email;
 	private String name;
 	private String surname;
-	
+
 	private String address;
 	private String city;
 	private String country;
 	private String phone; 
 	private String mobilePhone;
+	private List<IQualification> choosenQualifications;
+
+
 	private String school;
 	private String degree;
-	
-	private List<IQualification> choosenQualifications;
-	private List<IApplication> applications;
+
+
 	private Part cv;
 	private String cvPath;
-	
+
 	private String oldPassword;
+
+
 
 	public RegisterBean() {
 	}
 
-	@PostConstruct
-	public void init() {
-		IUser user = MetaUtils.getUser();
-		login = user.getLogin();
-		name = user.getName();
-		surname = user.getSurname();
-		email = user.getEmail();
-		address = user.getAddress();
-		city = user.getCity();
-		country = user.getCountry();
-		phone = user.getPhone();
-		mobilePhone = user.getMobile();
-		
+	public String register() {
+		candidateService.createNewCandidate(login,name,surname,email, Encryptor.encrypt(password), 
+				address, city, country, choosenQualifications, cv );
+		MetaUtils.setMsg("User registered with success", FacesMessage.SEVERITY_INFO);
+
+		return "index.xhtml";
 	}
 
 	public void upload(AjaxBehaviorEvent event) {
@@ -102,22 +97,18 @@ public class RegisterBean {
 	}
 
 
-	public void addQualification() {
-		qualificationService.addQualification(MetaUtils.getUser(), school, degree);
-	}
+//	public void addQualification() {
+//		
+//		
+//		
+//		qualificationService.addQualification(IUser user, school, degree);
+//	}
 
 	public void removeQualification(IQualification qualification) {
 		qualificationService.removeQualification(MetaUtils.getUser(), qualification);
 	}
 
 
-	public String register() throws DuplicatedUserException {
-
-
-		candidateService.createNewCandidate(login, name, surname, email, Encryptor.encrypt(password));
-
-		return "index.xhtml";
-	}
 
 	public void updateCandidate() throws DuplicatedUserException {
 		IUser user = MetaUtils.getUser();
@@ -128,25 +119,25 @@ public class RegisterBean {
 		user.setCountry(country);
 		user.setPhone(phone);
 		user.setMobile(mobilePhone);
-	
+
 		choosenQualifications = user.getQualifications();
-		
+
 		user = candidateService.update(user);
 
 	}
-	
+
 	public void deleteAccount(){
-		
-		
+
+
 	}
-	
+
 	public void updatePassword() {
 		try {
 			IUser user = MetaUtils.getUser();
-			
+
 			user.setPassword(Encryptor.encrypt(password));
 			user = candidateService.update(user, oldPassword);
-			
+
 			password = null;
 			oldPassword = null;
 			MetaUtils.getSession().setAttribute("user", user);
@@ -247,14 +238,6 @@ public class RegisterBean {
 		this.mobilePhone = mobilePhone;
 	}
 
-	public List<IApplication> getApplications() {
-		return applications;
-	}
-
-	public void setApplications(List<IApplication> applications) {
-		this.applications = applications;
-	}
-
 	public String getQualification() {
 		return school;
 	}
@@ -270,17 +253,6 @@ public class RegisterBean {
 
 	public void setDegree(String degree) {
 		this.degree = degree;
-	}
-
-
-	public IQualificationBusinessService getQualificationService() {
-		return qualificationService;
-	}
-
-
-	public void setQualificationService(
-			IQualificationBusinessService qualificationService) {
-		this.qualificationService = qualificationService;
 	}
 
 
@@ -331,6 +303,6 @@ public class RegisterBean {
 		this.oldPassword = oldPassword;
 	}
 
-	
+
 }
 

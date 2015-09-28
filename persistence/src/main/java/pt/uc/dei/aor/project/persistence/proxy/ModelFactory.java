@@ -72,11 +72,6 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IApplication application() {
-		return new ApplicationProxy();
-	}
-
-	@Override
 	public IAnswer answer(IInterview interview, String answer, IScriptEntry entry) {
 		return new AnswerProxy(interview, answer, entry);
 	}
@@ -115,6 +110,11 @@ public class ModelFactory implements IModelFactory {
 	public IColor color(String page, String header, String content, String contentText, String contentTitle,
 			String headerText, String background) {
 		return new ColorProxy(page, header, content, contentText, contentTitle, headerText, background);
+	}
+
+	@Override
+	public IApplication application(String coverLetter, String sourceInfo, Date date, IUser candidate, IPosition position) {
+		return new ApplicationProxy(coverLetter, sourceInfo, date, candidate, position);
 	}
 
 

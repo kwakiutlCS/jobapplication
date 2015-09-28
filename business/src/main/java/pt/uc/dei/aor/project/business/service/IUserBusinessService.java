@@ -13,6 +13,7 @@ import pt.uc.dei.aor.project.business.exception.IllegalRoleChangeException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.util.Role;
 
@@ -22,8 +23,9 @@ public interface IUserBusinessService {
 	IUser createNewUser(String login, String name, String surname, String email, 
 			Collection<Role> roles) throws NoRoleException, DuplicatedUserException;
 	
-	IUser createNewCandidate(String login, String name, String surname, String email, 
-			String password) throws DuplicatedUserException;
+	IUser createNewCandidate(String login, String name, String surname,
+			String email, String encrypt, String address, String city,
+			String country, List<IQualification> qualifications, Part cv);
 	
 	IUser getUserByLogin(String login);
 
@@ -65,6 +67,8 @@ public interface IUserBusinessService {
 	void removeInterviewer(IUser user);
 
 	boolean interviewerHasCandidate(IUser user, String string);
+
+
 
 
 }
