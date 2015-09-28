@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IPosition;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.business.util.TechnicalArea;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
-import pt.uc.dei.aor.project.persistence.entity.WorkerEntity;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.proxy.PositionProxy;
 
 @Stateless
@@ -95,7 +95,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 
 
 	@Override
-	public List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter, IWorker user) {
+	public List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter, IUser user) {
 			CriteriaBuilder cb = em.getCriteriaBuilder();
 			CriteriaQuery<PositionEntity> q = cb.createQuery(PositionEntity.class);
 			Root<PositionEntity> position = q.from(PositionEntity.class);
@@ -104,8 +104,8 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			List<Predicate> criteriaPredicates = new ArrayList<>();
 			
 			if (user != null) {
-				Expression<WorkerEntity> userField = position.get("contactPerson");
-				WorkerEntity w = GenericPersistenceService.getEntity(user);
+				Expression<UserEntity> userField = position.get("contactPerson");
+				UserEntity w = GenericPersistenceService.getEntity(user);
 				criteriaPredicates.add(cb.equal(userField, w));
 			}
 			

@@ -2,13 +2,10 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.FacesComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
@@ -22,9 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IQualification;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
@@ -37,7 +34,7 @@ public class AccountBean implements Serializable {
 	private static final Logger logger = LoggerFactory.getLogger(AccountBean.class);
 
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IUserBusinessService workerService;
 	
 	@Inject
 	private IQualificationBusinessService qualificationService;
@@ -64,7 +61,7 @@ public class AccountBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
-		IWorker user = MetaUtils.getUser();
+		IUser user = MetaUtils.getUser();
 		login = user.getLogin();
 		name = user.getName();
 		surname = user.getSurname();
@@ -80,7 +77,7 @@ public class AccountBean implements Serializable {
 	
 	public void updatePassword() {
 		try {
-			IWorker user = MetaUtils.getUser();
+			IUser user = MetaUtils.getUser();
 			
 			user.setPassword(Encryptor.encrypt(password));
 			user = workerService.update(user, oldPassword);
@@ -96,7 +93,7 @@ public class AccountBean implements Serializable {
 	
 	public void updatePersonal() {
 		try {
-			IWorker user = MetaUtils.getUser();
+			IUser user = MetaUtils.getUser();
 			user.setLogin(login);
 			user.setName(name);
 			user.setSurname(surname);
@@ -111,7 +108,7 @@ public class AccountBean implements Serializable {
 	}
 	
 	public void updateExtra() {
-		IWorker user = MetaUtils.getUser();
+		IUser user = MetaUtils.getUser();
 		user.setAddress(address);
 		user.setCity(city);
 		user.setCountry(country);

@@ -31,21 +31,18 @@ public class ColorProxy implements IColor, IProxyToEntity<ColorEntity> {
 
 	@Override
 	public String getBackground() {
-		System.out.println("back "+entity.getBackground());
 		return entity.getBackground();
 	}
 
 
 	@Override
 	public String getContent() {
-		System.out.println("content "+entity.getContent());
 		return entity.getContent();
 	}
 
 
 	@Override
 	public String getHeader() {
-		System.out.println("header "+entity.getHeader());
 		return entity.getHeader();
 	}
 

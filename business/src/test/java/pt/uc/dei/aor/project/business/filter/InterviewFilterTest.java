@@ -5,22 +5,15 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
-import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.util.Role;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InterviewFilterTest {
@@ -31,8 +24,8 @@ public class InterviewFilterTest {
 	public void init() {
 		filter = new InterviewFilter();
 		
-		IWorker i1 = mock(IWorker.class);
-		IWorker i2 = mock(IWorker.class);
+		IUser i1 = mock(IUser.class);
+		IUser i2 = mock(IUser.class);
 		
 		filter.addInterviewerSet(i1);
 		filter.addInterviewerSet(i2);
@@ -43,8 +36,8 @@ public class InterviewFilterTest {
 	public void shouldAddInterviewerCorrectly() {
 		int size = filter.getInterviewerSets().size();
 		
-		IWorker i1 = mock(IWorker.class);
-		IWorker i2 = mock(IWorker.class);
+		IUser i1 = mock(IUser.class);
+		IUser i2 = mock(IUser.class);
 		
 		filter.addInterviewerSet(i1);
 		
@@ -59,7 +52,7 @@ public class InterviewFilterTest {
 	public void shouldDeleteInterviewerCorrectly() throws IllegalFilterParamException {
 		int size = filter.getInterviewerSets().size();
 		
-		IWorker i1 = mock(IWorker.class);
+		IUser i1 = mock(IUser.class);
 		filter.addInterviewerSet(i1);
 		filter.mergeInterviewers(1);
 		
@@ -100,12 +93,12 @@ public class InterviewFilterTest {
 	
 	@Test
 	public void shouldMergeInterviewerCorrectlyNoRepeated() throws IllegalFilterParamException {
-		IWorker i1 = mock(IWorker.class);
+		IUser i1 = mock(IUser.class);
 		filter.addInterviewerSet(i1);
 		
 		int size = filter.getInterviewerSets().size();
 		int counter = 0;
-		for (List<IWorker> workers : filter.getInterviewerSets()) {
+		for (List<IUser> workers : filter.getInterviewerSets()) {
 			counter += workers.size();
 		}
 		
@@ -119,7 +112,7 @@ public class InterviewFilterTest {
 	
 	@Test
 	public void shouldMergeInterviewerCorrectlyRepeated() throws IllegalFilterParamException {
-		IWorker i1 = mock(IWorker.class);
+		IUser i1 = mock(IUser.class);
 		
 		filter.addInterviewerSet(i1);
 		filter.mergeInterviewers(1);
@@ -127,7 +120,7 @@ public class InterviewFilterTest {
 		
 		int size = filter.getInterviewerSets().size();
 		int counter = 0;
-		for (List<IWorker> workers : filter.getInterviewerSets()) {
+		for (List<IUser> workers : filter.getInterviewerSets()) {
 			counter += workers.size();
 		}
 		
@@ -146,7 +139,7 @@ public class InterviewFilterTest {
 	
 	@Test
 	public void shouldSplitInterviewerCorrectly() throws IllegalFilterParamException {
-		IWorker i1 = mock(IWorker.class);
+		IUser i1 = mock(IUser.class);
 		filter.addInterviewerSet(i1);
 		
 		filter.mergeInterviewers(1);
@@ -179,7 +172,7 @@ public class InterviewFilterTest {
 	
 	@Test
 	public void shouldMergeAndSplitCorrectly() throws IllegalFilterParamException {
-		IWorker w = mock(IWorker.class);
+		IUser w = mock(IUser.class);
 		filter.addInterviewerSet(w);
 		
 		filter.mergeInterviewers(0);

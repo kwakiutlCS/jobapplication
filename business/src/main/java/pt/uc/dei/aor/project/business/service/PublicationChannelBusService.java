@@ -23,9 +23,12 @@ public class PublicationChannelBusService implements IPublicationChannelBusServi
 
 	@Override
 	public IPublicationChannel createNewPublicationChannel(String channel) {
-				IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
-				return pcPersistenceService.save(publicationChannel);
-		}
+		if (channel == null || channel.equals("")) return null;
+		if (pcPersistenceService.findByName(channel) != null) return null;
+		
+		IPublicationChannel publicationChannel = pcfactory.publicationChannel(channel);
+		return pcPersistenceService.save(publicationChannel);
+	}
 
 
 	@Override

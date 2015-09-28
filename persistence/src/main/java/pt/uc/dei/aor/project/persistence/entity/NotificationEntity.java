@@ -14,16 +14,16 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="worker_notification")
+@Table(name="notification")
 @NamedQueries({
-	@NamedQuery(name = "WorkerNotification.findNotificationsByWorker", 
-			query = "from WorkerNotificationEntity u where u.worker = :worker"),
-	@NamedQuery(name = "WorkerNotification.findUnreadByWorker", 
-		query = "from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
-	@NamedQuery(name = "WorkerNotification.findReadByWorker", 
-	query = "from WorkerNotificationEntity u where u.worker = :worker and u.read is TRUE"),
-	@NamedQuery(name = "WorkerNotification.countUnread", 
-	query = "select count(u) from WorkerNotificationEntity u where u.worker = :worker and u.read is FALSE"),
+	@NamedQuery(name = "Notification.findNotificationsByUser", 
+			query = "from NotificationEntity u where u.user = :user"),
+	@NamedQuery(name = "Notification.findUnreadByUser", 
+		query = "from NotificationEntity u where u.user = :user and u.read is FALSE"),
+	@NamedQuery(name = "Notification.findReadByUser", 
+	query = "from NotificationEntity u where u.user = :user and u.read is TRUE"),
+	@NamedQuery(name = "Notification.countUnread", 
+	query = "select count(u) from NotificationEntity u where u.user = :user and u.read is FALSE"),
 })
 public class NotificationEntity {
 	

@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.persistence.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -104,7 +105,7 @@ public class UserEntity {
 	private Set<QualificationEntity> qualifications;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name="role", indexes={@Index(columnList="workerentity_id")})
+	@CollectionTable(name="role", indexes={@Index(columnList="userentity_id")})
 	@Enumerated(EnumType.STRING)
 	@Column(name="role")
 	private Set<Role> roles;
@@ -117,14 +118,14 @@ public class UserEntity {
 	private Set<PositionEntity> positions;
 	
 	
-	@OneToMany(mappedBy="worker")
+	@OneToMany(mappedBy="user")
 	private Set<NotificationEntity> notification;
 	
 	@Column
 	private String cv;
 	
 	@OneToMany(mappedBy="candidate")
-	private List<ApplicationEntity> applications;
+	private Set<ApplicationEntity> applications;
 	
 	
 	
@@ -318,6 +319,18 @@ public class UserEntity {
 	
 	public void removeRole(Role role) {
 		roles.remove(role);
+	}
+
+	public List<PositionEntity> getPositions() {
+		return new ArrayList<>(positions);
+	}
+
+	public List<NotificationEntity> getNotification() {
+		return new ArrayList<>(notification);
+	}
+
+	public List<ApplicationEntity> getApplications() {
+		return new ArrayList<>(applications);
 	}
 	
 	

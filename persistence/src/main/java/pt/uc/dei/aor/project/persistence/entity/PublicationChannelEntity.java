@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Table(name="publication_channel")
 @NamedQueries({
 	@NamedQuery(name="publicationChannel.findAll", query="from PublicationChannelEntity u"),
-	@NamedQuery(name="publicationChannel.findByName", query="from PublicationChannelEntity u where u.channel like :i")
+	@NamedQuery(name="publicationChannel.findByName", 
+	query="from PublicationChannelEntity u where u.channel like :name"),
 })
 public class PublicationChannelEntity implements Comparable<PublicationChannelEntity> {
 	

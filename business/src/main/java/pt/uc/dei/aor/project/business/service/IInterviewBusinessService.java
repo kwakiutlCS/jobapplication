@@ -60,5 +60,6 @@ public interface IInterviewBusinessService {
 	Set<IInterview> findFutureInterviews(IApplication selectedApplication) throws AllPhasesCompletedException;
 
 	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
+
 	
 }

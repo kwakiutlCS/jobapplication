@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IQualification;
-import pt.uc.dei.aor.project.business.service.ICandidateBusinessService;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
@@ -32,7 +32,7 @@ public class RegisterBean {
 	private static final Logger logger = LoggerFactory.getLogger(RegisterBean.class);
 
 	@Inject
-	private ICandidateBusinessService candidateService;
+	private IUserBusinessService candidateService;
 
 	@Inject
 	private IQualificationBusinessService qualificationService;
@@ -63,7 +63,7 @@ public class RegisterBean {
 
 	@PostConstruct
 	public void init() {
-		ICandidate user = MetaUtils.getUser();
+		IUser user = MetaUtils.getUser();
 		login = user.getLogin();
 		name = user.getName();
 		surname = user.getSurname();
@@ -72,7 +72,7 @@ public class RegisterBean {
 		city = user.getCity();
 		country = user.getCountry();
 		phone = user.getPhone();
-		mobilePhone = user.getMobilePhone();
+		mobilePhone = user.getMobile();
 		
 	}
 
@@ -111,15 +111,26 @@ public class RegisterBean {
 	}
 
 
+<<<<<<< HEAD
+=======
+	public String register() throws DuplicatedUserException {
+
+
+		candidateService.createNewCandidate(login, name, surname, email, Encryptor.encrypt(password));
+
+		return "index.xhtml";
+	}
+
+>>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 	public void updateCandidate() throws DuplicatedUserException {
-		ICandidate user = MetaUtils.getUser();
+		IUser user = MetaUtils.getUser();
 		user.setName(name);
 		user.setSurname(surname);
 		user.setAddress(address);
 		user.setCity(city);
 		user.setCountry(country);
 		user.setPhone(phone);
-		user.setMobilePhone(mobilePhone);
+		user.setMobile(mobilePhone);
 	
 		choosenQualifications = user.getQualifications();
 		
@@ -191,11 +202,11 @@ public class RegisterBean {
 		this.surname = surname;
 	}
 
-	public ICandidateBusinessService getCandidateService() {
+	public IUserBusinessService getCandidateService() {
 		return candidateService;
 	}
 
-	public void setCandidateService(ICandidateBusinessService candidateService) {
+	public void setCandidateService(IUserBusinessService candidateService) {
 		this.candidateService = candidateService;
 	}
 

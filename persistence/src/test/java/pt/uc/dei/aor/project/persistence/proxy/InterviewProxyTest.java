@@ -4,22 +4,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import pt.uc.dei.aor.project.business.model.IApplication;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
-import pt.uc.dei.aor.project.persistence.entity.ScriptEntryEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 
@@ -48,8 +42,6 @@ public class InterviewProxyTest {
 	
 	@Test
 	public void interviewForTommorrowShouldBeEditable() {
-		IApplication application = new ApplicationProxy();
-		
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, 1);
 		

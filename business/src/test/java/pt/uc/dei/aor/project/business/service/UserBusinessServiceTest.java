@@ -3,9 +3,9 @@ package pt.uc.dei.aor.project.business.service;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.eq;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,13 +23,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.persistence.IWorkerPersistenceService;
+import pt.uc.dei.aor.project.business.model.IUser;
+import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.Role;
 
 @RunWith(MockitoJUnitRunner.class)
-public class WorkerBusinessServiceTest {
+public class UserBusinessServiceTest {
 
 	@Mock
 	private EmailUtil emailUtil;
@@ -38,10 +38,10 @@ public class WorkerBusinessServiceTest {
 	private IModelFactory factory;
 	
 	@Mock
-	private IWorkerPersistenceService workerEjb;
+	private IUserPersistenceService userEjb;
 	
 	@Mock
-	private IWorker iWorker;
+	private IUser IUser;
 	
 	@InjectMocks
 	UserBusinessService ejb;
@@ -49,16 +49,16 @@ public class WorkerBusinessServiceTest {
 	@Test
 	public void shouldCallCorrectMethodWhenFindUserByLogin() {
 		String login = "login";
-		ejb.getWorkerByLogin(login);
+		ejb.getUserByLogin(login);
 		
-		verify(workerEjb).getWorkerByLogin(login);
+		verify(userEjb).getUserByLogin(login);
 	}
 	
 	@Test
 	public void shouldCallCorrectMethodWhenDeletingUser() {
-		ejb.deleteWorker(iWorker);
+		ejb.deleteUser(IUser);
 		
-		verify(workerEjb).delete(iWorker);
+		verify(userEjb).delete(IUser);
 	}
 	
 	@Test
@@ -71,14 +71,14 @@ public class WorkerBusinessServiceTest {
 		List<Role> roles = new ArrayList<>();
     	roles.add(Role.ADMIN);
     	
-		IWorker worker = factory.worker("other", email, password, name, surname, roles);
-		when(factory.worker(eq(login), eq(email), Mockito.anyString(), eq(name), eq(surname), eq(roles)))
+		IUser worker = factory.user("other", email, password, name, surname, roles);
+		when(factory.user(eq(login), eq(email), Mockito.anyString(), eq(name), eq(surname), eq(roles)))
 			.thenReturn(worker);
 		
-		ejb.createNewWorker(login, name, surname, email, roles);
+		ejb.createNewUser(login, name, surname, email, roles);
 		
-		verify(factory).worker(eq(login), eq(email), Mockito.anyString(), eq(name), eq(surname), eq(roles));
-		verify(workerEjb).save(worker);
+		verify(factory).user(eq(login), eq(email), Mockito.anyString(), eq(name), eq(surname), eq(roles));
+		verify(userEjb).save(worker);
 	}
 	
 	@Test(expected=NoRoleException.class)
@@ -90,10 +90,10 @@ public class WorkerBusinessServiceTest {
 		String password = "password";
 		List<Role> roles = new ArrayList<>();
     	
-		IWorker worker = factory.worker("other", email, password, name, surname, roles);
-		when(factory.worker(login, email, password, name, surname, roles)).thenReturn(worker);
+		IUser worker = factory.user("other", email, password, name, surname, roles);
+		when(factory.user(login, email, password, name, surname, roles)).thenReturn(worker);
 		
-		ejb.createNewWorker(login, name, surname, email, roles);
+		ejb.createNewUser(login, name, surname, email, roles);
 	}
 	
 	@Test(expected=DuplicatedUserException.class)
@@ -105,13 +105,13 @@ public class WorkerBusinessServiceTest {
 		String password = "password";
 		List<Role> roles = new ArrayList<>(Arrays.asList(new Role[]{Role.ADMIN}));
     	
-		IWorker worker = factory.worker("other", email, password, name, surname, roles);
-		when(factory.worker(login, email, password, name, surname, roles)).thenReturn(worker);
-		when(workerEjb.findWorkerByEmailOrLogin(email, login)).thenReturn(true);
+		IUser worker = factory.user("other", email, password, name, surname, roles);
+		when(factory.user(login, email, password, name, surname, roles)).thenReturn(worker);
+		when(userEjb.findUserByEmailOrLogin(email, login)).thenReturn(true);
 		
-		ejb.createNewWorker(login, name, surname, email, roles);
+		ejb.createNewUser(login, name, surname, email, roles);
 		
-		verify(workerEjb).findWorkerByEmailOrLogin(email, login);
+		verify(userEjb).findUserByEmailOrLogin(email, login);
 	}
 	
 	@Test
@@ -123,13 +123,13 @@ public class WorkerBusinessServiceTest {
 		String password = "password";
 		List<Role> roles = new ArrayList<>(Arrays.asList(new Role[]{Role.ADMIN}));
     	
-		IWorker worker = factory.worker("other", email, password, name, surname, roles);
-		when(factory.worker(login, email, password, name, surname, roles)).thenReturn(worker);
-		when(workerEjb.findWorkerByEmailOrLogin(email, login)).thenReturn(false);
+		IUser worker = factory.user("other", email, password, name, surname, roles);
+		when(factory.user(login, email, password, name, surname, roles)).thenReturn(worker);
+		when(userEjb.findUserByEmailOrLogin(email, login)).thenReturn(false);
 		
-		ejb.createNewWorker(login, name, surname, email, roles);
+		ejb.createNewUser(login, name, surname, email, roles);
 		
-		verify(workerEjb).findWorkerByEmailOrLogin(email, login);
+		verify(userEjb).findUserByEmailOrLogin(email, login);
 	}
 	
 	@Test
@@ -141,11 +141,11 @@ public class WorkerBusinessServiceTest {
 		String password = "password";
 		List<Role> roles = new ArrayList<>(Arrays.asList(new Role[]{Role.ADMIN}));
     	
-		IWorker worker = factory.worker("other", email, password, name, surname, roles);
-		when(factory.worker(login, email, password, name, surname, roles)).thenReturn(worker);
-		when(workerEjb.save(worker)).thenThrow(new EJBException());
+		IUser worker = factory.user("other", email, password, name, surname, roles);
+		when(factory.user(login, email, password, name, surname, roles)).thenReturn(worker);
+		when(userEjb.save(worker)).thenThrow(new EJBException());
 		
-		assertThat(ejb.createNewWorker(login, name, surname, email, roles), is(equalTo(null)));
+		assertThat(ejb.createNewUser(login, name, surname, email, roles), is(equalTo(null)));
 		
 	}
 	
@@ -153,7 +153,7 @@ public class WorkerBusinessServiceTest {
 	@Test
 	public void shouldCallCorrectMethodWhenListingUsers() {
 		ejb.findAllUsers();
-		verify(workerEjb).findAllUsers();
+		verify(userEjb).findAllUsers();
 	}
 	
 	@Test
@@ -162,29 +162,24 @@ public class WorkerBusinessServiceTest {
 		assertThat(roles.size(), is(equalTo(3)));
 	}
 	
-	@Test
-	public void shouldCallCorrectMethodWhenCreateSU() {
-		ejb.createSuperUser();
-		verify(workerEjb).createSuperUser();
-	}
 	
 	@Test
 	public void shouldCallCorrectMethodWhenFindAllInterviewers() {
 		ejb.findAllInterviewers();
-		verify(workerEjb).findAllInterviewers();
+		verify(userEjb).findAllInterviewers();
 	}
 	
 	@Test
 	public void shouldCallCorrectMethodWhenFindAllManagers() {
 		ejb.findAllManagers();
-		verify(workerEjb).findAllManagers();
+		verify(userEjb).findAllManagers();
 	}
 	
 	@Test
 	public void shouldCallCorrectMethodWhenFindUserByEmail() {
 		String email = "email";
 		
-		ejb.getWorkerByEmail(email);
-		verify(workerEjb).getWorkerByEmail(email);
+		ejb.getUserByEmail(email);
+		verify(userEjb).findUserByEmail(email);
 	}
 }

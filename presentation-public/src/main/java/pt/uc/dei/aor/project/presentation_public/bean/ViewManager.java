@@ -12,8 +12,8 @@ import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 
-import pt.uc.dei.aor.project.business.model.ICandidate;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
@@ -63,7 +63,7 @@ public class ViewManager implements Serializable {
 		String redirect = "";
 		
 		//get Candidate
-		ICandidate candidate = MetaUtils.getUser();
+		IUser candidate = MetaUtils.getUser();
 		//get Position applying for
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
@@ -91,7 +91,7 @@ public class ViewManager implements Serializable {
 		else{
 
 			//get Candidate
-			ICandidate candidate = MetaUtils.getUser();
+			IUser candidate = MetaUtils.getUser();
 			//get Position applying for
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
@@ -107,7 +107,7 @@ public class ViewManager implements Serializable {
 		}
 	}
 
-	public boolean duplicateApplication(ICandidate candidate, IPosition position){
+	public boolean duplicateApplication(IUser candidate, IPosition position){
 
 		boolean duplicateApplication = false;
 

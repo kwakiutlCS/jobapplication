@@ -6,14 +6,14 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 
 public class MetaUtils {
 	
-	public static IWorker getUser() {
+	public static IUser getUser() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-		return (IWorker) request.getSession().getAttribute("user");	
+		return (IUser) request.getSession().getAttribute("user");	
 	}
 	
 	public static void setMsg(String text, Severity severity) {

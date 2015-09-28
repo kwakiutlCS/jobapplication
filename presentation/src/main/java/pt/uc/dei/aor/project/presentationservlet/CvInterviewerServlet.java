@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pt.uc.dei.aor.project.business.model.IWorker;
-import pt.uc.dei.aor.project.business.service.IWorkerBusinessService;
+import pt.uc.dei.aor.project.business.model.IUser;
+import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 
 @WebServlet("/interview/cv/*")
 public class CvInterviewerServlet extends HttpServlet {
@@ -24,7 +24,7 @@ public class CvInterviewerServlet extends HttpServlet {
 			Paths.get(System.getProperty("jboss.server.data.dir")+"/jobapplication/uploads/cv");
        
 	@Inject
-	private IWorkerBusinessService workerService;
+	private IUserBusinessService userService;
 	
     public CvInterviewerServlet() {
         super();
@@ -38,10 +38,10 @@ public class CvInterviewerServlet extends HttpServlet {
 		String[] fields = filename.split("/");
 		if (fields.length != 2) return; 
 				
-		IWorker user = (IWorker) request.getSession().getAttribute("user");
+		IUser user = (IUser) request.getSession().getAttribute("user");
 		
 		if (user != null) {
-			if (!workerService.interviewerHasCandidate(user, fields[0])) return;
+			if (!userService.interviewerHasCandidate(user, fields[0])) return;
 			
 			Path path = DOWNLOADS.resolve(Paths.get(filename));
 				

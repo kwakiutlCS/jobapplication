@@ -87,7 +87,7 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public INotification workerNotification(String msg, IUser worker, String type) {
+	public INotification notification(String msg, IUser worker, String type) {
 		return new NotificationProxy(msg, worker, type);
 	}
 

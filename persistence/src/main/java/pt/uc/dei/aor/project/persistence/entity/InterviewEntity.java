@@ -56,8 +56,6 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	@JoinColumn(nullable=false)
 	private ApplicationEntity application;
 	
-	@Column
-	private String classification;
 	
 	@Column(nullable=false)
 	private Date date;
@@ -66,7 +64,7 @@ public class InterviewEntity implements Comparable<InterviewEntity> {
 	private Set<UserEntity> interviewers;
 
 	@OneToMany(mappedBy="interview")
-	private List<AnswerEntity> answers;
+	private Set<AnswerEntity> answers;
 	
 	
 	// getters and setters

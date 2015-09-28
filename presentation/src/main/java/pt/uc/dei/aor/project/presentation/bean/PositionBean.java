@@ -3,12 +3,10 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,7 +18,7 @@ import org.slf4j.LoggerFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IScript;
-import pt.uc.dei.aor.project.business.model.IWorker;
+import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.business.util.Localization;
 import pt.uc.dei.aor.project.business.util.PositionState;
@@ -42,7 +40,7 @@ public class PositionBean implements Serializable {
 	private int vacancies = 1; 
 	private Date closingDate;
 	private int sla = 1;
-	private IWorker contactPerson;
+	private IUser contactPerson;
 	private String company;
 	private String description;
 	private PositionState state;
@@ -145,12 +143,12 @@ public class PositionBean implements Serializable {
 	}
 
 
-	public IWorker getContactPerson() {
+	public IUser getContactPerson() {
 		return contactPerson;
 	}
 
 
-	public void setContactPerson(IWorker contactPerson) {
+	public void setContactPerson(IUser contactPerson) {
 		this.contactPerson = contactPerson;
 	}
 
