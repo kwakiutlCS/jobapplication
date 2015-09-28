@@ -2,6 +2,7 @@ package pt.uc.dei.aor.project.presentation_public.bean;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -107,12 +108,11 @@ public class RegisterBean implements Serializable {
 
 
 	public void addQualification() {
-
+		if (choosenQualifications == null) choosenQualifications = new ArrayList<>();
 		choosenQualifications.add(qualificationService.addQualification(school, degree));
 	}
 
 	public void removeQualification(IQualification qualification){
-
 		choosenQualifications.remove(qualification);
 	}
 
