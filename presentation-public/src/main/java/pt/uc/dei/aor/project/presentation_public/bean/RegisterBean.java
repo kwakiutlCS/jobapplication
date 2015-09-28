@@ -106,18 +106,15 @@ public class RegisterBean implements Serializable {
 	}
 
 
-//	public void addQualification() {
-//		
-//		
-//		
-//		qualificationService.addQualification(IUser user, school, degree);
-//	}
+	public void addQualification() {
 
-	public void removeQualification(IQualification qualification) {
-		qualificationService.removeQualification(MetaUtils.getUser(), qualification);
+		choosenQualifications.add(qualificationService.addQualification(school, degree));
 	}
 
+	public void removeQualification(IQualification qualification){
 
+		choosenQualifications.remove(qualification);
+	}
 
 	public void updateCandidate() throws DuplicatedUserException {
 		IUser user = MetaUtils.getUser();
