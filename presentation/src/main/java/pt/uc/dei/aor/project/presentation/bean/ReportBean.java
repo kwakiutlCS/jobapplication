@@ -40,6 +40,9 @@ public class ReportBean implements Serializable {
 	private DataModel<String, Long> rejectedCandidatesModel;
 	private boolean rejectedCandidatesVisible;
 	
+	private DataModel<String, Long> interviewReportModel;
+	private boolean interviewReportVisible;
+	
 	private DataModel<String, Long> interviewTimeModel;
 	private boolean interviewTimeVisible;
 	
@@ -66,6 +69,13 @@ public class ReportBean implements Serializable {
 		setRejectedCandidatesModel(reportService.generateRejectedCandidatesReport(period));
 		setRejectedCandidatesVisible(true);
 		chart.createChart(rejectedCandidatesModel, "Applications", "", "", "Applications");
+	}
+	
+	
+	public void generateInterviewReport() {
+		setInterviewReportModel(reportService.generateInterviewReport(period));
+		setInterviewReportVisible(true);
+		chart.createChart(interviewReportModel, "Interviews", "", "", "Interviews");
 	}
 	
 	
@@ -165,6 +175,22 @@ public class ReportBean implements Serializable {
 
 	public void setRejectedCandidatesVisible(boolean rejectedCandidatesVisible) {
 		this.rejectedCandidatesVisible = rejectedCandidatesVisible;
+	}
+
+	public DataModel<String, Long> getInterviewReportModel() {
+		return interviewReportModel;
+	}
+
+	public void setInterviewReportModel(DataModel<String, Long> interviewReportModel) {
+		this.interviewReportModel = interviewReportModel;
+	}
+
+	public boolean isInterviewReportVisible() {
+		return interviewReportVisible;
+	}
+
+	public void setInterviewReportVisible(boolean interviewReportVisible) {
+		this.interviewReportVisible = interviewReportVisible;
 	}
 
 	

@@ -31,4 +31,6 @@ public interface IInterviewPersistenceService {
 	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
 
 	List<IInterview> findInterviewsByApplication(IApplication application);
+
+	List<IInterview> findInterviewsByClosedPositionAndDate(Date startDate);
 }

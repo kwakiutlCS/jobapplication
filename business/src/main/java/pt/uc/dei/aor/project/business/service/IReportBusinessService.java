@@ -15,6 +15,8 @@ public interface IReportBusinessService {
 
 	DataModel<String, Long> generateRejectedCandidatesReport(int period);
 
+	DataModel<String, Long> generateInterviewReport(int period);
+
 	
 	
 }

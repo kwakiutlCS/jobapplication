@@ -16,6 +16,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
 import pt.uc.dei.aor.project.business.util.DataModel;
@@ -46,6 +47,9 @@ public class ReportBusinessService implements IReportBusinessService {
 	
 	@Inject 
 	private IAnswerPersistenceService answerPersistence;
+	
+	@Inject
+	private IInterviewPersistenceService interviewPersistence;
 
 	
 	@Override
@@ -226,5 +230,69 @@ public class ReportBusinessService implements IReportBusinessService {
 		model.addPoint(new DataPoint<String, Long>("Interview analysis", interviewed));
 		
 		return model;
+	}
+
+	@Override
+	public DataModel<String, Long> generateInterviewReport(int period) {
+		List<IApplication> applications;
+		Date startDate;
+		Calendar cal = Calendar.getInstance();
+		
+		if (period == 3) {
+			cal.add(Calendar.MONTH, -3);
+		}
+		else if (period == 12) {
+			cal.add(Calendar.YEAR, -1);
+		}
+		else {
+			cal.add(Calendar.YEAR, -1000); // all applications
+		}
+		
+		startDate = cal.getTime();
+		
+		List<IInterview> interviews = interviewPersistence.
+				findInterviewsByClosedPositionAndDate(startDate);
+		
+		long refused = 0;
+		long nextPhase = 0;
+		long accepted = 0;
+		long missed = 0;
+		
+		for (IInterview i : interviews) {
+			List<IAnswer> answers = answerPersistence.findAnswersByInterview(i);
+			if (answers.size() <= 1) missed++;
+			else {
+				if (isFinalInterview(i)) {
+					if (i.getApplication().isRefused()) refused++;
+					else accepted++;
+				}
+				else nextPhase++;
+			}
+		}
+		
+		DataModel<String, Long> model = new DataModel<>();
+		model.addPoint(new DataPoint<String, Long>("Application rejected", refused));
+		model.addPoint(new DataPoint<String, Long>("Application accepted", accepted));
+		model.addPoint(new DataPoint<String, Long>("Proceed next phase", nextPhase));
+		model.addPoint(new DataPoint<String, Long>("Interview unattended", missed));
+		
+		return model;
+	}
+	
+	
+	private boolean isFinalInterview(IInterview interview) {
+		IApplication app = interview.getApplication();
+		
+		List<IInterview> interviews = app.getInterviews();
+		
+		Calendar interviewCal = Calendar.getInstance();
+		interviewCal.setTime(interview.getDateObject());
+		Calendar otherCal = Calendar.getInstance();
+		for (IInterview i : interviews) {
+			otherCal.setTime(i.getDateObject());
+			if (otherCal.after(interviewCal)) return true;
+		}
+		
+		return false;
 	}
 }

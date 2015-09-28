@@ -86,6 +86,25 @@
 		</h:form>
 		
 		<h:form>
+			<p>Interviews results report</p>
+			<p:selectOneMenu value="#{reportBean.period}">
+			<f:selectItem itemLabel="Last 3 months" itemValue="3" />
+			<f:selectItem itemLabel="Last year" itemValue="12" />
+			<f:selectItem itemLabel="All" itemValue="-1" />
+			</p:selectOneMenu>
+			<p:commandButton value="Generate report" action="#{reportBean.generateInterviewReport}" 
+			update="@form" />
+			
+			<h:panelGroup rendered="#{reportBean.interviewReportVisible}">
+				<p:dataTable value="#{reportBean.interviewReportModel.points}" var="p">
+					<p:column>#{p.x}</p:column>
+					<p:column>#{p.y}</p:column>
+				</p:dataTable>
+				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+			</h:panelGroup>
+		</h:form>
+		
+		<h:form>
 			<p>Number of spontaneous applications by date period</p>
 			<p:selectOneMenu value="#{reportBean.period}">
 			<f:selectItem itemLabel="Monthly" itemValue="1" />

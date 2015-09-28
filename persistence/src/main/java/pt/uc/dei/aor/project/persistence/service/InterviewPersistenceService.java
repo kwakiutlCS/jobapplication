@@ -21,6 +21,7 @@ import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
+import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
@@ -252,6 +253,46 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		
 		List<InterviewEntity> entities = query.getResultList();
 		
+		List<IInterview> proxies = new ArrayList<>();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
+	}
+
+
+	@Override
+	public List<IInterview> findInterviewsByClosedPositionAndDate(Date startDate) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<InterviewEntity> q = cb.createQuery(InterviewEntity.class);
+		Root<InterviewEntity> interview = q.from(InterviewEntity.class);
+		q.select(interview);
+		
+		
+		// date
+		Expression<Date> dateExpression = interview.get("date");
+		Predicate criteriaPredicate = cb.greaterThanOrEqualTo(dateExpression, startDate);
+		
+		// closed
+		Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
+		criteriaPredicate = cb.and(criteriaPredicate, cb.equal(interview.get("application"), 
+				application.get("id")));
+		
+		Root<PositionEntity> position = q.from(PositionEntity.class);
+		criteriaPredicate = cb.and(criteriaPredicate, cb.equal(application.get("position"), 
+				position.get("id")));
+		criteriaPredicate = cb.and(criteriaPredicate, cb.equal(position.get("state"), 
+				PositionState.CLOSED));
+		
+		
+		q.where(criteriaPredicate);
+		
+		
+		TypedQuery<InterviewEntity> query = em.createQuery(q);
+		
+		List<InterviewEntity> entities = query.getResultList();
 		List<IInterview> proxies = new ArrayList<>();
 		
 		for (InterviewEntity ie : entities) {
