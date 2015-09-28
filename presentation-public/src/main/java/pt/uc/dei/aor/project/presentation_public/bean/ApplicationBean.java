@@ -22,8 +22,6 @@ public class ApplicationBean implements Serializable {
 	@Inject
 	private IApplicationBusinessService applicationService;
 
-	
-	
 	private String coverLetter;
 	private String sourceInfo;
 	private Date date;

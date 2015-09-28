@@ -1,20 +1,12 @@
 package pt.uc.dei.aor.project.business.startup;
 
-<<<<<<< HEAD
-import javax.ejb.Singleton;
-=======
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
->>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
-<<<<<<< HEAD
-
-
-=======
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +17,12 @@ import pt.uc.dei.aor.project.business.service.IPublicationChannelBusService;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
 import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 import pt.uc.dei.aor.project.business.util.Role;
->>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
+
 
 @Singleton
 @Startup
 public class StartUpEjb {
-<<<<<<< HEAD
-=======
+
 	
 	private static Logger logger = LoggerFactory.getLogger(StartUpEjb.class);
 	
@@ -44,10 +35,7 @@ public class StartUpEjb {
 	@Inject
 	private IQualificationBusinessService qualificationEjb;
 	
->>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 
-<<<<<<< HEAD
-=======
 	@Inject
 	private IColorBusinessService colorEjb;
 	
@@ -80,6 +68,5 @@ public class StartUpEjb {
 		colorEjb.save("public", "red", "white", "black", "green", "white", "grey");
 
 	
->>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 }
 }

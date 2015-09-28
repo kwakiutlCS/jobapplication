@@ -111,8 +111,6 @@ public class RegisterBean {
 	}
 
 
-<<<<<<< HEAD
-=======
 	public String register() throws DuplicatedUserException {
 
 
@@ -121,7 +119,6 @@ public class RegisterBean {
 		return "index.xhtml";
 	}
 
->>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 	public void updateCandidate() throws DuplicatedUserException {
 		IUser user = MetaUtils.getUser();
 		user.setName(name);
@@ -145,10 +142,10 @@ public class RegisterBean {
 	
 	public void updatePassword() {
 		try {
-			ICandidate user = MetaUtils.getUser();
+			IUser user = MetaUtils.getUser();
 			
 			user.setPassword(Encryptor.encrypt(password));
-			user = candidateService.updatePassword(user, oldPassword);
+			user = candidateService.update(user, oldPassword);
 			
 			password = null;
 			oldPassword = null;
