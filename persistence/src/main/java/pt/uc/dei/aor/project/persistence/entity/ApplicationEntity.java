@@ -77,6 +77,19 @@ public class ApplicationEntity {
 	private JobProposalEntity proposal;
 
 	
+	public ApplicationEntity(String coverLetter, String sourceInfo, Date date, UserEntity candidate,
+			PositionEntity position) {
+		this.coverLetter = coverLetter;
+		this.sourceInfo = sourceInfo;
+		this.date = date;
+		this.candidate = candidate;
+		this.position = position;
+	}
+
+	public ApplicationEntity() {
+	}
+
+	
 	public SortedSet<InterviewEntity> getInterviews() {
 		return new TreeSet<>(interviews);
 	}

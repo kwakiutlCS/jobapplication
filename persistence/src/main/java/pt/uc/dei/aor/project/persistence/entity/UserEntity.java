@@ -64,6 +64,23 @@ public class UserEntity {
 
 
 
+	public UserEntity(String login, String email, String password, String name, String surname, String address,
+			String city, String country, List<QualificationEntity> qualifications, String cv) {
+		this.login = login;
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.address = address;
+		this.city = city;
+		this.country = country;
+		this.qualifications = new HashSet<>();
+		this.qualifications.addAll(qualifications);
+		this.cv = cv;
+	}
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected long id;

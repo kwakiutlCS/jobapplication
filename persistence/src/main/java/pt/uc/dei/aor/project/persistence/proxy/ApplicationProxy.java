@@ -16,22 +16,31 @@ import pt.uc.dei.aor.project.persistence.entity.ApplicationEntity;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
 import pt.uc.dei.aor.project.persistence.entity.JobProposalEntity;
 import pt.uc.dei.aor.project.persistence.entity.PositionEntity;
+import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.service.GenericPersistenceService;
 
 public class ApplicationProxy implements IApplication, IProxyToEntity<ApplicationEntity> {
 
 	private ApplicationEntity entity;
-	
+
 	public ApplicationProxy(ApplicationEntity entity) {
 		this.entity = entity != null ? entity : new ApplicationEntity();
 	}
 
 
+	public ApplicationProxy(String coverLetter, String sourceInfo, Date date, IUser candidate, IPosition position) {
+		
+		UserEntity candidateEntity = GenericPersistenceService.getEntity(candidate);
+		
+		PositionEntity positionEntity = GenericPersistenceService.getEntity(position);
+					
+		this.entity = new ApplicationEntity(coverLetter, sourceInfo, date, candidateEntity, positionEntity);
+	}
+
 	public ApplicationProxy() {
 		this(null);
 	}
 
-		
 	@Override
 	public ApplicationEntity getEntity() {
 		return entity;
@@ -47,7 +56,7 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	@Override
 	public IPosition getPosition() {
 		PositionEntity position = entity.getPosition();
-		
+
 		return new PositionProxy(position);
 	}
 
@@ -56,11 +65,11 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public List<IInterview> getInterviews() {
 		List<IInterview> proxies = new ArrayList<>();
 		SortedSet<InterviewEntity> entities = entity.getInterviews();
-		
+
 		for (InterviewEntity ie : entities) {
 			proxies.add(new InterviewProxy(ie));
 		}
-		
+
 		return proxies;
 	}
 
@@ -103,7 +112,7 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public boolean reachedAllPhases() {
 		int scripts = getPosition().getScripts().size();
 		int interviews = getInterviews().size();
-		
+
 		if (interviews < scripts) return false;
 		return true;
 	}
@@ -153,8 +162,8 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public boolean isProposed() {
 		return isAccepted() || isPropositionSent() || isRefusedByCandidate();		
 	};
-	
-	
+
+
 	@Override
 	public void refuse() {
 		entity.setRefused(true);
@@ -171,9 +180,10 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public ProposalSituation getProposition() {
 		JobProposalEntity p = entity.getProposition();
 		if (p == null) return null;
-		
+
 		return p.getSituation();
 	}
+
 
 
 	@Override
@@ -181,5 +191,4 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		entity.setCv(filename);
 	}
 
-	
 }

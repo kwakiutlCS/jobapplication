@@ -10,6 +10,7 @@ import javax.inject.Named;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
+import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 
 
 @Named
@@ -22,6 +23,10 @@ public class ApplicationBean implements Serializable {
 	@Inject
 	private IApplicationBusinessService applicationService;
 
+	@Inject
+	private IPositionBusinessService positionService;
+	
+	
 	private String coverLetter;
 	private String sourceInfo;
 	private Date date;
@@ -29,12 +34,24 @@ public class ApplicationBean implements Serializable {
 	private boolean refused;
 	private IUser candidate;
 	private IPosition position;
+	private long selectedPositionId;
 
 
 	public ApplicationBean() {
 	}
 	
-
+	public void createApplication(){
+		
+		
+		applicationService.createApplication(coverLetter, sourceInfo, candidate, position);
+		
+	}
+	
+	public void findPosition(){
+		position =  positionService.findPositionById(selectedPositionId);
+	}
+	
+	
 	public String getCoverLetter() {
 		return coverLetter;
 	}

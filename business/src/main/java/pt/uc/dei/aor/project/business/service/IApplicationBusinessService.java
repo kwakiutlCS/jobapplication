@@ -12,6 +12,8 @@ import pt.uc.dei.aor.project.business.model.IUser;
 
 
 public interface IApplicationBusinessService {
+	
+	IApplication createApplication(String coverLetter, String sourceInfo, IUser candidate, IPosition position);
 
 	IApplication findApplicationById(long id);
 
