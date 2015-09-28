@@ -19,7 +19,7 @@ import pt.uc.dei.aor.project.business.model.IUser;
 public class CvServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Path DOWNLOADS = 
-			Paths.get(System.getProperty("jboss.server.data.dir")+"/jobapplication/uploads/cv");
+			Paths.get(System.getProperty("jboss.server.data.dir")+"/jobapplication/uploads/cv/users");
        
 	
     public CvServlet() {

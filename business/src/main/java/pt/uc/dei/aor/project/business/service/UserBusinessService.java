@@ -205,7 +205,7 @@ public class UserBusinessService implements IUserBusinessService {
 	@Override
 	public void uploadCV(IUser user, Part cv) throws IOException {
 		String filename = cv.getSubmittedFileName();
-		String dir = "cv/"+user.getLogin();
+		String dir = "cv/users/"+user.getLogin();
 		
 		upload.delete(dir);
 		upload.upload(dir, filename, cv.getInputStream());

@@ -49,6 +49,9 @@ public class ApplicationEntity {
 	private String sourceInfo; 
 	
 	@Column(nullable=false)
+	private String cv;
+	
+	@Column(nullable=false)
 	private Date date;
 	
 	@Column(nullable=false)
