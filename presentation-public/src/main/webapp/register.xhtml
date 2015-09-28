@@ -6,14 +6,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<ui:define name="title">Index</ui:define>
+	<ui:define name="title">Register</ui:define>
 
 	<ui:define name="content">
 
+		<h:form>
 
-		<p:panel header="Personal Details">
-			<h:form>
-
+			<p:panel header="Personal Details">
 				<p:outputLabel value="Login" for="login" />
 				<p></p>
 				<p:inputText id="login" value="#{register.login}" required="true" />
@@ -41,17 +40,10 @@
 				<p></p>
 				<p:password id="confirm" value="#{register.password}"
 					required="true" />
-				<p></p>
-				<p:commandButton action="#{register.register}" value="Enter"
-					update="@form :globalMessages" />
-				<p></p>
-				<h:link value="Cancel" outcome="index" />
+			</p:panel>
 
-			</h:form>
-		</p:panel>
 
-		<p:panel header="Contact Details">
-			<h:form>
+			<p:panel header="Contact Details">
 				<h:panelGrid columns="2">
 
 					<p:outputLabel value="Address" for="address" />
@@ -72,17 +64,11 @@
 						value="#{registerBean.mobilePhone}" />
 
 				</h:panelGrid>
+			</p:panel>
 
-				<p:commandButton value="Submit"
-					actionListener="#{registerBean.updateCandidate()}" />
-			</h:form>
-		</p:panel>
 
-		<p:panel header="Qualifications">
-			<h:form>
-				<p:messages />
+			<p:panel header="Qualifications">
 				<h:panelGrid columns="1">
-
 					<h:panelGroup id="qualificationsList">
 						<ui:repeat value="#{loginBean.user.qualifications}"
 							var="qualification">
@@ -116,51 +102,18 @@
 						action="#{registerBean.addQualification}" update="@form" />
 
 				</h:panelGrid>
+			</p:panel>
 
-				<p:commandButton value="Save changes"
-					actionListener="#{registerBean.updateCandidate()}" />
-			</h:form>
-		</p:panel>
-
-		<p:panel header="Curriculum Vitae">
-			<h:form enctype="multipart/form-data">
-				<p:messages />
-				<h:panelGrid columns="1">
-					<h:inputFile value="#{registerBean.cv}" required="true"
-						id="fileUploader">
-						<f:ajax listener="#{registerBean.upload}" render=":globalMessages" />
-					</h:inputFile>
-
-				</h:panelGrid>
+			<p:panel>
+				<p:commandButton action="#{register.register}" value="Enter"
+					update="@form :globalMessages" />
 				<p></p>
-				<p:commandButton value="Send"
-					actionListener="#{registerBean.updateCandidate()}" />
-			</h:form>
-		</p:panel>
-
-		<h:form>
-			<p:editor id="editor" widgetVar="editorWidget"
-				value="#{applicationBean.coverLetter}" width="600" />
-
-			<h:panelGrid columns="2" style="margin-top: 10px">
-				<p:commandButton value="Submit" update="display"
-					oncomplete="PF('letterDlg').show()" icon="ui-icon-disk" />
-
-				<p:commandButton value="Clear" type="button"
-					onclick="PF('editorWidget').clear();" icon="ui-icon-close" />
-			</h:panelGrid>
-
-			<p:dialog header="Cover Letter Preview" widgetVar="letterDlg"
-				showEffect="fade" hideEffect="fade">
-				<h:outputText id="display" value="#{applicationBean.coverLetter}"
-					escape="false" />
-			</p:dialog>
-
+				<h:link value="Cancel" outcome="index" />
+			</p:panel>
 		</h:form>
 
 		<p:panel header="Curriculum Vitae">
 			<h:form enctype="multipart/form-data">
-				<p:messages />
 				<h:panelGrid columns="1">
 					<h:inputFile value="#{registerBean.cv}" required="true"
 						id="fileUploader">
@@ -168,13 +121,8 @@
 					</h:inputFile>
 
 				</h:panelGrid>
-				<p></p>
-				<p:commandButton value="Send"
-					actionListener="#{registerBean.updateCandidate()}" />
 			</h:form>
 		</p:panel>
-
-
 
 	</ui:define>
 </ui:composition>

@@ -1,6 +1,7 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -25,7 +26,10 @@ import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 @Named
 @ViewScoped
-public class RegisterBean {
+public class RegisterBean implements Serializable {
+
+
+	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = LoggerFactory.getLogger(RegisterBean.class);
 
@@ -97,18 +101,15 @@ public class RegisterBean {
 	}
 
 
-//	public void addQualification() {
-//		
-//		
-//		
-//		qualificationService.addQualification(IUser user, school, degree);
-//	}
+	public void addQualification() {
 
-	public void removeQualification(IQualification qualification) {
-		qualificationService.removeQualification(MetaUtils.getUser(), qualification);
+		choosenQualifications.add(qualificationService.addQualification(school, degree));
 	}
 
+	public void removeQualification(IQualification qualification){
 
+		choosenQualifications.remove(qualification);
+	}
 
 	public void updateCandidate() throws DuplicatedUserException {
 		IUser user = MetaUtils.getUser();

@@ -43,6 +43,7 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 		addDegree(degree);
 	}
 
+
 	@Override
 	public ISchool addSchool(ISchool school) {
 		ISchool existing = qualificationPersistence.findSchoolByName(school.getName());
@@ -105,5 +106,12 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 
 		userPersistence.save(user);
 	}
+
+	
+	@Override
+	public IQualification addQualification(String school, String degree) {
+		return factory.qualification(school, degree);
+	}
+
 	
 }
