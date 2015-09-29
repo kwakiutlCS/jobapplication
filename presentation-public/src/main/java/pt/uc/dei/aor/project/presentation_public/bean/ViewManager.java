@@ -45,17 +45,6 @@ public class ViewManager implements Serializable {
 		return unlogged;
 	}
 
-	public String swapDialog(){
-		
-		if(MetaUtils.getUser()==null){
-			System.out.println("Swaping dialogs");	
-			RequestContext requestContext = RequestContext.getCurrentInstance();
-			requestContext.execute("PF('identifyDlg').show()");
-			return null;
-		}
-		else 
-			return "/authorized/apply.xhtml?faces-redirect=true";
-	}
 
 	public String applyAfterLogin(){
 	
@@ -65,16 +54,9 @@ public class ViewManager implements Serializable {
 		IUser candidate = MetaUtils.getUser();
 		//get Position applying for
 		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
-		
-		System.out.println("Param on apply position:"+params.get("position"));
-		
+		Map<String,String> params = context.getExternalContext().getRequestParameterMap();	
 		long positionId = Long.parseLong(params.get("position"));
 		IPosition position = positionService.findPositionById(positionId);
-		
-		System.out.println("position id = "+positionId);
-		
-		
 
 		//check if Candidate already applied for given position
 		if(duplicateApplication(candidate, position))
@@ -103,8 +85,6 @@ public class ViewManager implements Serializable {
 			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 			long positionId = Long.parseLong(params.get("position"));
 			IPosition position = positionService.findPositionById(positionId);
-			
-			System.out.println("login on apply, position: "+position);
 			
 			//check if Candidate already applied for given position
 			if(duplicateApplication(candidate, position)){

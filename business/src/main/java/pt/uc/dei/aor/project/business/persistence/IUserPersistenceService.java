@@ -36,6 +36,8 @@ public interface IUserPersistenceService {
 	List<IUser> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
 	long countAdmins();
+	
+	boolean confirmUserHasRegistComplete();
 
 
 

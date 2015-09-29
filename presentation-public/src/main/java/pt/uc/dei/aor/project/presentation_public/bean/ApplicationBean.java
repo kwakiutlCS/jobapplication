@@ -51,6 +51,8 @@ public class ApplicationBean implements Serializable {
 		IUser candidate = MetaUtils.getUser();
 		applicationService.createApplication(coverLetter.getSubmittedFileName(), cv.getSubmittedFileName(),sourceInfo, candidate, position);
 		
+		
+		
 	}
 		
 	public void findPosition(){
