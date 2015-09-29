@@ -90,7 +90,7 @@ public class UserBusinessService implements IUserBusinessService {
 			String country, List<IQualification> qualifications, String cv, String provisoryCv) throws IOException {
 		
 
-		upload.mv("temp/"+provisoryCv, "users/"+login, cv);
+		upload.mv("cv/temp/"+provisoryCv, "cv/users/"+login, cv);
 		
 		IUser user = factory.user(login, email, encrypt, name, surname, phone, mobilePhone, address, city,
 				country, qualifications,cv);

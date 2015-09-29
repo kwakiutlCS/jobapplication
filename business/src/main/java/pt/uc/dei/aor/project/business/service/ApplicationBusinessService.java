@@ -4,6 +4,7 @@ package pt.uc.dei.aor.project.business.service;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -32,14 +33,34 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	
 	
 	@Override
-	public IApplication createApplication(String coverLetter, String cv,
-			String sourceInfo, IUser candidate, IPosition position) {
+	public IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
+			String sourceInfo, IUser candidate, IPosition position) throws IOException {
 	
 		Date date = new Date();
 		
-		IApplication application = factory.application(coverLetter, cv,sourceInfo, date, candidate, position);
+		String cvName;
+		if (cv != null) {
+			cvName = cv.getSubmittedFileName();
+		}
+		else {
+			cvName = candidate.getCv();
+		}
 		
-		return applicationPersistence.save(application);
+		IApplication application = factory.application(letter.getSubmittedFileName(), 
+				cvName,sourceInfo, date, candidate, position);
+		
+		application = applicationPersistence.save(application);
+		
+		upload.mv("letter/temp/"+tmpLetter, "letter/"+application.getId(), letter.getSubmittedFileName());
+		if (cv != null) {
+			upload.mv("cv/temp/"+tmpCv, "cv/applications/"+application.getId(), cv.getSubmittedFileName());
+		}
+		else {
+			upload.cp("cv/users/"+candidate.getLogin(), "cv/applications/"+application.getId(), 
+					candidate.getCv());
+		}
+		
+		return application;
 	}
 
 		
@@ -89,5 +110,36 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		
 		application.setCv(filename);
 		applicationPersistence.save(application);
+	}
+
+
+	@Override
+	public String uploadTempLetter(Part letter) throws IOException {
+		return uploadTemp(letter, "letter/temp/");
+	}
+
+
+	@Override
+	public String uploadTempCV(Part cv) throws IOException {
+		return uploadTemp(cv, "cv/temp/");
+	}
+	
+	private String uploadTemp(Part file, String path) throws IOException {
+		Random rand = new Random();
+		
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < 11; i++) {
+			s.append(""+rand.nextInt(10));
+		}
+		
+		String tmpDir = s.toString();
+		
+		String filename = file.getSubmittedFileName();
+		String dir = path+tmpDir;
+		
+		upload.delete(dir);
+		upload.upload(dir, filename, file.getInputStream());
+		
+		return tmpDir;
 	}
 }
