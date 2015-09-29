@@ -43,17 +43,19 @@
 
 		<p:panel header="Send Application">
 			<h:form>
-
-				<p:selectOneMenu value="#{applicationBean.sourceInfo}">
-					<f:selectItems value="#{applicationBean.position.IPublicationChannels}"
+				<h:outputText value="Please tell us the information source" />
+				<p:selectOneMenu value="#{applicationBean.sourceInfo}" required="true">
+					<f:selectItems
+						value="#{applicationBean.position.IPublicationChannels}"
 						var="channel" itemValue="#{channel.channel}"
 						itemLabel="#{channel.channel}" />
-
 				</p:selectOneMenu>
-
-
+				<p />
 				<p:commandButton value="Apply"
 					action="#{applicationBean.createApplication()}" />
+				<p></p>
+				<p></p>
+				<p:link value="Back" outcome="listPosition" />
 			</h:form>
 		</p:panel>
 

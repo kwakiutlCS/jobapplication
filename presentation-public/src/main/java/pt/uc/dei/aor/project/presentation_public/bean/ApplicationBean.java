@@ -60,6 +60,8 @@ public class ApplicationBean implements Serializable {
 			MetaUtils.setMsg("Error creating user", FacesMessage.SEVERITY_ERROR);
 		}
 		
+		
+		
 	}
 		
 	public void findPosition(){

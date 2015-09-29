@@ -102,7 +102,7 @@ public class RegisterBean implements Serializable {
 		return qualificationService.listSchools(text);
 	}
 
-	public List<String> listDegrees(String School) {
+	public List<String> listDegrees() {
 		return qualificationService.listDegrees(school);
 	}
 
