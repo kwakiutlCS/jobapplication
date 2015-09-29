@@ -12,6 +12,7 @@ public class ApplicationFilter extends GenericFilter {
 	private String candidate;
 	private String type;
 	private PositionState state;
+	private Boolean spontaneous;
 	
 	
 	public ApplicationFilter() {
@@ -21,6 +22,7 @@ public class ApplicationFilter extends GenericFilter {
 		setCandidate(null);
 		type = null;
 		setState(PositionState.OPEN);
+		setSpontaneous(null);
 	}
 	
 	
@@ -71,6 +73,14 @@ public class ApplicationFilter extends GenericFilter {
 
 	public void setState(PositionState positionState) {
 		this.state = positionState;
+	}
+
+	public Boolean getSpontaneous() {
+		return spontaneous;
+	}
+
+	public void setSpontaneous(Boolean spontaneous) {
+		this.spontaneous = spontaneous;
 	}
 
 

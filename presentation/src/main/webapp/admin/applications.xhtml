@@ -19,7 +19,8 @@
 		
 		<p:dataTable value="#{applicationBean.activeApplications}" var="app" id="filteredList">
 			<p:column>#{app.date}</p:column>
-			<p:column>#{app.position.code}</p:column>
+			<p:column><h:outputText value="#{app.position.code}" rendered="#{app.position.code gt 0}" />
+			</p:column>
 			<p:column>#{app.position.stateFormatted}</p:column>
 			<p:column>#{app.candidate.fullName}</p:column>
 			<p:column>

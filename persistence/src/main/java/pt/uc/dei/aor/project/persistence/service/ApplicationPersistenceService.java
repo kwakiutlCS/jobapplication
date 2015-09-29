@@ -144,6 +144,14 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 					criteriaPredicates.add(cb.isNull(application.get("internalCandidate")));
 				}
 			}
+			
+			// spontaneous filter
+			Boolean spontanenousFilter = filter.getSpontaneous();
+			if (spontanenousFilter != null) {
+				if (spontanenousFilter.booleanValue())
+					criteriaPredicates.add(cb.isNull(application.get("position")));
+				else criteriaPredicates.add(cb.isNotNull(application.get("position")));
+			}
 		}
 		
 		q.where(cb.and(criteriaPredicates.toArray(new Predicate[0])));

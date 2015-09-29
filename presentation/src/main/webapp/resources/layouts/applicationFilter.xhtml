@@ -18,6 +18,7 @@
 					<f:selectItem itemValue="stateFilter" itemLabel="state" />
 					<f:selectItem itemValue="typeFilter" itemLabel="type" />
 					<f:selectItem itemValue="dateFilter" itemLabel="date" />
+					<f:selectItem itemValue="spontaneousFilter" itemLabel="spontaneous" />
 				</p:selectOneMenu>
 			</h:form>
 			
@@ -49,6 +50,15 @@
 					<f:selectItem itemValue="Internal" itemLabel="Internal" />
 				</p:selectOneMenu>
 				<p:commandButton value="Add Type" action="#{applicationBean.addType}" 
+				update=":filterSection :filteredList" />
+			</h:form>
+			
+			<h:form class="filter" id="spontaneousFilter">
+				<p:selectOneMenu value="#{applicationBean.spontaneous}">
+					<f:selectItem itemValue="True" itemLabel="true" />
+					<f:selectItem itemValue="False" itemLabel="false" />
+				</p:selectOneMenu>
+				<p:commandButton value="Add Filter" action="#{applicationBean.addSpontaneous}" 
 				update=":filterSection :filteredList" />
 			</h:form>
 			
@@ -100,6 +110,15 @@
 				<h:form style="display:inline-block">
 					<h:outputText value="#{applicationBean.filter.type}" />
 					<p:commandLink value="x" action="#{applicationBean.removeType}" 
+					update=":filterSection :filteredList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty applicationBean.filter.spontaneous}" 
+			styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{applicationBean.filter.spontaneous}" />
+					<p:commandLink value="x" action="#{applicationBean.removeSpontaneous}" 
 					update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>

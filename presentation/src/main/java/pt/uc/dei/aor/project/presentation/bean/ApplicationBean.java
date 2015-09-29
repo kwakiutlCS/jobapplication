@@ -33,6 +33,8 @@ public class ApplicationBean implements Serializable {
 	private String candidate;
 	private PositionState state;
 	private String type;
+
+	private String spontaneous;
 	
 	
 	@PostConstruct
@@ -105,6 +107,31 @@ public class ApplicationBean implements Serializable {
 	public void removeType() {
 		filter.setType(null);
 		type = null;
+	}
+	
+	public void addSpontaneous() {
+		if (spontaneous.equals("True"))
+			filter.setSpontaneous(true);
+		else filter.setSpontaneous(false);
+	}
+	
+	public String getSpontaneous() {
+		return spontaneous;
+	}
+
+
+
+
+	public void setSpontaneous(String spontaneous) {
+		this.spontaneous = spontaneous;
+	}
+
+
+
+
+	public void removeSpontaneous() {
+		filter.setSpontaneous(null);
+		spontaneous = null;
 	}
 	
 	
