@@ -99,7 +99,7 @@
 						completeMethod="#{registerBean.listDegrees()}" maxResults="8" />
 					<p></p>
 					<p:commandButton value="Add qualification" process="@this degreeField institution"
-						action="#{registerBean.addQualification}" update="@form" />
+						action="#{registerBean.addQualification}" update="@this" />
 
 				</h:panelGrid>
 			</p:panel>

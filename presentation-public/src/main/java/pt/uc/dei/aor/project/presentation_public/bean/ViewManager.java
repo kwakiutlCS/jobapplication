@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -19,7 +19,7 @@ import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 @Named
-@RequestScoped
+@ViewScoped
 public class ViewManager implements Serializable {
 
 
@@ -34,8 +34,7 @@ public class ViewManager implements Serializable {
 	@EJB
 	private IPositionBusinessService positionService;
 
-
-
+	
 	public int verifyLogin(){
 
 		int unlogged = 0;
@@ -67,12 +66,19 @@ public class ViewManager implements Serializable {
 		//get Position applying for
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String,String> params = context.getExternalContext().getRequestParameterMap();
+		
+		System.out.println("Param on apply position:"+params.get("position"));
+		
 		long positionId = Long.parseLong(params.get("position"));
 		IPosition position = positionService.findPositionById(positionId);
+		
+		System.out.println("position id = "+positionId);
+		
+		
 
 		//check if Candidate already applied for given position
 		if(duplicateApplication(candidate, position))
-			redirect = "/authorized/oportunities.xhtml?faces-redirect=true";
+			redirect = "/authorized/listPosition.xhtml?faces-redirect=true";
 					
 		return redirect;
 	}
@@ -97,15 +103,18 @@ public class ViewManager implements Serializable {
 			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 			long positionId = Long.parseLong(params.get("position"));
 			IPosition position = positionService.findPositionById(positionId);
-
+			
+			System.out.println("login on apply, position: "+position);
+			
 			//check if Candidate already applied for given position
 			if(duplicateApplication(candidate, position)){
-				return "/authorized/oportunities.xhtml?faces-redirect=true";
+				return "/authorized/listPosition.xhtml?faces-redirect=true";
 			}
 
 			return "/authorized/apply.xhtml?faces-redirect=true";
 		}
 	}
+
 
 	public boolean duplicateApplication(IUser candidate, IPosition position){
 
@@ -117,6 +126,5 @@ public class ViewManager implements Serializable {
 		}
 		return duplicateApplication;
 	}
-	
 
 }

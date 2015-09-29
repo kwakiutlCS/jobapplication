@@ -37,7 +37,13 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	
 		Date date = new Date();
 		
-		IApplication application = factory.application(coverLetter, sourceInfo, date, candidate, position);
+		System.out.println("coverLetter");
+		System.out.println(candidate);
+		System.out.println(position);
+		System.out.println("************");
+		
+		
+		IApplication application = factory.application("coverLetter", "sourceInfo", date, candidate, position);
 		
 		return applicationPersistence.save(application);
 	}

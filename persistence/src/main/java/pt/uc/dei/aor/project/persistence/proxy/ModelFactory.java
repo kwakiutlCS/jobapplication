@@ -115,22 +115,13 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IApplication application(String coverLetter, String sourceInfo, Date date, IUser candidate, IPosition position) {
 		
-		System.out.println("************");
-		System.out.println(coverLetter);
-		System.out.println(sourceInfo);
-		System.out.println(date);
-		System.out.println(candidate);
-		System.out.println(position);
-		System.out.println("************");
-		
 		return new ApplicationProxy(coverLetter, sourceInfo, date, candidate, position);
 	}
 
 	@Override
 	public IUser user(String login, String email, String encrypt, String name, String surname, String phone, String mobilePhone, String address,
 			String city, String country, List<IQualification> qualifications, String cv) {
-		return new UserProxy(login, email, encrypt, name, surname, phone, mobilePhone, address, city, country, qualifications, 
-				cv);
+		return new UserProxy(login, email, encrypt, name, surname, phone, mobilePhone, address, city, country, qualifications,cv);
 	}
 
 

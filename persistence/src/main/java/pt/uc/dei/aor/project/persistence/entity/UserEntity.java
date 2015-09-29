@@ -80,6 +80,8 @@ public class UserEntity {
 		this.completeName = name+" "+surname;
 		this.phone=phone;
 		this.mobilePhone=mobilePhone;
+		this.roles = new HashSet<>();
+		this.roles.add(Role.CANDIDATE);
 	}
 
 

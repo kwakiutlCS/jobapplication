@@ -11,6 +11,7 @@ import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
+import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
 @Named
@@ -36,6 +37,7 @@ public class ApplicationBean implements Serializable {
 	private IPosition position;
 	private long selectedPositionId;
 
+	private String cv;
 
 	public long getSelectedPositionId() {
 		return selectedPositionId;
@@ -49,11 +51,24 @@ public class ApplicationBean implements Serializable {
 	}
 	
 	public void createApplication(){
-		
-		
+		System.out.println("registerBean *************");
+		System.out.println(coverLetter);
+		System.out.println(sourceInfo);
+		System.out.println(candidate);
+		System.out.println(position);
+		System.out.println("registerBean *************");
+	
+		candidate=MetaUtils.getUser();
+		position = positionService.findPositionById(2L);
 		applicationService.createApplication(coverLetter, sourceInfo, candidate, position);
 		
 	}
+	
+	public void bothPositionAndUser(IUser candid, IPosition posit){
+		position = posit;
+		candidate = candid;
+	}
+	
 	
 	public void findPosition(){
 		position =  positionService.findPositionById(selectedPositionId);
