@@ -4,18 +4,233 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
+	
+	<ui:define name="scripts">
+		<h:outputStylesheet library="css" name="interviews.css" />
+		<h:outputScript library="js" name="positions.js" />
+	</ui:define>
 
 	<ui:define name="title">Index</ui:define>
 
 	<ui:define name="content">
 
-		<h:form id="listPositionForm">
+			<h:panelGroup id="filterAction">
+			<h:form prependId="false">
+				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
+					<f:selectItem itemValue="keywordFilter" itemLabel="keyword" />
+					<f:selectItem itemValue="codeFilter" itemLabel="code" />
+					<f:selectItem itemValue="titleFilter" itemLabel="title" />
+					<f:selectItem itemValue="localizationFilter" itemLabel="localization" />
+					<f:selectItem itemValue="areaFilter" itemLabel="technical area" />
+					<f:selectItem itemValue="companyFilter" itemLabel="company" />
+					<f:selectItem itemValue="dateFilter" itemLabel="date" />
+				</p:selectOneMenu>
+			</h:form>
+			
+			<h:panelGroup id="keywordFilter" class="filter">
+			<h:form>
+				<p:inputText value="#{positionFilterBean.keyword}" required="true" />
+				<p:commandButton value="Add Keyword" action="#{positionFilterBean.addKeyword}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup id="codeFilter" class="filter">
+			<h:form>
+				<p:spinner value="#{positionFilterBean.code}" required="true" min="1" />
+				<p:commandButton value="Add Code" action="#{positionFilterBean.addCode}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup id="titleFilter" class="filter">
+			<h:form>
+				<p:inputText value="#{positionFilterBean.title}" required="true" />
+				<p:commandButton value="Add Title" action="#{positionFilterBean.addTitle}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
+						
+			<h:panelGroup id="localizationFilter" class="filter">
+			<h:form>
+				<p:selectOneMenu value="#{positionFilterBean.localization}"
+				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
+					<f:selectItems value="#{positionFilterBean.localizations}"
+						var="local" itemLabel="#{local.localizationLabel}" />
+				</p:selectOneMenu>
 
-			<p:dataTable var="position" value="#{listPositionBean.positions}"
+				<p:commandButton value="Add Localization" action="#{positionFilterBean.addLocalizationToFilter}"
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup id="areaFilter" class="filter">
+			<h:form>
+				<p:selectOneMenu value="#{positionFilterBean.area}"
+				converter="omnifaces.SelectItemsConverter" styleClass="selectMenu">
+					<f:selectItems value="#{positionFilterBean.technicalAreas}"
+						var="area" itemLabel="#{area.technicalAreaLabel}" />
+				</p:selectOneMenu>
+
+				<p:commandButton value="Add Technical Area" action="#{positionFilterBean.addAreaToFilter}"
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup id="companyFilter" class="filter">
+			<h:form>
+				<p:inputText value="#{positionFilterBean.company}" required="true" />
+				<p:commandButton value="Add Company" action="#{positionFilterBean.addCompany}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup id="dateFilter" class="filter">
+			<h:form>
+				<p:outputLabel for="startDate" value="Start date" />
+				<p:calendar id="startDate" value="#{positionFilterBean.startDate}" 
+				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
+				<br />
+				<p:outputLabel for="finishDate" value="End date" />
+				<p:calendar id="finishDate" value="#{positionFilterBean.finishDate}" 
+				locale="pt" pattern="dd/MM/yyyy" timeZone="GMT" />
+				<p:commandButton value="Add Date" action="#{positionFilterBean.addDateFilter}" 
+				update=":positionsTable :filterList" />
+			</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+		
+		
+		
+		
+		<h:panelGroup id="filterList">
+			
+			<h:panelGroup id="keyword">
+				<h:form>
+					<ui:repeat value="#{positionFilterBean.keywordSets}" var="key"
+						varStatus="status">
+						<span class="filterUnit"> <h:outputText value="#{key}" />
+							<p:commandLink value="x" styleClass="removalLink"
+								action="#{positionFilterBean.deleteKeyword(status.index)}"
+								update=":filterList :positionsTable" />
+						</span>
+						<h:outputText value="or" rendered="#{not status.last}" />
+					</ui:repeat>
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{positionFilterBean.filter.code gt 0}" 
+			styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{positionFilterBean.filter.code}" />
+					<p:commandLink value="x" action="#{positionFilterBean.removeCode}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup id="title">
+				<h:form>
+					<ui:repeat value="#{positionFilterBean.titleSets}" var="title"
+						varStatus="status">
+						<span class="filterUnit"> <h:outputText value="#{title}" />
+							<p:commandLink value="x" styleClass="removalLink"
+								action="#{positionFilterBean.deleteTitle(status.index)}"
+								update=":filterList :positionsTable" />
+						</span>
+						<h:outputText value="or" rendered="#{not status.last}" />
+					</ui:repeat>
+				</h:form>
+			</h:panelGroup>
+		
+			
+			<h:panelGroup id="technicalAreas">
+				<h:form>
+					<ui:repeat value="#{positionFilterBean.areaSet}" var="set"
+						varStatus="status">
+						<span class="filterUnit"> <ui:repeat value="#{set}"
+								var="area" varStatus="innerStatus">
+								<h:outputText value="#{area.technicalAreaLabel}" />
+								<p:commandLink value="x" styleClass="removalLink"
+									action="#{positionFilterBean.deleteArea(status.index, innerStatus.index)}"
+									update="@form :positionsTable" />
+								<p:commandLink value="and" rendered="#{not innerStatus.last}"
+									update="@form :positionsTable"
+									action="#{positionFilterBean.splitAreas(status.index, innerStatus.index)}"
+									styleClass="conjugationLink" />
+							</ui:repeat>
+						</span>
+						<p:commandLink value="or" rendered="#{not status.last}"
+							update="@form :positionsTable"
+							action="#{positionFilterBean.mergeAreas(status.index)}"
+							styleClass="conjugationLink" />
+					</ui:repeat>
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup id="localizations">
+				<h:form>
+					<ui:repeat value="#{positionFilterBean.localizationSet}" var="set"
+						varStatus="status">
+						<span class="filterUnit"> <ui:repeat value="#{set}"
+								var="local" varStatus="innerStatus">
+								<h:outputText value="#{local.localizationLabel}" />
+								<p:commandLink value="x" styleClass="removalLink"
+									action="#{positionFilterBean.deleteLocalization(status.index, innerStatus.index)}"
+									update="@form :positionsTable" />
+								<p:commandLink value="and" rendered="#{not innerStatus.last}"
+									update="@form :positionsTable"
+									action="#{positionFilterBean.splitLocalizations(status.index, innerStatus.index)}"
+									styleClass="conjugationLink" />
+							</ui:repeat>
+						</span>
+						<p:commandLink value="or" rendered="#{not status.last}"
+							update="@form :positionsTable"
+							action="#{positionFilterBean.mergeLocalizations(status.index)}"
+							styleClass="conjugationLink" />
+					</ui:repeat>
+				</h:form>
+			</h:panelGroup>
+			
+			<h:panelGroup rendered="#{not empty positionFilterBean.filter.company}" 
+				styleClass="filterUnit">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{positionFilterBean.filter.company}" />
+					<p:commandLink value="x" action="#{positionFilterBean.removeCompany}" 
+					update=":positionsTable :filterList" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup styleClass="filterUnit"
+				rendered="#{not empty positionFilterBean.filter.startDate or 
+							not empty positionFilterBean.filter.finishDate}">
+				<h:form style="display:inline-block">
+					<h:outputText value="#{positionFilterBean.filter.startDate}" converter="dateConverter">
+					</h:outputText>
+					<p:commandLink value="x" rendered="#{not empty positionFilterBean.filter.startDate}"
+						action="#{positionFilterBean.removeStartDate}"
+						update=":positionsTable :filterList :filterAction" styleClass="removalLink" />
+					-
+					<h:outputText value="#{positionFilterBean.filter.finishDate}" converter="dateConverter">
+					</h:outputText>
+					<p:commandLink value="x" rendered="#{not empty positionFilterBean.filter.finishDate}"
+						action="#{positionFilterBean.removeFinishDate}"
+						update=":positionsTable :filterList :filterAction" styleClass="removalLink" />
+				</h:form>
+			</h:panelGroup>
+		</h:panelGroup>
+
+
+
+
+
+
+
+
+
+		<p:dataTable id="positionsTable" var="position" value="#{positionFilterBean.positions}"
 				widgetVar="positionsTable"
 				emptymessage="No positions found for given criteria"
-				filteredValue="#{listPositionBean.filteredPositions}"
 				style="text-align: center">
 
 				<f:facet name="header">
@@ -60,8 +275,6 @@
 				</p:column>
 
 			</p:dataTable>
-
-		</h:form>
 
 	
 	</ui:define>
