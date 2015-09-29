@@ -20,7 +20,6 @@ import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 import pt.uc.dei.aor.project.business.util.Role;
 import pt.uc.dei.aor.project.persistence.entity.InterviewEntity;
-import pt.uc.dei.aor.project.persistence.entity.QualificationEntity;
 import pt.uc.dei.aor.project.persistence.entity.UserEntity;
 import pt.uc.dei.aor.project.persistence.proxy.UserProxy;
 
@@ -243,26 +242,8 @@ public class UserPersistenceService implements IUserPersistenceService {
 		return result.get(0);
 	}
 
-	@Override
-	public boolean verifyUserHasQualification(IUser user) {
 
-		TypedQuery<QualificationEntity> q = em.createNamedQuery("User.verifyUserHasQualification", QualificationEntity.class);
-		q.setParameter("user", user);
-		
-		return false;
-	}
 
-	@Override
-	public boolean verifyUserHasAdress(IUser user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean verifyUserHasCv(IUser user) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 
 
