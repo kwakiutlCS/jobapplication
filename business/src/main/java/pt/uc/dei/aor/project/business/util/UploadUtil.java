@@ -66,6 +66,18 @@ public class UploadUtil {
 		return toFile;
 	}
 	
+	public Path cp(String from, String to, String filename) throws IOException {
+		Path fromFile = UPLOADS.resolve(Paths.get("cv/"+from+"/"+filename));
+		Path toFile = UPLOADS.resolve(Paths.get("cv/"+to));
+			
+		if (Files.notExists(toFile))
+			Files.createDirectories(toFile);
+		
+		toFile = toFile.resolve(filename);
+		Files.copy(fromFile, toFile);
+		
+		return toFile;
+	}
 	
 	public void delete(Path extra) throws IOException {
 		Path path = UPLOADS.resolve(extra);
