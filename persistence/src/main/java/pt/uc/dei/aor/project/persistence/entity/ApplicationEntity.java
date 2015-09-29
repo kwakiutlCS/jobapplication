@@ -70,7 +70,7 @@ public class ApplicationEntity {
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private SortedSet<InterviewEntity> interviews = new TreeSet<>();
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private JobProposalEntity proposal;
 
 	

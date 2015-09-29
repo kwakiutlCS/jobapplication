@@ -287,12 +287,12 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 
 	@Override
 	public String toString() {
-		return getCode()+" -> "+getTitle();
+		return getCode()+": "+getTitle();
 	}
 
 	@Override
 	public String getStateFormatted() {
-		
+		if (entity.getState() == null) return "";
 		return entity.getState().getPositionStateLabel();
 	}
 }

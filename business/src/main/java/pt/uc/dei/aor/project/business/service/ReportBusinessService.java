@@ -279,7 +279,8 @@ public class ReportBusinessService implements IReportBusinessService {
 	private boolean isFinalInterview(IInterview interview) {
 		IApplication app = interview.getApplication();
 		
-		List<IInterview> interviews = app.getInterviews();
+		List<IInterview> interviews = interviewPersistence.findInterviewsByApplication(app);
+		
 		if (interviews.size() == 1) return true;
 		
 		Calendar interviewCal = Calendar.getInstance();
