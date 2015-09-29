@@ -113,9 +113,9 @@ public class ModelFactory implements IModelFactory {
 	}
 
 	@Override
-	public IApplication application(String coverLetter, String sourceInfo, Date date, IUser candidate, IPosition position) {
+	public IApplication application(String coverLetter, String cv,String sourceInfo, Date date, IUser candidate, IPosition position) {
 		
-		return new ApplicationProxy(coverLetter, sourceInfo, date, candidate, position);
+		return new ApplicationProxy(coverLetter, cv, sourceInfo, date, candidate, position);
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import pt.uc.dei.aor.project.business.model.IUser;
 
 public interface IApplicationBusinessService {
 	
-	IApplication createApplication(String coverLetter, String sourceInfo, IUser candidate, IPosition position);
+	IApplication createApplication(String coverLetter, String cv, String sourceInfo, IUser candidate, IPosition position);
 
 	IApplication findApplicationById(long id);
 
@@ -28,6 +28,10 @@ public interface IApplicationBusinessService {
 	boolean findApplicationByCandidateAndPosition(IUser candidate , IPosition position);
 
 	void uploadCV(IApplication application, Part cv) throws IOException;
+
+
+
+
 
 
 }

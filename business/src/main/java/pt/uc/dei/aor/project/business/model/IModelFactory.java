@@ -24,7 +24,7 @@ public interface IModelFactory {
 
 	IAnswerChoice answerChoice(String answer);
 
-	IApplication application(String coverLetter, String sourceInfo, Date date,
+	IApplication application(String coverLetter, String cv, String sourceInfo, Date date,
 			IUser candidate, IPosition position);
 
 	IInterview interview(Date date);
@@ -50,6 +50,7 @@ public interface IModelFactory {
 
 	IColor color(String page, String header, String content, String contentText, String contentTitle, String headerText,
 			String background);
+
 
 	
 

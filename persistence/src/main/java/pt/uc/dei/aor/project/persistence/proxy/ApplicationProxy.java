@@ -28,13 +28,13 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	}
 
 	
-	public ApplicationProxy(String coverLetter, String sourceInfo, Date date, IUser candidate, IPosition position) {
+	public ApplicationProxy(String coverLetter, String cv, String sourceInfo, Date date, IUser candidate, IPosition position) {
 		
 		UserEntity candidateEntity = GenericPersistenceService.getEntity(candidate);
 		
 		PositionEntity positionEntity = GenericPersistenceService.getEntity(position);
 					
-		this.entity = new ApplicationEntity(coverLetter, sourceInfo, date, candidateEntity, positionEntity);
+		this.entity = new ApplicationEntity(coverLetter, cv, sourceInfo, date, candidateEntity, positionEntity);
 	}
 
 	public ApplicationProxy() {
