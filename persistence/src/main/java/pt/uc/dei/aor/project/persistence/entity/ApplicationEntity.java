@@ -34,7 +34,7 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 	query = "select count(u) from ApplicationEntity u where u.spontaneous is true and"
 			+ " u.date >= :startDate and u.date < :finishDate"),
 	@NamedQuery(name = "application.findApplicationbyCandidateAndPosition", 
-	query = "from ApplicationEntity u where u.candidate = :user and u.position = :position")
+	query = "from ApplicationEntity u where u.candidate = :candidate and u.position = :position")
 })
 public class ApplicationEntity {
 	
@@ -47,6 +47,9 @@ public class ApplicationEntity {
 	
 	@Column(nullable=false)
 	private String sourceInfo; 
+	
+	@Column(nullable=false)
+	private String cv;
 	
 	@Column(nullable=false)
 	private Date date;
@@ -72,6 +75,20 @@ public class ApplicationEntity {
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private JobProposalEntity proposal;
+
+	
+	public ApplicationEntity(String coverLetter, String cv, String sourceInfo, Date date, UserEntity candidate,
+			PositionEntity position) {
+		this.coverLetter = coverLetter;
+		this.sourceInfo = sourceInfo;
+		this.date = date;
+		this.candidate = candidate;
+		this.position = position;
+		this.cv=cv;
+	}
+
+	public ApplicationEntity() {
+	}
 
 	
 	public SortedSet<InterviewEntity> getInterviews() {
@@ -176,5 +193,9 @@ public class ApplicationEntity {
 
 	public JobProposalEntity getProposition() {
 		return proposal;
+	}
+
+	public void setCv(String filename) {
+		cv = filename;
 	}
 }

@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -25,6 +26,7 @@ import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
@@ -81,6 +83,22 @@ public class UserBusinessService implements IUserBusinessService {
 			return null;
 		}
 	}
+	
+	@Override
+	public IUser createNewCandidate(String login, String name, String surname,
+			String email, String encrypt, String phone, String mobilePhone, String address, String city,
+			String country, List<IQualification> qualifications, String cv, String provisoryCv) throws IOException {
+		
+
+		upload.mv("cv/temp/"+provisoryCv, "cv/users/"+login, cv);
+		
+		IUser user = factory.user(login, email, encrypt, name, surname, phone, mobilePhone, address, city,
+				country, qualifications,cv);
+		
+		return userPersistence.save(user);
+		
+	}
+	
 
 	@Override
 	public IUser getUserByLogin(String login) {
@@ -202,10 +220,11 @@ public class UserBusinessService implements IUserBusinessService {
 		return userPersistence.findUsersWithFilter(filter, offset, limit);
 	}
 
+	
 	@Override
 	public void uploadCV(IUser user, Part cv) throws IOException {
 		String filename = cv.getSubmittedFileName();
-		String dir = "cv/"+user.getLogin();
+		String dir = "cv/users/"+user.getLogin();
 		
 		upload.delete(dir);
 		upload.upload(dir, filename, cv.getInputStream());
@@ -214,6 +233,27 @@ public class UserBusinessService implements IUserBusinessService {
 		userPersistence.save(user);
 	}
 
+	@Override
+	public String uploadTempCV(Part cv) throws IOException {
+		Random rand = new Random();
+		
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < 11; i++) {
+			s.append(""+rand.nextInt(10));
+		}
+		
+		String tmpDir = s.toString();
+		
+		String filename = cv.getSubmittedFileName();
+		String dir = "cv/temp/"+tmpDir;
+		
+		upload.delete(dir);
+		upload.upload(dir, filename, cv.getInputStream());
+		
+		return tmpDir;
+	}
+	
+	
 	@Override
 	public void addAdmin(IUser user) {
 		user.addRole(Role.ADMIN);
@@ -271,11 +311,5 @@ public class UserBusinessService implements IUserBusinessService {
 		return false;
 	}
 
-	@Override
-	public IUser createNewCandidate(String login, String name, String surname, String email, String password)
-			throws DuplicatedUserException {
-		IUser user = factory.user(login, email, password, name, surname, new ArrayList<Role>());
-		
-		return userPersistence.save(user);
-	}
+
 }

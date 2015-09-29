@@ -46,4 +46,6 @@ public interface IApplication {
 	void sendProposition(IProposition proposition);
 
 	ProposalSituation getProposition();
+
+	void setCv(String filename);
 }

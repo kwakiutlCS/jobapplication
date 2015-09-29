@@ -26,4 +26,7 @@ public interface IQualificationBusinessService {
 
 	void removeQualification(IUser user, IQualification qualification);
 	
+	IQualification addQualification(String school, String degree);
+	
+	
 }

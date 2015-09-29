@@ -116,6 +116,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// code
 				int codeFilter = filter.getCode();
 				if (codeFilter != -1) {
+					System.out.println("code filter");
 					Expression<Integer> code = position.get("code");
 					Predicate codePredicate = cb.equal(code, codeFilter);
 										
@@ -125,7 +126,8 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// title
 				List<String> titleFilter = filter.getTitles();
 				if (titleFilter != null && titleFilter.size() > 0) {
-					Expression<String> title = position.get("title");
+					System.out.println("title filter");
+						Expression<String> title = position.get("title");
 					criteriaPredicates.add(GenericPersistenceService
 							.orStringPredicate(titleFilter, title, cb));
 				}
@@ -133,6 +135,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// state
 				PositionState stateFilter = filter.getState();
 				if (stateFilter != null) {
+					System.out.println("state filter");
 					Expression<PositionState> state = position.get("state");
 					Predicate statePredicate = cb.equal(state, stateFilter);
 					
@@ -142,6 +145,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// localization
 				List<List<Localization>> localizationFilter = filter.getLocalizationSets();
 				if (localizationFilter != null && localizationFilter.size() > 0) {
+					System.out.println("localization filter");
 					Expression<List<Localization>> localizations = position.get("localizations");
 					criteriaPredicates.add(GenericPersistenceService
 							.andOrPredicate(localizationFilter, localizations, cb));
@@ -151,6 +155,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// technical area
 				List<List<TechnicalArea>> areaFilter = filter.getAreaSets();
 				if (areaFilter != null && areaFilter.size() > 0) {
+					System.out.println("area filter");
 					Expression<List<TechnicalArea>> areas = position.get("technicalAreas");
 					criteriaPredicates.add(GenericPersistenceService.andOrPredicate(areaFilter, areas, cb));
 				}
@@ -159,6 +164,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// company
 				String companyFilter = filter.getCompany();
 				if (companyFilter != null) {
+					System.out.println("company filter");
 					Expression<String> company = position.get("company");
 					Predicate companyPredicate = cb.like(cb.lower(company), "%"+companyFilter.toLowerCase()+"%");
 										
@@ -171,6 +177,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// start date
 				Date startFilter = filter.getStartDate();
 				if (startFilter != null) {
+					System.out.println("date filter");
 					Predicate startPredicate = cb.greaterThanOrEqualTo(date, startFilter);
 										
 					criteriaPredicates.add(startPredicate);
@@ -179,6 +186,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// finish date
 				Date finishFilter = filter.getFinishDate();
 				if (finishFilter != null) {
+					System.out.println("finis filter");
 					Predicate finishPredicate = cb.lessThanOrEqualTo(date, finishFilter);
 										
 					criteriaPredicates.add(finishPredicate);
@@ -187,6 +195,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 				// keyword
 				List<String> keywordFilter = filter.getKeywords();
 				if (keywordFilter != null && keywordFilter.size() > 0) {
+					System.out.println("keyword filter");
 					
 					Expression<String> keyword = position.get("title");
 					Predicate keywordPredicate = GenericPersistenceService
@@ -248,6 +257,7 @@ public class PositionPersistenceService implements IPositionPersistenceService {
 			
 			for (PositionEntity ie : entities) {
 				proxies.add(new PositionProxy(ie));
+				System.out.println(ie.getId());
 			}
 			
 			return proxies;

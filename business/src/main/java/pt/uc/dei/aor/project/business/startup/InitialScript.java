@@ -143,8 +143,22 @@ public class InitialScript {
 		tmp = directory.resolve(Paths.get("uploads/cv"));
 		if (!Files.exists(tmp))
 			Files.createDirectory(tmp);
+		
+		tmp = directory.resolve(Paths.get("uploads/cv/users"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+		
+		tmp = directory.resolve(Paths.get("uploads/cv/applications"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+		
+		
 			
 		tmp = directory.resolve(Paths.get("uploads/letter"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+		
+		tmp = directory.resolve(Paths.get("uploads/letter/temp"));
 		if (!Files.exists(tmp))
 			Files.createDirectory(tmp);
 		

@@ -96,7 +96,7 @@ public class InterviewPersistenceServiceTest {
     	IPosition pos = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, 
     			sla, person, company, tech, description, scripts, pub);
     	
-    	application = factory.application();
+    	application = factory.application(company, company, company, closingDate, person, pos);
     	applicationEjb.save(application);
     	
     }

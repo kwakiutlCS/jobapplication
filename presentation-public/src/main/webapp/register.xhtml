@@ -1,0 +1,131 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">Register</ui:define>
+
+	<ui:define name="content">
+
+		<h:form>
+
+			<p:panel header="Personal Details">
+				<p:outputLabel value="Login" for="login" />
+				<p></p>
+				<p:inputText id="login" value="#{registerBean.login}" required="true" />
+				<p></p>
+				<p:outputLabel value="Name" for="name" required="true" />
+				<p></p>
+				<p:inputText id="name" value="#{registerBean.name}" required="true" />
+				<p></p>
+				<p:outputLabel for="surname" value="Surname" />
+				<p></p>
+				<p:inputText id="surname" value="#{registerBean.surname}"
+					required="true" />
+				<p></p>
+				<p:outputLabel value="Email" for="email" />
+				<p></p>
+				<p:inputText id="email" value="#{registerBean.email}" required="true"
+					validator="#{emailValidator.validate}" />
+				<p></p>
+				<p:outputLabel for="password" value="Password" />
+				<p></p>
+				<p:password id="password" value="#{registerBean.password}"
+					required="true" match="confirm" />
+				<p></p>
+				<p:outputLabel for="confirm" value="Confirm password" />
+				<p></p>
+				<p:password id="confirm" value="#{registerBean.password}"
+					required="true" />
+			</p:panel>
+
+
+			<p:panel header="Contact Details">
+				<h:panelGrid columns="2">
+
+					<p:outputLabel value="Address" for="address" />
+					<p:inputText id="address" value="#{registerBean.address}" />
+
+					<p:outputLabel value="City" for="city" />
+					<p:inputText id="city" value="#{registerBean.city}" />
+
+					<p:outputLabel value="Country" for="country" />
+					<p:inputText id="country" value="#{registerBean.country}" />
+
+					<p:outputLabel value="Phone number" for="phone" />
+					<p:inputMask mask="999 999 999" id="phone"
+						value="#{registerBean.phone}" />
+
+					<p:outputLabel value="Mobile number" for="mobile" />
+					<p:inputMask mask="999 999 999" id="mobile"
+						value="#{registerBean.mobilePhone}" />
+
+				</h:panelGrid>
+			</p:panel>
+
+
+			<p:panel header="Qualifications">
+				<h:panelGrid columns="1">
+					<h:panelGroup id="qualificationsList">
+						<ui:repeat value="#{registerBean.choosenQualifications}"
+							var="qualification">
+							<div>
+								<div>#{qualification.school}</div>
+								<div>#{qualification.degree}</div>
+								<div>
+									<p:commandLink value="delete" update="@form"
+										action="#{registerBean.removeQualification(qualification)}" />
+								</div>
+							</div>
+						</ui:repeat>
+
+					</h:panelGroup>
+					<p></p>
+					<p:outputLabel for="institution" value="Institution" />
+					<p></p>
+					<p:autoComplete id="institution"
+						value="#{registerBean.qualification}" forceSelection="false"
+						completeMethod="#{registerBean.listSchools}" style="width:600px"
+						maxResults="8">
+					</p:autoComplete>
+
+					<p></p>
+					<p:outputLabel for="degreeField" value="Course" />
+					<p:autoComplete id="degreeField" style="width:600px"
+						value="#{registerBean.degree}"
+						completeMethod="#{registerBean.listDegrees()}" maxResults="8" />
+					<p></p>
+					<p:commandButton value="Add qualification" process="@this degreeField institution"
+						action="#{registerBean.addQualification}" update="@this" />
+
+				</h:panelGrid>
+			</p:panel>
+
+			<p:panel>
+				<p:commandButton action="#{registerBean.register}" value="Enter"
+					update="@form :globalMessages" />
+				<p></p>
+				<h:link value="Cancel" outcome="index" />
+			</p:panel>
+		</h:form>
+
+		<p:panel header="Curriculum Vitae">
+			<h:form enctype="multipart/form-data">
+				<h:panelGrid columns="1">
+					<h:inputFile value="#{registerBean.cv}" required="true"
+						id="fileUploader">
+						<f:ajax listener="#{registerBean.upload}" render=":globalMessages" />
+					</h:inputFile>
+
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+
+	</ui:define>
+</ui:composition>
+
+
+

@@ -1,12 +1,10 @@
 package pt.uc.dei.aor.project.business.filter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 import pt.uc.dei.aor.project.business.exception.IllegalFilterParamException;
 import pt.uc.dei.aor.project.business.util.Localization;
@@ -41,7 +39,9 @@ public class PositionFilter extends GenericFilter {
 	// and or section
 	
 	public void addAreaSet(TechnicalArea area) {
+		System.out.println(area);
 		addGenericSet(areaSets, area);
+		System.out.println(areaSets);
 	}
 
 	public void deleteArea(int setIndex, int pos) throws IllegalFilterParamException {

@@ -1,0 +1,53 @@
+.filterUnit {
+	background: rgba(140, 237, 140, 0.5);
+	border: 2px solid rgb(86, 210, 86);
+	margin-right: 20px;
+	padding: 5px;
+	border-radius: 5px;
+	color: rgb(0, 178, 0);
+}
+
+.objectUnit {
+	background: rgba(140, 140, 237, 0.5);
+	border: 2px solid rgb(86, 86, 210);
+	margin-right: 20px;
+	padding: 5px;
+	border-radius: 5px;
+	color: rgb(0, 0, 178);
+	display: inline-block;
+}
+
+.filterUnit .removalLink, .objectUnit .removalLink {
+	color: red;
+	text-decoration: none;
+	vertical-align: super;
+	font-size: 11px;
+}
+
+.filterUnit .conjugationLink {
+	margin: 0 10px;
+}
+
+.conjugationLink {
+	margin-right: 20px;
+	text-decoration: none;
+	color: #C58240;
+}
+
+.conjugationLink:hover {
+	color: brown;
+}
+
+.selectMenu { 
+	display: inline-block; 
+	vertical-align: top; 
+}
+
+.filter {
+	display: none;
+}
+
+img {
+	display: block;
+	margin: auto;
+}

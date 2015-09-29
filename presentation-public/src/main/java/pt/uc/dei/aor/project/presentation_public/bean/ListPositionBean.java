@@ -28,9 +28,7 @@ public class ListPositionBean implements Serializable{
 	
 
 	public void findPosition(){
-		System.out.println("Find selected position");
 		selectedPosition =  position.findPositionById(selectedPositionId);
-		System.out.println("Found selected position "+selectedPosition.getTitle());
 	}
 	
 	

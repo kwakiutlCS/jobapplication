@@ -43,6 +43,7 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 		addDegree(degree);
 	}
 
+
 	@Override
 	public ISchool addSchool(ISchool school) {
 		ISchool existing = qualificationPersistence.findSchoolByName(school.getName());
@@ -75,7 +76,7 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 		return result;
 	}
 
-	@Override
+
 	public List<String> listDegrees(String school) {
 		ISchool proxy = qualificationPersistence.findSchoolByName(school);
 		if (proxy == null) return null;
@@ -90,7 +91,7 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 
 		return result;
 	}
-
+	
 	@Override
 	public void addQualification(IUser user, String school, String degree) {
 		IQualification qualification = factory.qualification(school, degree);
@@ -105,5 +106,12 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 
 		userPersistence.save(user);
 	}
+
+	
+	@Override
+	public IQualification addQualification(String school, String degree) {
+		return factory.qualification(school, degree);
+	}
+
 	
 }

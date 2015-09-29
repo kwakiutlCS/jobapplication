@@ -20,7 +20,6 @@
 	<ui:define name="content">
 
 
-		<h:form id="positionDetailForm">
 			<p:panel header="#{listPositionBean.selectedPosition.title}">
 
 				<h:panelGrid columns="2">
@@ -74,7 +73,7 @@
 					</p:column>
 
 					<p:column>
-						<p:commandButton update=":positionDetailForm" value="Apply Now"
+						<p:commandButton  value="Apply Now"
 							onclick="PF('identifyDlg').show()">
 						</p:commandButton>
 					</p:column>
@@ -83,7 +82,7 @@
 
 				</h:panelGrid>
 			</p:panel>
-		</h:form>
+	
 
 
 		<p:dialog widgetVar="identifyDlg" modal="true">
@@ -109,7 +108,7 @@
 					<p></p>
 					<h:outputText value="Don't have an account?" />
 					<p></p>
-					<h:link outcome="firstregister" value="Register" />
+					<h:link outcome="register" value="Register" />
 				</h:form>
 			</p:outputPanel>
 		</p:dialog>

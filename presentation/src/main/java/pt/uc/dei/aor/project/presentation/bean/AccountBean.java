@@ -151,6 +151,8 @@ public class AccountBean implements Serializable {
 	
 	public void addQualification() {
 		qualificationService.addQualification(MetaUtils.getUser(), school, degree);
+		school = null;
+		degree = null;
 	}
 	
 	public void removeQualification(IQualification qualification) {

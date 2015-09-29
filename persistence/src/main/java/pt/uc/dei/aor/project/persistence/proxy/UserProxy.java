@@ -36,6 +36,18 @@ public class UserProxy implements IUser, IProxyToEntity<UserEntity> {
 
 	
 
+	public UserProxy(String login, String email, String password, String name, String surname,String phone, String mobilePhone, String address,
+			String city, String country, List<IQualification> qualifications, String cv) {
+		
+		List<QualificationEntity> entities = new ArrayList<>();
+		for (IQualification q : qualifications) {
+			entities.add(GenericPersistenceService.getEntity(q));
+		}
+		
+		entity = new UserEntity(login, email, password, name, surname, phone,mobilePhone, address, city, country, 
+				entities, cv);
+	}
+
 	@Override
 	public UserEntity getEntity() {
 		return entity;

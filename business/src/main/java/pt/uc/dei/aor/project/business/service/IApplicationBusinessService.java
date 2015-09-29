@@ -1,6 +1,9 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
@@ -9,6 +12,9 @@ import pt.uc.dei.aor.project.business.model.IUser;
 
 
 public interface IApplicationBusinessService {
+	
+	IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
+			String sourceInfo, IUser candidate, IPosition position) throws IOException;
 
 	IApplication findApplicationById(long id);
 
@@ -22,5 +28,10 @@ public interface IApplicationBusinessService {
 	
 	boolean findApplicationByCandidateAndPosition(IUser candidate , IPosition position);
 
+	void uploadCV(IApplication application, Part cv) throws IOException;
+
+	String uploadTempLetter(Part letter) throws IOException;
+
+	String uploadTempCV(Part cv)  throws IOException;
 
 }
