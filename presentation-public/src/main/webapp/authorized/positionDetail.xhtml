@@ -73,48 +73,12 @@
 				</p:column>
 
 
-				<p:link value="Apply Now" outcome="apply">
-
+				<p:link value="Apply Now" rendered="#{viewManager.loginOnApply()}"  outcome="apply">
 					<f:param name="pos" value="#{listPositionBean.selectedPosition.id}" />
 				</p:link>
 
-				<p:link value="Exit" outcome="listPosition" />
-
 			</h:panelGrid>
 		</p:panel>
-
-
-
-
-		<p:dialog widgetVar="identifyDlg" modal="true">
-			<p:outputPanel id="identifyPanel" style="text-align:left;">
-				<h:form id="identifyForm">
-					<h:outputText value="Application for" />
-					<h:outputText value="#{listPositionBean.selectedPosition.title}" />
-					<p></p>
-					<p:outputLabel value="Login" />
-					<p></p>
-					<p:inputText id="login" value="#{loginBean.login}" required="true" />
-					<p></p>
-					<h:outputText value="Password" />
-					<p></p>
-					<h:inputSecret id="password" value="#{loginBean.password}" />
-					<p></p>
-					<h:commandLink value="recover password" />
-					<p></p>
-					<h:commandButton action="#{viewManager.loginOnApply}" value="Enter">
-						<f:param name="position"
-							value="#{listPositionBean.selectedPosition.id}" />
-					</h:commandButton>
-					<p></p>
-					<h:outputText value="Don't have an account?" />
-					<p></p>
-					<h:commandButton outcome="register" value="Register" />
-
-				</h:form>
-			</p:outputPanel>
-		</p:dialog>
-
 
 	</ui:define>
 </ui:composition>

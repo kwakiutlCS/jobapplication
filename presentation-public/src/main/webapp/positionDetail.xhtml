@@ -73,9 +73,9 @@
 					</p:column>
 
 					<p:column>
-						<p:commandButton  value="Apply Now"
-							onclick="PF('identifyDlg').show()">
-						</p:commandButton>
+						<p:link  value="Apply Now"
+							onclick="PF('identifyDlg').show();return false;">
+						</p:link>
 					</p:column>
 					<p:link value="Exit" outcome="listPosition" />
 
@@ -101,10 +101,10 @@
 					<p></p>
 					<h:link value="recover password" />
 					<p></p>
-					<h:commandButton action="#{viewManager.loginOnApply}" value="Enter">
+					<p:link outcome="apply" value="Enter" rendered="#{viewManager.loginOnApply()}">
 						<f:param name="position"
 							value="#{listPositionBean.selectedPosition.id}" />
-					</h:commandButton>
+					</p:link>
 					<p></p>
 					<h:outputText value="Don't have an account?" />
 					<p></p>

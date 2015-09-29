@@ -59,13 +59,25 @@ public class ApplicationBean implements Serializable {
 		} catch (IOException e) {
 			MetaUtils.setMsg("Error creating user", FacesMessage.SEVERITY_ERROR);
 		}
-		
-		
-		
 	}
 		
-	public void findPosition(){
+	public IPosition findPosition(){
+		
 		position =  positionService.findPositionById(selectedPositionId);
+		
+		IUser candidate = MetaUtils.getUser();
+		
+		if(candidate.getAddress()==null||candidate.getCv()==null||candidate.getQualifications().isEmpty()){
+			MetaUtils.setMsg("Please complete your profile record", FacesMessage.SEVERITY_INFO);
+			position = null;
+		}
+	
+		else if(applicationService.findApplicationByCandidateAndPosition(candidate, position)){
+			MetaUtils.setMsg("You have already applied for this position", FacesMessage.SEVERITY_INFO);
+			position = null;
+		}
+		 
+		return position;
 	}
 
 	public void uploadLetter(AjaxBehaviorEvent event) {
