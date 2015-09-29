@@ -45,7 +45,6 @@ public class ColorBean implements Serializable {
 
 	public void setAdmin(IColor admin) {
 		this.admin = admin;
-		System.out.println(admin.getHeader());
 	}
 
 	public IColor getInterview() {

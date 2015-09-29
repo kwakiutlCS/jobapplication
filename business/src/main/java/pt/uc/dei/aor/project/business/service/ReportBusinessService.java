@@ -7,33 +7,28 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.persistence.IAnswerPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IPropositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IReportPersistenceService;
 import pt.uc.dei.aor.project.business.util.DataModel;
 import pt.uc.dei.aor.project.business.util.DataPoint;
-import pt.uc.dei.aor.project.business.util.EmailUtil;
+import pt.uc.dei.aor.project.business.util.ProposalSituation;
 
 @Stateless
 public class ReportBusinessService implements IReportBusinessService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(ReportBusinessService.class);
-	
 	private static final String[] MONTHS = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun",
 			"Jul", "Ago", "Sep", "Oct", "Nov", "Dec"};
 	
-
-	@Inject
-	private EmailUtil emailUtil;
-	
+		
 	
 	@Inject
 	private IReportPersistenceService reportPersistence;
@@ -46,7 +41,13 @@ public class ReportBusinessService implements IReportBusinessService {
 	
 	@Inject 
 	private IAnswerPersistenceService answerPersistence;
+	
+	@Inject
+	private IInterviewPersistenceService interviewPersistence;
 
+	@Inject
+	private IPropositionPersistenceService propositionPersistence;
+	
 	
 	@Override
 	public DataModel<String, Long> generatePeriodicaAppReport(int period) {
@@ -92,7 +93,7 @@ public class ReportBusinessService implements IReportBusinessService {
 			
 			long y;
 			
-			if (spontaneous) y =reportPersistence.generateSpontaneousAppReport(startDate, finishDate);
+			if (spontaneous) y = reportPersistence.generateSpontaneousAppReport(startDate, finishDate);
 			else y = reportPersistence.generatePeriodicAppReport(startDate, finishDate);
 			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], y));
 			cal.add(Calendar.MONTH, 1);
@@ -224,6 +225,108 @@ public class ReportBusinessService implements IReportBusinessService {
 		model.addPoint(new DataPoint<String, Long>("Curriculum analysis", rejected));
 		model.addPoint(new DataPoint<String, Long>("Interview unattended", missedInterview));
 		model.addPoint(new DataPoint<String, Long>("Interview analysis", interviewed));
+		
+		return model;
+	}
+
+	@Override
+	public DataModel<String, Long> generateInterviewReport(int period) {
+		Date startDate;
+		Calendar cal = Calendar.getInstance();
+		
+		if (period == 3) {
+			cal.add(Calendar.MONTH, -3);
+		}
+		else if (period == 12) {
+			cal.add(Calendar.YEAR, -1);
+		}
+		else {
+			cal.add(Calendar.YEAR, -1000); // all applications
+		}
+		
+		startDate = cal.getTime();
+		
+		List<IInterview> interviews = interviewPersistence.
+				findInterviewsByClosedPositionAndDate(startDate);
+		
+		long refused = 0;
+		long nextPhase = 0;
+		long accepted = 0;
+		long missed = 0;
+		
+		for (IInterview i : interviews) {
+			List<IAnswer> answers = answerPersistence.findAnswersByInterview(i);
+			if (answers.size() <= 1) missed++;
+			else {
+				if (isFinalInterview(i)) {
+					if (i.getApplication().isRefused()) refused++;
+					else accepted++;
+				}
+				else nextPhase++;
+			}
+		}
+		
+		DataModel<String, Long> model = new DataModel<>();
+		model.addPoint(new DataPoint<String, Long>("Application rejected", refused));
+		model.addPoint(new DataPoint<String, Long>("Application accepted", accepted));
+		model.addPoint(new DataPoint<String, Long>("Proceed next phase", nextPhase));
+		model.addPoint(new DataPoint<String, Long>("Interview unattended", missed));
+		
+		return model;
+	}
+	
+	
+	private boolean isFinalInterview(IInterview interview) {
+		IApplication app = interview.getApplication();
+		
+		List<IInterview> interviews = interviewPersistence.findInterviewsByApplication(app);
+		
+		if (interviews.size() == 1) return true;
+		
+		Calendar interviewCal = Calendar.getInstance();
+		interviewCal.setTime(interview.getDateObject());
+		Calendar otherCal = Calendar.getInstance();
+		for (IInterview i : interviews) {
+			otherCal.setTime(i.getDateObject());
+			if (otherCal.after(interviewCal)) return true;
+		}
+		
+		return false;
+	}
+
+	@Override
+	public DataModel<String, Long> generateProposalReport(int period) {
+		Date startDate;
+		Calendar cal = Calendar.getInstance();
+		
+		if (period == 3) {
+			cal.add(Calendar.MONTH, -3);
+		}
+		else if (period == 12) {
+			cal.add(Calendar.YEAR, -1);
+		}
+		else {
+			cal.add(Calendar.YEAR, -1000); // all applications
+		}
+		
+		startDate = cal.getTime();
+		
+		List<IProposition> proposals = propositionPersistence.findPropositionsByDate(startDate);
+		
+		long unanswered = 0;
+		long refused = 0;
+		long accepted = 0;
+		
+		for (IProposition p : proposals) {
+			if (p.getState() == ProposalSituation.ACCEPTED) accepted++;
+			else if (p.getState() == ProposalSituation.REFUSED) refused++;
+			else if (p.getState() == ProposalSituation.ONHOLD) unanswered++;
+		}
+		
+		DataModel<String, Long> model = new DataModel<>();
+		model.addPoint(new DataPoint<String, Long>("rejected", refused));
+		model.addPoint(new DataPoint<String, Long>("accepted", accepted));
+		model.addPoint(new DataPoint<String, Long>("unanswered", unanswered));
 		
 		return model;
 	}

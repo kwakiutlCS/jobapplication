@@ -227,6 +227,7 @@ public class PositionBean implements Serializable {
 	public void createPosition() {
 		if (scripts == null || scripts.isEmpty()) {
 			MetaUtils.setMsg("Please select at least a script", FacesMessage.SEVERITY_ERROR);
+			return;
 		}
 		positionService.createNewPosition(title, selectedLocalizations, state, vacancies, closingDate, sla, contactPerson,
 				company, selectedTechnicalAreas, description, scripts, selectedChannels);
@@ -242,6 +243,7 @@ public class PositionBean implements Serializable {
 		description = null;
 		script = null;
 		selectedChannels = null;
+		scripts = null;
 		
 		MetaUtils.setMsg("Position created", FacesMessage.SEVERITY_INFO);
 	}

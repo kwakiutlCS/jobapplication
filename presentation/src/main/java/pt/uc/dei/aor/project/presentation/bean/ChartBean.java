@@ -2,7 +2,7 @@ package pt.uc.dei.aor.project.presentation.bean;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -13,6 +13,7 @@ import org.primefaces.model.chart.ChartSeries;
 
 import pt.uc.dei.aor.project.business.util.DataModel;
 import pt.uc.dei.aor.project.business.util.DataPoint;
+import pt.uc.dei.aor.project.presentation.util.MetaUtils;
 
 @Named
 @ViewScoped
@@ -46,6 +47,10 @@ public class ChartBean implements Serializable {
     
     public void createChart(DataModel<String, Long> data, String label, String title,
     		String axisX, String axisY) {
+    	if (data == null) {
+    		MetaUtils.setMsg("No data to display", FacesMessage.SEVERITY_INFO);
+    		return;
+    	}
     	
         barModel = init(data, label);
          

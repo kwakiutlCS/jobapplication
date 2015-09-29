@@ -71,7 +71,7 @@
 			<p:inputText id="company" value="#{positionBean.position.company}" disabled="true" />
 			
 			<p:outputLabel value="Description" for="description" />
-			<p:inputTextarea value="#{positionBean.description}" required="true" id="description" />
+			<p:inputTextarea value="#{positionBean.position.description}" required="true" id="description" />
 			
 			<p:commandButton value="Save changes" update="@form :globalMessages"
 				action="#{positionBean.updatePosition}"	styleClass="ui-priority-primary" />

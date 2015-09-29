@@ -60,6 +60,7 @@ public class PublicationChannelBean implements Serializable {
 
 
 	public void createNewPublicationChannel(){
+		if (editchannel == null || editchannel.equals("")) return;
 		for (IPublicationChannel c : channels) {
 			if (c.getChannel().equals(editchannel)) {
 				MetaUtils.setMsg("Publication channel "+editchannel+" already exists", FacesMessage.SEVERITY_ERROR,
