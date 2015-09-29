@@ -37,7 +37,11 @@ public interface IUserPersistenceService {
 
 	long countAdmins();
 	
-	boolean confirmUserHasRegistComplete();
+	boolean verifyUserHasQualification(IUser user);
+	
+	boolean verifyUserHasAdress(IUser user);
+	
+	boolean verifyUserHasCv(IUser user);
 
 
 
