@@ -1,10 +1,7 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
-import java.io.IOException;
 import java.io.Serializable;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -60,40 +57,40 @@ public class ApplicationBean implements Serializable {
 		position =  positionService.findPositionById(selectedPositionId);
 	}
 
-	public void uploadLetter(AjaxBehaviorEvent event) {
-
-		if (!coverLetter.getContentType().equals("application/pdf")) {
-			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
-			return; 
-		}
-
-		try {
-		 applicationService.uploadLetter(coverLetter);
-		} catch (IOException e) {
-			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
-			coverLetter = null;
-			logger.error("Error uploading file: "+cv.getSubmittedFileName());
-		}
-	}
-	
-	public void upload(AjaxBehaviorEvent event) {
-
-		if (!cv.getContentType().equals("application/pdf")) {
-			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
-			return; 
-		}
-
-		try {
-			provisoryCv = candidateService.uploadTempCV(cv);
-			cvPath = cv.getSubmittedFileName();
-		} catch (IOException e) {
-			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
-			cv = null;
-			logger.error("Error uploading file: "+cv.getSubmittedFileName());
-		}
-	}
-
-	
+//	public void uploadLetter(AjaxBehaviorEvent event) {
+//
+//		if (!coverLetter.getContentType().equals("application/pdf")) {
+//			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
+//			return; 
+//		}
+//
+//		try {
+//		 applicationService.uploadLetter(coverLetter);
+//		} catch (IOException e) {
+//			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
+//			coverLetter = null;
+//			logger.error("Error uploading file: "+cv.getSubmittedFileName());
+//		}
+//	}
+//	
+//	public void upload(AjaxBehaviorEvent event) {
+//
+//		if (!cv.getContentType().equals("application/pdf")) {
+//			MetaUtils.setMsg("Please upload a pdf file", FacesMessage.SEVERITY_ERROR);
+//			return; 
+//		}
+//
+//		try {
+//			provisoryCv = candidateService.uploadTempCV(cv);
+//			cvPath = cv.getSubmittedFileName();
+//		} catch (IOException e) {
+//			MetaUtils.setMsg("Error uploading file", FacesMessage.SEVERITY_ERROR);
+//			cv = null;
+//			logger.error("Error uploading file: "+cv.getSubmittedFileName());
+//		}
+//	}
+//
+//	
 	
 	
 	
