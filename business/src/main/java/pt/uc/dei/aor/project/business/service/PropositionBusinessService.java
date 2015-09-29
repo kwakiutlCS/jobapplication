@@ -20,9 +20,7 @@ public class PropositionBusinessService implements IPropositionBusinessService {
 	@Override
 	public void sendProposition(IApplication application) {
 		IProposition proposition = factory.proposition();
-		System.out.println(proposition);
 		application.sendProposition(proposition);
-		System.out.println(application.getProposition());
 		applicationPersistence.save(application);
 	}
 

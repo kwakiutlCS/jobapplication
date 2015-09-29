@@ -2,7 +2,9 @@ package pt.uc.dei.aor.project.persistence.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -61,17 +63,18 @@ public class ReportPersistenceService implements IReportPersistenceService {
 		Root<ApplicationEntity> application = q.from(ApplicationEntity.class);
 		q.select(application);
 		
-		
 		// date
 		Expression<Date> dateExpression = application.get("date");
 		Predicate criteriaPredicate = cb.greaterThanOrEqualTo(dateExpression, startDate);
 		
 		// closed
 		Root<PositionEntity> position = q.from(PositionEntity.class);
-		criteriaPredicate = cb.and(criteriaPredicate, cb.equal(application.get("position"), 
-				position.get("id")));
-		criteriaPredicate = cb.and(criteriaPredicate, cb.equal(position.get("state"), 
-				PositionState.CLOSED));
+		Predicate positionPredicate = cb.and(cb.equal(application.get("position"), 
+			position.get("id")), cb.equal(position.get("state"), 
+					PositionState.CLOSED)); 
+		positionPredicate = cb.or(positionPredicate, cb.isNull(application.get("position")));
+		
+		criteriaPredicate = cb.and(criteriaPredicate, positionPredicate);
 		
 		// refused
 		criteriaPredicate = cb.and(criteriaPredicate, cb.equal(application.get("refused"), true));
@@ -82,9 +85,10 @@ public class ReportPersistenceService implements IReportPersistenceService {
 		TypedQuery<ApplicationEntity> query = em.createQuery(q);
 		
 		List<ApplicationEntity> entities = query.getResultList();
+		Set<ApplicationEntity> set = new HashSet<>(entities);
 		List<IApplication> proxies = new ArrayList<>();
 		
-		for (ApplicationEntity ie : entities) {
+		for (ApplicationEntity ie : set) {
 			proxies.add(new ApplicationProxy(ie));
 		}
 		

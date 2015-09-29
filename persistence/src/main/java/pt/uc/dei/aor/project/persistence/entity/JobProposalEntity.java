@@ -10,7 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import pt.uc.dei.aor.project.business.util.ProposalSituation;
@@ -20,6 +21,10 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 
 @Entity
 @Table(name="proposal")
+@NamedQueries({
+	@NamedQuery(name = "Proposition.findByDate", 
+			query = "from JobProposalEntity p where p.date >= :startDate"),
+})
 public class JobProposalEntity {
 	
 	@Id 
