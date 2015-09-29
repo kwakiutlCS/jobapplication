@@ -7,6 +7,7 @@ import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IPropositionPersistenceService;
 
 @Stateless
 public class PropositionBusinessService implements IPropositionBusinessService {
@@ -17,11 +18,15 @@ public class PropositionBusinessService implements IPropositionBusinessService {
 	@Inject
 	private IApplicationPersistenceService applicationPersistence;
 	
+	@Inject 
+	private IPropositionPersistenceService propositionPersistence;
+	
 	@Override
 	public void sendProposition(IApplication application) {
 		IProposition proposition = factory.proposition();
 		application.sendProposition(proposition);
 		applicationPersistence.save(application);
+		
 	}
 
 }

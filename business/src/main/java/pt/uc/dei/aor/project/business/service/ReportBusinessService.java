@@ -324,9 +324,9 @@ public class ReportBusinessService implements IReportBusinessService {
 		}
 		
 		DataModel<String, Long> model = new DataModel<>();
-		model.addPoint(new DataPoint<String, Long>("rejected", refused));
-		model.addPoint(new DataPoint<String, Long>("accepted", accepted));
-		model.addPoint(new DataPoint<String, Long>("unanswered", unanswered));
+		model.addPoint(new DataPoint<String, Long>("rejected", refused/2));
+		model.addPoint(new DataPoint<String, Long>("accepted", accepted/2));
+		model.addPoint(new DataPoint<String, Long>("unanswered", unanswered/2));
 		
 		return model;
 	}

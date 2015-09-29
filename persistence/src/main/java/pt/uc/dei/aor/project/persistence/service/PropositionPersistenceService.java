@@ -37,6 +37,39 @@ public class PropositionPersistenceService implements IPropositionPersistenceSer
 		return proxies;
 	}
 
+	@Override
+	public List<IProposition> findOrphanPropositions() {
+		TypedQuery<JobProposalEntity> query = em.createNamedQuery("Proposition.findOrphans", 
+				JobProposalEntity.class);
+		
+		List<JobProposalEntity> entities = query.getResultList();
+		List<IProposition> proxies = new ArrayList<>();
+		
+		for (JobProposalEntity pe : entities) {
+			proxies.add(new PropositionProxy(pe));
+		}
+		
+		return proxies;
+	}
 	
+	@Override
+	public List<IProposition> findAll() {
+		TypedQuery<JobProposalEntity> query = em.createNamedQuery("Proposition.findAll", 
+				JobProposalEntity.class);
+		
+		List<JobProposalEntity> entities = query.getResultList();
+		List<IProposition> proxies = new ArrayList<>();
+		
+		for (JobProposalEntity pe : entities) {
+			proxies.add(new PropositionProxy(pe));
+		}
+		
+		return proxies;
+	}
+	
+	@Override
+	public void remove(IProposition proposition) {
+		em.remove(em.merge(GenericPersistenceService.getEntity(proposition)));
+	}
 	
 }

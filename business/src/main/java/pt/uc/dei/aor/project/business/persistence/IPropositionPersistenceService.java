@@ -9,6 +9,12 @@ public interface IPropositionPersistenceService {
 
 	List<IProposition> findPropositionsByDate(Date startDate);
 
+	List<IProposition> findOrphanPropositions();
+
+	void remove(IProposition proposition);
+
+	List<IProposition> findAll();
+
 	
 	
 
