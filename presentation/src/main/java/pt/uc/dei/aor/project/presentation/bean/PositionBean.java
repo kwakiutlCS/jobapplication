@@ -194,7 +194,10 @@ public class PositionBean implements Serializable {
 		this.state = state;
 	}
 
-
+	public List<IPosition> getOpenPositions() {
+		return positionService.findOpenPosition();
+	}
+	
 	public void setTechnicalAreas(List<TechnicalArea> technicalAreas) {
 	}
 	

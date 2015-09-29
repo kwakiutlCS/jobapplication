@@ -160,6 +160,7 @@ public class PositionEntity {
 	}
 
 	public List<Localization> getLocalizations() {
+		if (localizations == null) return new ArrayList<>();
 		return new ArrayList<>(localizations);
 	}
 
@@ -224,6 +225,7 @@ public class PositionEntity {
 	}
 
 	public List<TechnicalArea> getTechnicalAreas() {
+		if (technicalAreas == null) return new ArrayList<>();
 		return new ArrayList<>(technicalAreas);
 	}
 

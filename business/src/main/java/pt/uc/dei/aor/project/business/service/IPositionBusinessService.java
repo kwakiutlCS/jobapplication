@@ -33,5 +33,7 @@ public interface IPositionBusinessService {
 			Collection<IPublicationChannel> channels);
 
 	IPosition findPositionById(long posId);
+	
+	List<IPosition> findOpenPosition();
 		
 }

@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.servlet.http.Part;
 
+import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -141,5 +142,13 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		upload.upload(dir, filename, file.getInputStream());
 		
 		return tmpDir;
+	}
+
+
+	@Override
+	public IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication)
+			throws IllegalApplicationException {
+		selectedApplication.addPositon(positionToAdd);
+		return applicationPersistence.save(selectedApplication);
 	}
 }

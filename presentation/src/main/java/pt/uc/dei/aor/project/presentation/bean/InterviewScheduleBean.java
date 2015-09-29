@@ -19,10 +19,12 @@ import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
+import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IInterviewBusinessService;
@@ -59,7 +61,14 @@ public class InterviewScheduleBean implements Serializable {
 	private Date tommorrow;
 	
 	private IInterview editing = null;
+
+	private IPosition selectedPosition;
+
+	private IUser selectedCandidate;
 	
+	private IPosition positionToAdd;
+	
+	private boolean spontaneous = false;
 	
 	public InterviewScheduleBean() {
 		Calendar c = Calendar.getInstance();
@@ -170,9 +179,23 @@ public class InterviewScheduleBean implements Serializable {
 		if (!user.isAdmin() && !selectedApplication.getPosition().getContactPerson().equals(user))
 			selectedApplication = null;
 		
+		setSelectedPosition(selectedApplication.getPosition());
+		if (selectedPosition.getTitle() == null) spontaneous = true;
+		setSelectedCandidate(selectedApplication.getCandidate());
 	}
 	
 	
+	public void addPositionToApplication() {
+		try {
+			 selectedApplication = applicationService.addPositionToApplication(positionToAdd, selectedApplication);
+			 spontaneous = false;
+			 selectedPosition = selectedApplication.getPosition();
+		} catch (IllegalApplicationException e) {
+			MetaUtils.setMsg("Not possible to add a position to that application", 
+					FacesMessage.SEVERITY_ERROR);
+		}
+		
+	}
 
 	public void saveInterview(IInterview interview) {
 		String[] hours = interviewTime.split("h");
@@ -347,6 +370,38 @@ public class InterviewScheduleBean implements Serializable {
 
 	public void setEditing(IInterview editing) {
 		this.editing = editing;
+	}
+
+	public IUser getSelectedCandidate() {
+		return selectedCandidate;
+	}
+
+	public void setSelectedCandidate(IUser selectedCandidate) {
+		this.selectedCandidate = selectedCandidate;
+	}
+
+	public IPosition getSelectedPosition() {
+		return selectedPosition;
+	}
+
+	public void setSelectedPosition(IPosition selectedPosition) {
+		this.selectedPosition = selectedPosition;
+	}
+
+	public IPosition getPositionToAdd() {
+		return positionToAdd;
+	}
+
+	public void setPositionToAdd(IPosition positionToAdd) {
+		this.positionToAdd = positionToAdd;
+	}
+
+	public boolean isSpontaneous() {
+		return spontaneous;
+	}
+
+	public void setSpontaneous(boolean spontaneous) {
+		this.spontaneous = spontaneous;
 	}
 
 	

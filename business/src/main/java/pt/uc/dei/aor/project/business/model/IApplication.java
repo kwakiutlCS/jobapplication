@@ -48,4 +48,6 @@ public interface IApplication {
 	ProposalSituation getProposition();
 
 	void setCv(String filename);
+
+	void addPositon(IPosition positionToAdd);
 }

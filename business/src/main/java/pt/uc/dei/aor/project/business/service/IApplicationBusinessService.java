@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.Part;
 
+import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IPosition;
@@ -33,5 +34,8 @@ public interface IApplicationBusinessService {
 	String uploadTempLetter(Part letter) throws IOException;
 
 	String uploadTempCV(Part cv)  throws IOException;
+
+	IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication) throws
+		IllegalApplicationException;
 
 }

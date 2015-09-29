@@ -112,5 +112,11 @@ public class PositionBusinessService implements IPositionBusinessService {
 	}
 
 
+	@Override
+	public List<IPosition> findOpenPosition() {
+		return positionPersistence.findOpenPositions();
+	}
+
+
 
 }

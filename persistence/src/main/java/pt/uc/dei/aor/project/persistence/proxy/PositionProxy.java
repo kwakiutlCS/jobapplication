@@ -295,4 +295,19 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		if (entity.getState() == null) return "";
 		return entity.getState().getPositionStateLabel();
 	}
+	
+	@Override
+	public int hashCode() {
+		return entity.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (o instanceof PositionProxy) {
+			PositionProxy p = (PositionProxy) o;
+			return entity.equals(GenericPersistenceService.getEntity(o));
+		}
+		else return false;
+	}
 }

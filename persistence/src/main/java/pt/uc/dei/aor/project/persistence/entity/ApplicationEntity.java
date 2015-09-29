@@ -198,4 +198,8 @@ public class ApplicationEntity {
 	public void setCv(String filename) {
 		cv = filename;
 	}
+
+	public void setPosition(PositionEntity entity) {
+		position = entity;
+	}
 }
