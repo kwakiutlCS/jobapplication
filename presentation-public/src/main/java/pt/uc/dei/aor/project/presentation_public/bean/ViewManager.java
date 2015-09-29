@@ -34,7 +34,7 @@ public class ViewManager implements Serializable {
 	@EJB
 	private IPositionBusinessService positionService;
 
-	
+
 	public int verifyLogin(){
 
 		int unlogged = 0;
@@ -47,9 +47,9 @@ public class ViewManager implements Serializable {
 
 
 	public String applyAfterLogin(){
-	
+
 		String redirect = "";
-		
+
 		//get Candidate
 		IUser candidate = MetaUtils.getUser();
 		//get Position applying for
@@ -58,13 +58,19 @@ public class ViewManager implements Serializable {
 		long positionId = Long.parseLong(params.get("position"));
 		IPosition position = positionService.findPositionById(positionId);
 
+
+		//check if Candidate has completed register
+		if(!verifyCandidateHasCompletedRegist(candidate)){
+			redirect = "/authorized/profile.xhtml?faces-redirect=true";
+		}
+
 		//check if Candidate already applied for given position
-		if(duplicateApplication(candidate, position))
+		else if (duplicateApplication(candidate, position))
 			redirect = "/authorized/listPosition.xhtml?faces-redirect=true";
-					
+
 		return redirect;
 	}
-	
+
 	public String loginOnApply(){
 
 		//login error - unregistered candidate 
@@ -85,13 +91,19 @@ public class ViewManager implements Serializable {
 			Map<String,String> params = context.getExternalContext().getRequestParameterMap();
 			long positionId = Long.parseLong(params.get("position"));
 			IPosition position = positionService.findPositionById(positionId);
-			
+
+			//check if Candidate has completed register
+			if(!verifyCandidateHasCompletedRegist(candidate)){
+				return "/authorized/profile.xhtml?faces-redirect=true";
+			}
+
 			//check if Candidate already applied for given position
-			if(duplicateApplication(candidate, position)){
+			else if(duplicateApplication(candidate, position)){
 				return "/authorized/listPosition.xhtml?faces-redirect=true";
 			}
 
-			return "/authorized/apply.xhtml?faces-redirect=true";
+			else
+				return "/authorized/apply.xhtml?faces-redirect=true";
 		}
 	}
 
@@ -105,6 +117,18 @@ public class ViewManager implements Serializable {
 			duplicateApplication = true;
 		}
 		return duplicateApplication;
+	}
+
+	public boolean verifyCandidateHasCompletedRegist(IUser candidate){
+
+		if(candidate.getAddress()==null||candidate.getCv()==null||candidate.getQualifications().isEmpty()){
+			MetaUtils.setMsg("Please complete your profile record", FacesMessage.SEVERITY_INFO);
+			return false;
+		}
+
+		return true;
+
+
 	}
 
 }

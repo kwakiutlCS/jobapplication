@@ -70,6 +70,4 @@ public interface IUserBusinessService {
 
 	String uploadTempCV(Part cv) throws IOException;
 
-
-
 }

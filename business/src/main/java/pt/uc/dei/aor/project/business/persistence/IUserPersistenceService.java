@@ -36,14 +36,5 @@ public interface IUserPersistenceService {
 	List<IUser> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
 	long countAdmins();
-	
-	boolean verifyUserHasQualification(IUser user);
-	
-	boolean verifyUserHasAdress(IUser user);
-	
-	boolean verifyUserHasCv(IUser user);
-
-
-
-	
+		
 }
