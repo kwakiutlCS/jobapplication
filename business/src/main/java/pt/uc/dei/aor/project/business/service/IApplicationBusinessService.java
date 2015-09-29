@@ -13,7 +13,8 @@ import pt.uc.dei.aor.project.business.model.IUser;
 
 public interface IApplicationBusinessService {
 	
-	IApplication createApplication(String coverLetter, String cv, String sourceInfo, IUser candidate, IPosition position);
+	IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
+			String sourceInfo, IUser candidate, IPosition position) throws IOException;
 
 	IApplication findApplicationById(long id);
 
@@ -29,9 +30,8 @@ public interface IApplicationBusinessService {
 
 	void uploadCV(IApplication application, Part cv) throws IOException;
 
+	String uploadTempLetter(Part letter) throws IOException;
 
-
-
-
+	String uploadTempCV(Part cv)  throws IOException;
 
 }

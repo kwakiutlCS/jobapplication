@@ -158,6 +158,10 @@ public class InitialScript {
 		if (!Files.exists(tmp))
 			Files.createDirectory(tmp);
 		
+		tmp = directory.resolve(Paths.get("uploads/letter/temp"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
+		
 		tmp = directory.resolve(Paths.get("data"));
 		if (!Files.exists(tmp))
 			Files.createDirectory(tmp);
