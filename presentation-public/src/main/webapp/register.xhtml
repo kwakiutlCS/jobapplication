@@ -10,7 +10,7 @@
 
 	<ui:define name="content">
 
-		<h:form>
+		<h:form id="registerForm">
 
 			<p:panel header="Personal Details">
 				<p:outputLabel value="Login" for="login" />
@@ -76,8 +76,8 @@
 								<div>#{qualification.school}</div>
 								<div>#{qualification.degree}</div>
 								<div>
-									<p:commandLink value="delete" update="@form"
-										action="#{registerBean.removeQualification(qualification)}" />
+									<p:commandLink value="delete" update=":registerForm:qualificationsList"
+									process="@this" action="#{registerBean.removeQualification(qualification)}" />
 								</div>
 							</div>
 						</ui:repeat>
@@ -99,7 +99,7 @@
 						completeMethod="#{registerBean.listDegrees()}" maxResults="8" />
 					<p></p>
 					<p:commandButton value="Add qualification" process="@this degreeField institution"
-						action="#{registerBean.addQualification}" update="@this" />
+						action="#{registerBean.addQualification}" update="@this :registerForm:qualificationsList" />
 
 				</h:panelGrid>
 			</p:panel>

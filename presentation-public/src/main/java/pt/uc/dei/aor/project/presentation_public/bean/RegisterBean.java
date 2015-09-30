@@ -110,6 +110,8 @@ public class RegisterBean implements Serializable {
 	public void addQualification() {
 		if (choosenQualifications == null) choosenQualifications = new ArrayList<>();
 		choosenQualifications.add(qualificationService.addQualification(school, degree));
+		school = null;
+		degree = null;
 	}
 
 	public void removeQualification(IQualification qualification){
