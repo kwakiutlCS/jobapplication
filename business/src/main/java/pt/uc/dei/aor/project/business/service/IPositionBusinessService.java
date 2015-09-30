@@ -21,7 +21,7 @@ public interface IPositionBusinessService {
 
 	List<IPosition> findPositionByTitle(String filterPosition);
 	
-	IPosition updatePosition(IPosition position);
+	IPosition updatePosition(IPosition position, List<IScript> scripts);
 
 	List<IPosition> findFilteredPositions(int offset, int limit, PositionFilter filter);
 

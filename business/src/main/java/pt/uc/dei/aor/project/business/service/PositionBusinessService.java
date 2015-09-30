@@ -87,7 +87,8 @@ public class PositionBusinessService implements IPositionBusinessService {
 
 
 	@Override
-	public IPosition updatePosition(IPosition position) {
+	public IPosition updatePosition(IPosition position, List<IScript> scripts) {
+		position.setScripts(scripts);
 		return positionPersistence.save(position);
 	}
 
@@ -118,5 +119,5 @@ public class PositionBusinessService implements IPositionBusinessService {
 	}
 
 
-
+	
 }

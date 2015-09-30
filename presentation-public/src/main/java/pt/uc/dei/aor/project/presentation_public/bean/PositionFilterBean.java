@@ -120,11 +120,7 @@ public class PositionFilterBean implements Serializable{
 		this.selectedPosition = selectedPosition;
 	}
 	
-	public void updatePosition(IPosition selectedposition){
-		positionEjb.updatePosition(selectedposition);
-	}
-	
-	
+		
 	public void mergeAreas(int setPos) {
 		try {
 			filter.mergeAreas(setPos);

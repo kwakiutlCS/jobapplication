@@ -16,7 +16,7 @@
 	</ui:define>
 	
 	<ui:define name="content">
-		<h:form>
+		<h:form id="positionform">
 		<h:panelGrid columns="4" styleClass="defaultGrid" columnClasses="defLbl1, defData, defLbl2, defData"
 		rowClasses="row">
 			<p:outputLabel value="Code" for="code" />
@@ -72,6 +72,30 @@
 			
 			<p:outputLabel value="Description" for="description" />
 			<p:inputTextarea value="#{positionBean.position.description}" required="true" id="description" />
+			
+			<p:outputLabel for="script" value="Add Script" />
+				<p:selectOneMenu id="script"
+					value="#{positionBean.script}" converter="omnifaces.SelectItemsConverter">
+					<f:selectItem noSelectionOption="true" itemLabel="select one:" />
+					<f:selectItems value="#{scriptBean.scripts}"
+						var="scr" itemValue="#{scr}"
+						itemLabel="#{scr.title}" />
+				</p:selectOneMenu>	
+				<p:commandLink value="add script" action="#{positionBean.addScript}" 
+				process=":positionform:script @this" update="scriptList" />
+				<h:panelGroup id="scriptList">
+				<ui:repeat value="#{positionBean.scripts}" var="script">
+					<div class="objectUnit">
+						<span>
+						#{script.title}
+						</span>
+						<span class="removalLink">
+							<p:commandLink value="x" action="#{positionBean.removeScript(script)}"
+							process="@this" update=":positionform:scriptList" />
+						</span>
+					</div>
+				</ui:repeat>		
+				</h:panelGroup>
 			
 			<p:commandButton value="Save changes" update="@form :globalMessages"
 				action="#{positionBean.updatePosition}"	styleClass="ui-priority-primary" />

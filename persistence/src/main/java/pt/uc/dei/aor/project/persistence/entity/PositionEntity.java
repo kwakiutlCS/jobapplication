@@ -125,10 +125,7 @@ public class PositionEntity {
 		this.publications = new TreeSet<>();
 		this.publications.addAll(publications);
 		
-		phases = new TreeSet<>();
-		int i = 1;
-		for (ScriptEntity s : scripts)
-			this.phases.add(new PhaseEntity(s, i++));
+		setScripts(scripts);
 		
 	}
 
@@ -297,6 +294,8 @@ public class PositionEntity {
 	public String toString() {
 		return "PositionEntity [code=" + code + ", title=" + title + "]";
 	}
+
+	
    
 }
 

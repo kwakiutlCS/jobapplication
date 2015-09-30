@@ -77,4 +77,6 @@ public interface IPosition  {
 
 	void setContactPerson(IUser contactPerson);
 
+	public void setScripts(List<IScript> scripts);
+
 }

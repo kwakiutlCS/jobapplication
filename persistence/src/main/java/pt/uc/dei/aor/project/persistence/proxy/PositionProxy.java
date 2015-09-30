@@ -310,4 +310,16 @@ public class PositionProxy implements IPosition, IProxyToEntity<PositionEntity> 
 		}
 		else return false;
 	}
+
+	@Override
+	public void setScripts(List<IScript> scripts) {
+		List<ScriptEntity> entities = new ArrayList<>();
+		for (IScript s : scripts) {
+			entities.add(GenericPersistenceService.getEntity(s));
+		}
+		
+		entity.setScripts(entities);
+	}
+
+	
 }

@@ -57,6 +57,7 @@ public class PositionBean implements Serializable {
 	
 	public void onload() {
 		position = positionService.findPositionById(posId);
+		scripts = position.getScripts();
 	}
 	
 	public PositionBean() {
@@ -65,7 +66,8 @@ public class PositionBean implements Serializable {
 	public void removeScript(IScript script) {
 		scripts.remove(script);
 	}
-
+	
+	
 	public List<Localization> getLocalizations(){
 		
 		List<Localization> localizations = new ArrayList<Localization>(EnumSet.allOf(Localization.class));
@@ -99,7 +101,11 @@ public class PositionBean implements Serializable {
 	}
 	
 	public void updatePosition() {
-		position = positionService.updatePosition(position);
+		if (scripts.size() == 0) {
+			MetaUtils.setMsg("At least 1 script needed", FacesMessage.SEVERITY_ERROR);
+			return;
+		}
+		position = positionService.updatePosition(position, scripts);
 		MetaUtils.setMsg("Position updated", FacesMessage.SEVERITY_INFO);
 	}
 

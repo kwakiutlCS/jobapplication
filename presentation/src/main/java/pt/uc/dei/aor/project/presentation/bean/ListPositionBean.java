@@ -3,10 +3,8 @@ package pt.uc.dei.aor.project.presentation.bean;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -123,9 +121,9 @@ public class ListPositionBean implements Serializable{
 		this.selectedPosition = selectedPosition;
 	}
 	
-	public void updatePosition(IPosition selectedposition){
-		positionEjb.updatePosition(selectedposition);
-	}
+//	public void updatePosition(IPosition selectedposition){
+//		positionEjb.updatePosition(selectedposition);
+//	}
 	
 	
 	public void mergeAreas(int setPos) {
