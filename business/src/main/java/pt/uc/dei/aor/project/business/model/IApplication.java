@@ -52,4 +52,6 @@ public interface IApplication {
 	void addPositon(IPosition positionToAdd);
 
 	String getCv();
+	
+	boolean isSpontaneous();
 }

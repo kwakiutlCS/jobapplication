@@ -295,6 +295,6 @@ public class AccountBean implements Serializable {
 				.getExternalContext().getRequest()).getContextPath();
 		String cv = MetaUtils.getUser().getCv();
 		
-		return "https://localhost:8443"+app+"/cv/"+cv;
+		return "https://localhost:8443"+app+"/cv/users/"+MetaUtils.getUser().getLogin()+"/"+cv;
 	}
 }

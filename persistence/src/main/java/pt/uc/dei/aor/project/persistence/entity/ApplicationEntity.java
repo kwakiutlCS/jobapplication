@@ -206,4 +206,8 @@ public class ApplicationEntity {
 	public String getCv() {
 		return cv;
 	}
+
+	public boolean isSpontaneous() {
+		return spontaneous;
+	}
 }

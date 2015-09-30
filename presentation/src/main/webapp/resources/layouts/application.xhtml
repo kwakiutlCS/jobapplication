@@ -36,6 +36,22 @@
 					<div><span>#{q.school}</span><span>#{q.degree}</span></div>
 				</ui:repeat>
 			</div>
+			<h:panelGroup rendered="#{not interviewScheduleBean.selectedApplication.spontaneous}" layout="block">
+				<span>Documents</span><span> <h:outputLink
+						value="https://localhost:8443/jobmanagement/cv/applications/#{interviewScheduleBean.selectedApplicationId}/#{interviewScheduleBean.selectedApplication.cv}">
+				cv
+			</h:outputLink> - <h:outputLink value="https://localhost:8443/jobmanagement/letter/#{interviewScheduleBean.selectedApplicationId}/#{interviewScheduleBean.selectedApplication.letter}">
+				cover letter
+			</h:outputLink>
+				</span>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.spontaneous}" layout="block">
+				<span>Documents</span><span> <h:outputLink
+						value="https://localhost:8443/jobmanagement/cv/users/#{interviewScheduleBean.selectedApplication.candidate.login}/#{interviewScheduleBean.selectedApplication.candidate.cv}">
+				cv
+			</h:outputLink> 
+				</span>
+			</h:panelGroup>
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{interviewScheduleBean.spontaneous}">

@@ -202,4 +202,10 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public String getCv() {
 		return entity.getCv();
 	}
+
+
+	@Override
+	public boolean isSpontaneous() {
+		return entity.isSpontaneous();
+	}
 }

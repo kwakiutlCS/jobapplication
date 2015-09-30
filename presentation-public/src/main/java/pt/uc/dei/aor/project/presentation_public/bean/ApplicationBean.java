@@ -36,6 +36,14 @@ public class ApplicationBean implements Serializable {
 	private IPositionBusinessService positionService;
 	
 	
+	public String getProvisoryLetter() {
+		return provisoryLetter;
+	}
+
+	public String getProvisoryCv() {
+		return provisoryCv;
+	}
+
 	private Part coverLetter;
 	private String sourceInfo;
 	private IPosition position;

@@ -86,7 +86,6 @@
 
 		<p:panel header="Qualifications">
 			<h:form>
-				<p:messages />
 				<h:panelGrid columns="1">
 
 					<h:panelGroup id="qualificationsList">
@@ -130,14 +129,15 @@
 
 		<p:panel header="Curriculum Vitae">
 			<h:form enctype="multipart/form-data">
-				<p:messages />
-				<h:panelGrid columns="1">
-					<h:inputFile value="#{registerBean.cv}" required="true"
+				<h:outputLink value="https://localhost:8443/jobapplication/cvUser/#{user.login}/#{user.cv}" 
+				rendered="#{not empty user.cv}" target="_blank">
+					#{user.cv}
+				</h:outputLink>
+				<h:inputFile value="#{registerBean.cv}" required="true"
 						id="fileUploader">
 						<f:ajax listener="#{registerBean.upload}" render=":globalMessages" />
 					</h:inputFile>
 
-				</h:panelGrid>
 				<p></p>
 				<p:commandButton value="Send"
 					actionListener="#{registerBean.updateCandidate()}" />

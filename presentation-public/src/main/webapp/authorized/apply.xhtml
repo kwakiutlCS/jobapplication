@@ -23,20 +23,33 @@
 
 		<p:panel header="Cover Letter">
 			<h:form enctype="multipart/form-data">
+				
+				<h:outputLink value="https://localhost:8443/jobapplication/letter/#{applicationBean.provisoryLetter}/#{applicationBean.coverLetter.submittedFileName}" 
+				rendered="#{not empty applicationBean.provisoryLetter}" target="_blank">
+					#{applicationBean.coverLetter.submittedFileName}
+				</h:outputLink>
 				<h:inputFile value="#{applicationBean.coverLetter}" required="true"
 					id="fileUploader">
 					<f:ajax listener="#{applicationBean.uploadLetter}"
-						render=":globalMessages" />
+						render=":globalMessages @form" />
 				</h:inputFile>
 			</h:form>
 		</p:panel>
 
 		<p:panel header="Curriculum Vitae">
 			<h:form enctype="multipart/form-data">
+				<h:outputLink value="https://localhost:8443/jobapplication/cv/#{applicationBean.provisoryCv}/#{applicationBean.cv.submittedFileName}" 
+				rendered="#{not empty applicationBean.provisoryCv}" target="_blank">
+					#{applicationBean.cv.submittedFileName}
+				</h:outputLink>
+				<h:outputLink value="https://localhost:8443/jobapplication/cvUser/#{user.login}/#{user.cv}" 
+				rendered="#{empty applicationBean.provisoryCv and not empty user.cv}" target="_blank">
+					#{user.cv}
+				</h:outputLink>
 				<h:inputFile value="#{applicationBean.cv}" required="true"
 					id="fileUploader">
 					<f:ajax listener="#{applicationBean.uploadCv}"
-						render=":globalMessages" />
+						render=":globalMessages @form" />
 				</h:inputFile>
 			</h:form>
 		</p:panel>
