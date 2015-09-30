@@ -102,7 +102,7 @@
 					<h:link value="recover password" />
 					<p></p>
 					<p:commandButton value="Enter"
-						action="#{viewManager.loginOnApply()}">
+						action="#{viewManager.loginOnApply(listPositionBean.selectedPosition)}">
 						<f:param name="position"
 							value="#{listPositionBean.selectedPosition.id}" />
 					</p:commandButton>

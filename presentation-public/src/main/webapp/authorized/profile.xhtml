@@ -15,22 +15,20 @@
 				<h:panelGrid columns="2">
 
 					<h:outputText value="Your Login" />
-					<h:outputText value="#{registerBean.login}" />
+					<h:outputText value="#{profileBean.login}" />
 
 
-					<h:outputText value="Old Password" />
-					<h:inputSecret value="#{registerBean.oldPassword}" />
-
-					<h:outputText value="New Password" />
-					<h:inputSecret value="#{registerBean.password}" />
+					<p:outputLabel value="New Password" for="password" />
+					<p:password value="#{profileBean.newPassword}" id="password" match="confirm" required="true" />
+					
+					<p:outputLabel value="Confirm Password" for="confirm" />
+					<p:password value="#{profileBean.newPassword}" id="confirm" required="true" />
+					
+					<p:outputLabel for="oldPassword" value="Old Password" />
+					<p:password id="oldPassword" value="#{profileBean.oldPassword}" required="true" />
 
 					<p:commandButton value="save"
-						action="#{registerBean.updatePassword()}" ajax="false" update=":globalMessages @form"/>
-					<p:outputLabel value=" " />
-
-					<p:commandButton value="Delete Account"
-						actionListener="#{registerBean.deleteAccount}" />
-
+						action="#{profileBean.updatePassword}" update=":globalMessages @form"/>
 				</h:panelGrid>
 			</h:form>
 		</p:panel>
@@ -39,19 +37,19 @@
 			<h:form>
 				<h:panelGrid columns="2">
 
-					<p:outputLabel value="Email" />
-					<p:inputText id="email" value="#{registerBean.email}" />
+					<p:outputLabel value="Email" for="email" />
+					<p:inputText id="email" value="#{profileBean.user.email}" required="true" />
 
 					<p:outputLabel value="First name" for="name" />
-					<p:inputText id="name" value="#{registerBean.name}" />
+					<p:inputText id="name" value="#{profileBean.user.name}" required="true" />
 
-					<p:outputLabel value="Surname" />
-					<p:inputText id="surname" value="#{registerBean.surname}" />
+					<p:outputLabel value="Surname" for="surname" />
+					<p:inputText id="surname" value="#{profileBean.user.surname}" required="true" />
 
 				</h:panelGrid>
 
-				<p:commandButton value="Save changes"
-					actionListener="#{registerBean.updateCandidate()}" />
+				<p:commandButton value="Save changes" update="@form :globalMessages"
+					action="#{profileBean.updateCandidate()}" />
 
 			</h:form>
 		</p:panel>
@@ -61,26 +59,26 @@
 				<h:panelGrid columns="2">
 
 					<p:outputLabel value="Address" for="address" />
-					<p:inputText id="address" value="#{registerBean.address}" />
+					<p:inputText id="address" value="#{profileBean.user.address}" required="true" />
 
 					<p:outputLabel value="City" for="city" />
-					<p:inputText id="city" value="#{registerBean.city}" />
+					<p:inputText id="city" value="#{profileBean.user.city}" required="true"/>
 
 					<p:outputLabel value="Country" for="country" />
-					<p:inputText id="country" value="#{registerBean.country}" />
+					<p:inputText id="country" value="#{profileBean.user.country}" required="true" />
 
 					<p:outputLabel value="Phone number" for="phone" />
 					<p:inputMask mask="999 999 999" id="phone"
-						value="#{registerBean.phone}" />
+						value="#{profileBean.user.phone}" required="true" />
 
 					<p:outputLabel value="Mobile number" for="mobile" />
 					<p:inputMask mask="999 999 999" id="mobile"
-						value="#{registerBean.mobilePhone}" />
+						value="#{profileBean.user.mobile}" required="true" />
 
 				</h:panelGrid>
 
-				<p:commandButton value="Submit"
-					actionListener="#{registerBean.updateCandidate()}" />
+				<p:commandButton value="Submit" update="@form :globalMessages"
+					action="#{profileBean.updateCandidate()}" />
 			</h:form>
 		</p:panel>
 
@@ -96,7 +94,7 @@
 								<div>#{qualification.degree}</div>
 								<div>
 									<p:commandLink value="delete" update="@form"
-										action="#{registerBean.removeQualification(qualification)}" />
+										action="#{profileBean.removeQualification(qualification)}" />
 								</div>
 							</div>
 						</ui:repeat>
@@ -106,24 +104,18 @@
 					<p:outputLabel for="institution" value="Institution" />
 					<p></p>
 					<p:autoComplete id="institution"
-						value="#{registerBean.qualification}" forceSelection="false"
-						completeMethod="#{registerBean.listSchools}" style="width:600px"
-						maxResults="8">
+						value="#{profileBean.school}" forceSelection="false"
+						completeMethod="#{registerBean.listSchools}" maxResults="8">
 					</p:autoComplete>
 
 					<p></p>
 					<p:outputLabel for="degreeField" value="Course" />
-					<p:autoComplete id="degreeField" style="width:600px"
-						value="#{registerBean.degree}"
-						completeMethod="#{registerBean.listDegrees()}" maxResults="8" />
+					<p:inputText id="degreeField" value="#{profileBean.degree}" />
 					<p></p>
 					<p:commandButton value="Add qualification"
-						action="#{registerBean.addQualification}" update="@form" />
+						action="#{profileBean.addQualification}" update="@form" />
 
 				</h:panelGrid>
-
-				<p:commandButton value="Save changes"
-					actionListener="#{registerBean.updateCandidate()}" />
 			</h:form>
 		</p:panel>
 
@@ -133,14 +125,10 @@
 				rendered="#{not empty user.cv}" target="_blank">
 					#{user.cv}
 				</h:outputLink>
-				<h:inputFile value="#{registerBean.cv}" required="true"
+				<h:inputFile value="#{profileBean.cv}" required="true"
 						id="fileUploader">
-						<f:ajax listener="#{registerBean.upload}" render=":globalMessages" />
+						<f:ajax listener="#{profileBean.upload}" render=":globalMessages @form" />
 					</h:inputFile>
-
-				<p></p>
-				<p:commandButton value="Send"
-					actionListener="#{registerBean.updateCandidate()}" />
 			</h:form>
 		</p:panel>
 

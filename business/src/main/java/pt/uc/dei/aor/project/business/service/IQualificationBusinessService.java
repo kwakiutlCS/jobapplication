@@ -22,7 +22,7 @@ public interface IQualificationBusinessService {
 
 	List<String> listDegrees(String school);
 
-	void addQualification(IUser user, String school, String degree);
+	IUser addQualification(IUser user, String school, String degree);
 
 	void removeQualification(IUser user, IQualification qualification);
 	

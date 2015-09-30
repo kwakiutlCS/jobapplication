@@ -1,10 +1,8 @@
 package pt.uc.dei.aor.project.presentation_public.bean;
 
 import java.io.Serializable;
-import java.util.Map;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -44,7 +42,7 @@ public class ViewManager implements Serializable {
 		return unlogged;
 	}
 
-	public String loginOnApply(){
+	public String loginOnApply(IPosition position){
 		
 		if(loginBeanI.login().equals("error")){
 			MetaUtils.setMsg("Login or password wrong", FacesMessage.SEVERITY_INFO);
@@ -55,7 +53,7 @@ public class ViewManager implements Serializable {
 		else if(candidateHasCompletedRegistry()){
 			return "/authorized/profile.xhtml?faces-redirect=true";
 		}
-		else if(duplicateApplication()) 
+		else if(duplicateApplication(position)) 
 			return "/authorized/careers.xhtml?faces-redirect=true";
 
 		else
@@ -80,18 +78,12 @@ public class ViewManager implements Serializable {
 			return true;
 	}
 
-	public boolean duplicateApplication(){
+	public boolean duplicateApplication(IPosition position){
 
 		boolean duplicateApplication = false;
 
 		//get Candidate
 		IUser candidate = MetaUtils.getUser();
-
-		//get Position applying for
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String,String> params = context.getExternalContext().getRequestParameterMap();	
-		long positionId = Long.parseLong(params.get("position"));
-		IPosition position = positionService.findPositionById(positionId);
 
 		if(applicationService.findApplicationByCandidateAndPosition(candidate, position)){
 			//		MetaUtils.setMsg("You have already applied for this position", FacesMessage.SEVERITY_INFO);
@@ -100,6 +92,8 @@ public class ViewManager implements Serializable {
 		return duplicateApplication;
 	}
 
+	
+	
 	public boolean duplicateApplication(long id){
 
 		boolean duplicateApplication = false;
