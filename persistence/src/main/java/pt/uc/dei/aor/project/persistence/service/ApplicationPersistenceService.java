@@ -206,6 +206,23 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		
 		return result;
 	}
+
+
+	@Override
+	public List<IApplication> findAllApplicationsByPosition(IPosition position) {
+		TypedQuery<ApplicationEntity> query = em.createNamedQuery("Application.findApplicationsByPosition", 
+				ApplicationEntity.class);
+		query.setParameter("position", GenericPersistenceService.getEntity(position));
+		
+		List<ApplicationEntity> result = query.getResultList();
+		List<IApplication> proxies = new ArrayList<>();
+		
+		for (ApplicationEntity ae : result) {
+			proxies.add(new ApplicationProxy(ae));
+		}
+		
+		return proxies;
+	}
 	
 	
 }

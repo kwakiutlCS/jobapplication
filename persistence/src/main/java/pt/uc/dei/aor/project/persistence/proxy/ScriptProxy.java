@@ -28,6 +28,9 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 		this.entity = new ScriptEntity(title);
 	}
 
+	public ScriptProxy() {
+		entity = new ScriptEntity();
+	}
 
 	@Override
 	public ScriptEntity getEntity() {

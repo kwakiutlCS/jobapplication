@@ -37,6 +37,8 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 	query = "from ApplicationEntity u where u.candidate = :candidate and u.position = :position"),
 	@NamedQuery(name = "Application.findRejectedByDate",
 			query = "from ApplicationEntity u where u.refused = true and u.date >= :startDate"),
+	@NamedQuery(name = "Application.findApplicationsByPosition",
+			query = "from ApplicationEntity u where u.position = :position"),
 })
 public class ApplicationEntity {
 	

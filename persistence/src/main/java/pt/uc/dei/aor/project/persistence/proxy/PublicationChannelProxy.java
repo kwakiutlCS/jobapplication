@@ -18,6 +18,10 @@ public class PublicationChannelProxy implements IPublicationChannel,IProxyToEnti
 	public PublicationChannelProxy(String channel){
 		pcEntity = new PublicationChannelEntity(channel);
 	}
+	
+	public PublicationChannelProxy() {
+		pcEntity = new PublicationChannelEntity();
+	}
 
 	@Override
 	public PublicationChannelEntity getEntity() {

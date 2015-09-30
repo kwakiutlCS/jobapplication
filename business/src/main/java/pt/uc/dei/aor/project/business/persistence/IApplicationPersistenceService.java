@@ -21,6 +21,8 @@ public interface IApplicationPersistenceService {
 	boolean findApplicationbyCandidateAndPosition(IUser candidate,
 			IPosition position);
 
+	List<IApplication> findAllApplicationsByPosition(IPosition position);
+
 
 	
 }
