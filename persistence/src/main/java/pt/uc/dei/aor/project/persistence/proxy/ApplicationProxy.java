@@ -197,4 +197,9 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 		entity.setPosition(GenericPersistenceService.getEntity(positionToAdd));
 	}
 
+
+	@Override
+	public String getCv() {
+		return entity.getCv();
+	}
 }

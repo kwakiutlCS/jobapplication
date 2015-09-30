@@ -50,4 +50,6 @@ public interface IApplication {
 	void setCv(String filename);
 
 	void addPositon(IPosition positionToAdd);
+
+	String getCv();
 }

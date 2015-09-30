@@ -202,4 +202,8 @@ public class ApplicationEntity {
 	public void setPosition(PositionEntity entity) {
 		position = entity;
 	}
+
+	public String getCv() {
+		return cv;
+	}
 }

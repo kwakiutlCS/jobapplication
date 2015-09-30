@@ -14,19 +14,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pt.uc.dei.aor.project.business.model.IApplication;
+import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IUser;
-import pt.uc.dei.aor.project.business.service.IUserBusinessService;
+import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 
-@WebServlet("/interview/cv/*")
-public class CvInterviewerServlet extends HttpServlet {
+@WebServlet("/letter/*")
+public class LetterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Path DOWNLOADS = 
-			Paths.get(System.getProperty("jboss.server.data.dir")+"/jobapplication/uploads/cv");
+			Paths.get(System.getProperty("jboss.server.data.dir")+"/jobapplication/uploads/letter/");
        
 	@Inject
-	private IUserBusinessService userService;
+	private IApplicationBusinessService applicationService;
 	
-    public CvInterviewerServlet() {
+    public LetterServlet() {
         super();
     }
 
@@ -34,17 +36,15 @@ public class CvInterviewerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
-		
 		String[] fields = filename.split("/");
-		if (fields.length != 2) return; 
-				
-		IUser user = (IUser) request.getSession().getAttribute("user");
+		if (fields.length != 2) return;
 		
+		IUser user = (IUser) request.getSession().getAttribute("user");
 		if (user != null) {
-			if (!userService.interviewerHasCandidate(user, fields[0])) return;
 			
+			if (!validLink(fields, user)) return;
 			Path path = DOWNLOADS.resolve(Paths.get(filename));
-				
+			
 			if (Files.exists(path)) {
 				File file = path.toFile();
 				response.setHeader("Content-Type", getServletContext().getMimeType(filename));
@@ -60,6 +60,31 @@ public class CvInterviewerServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 	
+	}
+	
+	
+	private boolean validLink(String[] fields, IUser user) {
+		if (user.isAdmin()) return true;
+
+		long id;
+		try {
+			id = Long.parseLong(fields[0]);
+		}
+		catch(Exception e) {
+			return false;
+		}
+
+		IApplication application = applicationService.findApplicationById(id);
+		if (user.isManager() && application.getPosition().getContactPerson().equals(user)) {
+			return true;
+		}
+		else if (user.isInterviewer()) {
+			for (IInterview interview : application.getInterviews()) {
+				if (interview.getInterviewers().contains(user)) return true;
+			}
+		}
+		
+		return false;
 	}
 
 }

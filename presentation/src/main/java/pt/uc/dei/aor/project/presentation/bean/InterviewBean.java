@@ -171,9 +171,9 @@ public class InterviewBean implements Serializable {
 		String app = ((HttpServletRequest) FacesContext.getCurrentInstance()
 				.getExternalContext().getRequest()).getContextPath();
 		
-		String login = selectedInterview.getCandidate().getLogin();
-		String cv = selectedInterview.getCandidate().getCv();
-		return "https://localhost:8443"+app+"/interview/cv/"+login+"/"+cv;
+		long id = selectedInterview.getApplication().getId();
+		String cv = selectedInterview.getApplication().getCv();
+		return "https://localhost:8443"+app+"/cv/applications/"+id+"/"+cv;
 	}
 	
 	public String getLetterLink() {
@@ -182,7 +182,7 @@ public class InterviewBean implements Serializable {
 		
 		long id = selectedInterview.getApplication().getId();
 		String letter = selectedInterview.getApplication().getLetter();
-		return "https://localhost:8443"+app+"/interview/letter/"+id+"/"+letter;
+		return "https://localhost:8443"+app+"/letter/"+id+"/"+letter;
 	}
 	
 	public List<IInterview> getPreviousInterviews() {
