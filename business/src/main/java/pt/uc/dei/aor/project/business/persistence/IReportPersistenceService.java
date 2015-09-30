@@ -13,4 +13,6 @@ public interface IReportPersistenceService {
 
 	List<IApplication> findAllCloseApplicationsByDate(Date startDate);
 
+	List<IApplication> findRejectedByDate(Date startDate);
+
 }

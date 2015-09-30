@@ -198,7 +198,7 @@ public class ReportBusinessService implements IReportBusinessService {
 		
 		startDate = cal.getTime();
 		
-		applications = reportPersistence.findAllCloseApplicationsByDate(startDate);
+		applications = reportPersistence.findRejectedByDate(startDate);
 		
 		long rejected = 0;
 		long interviewed = 0;

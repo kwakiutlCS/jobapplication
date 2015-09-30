@@ -150,6 +150,7 @@ public class AccountBean implements Serializable {
 	
 	
 	public void addQualification() {
+		if (school == null || degree == null) return;
 		qualificationService.addQualification(MetaUtils.getUser(), school, degree);
 		school = null;
 		degree = null;

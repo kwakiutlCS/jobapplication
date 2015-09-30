@@ -95,6 +95,24 @@ public class ReportPersistenceService implements IReportPersistenceService {
 		return proxies;
 	}
 
+
+	@Override
+	public List<IApplication> findRejectedByDate(Date startDate) {
+		TypedQuery<ApplicationEntity> query = em.createNamedQuery("Application.findRejectedByDate",
+				ApplicationEntity.class);
+		query.setParameter("startDate", startDate);
+		
+		List<ApplicationEntity> entities = query.getResultList();
+		
+		List<IApplication> proxies = new ArrayList<>();
+		
+		for (ApplicationEntity ae : entities) {
+			proxies.add(new ApplicationProxy(ae));
+		}
+		
+		return proxies;
+	}
+
 	
 
 
