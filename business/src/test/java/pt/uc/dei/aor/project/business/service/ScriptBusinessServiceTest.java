@@ -413,7 +413,8 @@ public class ScriptBusinessServiceTest {
 	@Test
 	public void shouldCallCorrectFunctionWhenDeleteScript() {
 		ejb.deleteScript(iScript);
-		verify(scriptEjb).delete(iScript);
+		verify(iScript).delete();
+		verify(scriptEjb).save(iScript);
 	}
 	
 	@Test

@@ -177,5 +177,10 @@ public class ScriptProxy implements IScript, IProxyToEntity<ScriptEntity> {
 		return entity.equals(oe);
 	}
 
+	@Override
+	public void delete() {
+		entity.setDeleted(true);
+	}
+
 
 }

@@ -107,7 +107,8 @@ public class ScriptBusinessService implements IScriptBusinessService {
 
 	@Override
 	public void deleteScript(IScript script) {
-		scriptPersistence.delete(script);
+		script.delete();
+		scriptPersistence.save(script);
 	}
 
 	@Override

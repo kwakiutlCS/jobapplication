@@ -20,7 +20,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="script")
 @NamedQueries({
-	@NamedQuery(name = "Script.findAllScripts", query="from ScriptEntity u where u.entries is not empty"),
+	@NamedQuery(name = "Script.findAllScripts", 
+			query="from ScriptEntity u where u.entries is not empty and u.deleted = false"),
 })
 public class ScriptEntity implements Serializable {
 
@@ -32,6 +33,9 @@ public class ScriptEntity implements Serializable {
 	
 	@Column(nullable=false, unique=true)
 	private String title;
+	
+	@Column
+	private boolean deleted = false;
 	
 	@OrderBy("position ASC")
 	@OneToMany(cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
@@ -100,6 +104,10 @@ public class ScriptEntity implements Serializable {
 	@Override
 	public String toString() {
 		return "ScriptEntity [title=" + title + "]";
+	}
+
+	public void setDeleted(boolean b) {
+		deleted = b;
 	}
 	
 	

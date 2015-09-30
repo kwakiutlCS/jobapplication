@@ -28,4 +28,6 @@ public interface IScript {
 	public void addAnswerToEntry(IScriptEntry entry, IAnswerChoice answerChoice);
 
 	public void removeAnswerFromEntry(IScriptEntry entry, IAnswerChoice answerChoice);
+
+	public void delete();
 }
