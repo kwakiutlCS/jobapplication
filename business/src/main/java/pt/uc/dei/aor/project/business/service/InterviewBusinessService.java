@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.business.service;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -112,9 +114,20 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 				
 				notificationService.notify(w, msg, title);
 				
-				emailUtil.send(w.getEmail(), msgEmail, title);
-//				, interview.getCandidate().getLogin()+"/",
-//				interview.getCandidate().getCv()
+				Path file;
+				if (interview.getApplication().isSpontaneous()) {
+					file = Paths.get(System.getProperty("jboss.server.data.dir")+
+						"/jobapplication/uploads/cv/users/"+interview.getCandidate().getLogin()+
+						"/"+interview.getCandidate().getCv());
+				}
+				else {
+					file = Paths.get(System.getProperty("jboss.server.data.dir")+
+							"/jobapplication/uploads/cv/applications/"+interview.getApplication().getId()+
+							"/"+interview.getApplication().getCv());
+				}
+				
+				emailUtil.send(w.getEmail(), msgEmail, title, file);
+//				
 			}
 			
 			return application;

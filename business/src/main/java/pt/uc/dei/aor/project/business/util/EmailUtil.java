@@ -70,6 +70,7 @@ public class EmailUtil {
  			
 			BodyPart messageBodyPart = new MimeBodyPart();
 			messageBodyPart.setText(content);
+			messageBodyPart.setHeader("Content-Type", "text/html");
 			
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBodyPart);
@@ -77,7 +78,7 @@ public class EmailUtil {
 			BodyPart attach = new MimeBodyPart();
 			DataSource source = new FileDataSource(file.toAbsolutePath().toString());
 			attach.setDataHandler(new DataHandler(source));
-			attach.setFileName("cc");
+			attach.setFileName(file.getFileName().toString());
 			multipart.addBodyPart(attach);
 			
 			message.setContent(multipart);
