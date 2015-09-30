@@ -93,11 +93,11 @@ public class QualificationBusinessService implements IQualificationBusinessServi
 	}
 	
 	@Override
-	public void addQualification(IUser user, String school, String degree) {
+	public IUser addQualification(IUser user, String school, String degree) {
 		IQualification qualification = factory.qualification(school, degree);
 		user.addQualification(qualification);
 
-		userPersistence.save(user);
+		return userPersistence.save(user);
 	}
 
 	@Override

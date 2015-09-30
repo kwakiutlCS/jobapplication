@@ -16,7 +16,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
-import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IQualificationBusinessService;
@@ -134,26 +133,7 @@ public class RegisterBean implements Serializable {
 
 	}
 
-	public void deleteAccount(){
-
-
-	}
-
-	public void updatePassword() {
-		try {
-			IUser user = MetaUtils.getUser();
-
-			user.setPassword(Encryptor.encrypt(password));
-			user = candidateService.update(user, oldPassword);
-
-			password = null;
-			oldPassword = null;
-			MetaUtils.getSession().setAttribute("user", user);
-			MetaUtils.setMsg("Password updated", FacesMessage.SEVERITY_INFO);
-		} catch (WrongPasswordException e) {
-			MetaUtils.setMsg("Password is incorrect", FacesMessage.SEVERITY_ERROR);
-		}
-	}
+	
 
 	//getters and setters
 

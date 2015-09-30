@@ -52,7 +52,7 @@ public interface IUserBusinessService {
 
 	List<IUser> findUsersWithFilter(WorkerFilter filter, int offset, int limit);
 
-	void uploadCV(IUser worker, Part cv) throws IOException;
+	IUser uploadCV(IUser worker, Part cv) throws IOException;
 
 	void addAdmin(IUser user);
 

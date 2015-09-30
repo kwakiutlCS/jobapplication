@@ -11,7 +11,6 @@ import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IUserBusinessService;
-import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
@@ -55,8 +54,6 @@ public class LoginBean {
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
 		try {
-			System.out.println(login+" "+password);
-			System.out.println(Encryptor.encrypt(password));
 			request.login(login, password);
 
 			IUser user = candidateService.getUserByLogin(login);
@@ -66,8 +63,6 @@ public class LoginBean {
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
-			
 			return "error";		
 		}
 	}
