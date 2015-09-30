@@ -7,6 +7,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
+import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.model.IAnswer;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -167,17 +171,50 @@ public class ReportBusinessService implements IReportBusinessService {
 	}
 
 	@Override
-	public DataModel<String, Long> generateInterviewTimeReport(int period) {
+	public DataModel<String, Long> generateInterviewTimeReport() {
+		DataModel<String, Long> data = new DataModel<>();
+		System.out.println("generating report");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.add(Calendar.MONTH, -11);
 		
-		if (period == 12) {
-			return generateYearlyAppReport(false);
+		for (int i = 0; i < 12; i++) {
+			Calendar finish = Calendar.getInstance();
+			finish.setTime(cal.getTime());
+			finish.add(Calendar.MONTH, 1);
+			Date startDate = cal.getTime();
+			Date finishDate = finish.getTime();
+			System.out.println(startDate);
+			List<IInterview> interviews = interviewPersistence.findInterviewsByDate(startDate, finishDate);
+			System.out.println(interviews.size());
+			int counter = 0;
+			int total = 0;
+			for (IInterview interview : interviews) {
+				System.out.println(interview.getDate());
+				System.out.println(interview.getApplication().getDate());
+				try {
+					if (interview.getInterviewPhase() == 1) {
+						DateTime iDate = new DateTime(interview.getDateObject());
+						DateTime aDate = new DateTime(interview.getApplication().getDateObject());
+						total += Days.daysBetween(aDate , iDate).getDays();
+						counter++;
+					}
+				} catch (AllPhasesCompletedException e) {
+					
+				}
+			}
+			
+			if (counter == 0)
+				total = 0;
+			else total /= counter;
+			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], (long) total));
+			cal.add(Calendar.MONTH, 1);
 		}
-		if (period == 3) {
-			return generateTrimonthAppReport(false);
-		}
-		else {
-			return generateMonthlyAppReport(false);
-		}
+		
+		return data;
+		
 	}
 
 	@Override

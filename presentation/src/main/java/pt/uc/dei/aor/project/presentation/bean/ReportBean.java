@@ -90,9 +90,9 @@ public class ReportBean implements Serializable {
 	
 	
 	public void generateInterviewTime() {
-		setInterviewTimeModel(reportService.generateInterviewTimeReport(period));
+		setInterviewTimeModel(reportService.generateInterviewTimeReport());
 		setInterviewTimeVisible(true);
-		chart.createChart(spontaneousAppModel, "Applications", "", "", "Applications");
+		chart.createChart(interviewTimeModel, "Days", "", "", "Days");
 	}
 	
 	

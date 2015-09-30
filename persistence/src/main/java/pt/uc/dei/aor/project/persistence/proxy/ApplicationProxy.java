@@ -215,4 +215,10 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public boolean isSpontaneous() {
 		return entity.isSpontaneous();
 	}
+
+
+	@Override
+	public Date getDateObject() {
+		return entity.getDate();
+	}
 }

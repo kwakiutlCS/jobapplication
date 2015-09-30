@@ -54,4 +54,6 @@ public interface IApplication {
 	String getCv();
 	
 	boolean isSpontaneous();
+
+	Date getDateObject();
 }

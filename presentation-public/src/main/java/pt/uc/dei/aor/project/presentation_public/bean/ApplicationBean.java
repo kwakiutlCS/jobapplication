@@ -79,6 +79,10 @@ public class ApplicationBean implements Serializable {
 			return null;
 		}
 		IUser candidate = MetaUtils.getUser();
+		if (candidate.getCv() == null) {
+			MetaUtils.setMsg("Upload a cover letter to apply", FacesMessage.SEVERITY_ERROR);
+			return null;
+		}
 		try {
 			applicationService.createApplication(provisoryLetter, coverLetter, provisoryCv, cv, sourceInfo, candidate);
 			MetaUtils.setMsg("Spontaneous application created", FacesMessage.SEVERITY_INFO);
