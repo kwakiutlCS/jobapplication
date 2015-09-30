@@ -98,7 +98,6 @@ public class UserBusinessService implements IUserBusinessService {
 		return userPersistence.save(user);
 		
 	}
-	
 
 	@Override
 	public IUser getUserByLogin(String login) {
