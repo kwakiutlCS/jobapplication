@@ -23,6 +23,8 @@ public interface IApplicationPersistenceService {
 
 	List<IApplication> findAllApplicationsByPosition(IPosition position);
 
+	boolean hasSpontaneous(IUser user);
+
 
 	
 }

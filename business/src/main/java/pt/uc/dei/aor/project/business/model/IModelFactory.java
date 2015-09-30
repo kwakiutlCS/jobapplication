@@ -51,6 +51,8 @@ public interface IModelFactory {
 	IColor color(String page, String header, String content, String contentText, String contentTitle, String headerText,
 			String background);
 
+	IApplication application(String submittedFileName, String cvName, String sourceInfo, Date date, IUser candidate);
+
 
 	
 

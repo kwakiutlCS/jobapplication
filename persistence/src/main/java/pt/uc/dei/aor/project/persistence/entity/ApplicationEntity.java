@@ -39,6 +39,8 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 			query = "from ApplicationEntity u where u.refused = true and u.date >= :startDate"),
 	@NamedQuery(name = "Application.findApplicationsByPosition",
 			query = "from ApplicationEntity u where u.position = :position"),
+	@NamedQuery(name = "Application.findSpontaneous", query = "from ApplicationEntity u where u.spontaneous = true "+
+			"and u.candidate = :user"),
 })
 public class ApplicationEntity {
 	
@@ -49,7 +51,7 @@ public class ApplicationEntity {
 	@Column(nullable=false)
 	private String coverLetter;
 	
-	@Column(nullable=false)
+	@Column
 	private String sourceInfo; 
 	
 	@Column(nullable=false)
@@ -71,7 +73,7 @@ public class ApplicationEntity {
 	private PositionEntity position;
 	
 	@Column
-	private boolean spontaneous = false;
+	private boolean spontaneous;
 	
 	@OrderBy("date")
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
@@ -89,12 +91,23 @@ public class ApplicationEntity {
 		this.candidate = candidate;
 		this.position = position;
 		this.cv=cv;
+		this.spontaneous = false;
 	}
 
 	public ApplicationEntity() {
 	}
 
 	
+	public ApplicationEntity(String coverLetter, String cv, String sourceInfo, Date date,
+			UserEntity candidate) {
+		this.coverLetter = coverLetter;
+		this.sourceInfo = sourceInfo;
+		this.date = date;
+		this.candidate = candidate;
+		this.cv=cv;
+		this.spontaneous = true;
+	}
+
 	public SortedSet<InterviewEntity> getInterviews() {
 		return new TreeSet<>(interviews);
 	}

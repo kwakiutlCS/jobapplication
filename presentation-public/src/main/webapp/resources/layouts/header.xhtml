@@ -21,6 +21,7 @@
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li><p:link value="CAREERS" outcome="listPosition" /></li>
+						<li><p:link value="SPONTANEOUS APPLICATION" outcome="spontaneous" /></li>
 						<h:panelGroup rendered="#{not loginBean.loggedIn}">
 							<li><p:link value="REGISTER" outcome="register" /></li>
 							<li><h:form>
@@ -30,11 +31,6 @@
 					</ul>
 					<h:panelGroup rendered="#{loginBean.loggedIn}">
 						<ul class="nav navbar-nav navbar-right">
-							<h:panelGroup rendered="#{notificationBean.countUnread() gt 0}">
-								<li><p:link
-										value="#{notificationBean.countUnread()} unread notifications"
-										outcome="" /></li>
-							</h:panelGroup>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">#{loginBean.user.name} <span

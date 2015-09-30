@@ -16,6 +16,9 @@ public interface IApplicationBusinessService {
 	
 	IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
 			String sourceInfo, IUser candidate, IPosition position) throws IOException;
+	
+	IApplication createApplication(String provisoryLetter, Part coverLetter, String provisoryCv, Part cv, String sourceInfo,
+			IUser candidate) throws IOException;
 
 	IApplication findApplicationById(long id);
 
@@ -37,5 +40,9 @@ public interface IApplicationBusinessService {
 
 	IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication) throws
 		IllegalApplicationException;
+
+	boolean hasSpontaneous(IUser user);
+
+	
 
 }

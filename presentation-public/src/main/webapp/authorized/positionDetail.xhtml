@@ -82,7 +82,8 @@
 				<p:link value="here" outcome="profile" />
 				to complete it.
 				</h:panelGroup>
-				<h:panelGroup rendered="#{viewManager.duplicateApplication(listPositionBean.selectedPosition)}">
+				<h:panelGroup rendered="#{viewManager.candidateHasCompletedRegistry() and 
+				viewManager.duplicateApplication(listPositionBean.selectedPosition)}">
 				You already applied to this position. Click
 				<p:link value="here" outcome="profile" />
 				to consult it.

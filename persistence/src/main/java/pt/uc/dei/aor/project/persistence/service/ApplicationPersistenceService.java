@@ -223,6 +223,17 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		
 		return proxies;
 	}
+
+
+	@Override
+	public boolean hasSpontaneous(IUser user) {
+		TypedQuery<ApplicationEntity> query = em.createNamedQuery("Application.findSpontaneous", 
+				ApplicationEntity.class);
+		query.setParameter("user", GenericPersistenceService.getEntity(user));
+		
+		List<ApplicationEntity>	entity = query.getResultList();
+		return !entity.isEmpty();
+	}
 	
 	
 }

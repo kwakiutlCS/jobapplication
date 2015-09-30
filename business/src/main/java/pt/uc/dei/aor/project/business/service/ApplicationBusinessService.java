@@ -50,6 +50,34 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		IApplication application = factory.application(letter.getSubmittedFileName(), 
 				cvName,sourceInfo, date, candidate, position);
 		
+		return createApplication(application, tmpLetter, letter, tmpCv, cv, candidate);
+	}
+
+	
+	@Override
+	public IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
+			String sourceInfo, IUser candidate) throws IOException {
+		
+		Date date = new Date();
+		
+		String cvName;
+		if (cv != null) {
+			cvName = cv.getSubmittedFileName();
+		}
+		else {
+			cvName = candidate.getCv();
+		}
+		
+		IApplication application = factory.application(letter.getSubmittedFileName(), 
+				cvName,sourceInfo, date, candidate);
+		
+		return createApplication(application, tmpLetter, letter, tmpCv, cv, candidate);
+	}
+	
+	
+	private IApplication createApplication(IApplication application, String tmpLetter, Part letter, 
+			String tmpCv, Part cv, IUser candidate) throws IOException {
+		
 		application = applicationPersistence.save(application);
 		
 		upload.mv("letter/temp/"+tmpLetter, "letter/"+application.getId(), letter.getSubmittedFileName());
@@ -63,7 +91,8 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		
 		return application;
 	}
-
+	
+	
 		
 	@Override
 	public IApplication findApplicationById(long id) {
@@ -150,5 +179,11 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 			throws IllegalApplicationException {
 		selectedApplication.addPositon(positionToAdd);
 		return applicationPersistence.save(selectedApplication);
+	}
+
+
+	@Override
+	public boolean hasSpontaneous(IUser user) {
+		return applicationPersistence.hasSpontaneous(user);
 	}
 }

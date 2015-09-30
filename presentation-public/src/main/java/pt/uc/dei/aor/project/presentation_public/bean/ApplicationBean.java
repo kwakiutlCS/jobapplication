@@ -68,7 +68,24 @@ public class ApplicationBean implements Serializable {
 			MetaUtils.setMsg("Application to "+position+" created", FacesMessage.SEVERITY_INFO);
 			return "authorized/listPosition.xhtml?faces-redirect=true";
 		} catch (IOException e) {
-			MetaUtils.setMsg("Error creating user", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("Error creating application", FacesMessage.SEVERITY_ERROR);
+		}
+		return null;
+	}
+	
+	public String createSpontaneous() {
+		if (provisoryLetter == null) {
+			MetaUtils.setMsg("Upload a cover letter to apply", FacesMessage.SEVERITY_ERROR);
+			return null;
+		}
+		IUser candidate = MetaUtils.getUser();
+		try {
+			applicationService.createApplication(provisoryLetter, coverLetter, provisoryCv, cv, sourceInfo, candidate);
+			MetaUtils.setMsg("Spontaneous application created", FacesMessage.SEVERITY_INFO);
+			return "authorized/listPosition.xhtml?faces-redirect=true";
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			MetaUtils.setMsg("Error creating application", FacesMessage.SEVERITY_ERROR);
 		}
 		return null;
 	}
@@ -129,7 +146,9 @@ public class ApplicationBean implements Serializable {
 	}
 
 	
-	
+	public boolean hasSpontaneous() {
+		return applicationService.hasSpontaneous(MetaUtils.getUser());
+	}
 	
 	
 	
