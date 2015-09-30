@@ -18,8 +18,8 @@
 
 	<ui:define name="content">
 
-		<h:outputText
-			value="You are applying to position #{applicationBean.position}" />
+		<h:panelGroup rendered="#{applicationBean.position ne null}">
+
 
 		<p:panel header="Cover Letter">
 			<h:form enctype="multipart/form-data">
@@ -35,6 +35,7 @@
 				</h:inputFile>
 			</h:form>
 		</p:panel>
+
 
 		<p:panel header="Curriculum Vitae">
 			<h:form enctype="multipart/form-data">
@@ -54,23 +55,37 @@
 			</h:form>
 		</p:panel>
 
-		<p:panel header="Send Application">
-			<h:form>
-				<h:outputText value="Please tell us the information source" />
-				<p:selectOneMenu value="#{applicationBean.sourceInfo}" required="true">
-					<f:selectItems
-						value="#{applicationBean.position.IPublicationChannels}"
-						var="channel" itemValue="#{channel.channel}"
-						itemLabel="#{channel.channel}" />
-				</p:selectOneMenu>
-				<p />
-				<p:commandButton value="Apply"
-					action="#{applicationBean.createApplication()}" />
-				<p></p>
-				<p></p>
-				<p:link value="Back" outcome="listPosition" />
-			</h:form>
-		</p:panel>
+
+			<p:panel header="Curriculum Vitae">
+				<h:form enctype="multipart/form-data">
+					<h:inputFile value="#{applicationBean.cv}" required="true"
+						id="fileUploader">
+						<f:ajax listener="#{applicationBean.uploadCv}"
+							render=":globalMessages" />
+					</h:inputFile>
+				</h:form>
+			</p:panel>
+
+			<p:panel header="Send Application">
+				<h:form>
+					<h:outputText value="Please tell us the information source" />
+					<p:selectOneMenu value="#{applicationBean.sourceInfo}"
+						required="true">
+						<f:selectItems
+							value="#{applicationBean.position.IPublicationChannels}"
+							var="channel" itemValue="#{channel.channel}"
+							itemLabel="#{channel.channel}" />
+					</p:selectOneMenu>
+					<p />
+					<p:commandButton value="Apply"
+						action="#{applicationBean.createApplication()}" />
+					<p></p>
+					<p></p>
+					<p:link value="Back" outcome="listPosition" />
+				</h:form>
+			</p:panel>
+
+		</h:panelGroup>
 
 	</ui:define>
 </ui:composition>
