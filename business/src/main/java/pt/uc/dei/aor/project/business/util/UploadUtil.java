@@ -75,8 +75,8 @@ public class UploadUtil {
 			Files.createDirectories(toFile);
 		toFile = toFile.resolve(filename);
 		
-		Files.createFile(toFile);
-		Files.copy(fromFile, toFile);
+		//Files.createFile(toFile);
+		Files.copy(fromFile, toFile, StandardCopyOption.REPLACE_EXISTING);
 		
 		return toFile;
 	}
