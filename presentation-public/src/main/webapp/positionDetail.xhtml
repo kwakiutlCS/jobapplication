@@ -20,74 +20,74 @@
 	<ui:define name="content">
 
 
-			<p:panel header="#{listPositionBean.selectedPosition.title}">
+		<p:panel header="#{listPositionBean.selectedPosition.title}">
 
-				<h:panelGrid columns="2">
+			<h:panelGrid columns="2">
 
-					<h:outputText value="Opening date:" />
-					<h:outputText
-						value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
+				<h:outputText value="Opening date:" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.openingDateFormatted}" />
 
-					<h:outputText value="Code:" />
-					<h:outputText value="#{listPositionBean.selectedPosition.code}" />
+				<h:outputText value="Code:" />
+				<h:outputText value="#{listPositionBean.selectedPosition.code}" />
 
-					<h:outputText value="Company" />
-					<h:outputText value="#{listPositionBean.selectedPosition.company}" />
+				<h:outputText value="Company" />
+				<h:outputText value="#{listPositionBean.selectedPosition.company}" />
 
-					<h:outputText value="Technical Area" />
-					<p:column headerText="Technical Area">
-						<ui:repeat
-							value="#{listPositionBean.selectedPosition.technicalAreasFormatted}"
-							var="t">
+				<h:outputText value="Technical Area" />
+				<p:column headerText="Technical Area">
+					<ui:repeat
+						value="#{listPositionBean.selectedPosition.technicalAreasFormatted}"
+						var="t">
   						  		  #{t}
 							</ui:repeat>
-					</p:column>
+				</p:column>
 
-					<h:outputText value="Location:" />
-					<p:column headerText="Location">
-						<ui:repeat
-							value="#{listPositionBean.selectedPosition.localizationsFormatted}"
-							var="l">
+				<h:outputText value="Location:" />
+				<p:column headerText="Location">
+					<ui:repeat
+						value="#{listPositionBean.selectedPosition.localizationsFormatted}"
+						var="l">
   							    #{l}
 							</ui:repeat>
-					</p:column>
+				</p:column>
 
-					<h:outputText value="Vacancies:" />
-					<h:outputText
-						value="#{listPositionBean.selectedPosition.vacancies}" />
+				<h:outputText value="Vacancies:" />
+				<h:outputText value="#{listPositionBean.selectedPosition.vacancies}" />
 
-					<h:outputText value="Contact person:" />
-					<h:outputText value="#{listPositionBean.contactPersonName()}" />
+				<h:outputText value="Contact person:" />
+				<h:outputText value="#{listPositionBean.contactPersonName()}" />
 
-					<h:outputText value="Description" />
-					<h:outputText
-						value="#{listPositionBean.selectedPosition.description}" />
+				<h:outputText value="Description" />
+				<h:outputText
+					value="#{listPositionBean.selectedPosition.description}" />
 
-					<h:outputText value="Publication channels" />
-					<p:column headerText="Publication Channels">
-						<ui:repeat
-							value="#{listPositionBean.selectedPosition.publicationChannels}"
-							var="l">
+				<h:outputText value="Publication channels" />
+				<p:column headerText="Publication Channels">
+					<ui:repeat
+						value="#{listPositionBean.selectedPosition.publicationChannels}"
+						var="l">
   							    #{l}
 							</ui:repeat>
-					</p:column>
+				</p:column>
 
-					<p:column>
-						<p:link  value="Apply Now"
-							onclick="PF('identifyDlg').show();return false;">
-						</p:link>
-					</p:column>
-					<p:link value="Exit" outcome="listPosition" />
+				<p:column>
+					<p:link value="Apply Now"
+						onclick="PF('identifyDlg').show();return false;">
+					</p:link>
+				</p:column>
+				<p:link value="Exit" outcome="listPosition" />
 
 
-				</h:panelGrid>
-			</p:panel>
-	
+			</h:panelGrid>
+		</p:panel>
+
 
 
 		<p:dialog widgetVar="identifyDlg" modal="true">
 			<p:outputPanel id="identifyPanel" style="text-align:left;">
 				<h:form id="identifyForm">
+					<p:messages></p:messages>
 					<h:outputText value="Application for" />
 					<h:outputText value="#{listPositionBean.selectedPosition.title}" />
 					<p></p>
@@ -101,10 +101,11 @@
 					<p></p>
 					<h:link value="recover password" />
 					<p></p>
-					<p:link outcome="apply" value="Enter" rendered="#{viewManager.loginOnApply()}">
+					<p:commandButton value="Enter"
+						action="#{viewManager.loginOnApply()}">
 						<f:param name="position"
 							value="#{listPositionBean.selectedPosition.id}" />
-					</p:link>
+					</p:commandButton>
 					<p></p>
 					<h:outputText value="Don't have an account?" />
 					<p></p>

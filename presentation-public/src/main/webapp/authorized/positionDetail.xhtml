@@ -73,9 +73,12 @@
 				</p:column>
 
 
-				<p:link value="Apply Now" rendered="#{viewManager.loginOnApply()}"  outcome="apply">
+				<p:link value="Apply Now" rendered="#{viewManager.applyAfterLogin(listPositionBean.selectedPosition.id)}"  outcome="apply">
 					<f:param name="pos" value="#{listPositionBean.selectedPosition.id}" />
 				</p:link>
+				<p:link value="Profile" rendered="#{not viewManager.candidateHasCompletedRegistry()}"  outcome="profile">
+				</p:link>
+				
 
 			</h:panelGrid>
 		</p:panel>

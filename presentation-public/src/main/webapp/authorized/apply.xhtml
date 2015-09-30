@@ -18,7 +18,7 @@
 
 	<ui:define name="content">
 
-		<h:panelGroup rendered="#{not null applicationBean.position}">
+		<h:panelGroup rendered="#{applicationBean.position ne null}">
 
 
 			<h:outputText

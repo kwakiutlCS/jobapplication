@@ -3,10 +3,13 @@ package pt.uc.dei.aor.project.presentation_public.bean;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.context.RequestContext;
 
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
@@ -41,23 +44,39 @@ public class ViewManager implements Serializable {
 		return unlogged;
 	}
 
-	
-	public boolean loginOnApply(){
-
-		if(MetaUtils.getUser()==null)
-			return true;
-
-		else if(loginBeanI.login().equals("error")){
-			//		MetaUtils.setMsg("Login or password wrong", FacesMessage.SEVERITY_INFO);
-			return false;
+	public String loginOnApply(){
+		
+		if(loginBeanI.login().equals("error")){
+			MetaUtils.setMsg("Login or password wrong", FacesMessage.SEVERITY_INFO);
+			RequestContext context = RequestContext.getCurrentInstance();
+			context.execute("PF('identifyDlg').show();");
+			return "";
 		}
-		else if(!candidateHasCompletedRegistry()){
-			return false;
+		else if(candidateHasCompletedRegistry()){
+			return "/authorized/profile.xhtml?faces-redirect=true";
 		}
 		else if(duplicateApplication()) 
+			return "/authorized/careers.xhtml?faces-redirect=true";
+
+		else
+			return "/authorized/apply.xhtml?faces-redirect=true";
+		
+	}
+	
+	public boolean applyAfterLogin(long idposition){
+
+
+		System.out.println("id da position"+idposition);
+		
+		if(!candidateHasCompletedRegistry()){
+			System.out.println("apply after login, completed registry"+ false);
+			return false;
+		}
+		else if(duplicateApplication(idposition)) 
 			return false;
 
 		else
+			System.out.println("apply after login"+ true);
 			return true;
 	}
 
@@ -81,15 +100,33 @@ public class ViewManager implements Serializable {
 		return duplicateApplication;
 	}
 
+	public boolean duplicateApplication(long id){
+
+		boolean duplicateApplication = false;
+
+		IUser candidate = MetaUtils.getUser();
+		
+		IPosition position = positionService.findPositionById(id);
+
+		if(applicationService.findApplicationByCandidateAndPosition(candidate, position)){
+			//		MetaUtils.setMsg("You have already applied for this position", FacesMessage.SEVERITY_INFO);
+			duplicateApplication = true;
+		}
+		return duplicateApplication;
+	}
 
 	public boolean candidateHasCompletedRegistry(){
 
 		IUser candidate = MetaUtils.getUser();
+		
+		System.out.println("completed registry, user"+candidate);
 
 		if(candidate.getAddress()==null||candidate.getCv()==null||candidate.getQualifications().isEmpty()){
 			//		MetaUtils.setMsg("Please complete your profile record", FacesMessage.SEVERITY_INFO);
+			System.out.println("completed registry, TorF"+false);
 			return false;
 		}
+		System.out.println("completed registry, TorF"+true);
 		return true;
 	}
 
