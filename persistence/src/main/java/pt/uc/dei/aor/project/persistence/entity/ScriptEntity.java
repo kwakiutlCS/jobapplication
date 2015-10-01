@@ -108,6 +108,7 @@ public class ScriptEntity implements Serializable {
 
 	public void setDeleted(boolean b) {
 		deleted = b;
+		title += "_inactive";
 	}
 	
 	

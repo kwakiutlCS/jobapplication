@@ -14,9 +14,13 @@
 			You already registered a spontaneous application. You can consult it 
 			<p:link value="here" outcome="myPage" />.
 		</h:panelGroup>
+		<h:panelGroup rendered="#{not applicationBean.hasSpontaneous() and
+		not viewManager.candidateHasCompletedRegistry()}">
+			You need to complete your registry <p:link value="here" outcome="profile" /> to be able to apply.
+		</h:panelGroup>
 		
-		
-		<h:panelGroup rendered="#{not applicationBean.hasSpontaneous()}">
+		<h:panelGroup rendered="#{not applicationBean.hasSpontaneous() and
+		viewManager.candidateHasCompletedRegistry()}">
 		<p:panel header="Cover Letter">
 			<h:form enctype="multipart/form-data">
 				

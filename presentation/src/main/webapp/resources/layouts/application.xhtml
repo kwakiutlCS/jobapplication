@@ -36,7 +36,7 @@
 					<div><span>#{q.school}</span><span>#{q.degree}</span></div>
 				</ui:repeat>
 			</div>
-			<h:panelGroup rendered="#{not interviewScheduleBean.selectedApplication.spontaneous}" layout="block">
+			<div>
 				<span>Documents</span><span> <h:outputLink
 						value="https://localhost:8443/jobmanagement/cv/applications/#{interviewScheduleBean.selectedApplicationId}/#{interviewScheduleBean.selectedApplication.cv}">
 				cv
@@ -44,14 +44,8 @@
 				cover letter
 			</h:outputLink>
 				</span>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.spontaneous}" layout="block">
-				<span>Documents</span><span> <h:outputLink
-						value="https://localhost:8443/jobmanagement/cv/users/#{interviewScheduleBean.selectedApplication.candidate.login}/#{interviewScheduleBean.selectedApplication.candidate.cv}">
-				cv
-			</h:outputLink> 
-				</span>
-			</h:panelGroup>
+			</div>
+			
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{interviewScheduleBean.spontaneous}">
@@ -117,7 +111,7 @@
 			</h:panelGroup>
 		</h:panelGroup>
 		
-		<h:panelGroup id="interviewListPast"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
+		<h:panelGroup id="interviewListPast"  rendered="#{not empty interviewScheduleBean.selectedApplication  and not interviewScheduleBean.spontaneous}">
 			<ui:repeat
 				value="#{interviewScheduleBean.pastInterviews}"
 				var="interview">
@@ -137,7 +131,7 @@
 		</h:panelGroup>
 
 			
-		<h:panelGroup id="interviewList"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
+		<h:panelGroup id="interviewList"  rendered="#{not empty interviewScheduleBean.selectedApplication  and not interviewScheduleBean.spontaneous}">
 			<ui:repeat
 				value="#{interviewScheduleBean.futureInterviews}"
 				var="interview">
@@ -164,7 +158,7 @@
 					</h:panelGroup>
 
 					<h:panelGroup
-						rendered="#{interviewScheduleBean.editing eq interview}">
+						rendered="#{interviewScheduleBean.editing eq interview  and not interviewScheduleBean.spontaneous}">
 						<h:form id="editInterviewForm">
 
 							<div class="ui-grid-col-4">
@@ -227,7 +221,7 @@
 		<h:panelGroup id="addInterviewPanel" >
 		<h:panelGroup rendered="#{not empty interviewScheduleBean.selectedApplication
 		and not interviewScheduleBean.selectedApplication.refused and 
-		not interviewScheduleBean.selectedApplication.proposed}">
+		not interviewScheduleBean.selectedApplication.proposed}  and not interviewScheduleBean.spontaneous">
 			<h:form id="addInterviewForm"
 				rendered="#{empty interviewScheduleBean.editing}">
 				<div class="ui-grid-row">
