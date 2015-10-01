@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
+import pt.uc.dei.aor.project.business.exception.IllegalPositionAssignmentException;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IPosition;
@@ -15,7 +16,7 @@ import pt.uc.dei.aor.project.business.model.IUser;
 public interface IApplicationBusinessService {
 	
 	IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
-			String sourceInfo, IUser candidate, IPosition position) throws IOException;
+			String sourceInfo, IUser candidate, IPosition position) throws IOException, IllegalApplicationException;
 	
 	IApplication createApplication(String provisoryLetter, Part coverLetter, String provisoryCv, Part cv, String sourceInfo,
 			IUser candidate) throws IOException;
@@ -39,7 +40,7 @@ public interface IApplicationBusinessService {
 	String uploadTempCV(Part cv)  throws IOException;
 
 	IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication) throws
-		IllegalApplicationException;
+		IllegalApplicationException, IllegalPositionAssignmentException;
 
 
 	List<IApplication> findAllApplicationByCandidate(IUser candidate);

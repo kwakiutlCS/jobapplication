@@ -13,6 +13,7 @@ import javax.servlet.http.Part;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
@@ -69,8 +70,10 @@ public class ApplicationBean implements Serializable {
 			return "authorized/listPosition.xhtml?faces-redirect=true";
 		} catch (IOException e) {
 			MetaUtils.setMsg("Error creating application", FacesMessage.SEVERITY_ERROR);
+		} catch (IllegalApplicationException e) {
+			MetaUtils.setMsg("Already applied to this position", FacesMessage.SEVERITY_ERROR);
 		}
-		return null;
+		return "positionDetail?pos="+position.getId();
 	}
 	
 	public String createSpontaneous() {

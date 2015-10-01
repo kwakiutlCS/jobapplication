@@ -68,6 +68,14 @@ public class RegisterBean implements Serializable {
 	}
 
 	public String register() {
+		if (cvPath == null) {
+			MetaUtils.setMsg("Upload a cv to register", FacesMessage.SEVERITY_ERROR);
+			return null;
+		}
+		if (choosenQualifications == null || choosenQualifications.isEmpty()) {
+			MetaUtils.setMsg("Add qualifications to register", FacesMessage.SEVERITY_ERROR);
+			return null;
+		}
 		try {
 			candidateService.createNewCandidate(login,name,surname,email, Encryptor.encrypt(password),phone, mobilePhone, 
 					address, city, country, choosenQualifications, cvPath, provisoryCv);

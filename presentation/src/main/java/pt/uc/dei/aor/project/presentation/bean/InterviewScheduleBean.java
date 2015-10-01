@@ -21,6 +21,7 @@ import pt.uc.dei.aor.project.business.exception.AllPhasesCompletedException;
 import pt.uc.dei.aor.project.business.exception.GenericIllegalParamsException;
 import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
 import pt.uc.dei.aor.project.business.exception.IllegalInterviewDeletionException;
+import pt.uc.dei.aor.project.business.exception.IllegalPositionAssignmentException;
 import pt.uc.dei.aor.project.business.exception.RepeatedInterviewException;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IInterview;
@@ -192,6 +193,9 @@ public class InterviewScheduleBean implements Serializable {
 			 selectedPosition = selectedApplication.getPosition();
 		} catch (IllegalApplicationException e) {
 			MetaUtils.setMsg("Not possible to add a position to that application", 
+					FacesMessage.SEVERITY_ERROR);
+		} catch (IllegalPositionAssignmentException e) {
+			MetaUtils.setMsg("Candidate alread applied to that position", 
 					FacesMessage.SEVERITY_ERROR);
 		}
 		

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.servlet.http.Part;
 
 import pt.uc.dei.aor.project.business.exception.IllegalApplicationException;
+import pt.uc.dei.aor.project.business.exception.IllegalPositionAssignmentException;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -35,8 +36,11 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	
 	@Override
 	public IApplication createApplication(String tmpLetter, Part letter, String tmpCv, Part cv,
-			String sourceInfo, IUser candidate, IPosition position) throws IOException {
+			String sourceInfo, IUser candidate, IPosition position) throws IOException, IllegalApplicationException {
 	
+		if (applicationPersistence.findApplicationbyCandidateAndPosition(candidate, position))
+			throw new IllegalApplicationException();
+			
 		Date date = new Date();
 		
 		String cvName;
@@ -176,7 +180,11 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 
 	@Override
 	public IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication)
-			throws IllegalApplicationException {
+			throws IllegalApplicationException, IllegalPositionAssignmentException {
+		if (applicationPersistence
+				.findApplicationbyCandidateAndPosition(selectedApplication.getCandidate(), positionToAdd)) 
+			throw new IllegalPositionAssignmentException();
+		
 		selectedApplication.addPositon(positionToAdd);
 		return applicationPersistence.save(selectedApplication);
 	}
