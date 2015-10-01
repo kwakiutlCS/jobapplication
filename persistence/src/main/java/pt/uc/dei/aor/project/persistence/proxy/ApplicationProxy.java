@@ -239,4 +239,12 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public void refuseByCandidate() {
 		entity.refuseByCandidate();
 	}
+
+
+	@Override
+	public boolean hasPosition() {
+		if (GenericPersistenceService.getEntity(getPosition()) == null) return false;
+		else if (getPosition().getTitle() == null) return false;
+		return true;
+	}
 }

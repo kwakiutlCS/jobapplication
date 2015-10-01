@@ -58,7 +58,7 @@
 					itemLabel="#{pos.title}" itemValue="#{pos}" />
 				</p:selectOneMenu>
 				
-				<p:commandButton value="Add to position" update=":analyzed"
+				<p:commandButton value="Add to position" update=":analyzed :globalMessages"
 				action="#{interviewScheduleBean.addPositionToApplication}" />
 			</h:form>
 		</h:panelGroup>
@@ -67,14 +67,12 @@
 		<h:panelGroup rendered="#{interviewScheduleBean.selectedPosition ne null}">
 			<h:form rendered="#{not interviewScheduleBean.selectedApplication.refused and
 			not interviewScheduleBean.selectedApplication.proposed}">
-				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
+				<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}" value="mark as not analyzed"
 			rendered="#{interviewScheduleBean.selectedApplication.analyzed}" update=":analyzed">
-			<h:graphicImage value="/resources/img/no.png" />
 			</p:commandLink>
 			
-			<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}"
+			<p:commandLink action="#{interviewScheduleBean.changeAnalyzed}" value="mark as analyzed"
 			rendered="#{not interviewScheduleBean.selectedApplication.analyzed}" update=":analyzed">
-			<h:graphicImage value="/resources/img/maybe.png" />
 			</p:commandLink>
 			</h:form>
 			
@@ -88,7 +86,6 @@
 			</h:panelGroup>
 			
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refused}">
-				<h:graphicImage value="/resources/img/no.png" />
 				<span>Status: </span><span>Refused</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.waitingInterview}">
@@ -98,7 +95,6 @@
 				<span>Status: </span><span>Waiting analysis</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.accepted}">
-				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Accepted</span>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.propositionSent}">
@@ -113,12 +109,11 @@
 				</h:form>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refusedByCandidate}">
-				<h:graphicImage value="/resources/img/no.png" />
 				<span>Status: </span><span>Proposition refused by candidate</span>
 			</h:panelGroup>
 		</h:panelGroup>
 		
-		<h:panelGroup id="interviewListPast"  rendered="#{not empty interviewScheduleBean.selectedApplication  and not interviewScheduleBean.spontaneous}">
+		<h:panelGroup id="interviewListPast"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
 			<ui:repeat
 				value="#{interviewScheduleBean.pastInterviews}"
 				var="interview">
@@ -138,7 +133,7 @@
 		</h:panelGroup>
 
 			
-		<h:panelGroup id="interviewList"  rendered="#{not empty interviewScheduleBean.selectedApplication  and not interviewScheduleBean.spontaneous}">
+		<h:panelGroup id="interviewList"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
 			<ui:repeat
 				value="#{interviewScheduleBean.futureInterviews}"
 				var="interview">
@@ -159,13 +154,13 @@
 							<h:form>
 								<p:commandLink value="delete"
 									action="#{interviewScheduleBean.delete(interview)}"
-									update=":interviewList :globalMessages" />
+									update=":analyzed :globalMessages" />
 							</h:form>
 						</div>
 					</h:panelGroup>
 
 					<h:panelGroup
-						rendered="#{interviewScheduleBean.editing eq interview  and not interviewScheduleBean.spontaneous}">
+						rendered="#{interviewScheduleBean.editing eq interview}">
 						<h:form id="editInterviewForm">
 
 							<div class="ui-grid-col-4">
@@ -228,7 +223,7 @@
 		<h:panelGroup id="addInterviewPanel" >
 		<h:panelGroup rendered="#{not empty interviewScheduleBean.selectedApplication
 		and not interviewScheduleBean.selectedApplication.refused and 
-		not interviewScheduleBean.selectedApplication.proposed}  and not interviewScheduleBean.spontaneous">
+		not interviewScheduleBean.selectedApplication.proposed}">
 			<h:form id="addInterviewForm"
 				rendered="#{empty interviewScheduleBean.editing}">
 				<div class="ui-grid-row">

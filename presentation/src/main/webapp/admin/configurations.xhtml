@@ -12,25 +12,25 @@
 		
 		<h:form>
 			<p:outputLabel value="Header" for="header" />
-			<p:colorPicker id="header" value="#{colorBean.admin.header}" />
+			<p:colorPicker id="header" value="#{colorTestBean.color.header}" />
 		
 			<p:outputLabel value="Background 1" for="bg1" />
-			<p:colorPicker id="bg1" value="#{colorBean.admin.content}" />
+			<p:colorPicker id="bg1" value="#{colorTestBean.color.content}" />
 			
 			<p:outputLabel value="Background 2" for="bg2" />
-			<p:colorPicker id="bg2" value="#{colorBean.admin.background}" />
+			<p:colorPicker id="bg2" value="#{colorTestBean.color.background}" />
 			
 			<p:outputLabel value="Header Text" for="headerText" />
-			<p:colorPicker id="headerText" value="#{colorBean.admin.headerText}" />
+			<p:colorPicker id="headerText" value="#{colorTestBean.color.headerText}" />
 			
 			<p:outputLabel value="Main Text" for="contentText" />
-			<p:colorPicker id="contentText" value="#{colorBean.admin.contentText}" />
+			<p:colorPicker id="contentText" value="#{colorTestBean.color.contentText}" />
 			
 			<p:outputLabel value="Title" for="contentTitle" />
-			<p:colorPicker id="contentTitle" value="#{colorBean.admin.contentTitle}" />
+			<p:colorPicker id="contentTitle" value="#{colorTestBean.color.contentTitle}" />
 			
 			
-			<p:commandButton value="Save changes" action="#{colorBean.saveAdmin}" ajax="false" />
+			<p:commandButton value="Save changes" action="#{colorTestBean.save(1)}" ajax="false" />
 		</h:form>
 		
 	</ui:define>

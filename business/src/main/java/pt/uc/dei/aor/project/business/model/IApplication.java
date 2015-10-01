@@ -62,4 +62,6 @@ public interface IApplication {
 	void acceptByCandidate();
 	
 	void refuseByCandidate();
+	
+	boolean hasPosition();
 }

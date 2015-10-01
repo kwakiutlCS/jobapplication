@@ -10,4 +10,6 @@ public interface IColorBusinessService {
 	
 	IColor save(String page, String header, String content, String contentText, String contentTitle, String headerText,
 			String background);
+
+	IColor color();
 }

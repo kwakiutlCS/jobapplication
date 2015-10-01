@@ -2,7 +2,6 @@ package pt.uc.dei.aor.project.business.service;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import pt.uc.dei.aor.project.business.model.IColor;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
@@ -35,6 +34,11 @@ public class ColorBusinessService implements IColorBusinessService {
 		
 		IColor color = factory.color(page, header, content, contentText, contentTitle, headerText, background);
 		return colorPersistence.save(color);
+	}
+
+	@Override
+	public IColor color() {
+		return factory.color();
 	}
 	
 }

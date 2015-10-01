@@ -5,8 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -63,6 +61,10 @@ public class ColorEntity {
 	}
 
 	public void setHeader(String header) {
+		if (header == null || header.length() == 0) {
+			this.header = header;
+			return;
+		}
 		if (header.charAt(0) != '#')
 			this.header = "#"+header;
 		else
@@ -74,6 +76,10 @@ public class ColorEntity {
 	}
 
 	public void setContent(String content) {
+		if (content == null || content.length() == 0) {
+			this.content = content;
+			return;
+		}
 		if (content.charAt(0) != '#')
 			this.content = "#"+content;
 		else
@@ -85,6 +91,10 @@ public class ColorEntity {
 	}
 
 	public void setContentText(String contentText) {
+		if (contentText == null || contentText.length() == 0) {
+			this.contentText = contentText;
+			return;
+		}
 		if (contentText.charAt(0) != '#')
 			this.contentText = "#"+contentText;
 		else
@@ -96,6 +106,10 @@ public class ColorEntity {
 	}
 
 	public void setContentTitle(String contentTitle) {
+		if (contentTitle == null || contentTitle.length() == 0) {
+			this.contentTitle = contentTitle;
+			return;
+		}
 		if (contentTitle.charAt(0) != '#')
 			this.contentTitle = "#"+contentTitle;
 		else
@@ -107,6 +121,10 @@ public class ColorEntity {
 	}
 
 	public void setHeaderText(String headerText) {
+		if (headerText == null || headerText.length() == 0) {
+			this.headerText = headerText;
+			return;
+		}
 		if (headerText.charAt(0) != '#')
 			this.headerText = "#"+headerText;
 		else
@@ -118,6 +136,10 @@ public class ColorEntity {
 	}
 
 	public void setBackground(String background) {
+		if (background == null || background.length() == 0) {
+			this.background = background;
+			return;
+		}
 		if (background.charAt(0) != '#')
 			this.background = "#"+background;
 		else

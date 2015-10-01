@@ -131,6 +131,11 @@ public class ModelFactory implements IModelFactory {
 		return new UserProxy(login, email, encrypt, name, surname, phone, mobilePhone, address, city, country, qualifications,cv);
 	}
 
+	@Override
+	public IColor color() {
+		return new ColorProxy();
+	}
+
 
 
 }
