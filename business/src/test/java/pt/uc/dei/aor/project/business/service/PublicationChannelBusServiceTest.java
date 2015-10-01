@@ -55,9 +55,7 @@ public class PublicationChannelBusServiceTest {
 	
 	@Test
 	public void shouldDeleteChannel(){
-		
-	//	IPublicationChannel channel  = Mockito.mock(IPublicationChannel.class);
-		
+				
 		ejb.deletePublicationChannel(channel);
 		verify(persistence).delete(channel);
 	}
