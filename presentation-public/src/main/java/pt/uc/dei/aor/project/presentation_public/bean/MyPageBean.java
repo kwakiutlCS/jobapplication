@@ -72,8 +72,25 @@ private IApplication selectedApp;
 		if(sizeList==0)
 			return "-";
 		
-		return application.getInterviews().get(sizeList-1).toString();
+		return application.getInterviews().get(sizeList-1).getDate();
 	}
+	
+public String getProposition(IApplication application) {
+		
+		if (application.isAccepted()) return "Application accepted";
+		else if (application.isRefusedByCandidate()) return "Application refused by candidate";
+		else if (application.isProposed()) return "Negotiation process";
+		else return "-";
+	}
+
+public String getPositionTitle(IApplication application) {
+	
+	IPosition position = application.getPosition();
+	if (position == null || position.getId() == 0) return "Spontaneous";
+	else return position.getTitle();
+}
+
+
 
 	public IApplication getSelectedApp() {
 		return selectedApp;

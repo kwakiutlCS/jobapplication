@@ -16,13 +16,15 @@
     						<th>Position</th> 
     						<th>Situation</th>
     						<th>Interview</th>
+    						<th>Proposition</th>
   						</tr>
   						<ui:repeat value="#{myPageBean.myApplications}" var="app">
   						<tr>
     						<td>#{app.date}</td>
-   							 <td>#{app.position.title}</td> 
+   							 <td>#{myPageBean.getPositionTitle(app)}</td> 
     						<td>#{app.position.stateFormatted}</td>
     						<td>#{myPageBean.getDateInterview(app)}</td>
+    						<td>#{myPageBean.getProposition(app)}</td>
   						</tr>
   						</ui:repeat>
 					</table>

@@ -32,36 +32,30 @@ public class LoginBean {
 	
 	
 	public String login() {
-		String result = "";
+		String result = null;
 		FacesContext context = FacesContext.getCurrentInstance();
 		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 		
 		try {
 			request.login(username, password);
 			
-			System.out.println("requested login "+username);
-			
 			IUser worker = userService.getUserByLogin(username);
-			
-			System.out.println("getting user "+username);
 			
 			request.getSession().setAttribute("user", worker);
 			
-			System.out.println("setting user "+username);
-			
 			List<String> roles = worker.getRoles();
-			
-			System.out.println("getting role "+username);
 			
 			if (roles.contains("ADMIN")) {
 				result = "/admin/index.xhtml?faces-redirect=true";
-				System.out.println("login admin "+username);
 			}
 			else if (roles.contains("MANAGER")) {
 				result = "/manager/index.xhtml?faces-redirect=true";
 			}
 			else if (roles.contains("INTERVIEWER"))
 				result = "/interview/index.xhtml?faces-redirect=true";
+			else {
+				logout();
+			}
 				
 		} catch (Exception e) {
 			logger.error(e.getMessage(), FacesMessage.SEVERITY_ERROR);
