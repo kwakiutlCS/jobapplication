@@ -21,7 +21,14 @@
 					id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li><p:link value="CAREERS" outcome="listPosition" /></li>
+						<h:panelGroup rendered="#{loginBean.loggedIn}">
 						<li><p:link value="SPONTANEOUS APPLICATION" outcome="spontaneous" /></li>
+						</h:panelGroup>
+						<h:panelGroup rendered="#{not loginBean.loggedIn}">
+						<li><p:link value="SPONTANEOUS APPLICATION" onclick="PF('loginDlg').show();return false;"
+						outcome="spontaneous" /></li>
+						</h:panelGroup>
+						
 						<h:panelGroup rendered="#{not loginBean.loggedIn}">
 							<li><p:link value="REGISTER" outcome="register" /></li>
 							<li><h:form>

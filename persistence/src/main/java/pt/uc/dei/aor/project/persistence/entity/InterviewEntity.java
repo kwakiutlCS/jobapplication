@@ -35,6 +35,8 @@ import javax.persistence.Table;
 	query = "from InterviewEntity u where u.date < :date and u.application = :application"),
 	@NamedQuery(name = "Interview.findInterviewsByApplication", 
 	query = "from InterviewEntity u where u.application = :application"),
+	@NamedQuery(name = "Interview.findInterviewsByDate", 
+	query = "from InterviewEntity u where u.date between :startDate and :finishDate"),
 	
 	
 })

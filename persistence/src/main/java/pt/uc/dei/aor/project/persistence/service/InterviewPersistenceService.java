@@ -302,4 +302,23 @@ public class InterviewPersistenceService implements IInterviewPersistenceService
 		return proxies;
 	}
 
+
+	@Override
+	public List<IInterview> findInterviewsByDate(Date startDate, Date finishDate) {
+		TypedQuery<InterviewEntity> query = em.createNamedQuery("Interview.findInterviewsByDate",
+				InterviewEntity.class);
+		query.setParameter("startDate", startDate);
+		query.setParameter("finishDate", finishDate);
+		
+		List<InterviewEntity> entities = query.getResultList();
+		
+		List<IInterview> proxies = new ArrayList<>();
+		
+		for (InterviewEntity ie : entities) {
+			proxies.add(new InterviewProxy(ie));
+		}
+		
+		return proxies;
+	}
+
 }

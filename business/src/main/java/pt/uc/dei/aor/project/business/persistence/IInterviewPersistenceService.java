@@ -34,4 +34,5 @@ public interface IInterviewPersistenceService {
 
 	List<IInterview> findInterviewsByClosedPositionAndDate(Date startDate);
 
+	List<IInterview> findInterviewsByDate(Date startDate, Date finishDate);
 }

@@ -71,5 +71,22 @@ public class PropositionPersistenceService implements IPropositionPersistenceSer
 	public void remove(IProposition proposition) {
 		em.remove(em.merge(GenericPersistenceService.getEntity(proposition)));
 	}
+
+	@Override
+	public List<IProposition> findHiringsByDate(Date startDate, Date finishDate) {
+		TypedQuery<JobProposalEntity> query = em.createNamedQuery("Proposition.findHiringsByDate", 
+				JobProposalEntity.class);
+		query.setParameter("startDate", startDate);
+		query.setParameter("finishDate", finishDate);
+		
+		List<JobProposalEntity> entities = query.getResultList();
+		List<IProposition> proxies = new ArrayList<>();
+		
+		for (JobProposalEntity pe : entities) {
+			proxies.add(new PropositionProxy(pe));
+		}
+		
+		return proxies;
+	}
 	
 }

@@ -29,6 +29,8 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 			query = "from JobProposalEntity p where p.application is null"),
 	@NamedQuery(name = "Proposition.findAll", 
 			query = "from JobProposalEntity p"),
+	@NamedQuery(name = "Proposition.findHiringsByDate", 
+		query = "from JobProposalEntity p where p.date between :startDate and :finishDate"),
 })
 public class JobProposalEntity {
 	
@@ -88,6 +90,11 @@ public class JobProposalEntity {
 
 	public ApplicationEntity getApplication() {
 		return application;
+	}
+
+
+	public Date getDate() {
+		return date;
 	}
 
 	

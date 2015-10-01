@@ -1,5 +1,7 @@
 package pt.uc.dei.aor.project.persistence.proxy;
 
+import java.util.Date;
+
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.util.ProposalSituation;
@@ -40,6 +42,13 @@ public class PropositionProxy implements IProposition, IProxyToEntity<JobProposa
 	public IApplication getApplication() {
 		if (entity.getApplication() == null) return null;
 		return new ApplicationProxy(entity.getApplication());
+	}
+
+
+
+	@Override
+	public Date getDate() {
+		return entity.getDate();
 	}
 
 	
