@@ -137,6 +137,19 @@
 			</h:panelGroup>
 		</h:form>
 	
+		<h:form>
+			<p>Average time for hiring</p>
+			<p:commandButton value="Generate report" action="#{reportBean.generateHiringTime}" 
+			update="@form" />
+			
+			<h:panelGroup rendered="#{reportBean.hiringTimeVisible}">
+				<p:dataTable value="#{reportBean.hiringTimeModel.points}" var="p">
+					<p:column>#{p.x}</p:column>
+					<p:column>#{p.y}</p:column>
+				</p:dataTable>
+				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+			</h:panelGroup>
+		</h:form>
 	</ui:define>
 	
 </ui:composition>

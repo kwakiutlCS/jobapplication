@@ -234,6 +234,24 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		List<ApplicationEntity>	entity = query.getResultList();
 		return !entity.isEmpty();
 	}
+
+
+	@Override
+	public List<IApplication> findApplicationsByDate(Date startDate, Date finishDate) {
+		TypedQuery<ApplicationEntity> query = em.createNamedQuery("Application.findApplicationsByDate", 
+				ApplicationEntity.class);
+		query.setParameter("startDate", startDate);
+		query.setParameter("finishDate", finishDate);
+		
+		List<ApplicationEntity> result = query.getResultList();
+		List<IApplication> proxies = new ArrayList<>();
+		
+		for (ApplicationEntity ae : result) {
+			proxies.add(new ApplicationProxy(ae));
+		}
+		
+		return proxies;
+	}
 	
 	
 }

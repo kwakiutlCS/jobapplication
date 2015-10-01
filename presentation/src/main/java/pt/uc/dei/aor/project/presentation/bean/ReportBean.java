@@ -49,6 +49,9 @@ public class ReportBean implements Serializable {
 	private DataModel<String, Long> interviewTimeModel;
 	private boolean interviewTimeVisible;
 	
+	private DataModel<String, Long> hiringTimeModel;
+	private boolean hiringTimeVisible;
+	
 	
 	public void generatePeriodicApp() {
 		periodicAppModel = reportService.generatePeriodicaAppReport(period);
@@ -93,6 +96,12 @@ public class ReportBean implements Serializable {
 		setInterviewTimeModel(reportService.generateInterviewTimeReport());
 		setInterviewTimeVisible(true);
 		chart.createChart(interviewTimeModel, "Days", "", "", "Days");
+	}
+	
+	public void generateHiringTime() {
+		setHiringTimeModel(reportService.generateHiringTimeReport());
+		setHiringTimeVisible(true);
+		chart.createChart(hiringTimeModel, "Days", "", "", "Days");
 	}
 	
 	
@@ -217,6 +226,22 @@ public class ReportBean implements Serializable {
 
 	public void setProposalReportVisible(boolean proposalReportVisible) {
 		this.proposalReportVisible = proposalReportVisible;
+	}
+
+	public boolean isHiringTimeVisible() {
+		return hiringTimeVisible;
+	}
+
+	public void setHiringTimeVisible(boolean hiringTimeVisible) {
+		this.hiringTimeVisible = hiringTimeVisible;
+	}
+
+	public DataModel<String, Long> getHiringTimeModel() {
+		return hiringTimeModel;
+	}
+
+	public void setHiringTimeModel(DataModel<String, Long> hiringTimeModel) {
+		this.hiringTimeModel = hiringTimeModel;
 	}
 
 	

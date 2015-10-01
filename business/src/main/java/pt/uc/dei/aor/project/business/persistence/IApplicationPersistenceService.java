@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.persistence;
 
+import java.util.Date;
 import java.util.List;
 
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
@@ -24,6 +25,8 @@ public interface IApplicationPersistenceService {
 	List<IApplication> findAllApplicationsByPosition(IPosition position);
 
 	boolean hasSpontaneous(IUser user);
+
+	List<IApplication> findApplicationsByDate(Date startDate, Date finishDate);
 
 
 	

@@ -41,6 +41,8 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 			query = "from ApplicationEntity u where u.position = :position"),
 	@NamedQuery(name = "Application.findSpontaneous", query = "from ApplicationEntity u where u.spontaneous = true "+
 			"and u.candidate = :user"),
+	@NamedQuery(name = "Application.findApplicationsByDate", 
+			query = "from ApplicationEntity u where u.date between :startDate and :finishDate"),
 })
 public class ApplicationEntity {
 	
@@ -226,5 +228,13 @@ public class ApplicationEntity {
 
 	public boolean isSpontaneous() {
 		return spontaneous;
+	}
+
+	public JobProposalEntity getProposal() {
+		return proposal;
+	}
+
+	public Date getPropositionDate() {
+		return proposal.getDate();
 	}
 }

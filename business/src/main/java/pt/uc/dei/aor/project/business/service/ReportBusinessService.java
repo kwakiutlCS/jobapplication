@@ -173,7 +173,7 @@ public class ReportBusinessService implements IReportBusinessService {
 	@Override
 	public DataModel<String, Long> generateInterviewTimeReport() {
 		DataModel<String, Long> data = new DataModel<>();
-		System.out.println("generating report");
+		
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.HOUR, 0);
@@ -186,14 +186,12 @@ public class ReportBusinessService implements IReportBusinessService {
 			finish.add(Calendar.MONTH, 1);
 			Date startDate = cal.getTime();
 			Date finishDate = finish.getTime();
-			System.out.println(startDate);
+			
 			List<IInterview> interviews = interviewPersistence.findInterviewsByDate(startDate, finishDate);
-			System.out.println(interviews.size());
+			
 			int counter = 0;
 			int total = 0;
 			for (IInterview interview : interviews) {
-				System.out.println(interview.getDate());
-				System.out.println(interview.getApplication().getDate());
 				try {
 					if (interview.getInterviewPhase() == 1) {
 						DateTime iDate = new DateTime(interview.getDateObject());
@@ -217,6 +215,48 @@ public class ReportBusinessService implements IReportBusinessService {
 		
 	}
 
+	@Override
+	public DataModel<String, Long> generateHiringTimeReport() {
+		DataModel<String, Long> data = new DataModel<>();
+		System.out.println("generating report");
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		cal.set(Calendar.HOUR, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.add(Calendar.MONTH, -11);
+		
+		for (int i = 0; i < 12; i++) {
+			Calendar finish = Calendar.getInstance();
+			finish.setTime(cal.getTime());
+			finish.add(Calendar.MONTH, 1);
+			Date startDate = cal.getTime();
+			Date finishDate = finish.getTime();
+			System.out.println(startDate);
+			List<IApplication> applications = applicationPersistence.findApplicationsByDate(startDate, finishDate);
+			System.out.println(applications.size());
+			int counter = 0;
+			int total = 0;
+			for (IApplication app : applications) {
+				System.out.println(app.isProposed());
+				if (app.isProposed()) {
+					DateTime iDate = new DateTime(app.getPropositionDate());
+					DateTime aDate = new DateTime(app.getDateObject());
+					total += Days.daysBetween(aDate , iDate).getDays();
+					counter++;
+				}
+			}
+			
+			if (counter == 0)
+				total = 0;
+			else total /= counter;
+			data.addPoint(new DataPoint<>(cal.get(Calendar.YEAR)+"/"+MONTHS[cal.get(Calendar.MONTH)], (long) total));
+			cal.add(Calendar.MONTH, 1);
+		}
+		
+		return data;
+		
+	}
+	
 	@Override
 	public DataModel<String, Long> generateRejectedCandidatesReport(int period) {
 		List<IApplication> applications;

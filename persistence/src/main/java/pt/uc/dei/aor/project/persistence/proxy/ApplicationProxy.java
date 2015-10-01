@@ -221,4 +221,10 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public Date getDateObject() {
 		return entity.getDate();
 	}
+
+
+	@Override
+	public Date getPropositionDate() {
+		return entity.getPropositionDate();
+	}
 }

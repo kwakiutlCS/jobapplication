@@ -56,4 +56,6 @@ public interface IApplication {
 	boolean isSpontaneous();
 
 	Date getDateObject();
+
+	Date getPropositionDate();
 }

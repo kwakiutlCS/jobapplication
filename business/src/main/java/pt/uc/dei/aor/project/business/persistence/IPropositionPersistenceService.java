@@ -15,6 +15,8 @@ public interface IPropositionPersistenceService {
 
 	List<IProposition> findAll();
 
+	List<IProposition> findHiringsByDate(Date startDate, Date finishDate);
+
 	
 	
 

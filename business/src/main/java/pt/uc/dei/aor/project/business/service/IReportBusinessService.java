@@ -19,6 +19,8 @@ public interface IReportBusinessService {
 
 	DataModel<String, Long> generateProposalReport(int period);
 
+	DataModel<String, Long> generateHiringTimeReport();
+
 	
 	
 }
