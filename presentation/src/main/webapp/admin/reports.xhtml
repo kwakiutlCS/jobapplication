@@ -20,12 +20,16 @@
 			update="@form" />
 
 			<h:panelGroup rendered="#{reportBean.periodicAppVisible}">
-				<p:dataTable value="#{reportBean.periodicAppModel.points}" var="p">
+				<p:dataTable value="#{reportBean.periodicAppModel.points}" var="p" id="table">
 					<p:column>#{p.x}</p:column>
 					<p:column>#{p.y}</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}"
 					style="height:300px" widgetVar="chart" />
+			
+			<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table" fileName="ApplicationsPeriodReport" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		

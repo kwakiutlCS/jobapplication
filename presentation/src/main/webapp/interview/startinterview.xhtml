@@ -52,7 +52,7 @@
 			<p:inputText value="#{interviewBean.answer}"
 				rendered="#{interviewBean.selectedEntry.questionType eq 'SHORT_ANSWER'}"
 				required="true" />
-			<p:inputTextarea value="#{interviewBean.answer}"
+			<p:inputTextarea value="#{interviewBean.answer}" maxlength="499"
 				rendered="#{interviewBean.selectedEntry.questionType eq 'LONG_ANSWER'}"
 				required="true" />
 			<p:inputMask value="#{interviewBean.answer}"

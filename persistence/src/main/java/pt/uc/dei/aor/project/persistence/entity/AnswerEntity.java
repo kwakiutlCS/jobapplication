@@ -43,7 +43,7 @@ public class AnswerEntity {
 	@Column(nullable=false)
 	private String question;
 	
-	@Column(nullable=false)
+	@Column(nullable=false, length=500)
 	private String answer;
 	
 	@Column(nullable=false)

@@ -15,7 +15,8 @@
 			<p:panel header="Personal Details">
 				<p:outputLabel value="Login" for="login" />
 				<p></p>
-				<p:inputText id="login" value="#{registerBean.login}" required="true" />
+				<p:inputText id="login" value="#{registerBean.login}" required="true"
+				validator="#{loginValidator.validate}" />
 				<p></p>
 				<p:outputLabel value="Name" for="name" required="true" />
 				<p></p>

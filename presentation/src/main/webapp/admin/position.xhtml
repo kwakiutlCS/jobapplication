@@ -71,7 +71,7 @@
 			<p:inputText id="company" value="#{positionBean.position.company}" disabled="true" />
 			
 			<p:outputLabel value="Description" for="description" />
-			<p:inputTextarea value="#{positionBean.position.description}" required="true" id="description" />
+			<p:inputTextarea maxlength="250" value="#{positionBean.position.description}" required="true" id="description" />
 			
 			<p:outputLabel for="script" value="Add Script" />
 				<p:selectOneMenu id="script"

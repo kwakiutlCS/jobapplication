@@ -11,27 +11,25 @@ import javax.inject.Named;
 
 import pt.uc.dei.aor.project.business.service.IUserBusinessService;
 
+
+
 @Named
 @RequestScoped
-public class EmailValidator implements Validator {
+public class LoginValidator implements Validator {
 	
-	@Inject
-	private IUserBusinessService userService;
-	
-	@Override
+	@Inject 
+	private IUserBusinessService ejb;
+	  
+    @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-    	String email = (String) value;
+    	String login = (String) value;
     	
-        if (email == null) {
+        if (login == null) {
             return;
         }
         
-        if (userService.getUserByEmail(email) != null) {
-        	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email already registed", null));
-        }
-        
-        if (!org.apache.commons.validator.routines.EmailValidator.getInstance().isValid(email)) {
-        	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Email format is incorrect", null));
+        if (ejb.getUserByLogin(login) != null) {
+        	throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login already registered", null));
         }
     }
 

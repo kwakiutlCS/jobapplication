@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.view.ViewScoped;
@@ -63,15 +64,17 @@ public class RegisterBean implements Serializable {
 	private String oldPassword;
 
 	
-
-	public RegisterBean() {
+	@PostConstruct
+	public void init() {
+		choosenQualifications = new ArrayList<>();
 	}
-
+	
 	public String register() {
 		if (cvPath == null) {
 			MetaUtils.setMsg("Upload a cv to register", FacesMessage.SEVERITY_ERROR);
 			return null;
 		}
+		System.out.println(choosenQualifications);
 		if (choosenQualifications == null || choosenQualifications.isEmpty()) {
 			MetaUtils.setMsg("Add qualifications to register", FacesMessage.SEVERITY_ERROR);
 			return null;
