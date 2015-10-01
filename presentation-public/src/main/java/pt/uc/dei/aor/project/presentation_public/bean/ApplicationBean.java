@@ -17,6 +17,7 @@ import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.service.IApplicationBusinessService;
 import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
+import pt.uc.dei.aor.project.business.util.PositionState;
 import pt.uc.dei.aor.project.presentation_public.util.MetaUtils;
 
 
@@ -56,17 +57,37 @@ public class ApplicationBean implements Serializable {
 	public ApplicationBean() {
 	}
 	
-	public void createApplication(){
+	public String createApplication(){
 		if (provisoryLetter == null) {
 			MetaUtils.setMsg("Upload a cover letter to apply", FacesMessage.SEVERITY_ERROR);
-			return;
+			return null;
 		}
 		IUser candidate = MetaUtils.getUser();
 		try {
 			applicationService.createApplication(provisoryLetter, coverLetter, provisoryCv, cv, sourceInfo, candidate, position);
+			MetaUtils.setMsg("Application to "+position+" created", FacesMessage.SEVERITY_INFO);
+			return "authorized/listPosition.xhtml?faces-redirect=true";
 		} catch (IOException e) {
-			MetaUtils.setMsg("Error creating user", FacesMessage.SEVERITY_ERROR);
+			MetaUtils.setMsg("Error creating application", FacesMessage.SEVERITY_ERROR);
 		}
+		return null;
+	}
+	
+	public String createSpontaneous() {
+		if (provisoryLetter == null) {
+			MetaUtils.setMsg("Upload a cover letter to apply", FacesMessage.SEVERITY_ERROR);
+			return null;
+		}
+		IUser candidate = MetaUtils.getUser();
+		try {
+			applicationService.createApplication(provisoryLetter, coverLetter, provisoryCv, cv, sourceInfo, candidate);
+			MetaUtils.setMsg("Spontaneous application created", FacesMessage.SEVERITY_INFO);
+			return "authorized/listPosition.xhtml?faces-redirect=true";
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			MetaUtils.setMsg("Error creating application", FacesMessage.SEVERITY_ERROR);
+		}
+		return null;
 	}
 		
 	public IPosition findPosition(){
@@ -82,6 +103,10 @@ public class ApplicationBean implements Serializable {
 	
 		else if(applicationService.findApplicationByCandidateAndPosition(candidate, position)){
 			MetaUtils.setMsg("You have already applied for this position", FacesMessage.SEVERITY_INFO);
+			position = null;
+		}
+		else if (position.getState() != PositionState.OPEN) {
+			MetaUtils.setMsg("This position is not open anymore", FacesMessage.SEVERITY_INFO);
 			position = null;
 		}
 		 
@@ -121,7 +146,9 @@ public class ApplicationBean implements Serializable {
 	}
 
 	
-	
+	public boolean hasSpontaneous() {
+		return applicationService.hasSpontaneous(MetaUtils.getUser());
+	}
 	
 	
 	

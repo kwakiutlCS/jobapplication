@@ -3,7 +3,7 @@ package pt.uc.dei.aor.project.presentation_public.bean;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,13 +12,11 @@ import pt.uc.dei.aor.project.business.service.IPositionBusinessService;
 
 
 @Named
-@SessionScoped
+@ViewScoped
 public class ListPositionBean implements Serializable{
 
-	
 	private static final long serialVersionUID = 1L;
 	
-
 	@Inject
 	private IPositionBusinessService position;
 	

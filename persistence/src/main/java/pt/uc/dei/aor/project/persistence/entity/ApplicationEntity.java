@@ -40,6 +40,9 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 				query = "from ApplicationEntity u where u.position = :position"),
 	@NamedQuery(name = "Application.findApplicationsByCandidate",
 				query = "from ApplicationEntity u where u.candidate = :candidate"),
+	@NamedQuery(name = "Application.findSpontaneous", query = "from ApplicationEntity u where u.spontaneous = true "+
+			"and u.candidate = :user"),
+
 })
 public class ApplicationEntity {
 
@@ -49,8 +52,13 @@ public class ApplicationEntity {
 
 	@Column(nullable=false)
 	private String coverLetter;
+<<<<<<< HEAD
 
 	@Column(nullable=false)
+=======
+	
+	@Column
+>>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 	private String sourceInfo; 
 
 	@Column(nullable=false)
@@ -72,8 +80,13 @@ public class ApplicationEntity {
 	private PositionEntity position;
 
 	@Column
+<<<<<<< HEAD
 	private boolean spontaneous = false;
 
+=======
+	private boolean spontaneous;
+	
+>>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 	@OrderBy("date")
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private SortedSet<InterviewEntity> interviews = new TreeSet<>();
@@ -90,11 +103,25 @@ public class ApplicationEntity {
 		this.candidate = candidate;
 		this.position = position;
 		this.cv=cv;
+		this.spontaneous = false;
 	}
 
 	public ApplicationEntity() {
 	}
 
+<<<<<<< HEAD
+=======
+	
+	public ApplicationEntity(String coverLetter, String cv, String sourceInfo, Date date,
+			UserEntity candidate) {
+		this.coverLetter = coverLetter;
+		this.sourceInfo = sourceInfo;
+		this.date = date;
+		this.candidate = candidate;
+		this.cv=cv;
+		this.spontaneous = true;
+	}
+>>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 
 	public SortedSet<InterviewEntity> getInterviews() {
 		return new TreeSet<>(interviews);

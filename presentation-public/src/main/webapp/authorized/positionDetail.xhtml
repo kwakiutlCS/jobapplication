@@ -73,12 +73,21 @@
 				</p:column>
 
 
-				<p:link value="Apply Now" rendered="#{viewManager.applyAfterLogin(listPositionBean.selectedPosition.id)}"  outcome="apply">
+				<p:link value="Apply Now" rendered="#{viewManager.applyAfterLogin(listPositionBean
+				.selectedPosition.id)}"  outcome="apply">
 					<f:param name="pos" value="#{listPositionBean.selectedPosition.id}" />
 				</p:link>
-				<p:link value="Profile" rendered="#{not viewManager.candidateHasCompletedRegistry()}"  outcome="profile">
-				</p:link>
-				
+				<h:panelGroup rendered="#{not viewManager.candidateHasCompletedRegistry()}">
+				You need to complete your profile to be able to apply to positions. Click
+				<p:link value="here" outcome="profile" />
+				to complete it.
+				</h:panelGroup>
+				<h:panelGroup rendered="#{viewManager.candidateHasCompletedRegistry() and 
+				viewManager.duplicateApplication(listPositionBean.selectedPosition)}">
+				You already applied to this position. Click
+				<p:link value="here" outcome="profile" />
+				to consult it.
+				</h:panelGroup>
 
 			</h:panelGrid>
 		</p:panel>

@@ -6,21 +6,17 @@
 	xmlns:p="http://primefaces.org/ui">
 
 
-	<ui:define name="title">Application</ui:define>
-
-	<ui:define name="metadata">
-		<f:metadata>
-			<f:viewParam name="pos" value="#{applicationBean.selectedPositionId}" />
-			<f:viewAction action="#{applicationBean.findPosition()}" />
-		</f:metadata>
-	</ui:define>
-
+	<ui:define name="title">Spontaneous Application</ui:define>
 
 	<ui:define name="content">
-
-		<h:panelGroup rendered="#{applicationBean.position ne null}">
-
-
+		<h:panelGroup id="page">
+		<h:panelGroup rendered="#{applicationBean.hasSpontaneous()}">
+			You already registered a spontaneous application. You can consult it 
+			<p:link value="here" outcome="profile" />.
+		</h:panelGroup>
+		
+		
+		<h:panelGroup rendered="#{not applicationBean.hasSpontaneous()}">
 		<p:panel header="Cover Letter">
 			<h:form enctype="multipart/form-data">
 				
@@ -58,25 +54,12 @@
 
 			<p:panel header="Send Application">
 				<h:form>
-					<h:outputText value="Please tell us the information source" />
-					<p:selectOneMenu value="#{applicationBean.sourceInfo}"
-						required="true">
-						<f:selectItems
-							value="#{applicationBean.position.IPublicationChannels}"
-							var="channel" itemValue="#{channel.channel}"
-							itemLabel="#{channel.channel}" />
-					</p:selectOneMenu>
-					<p />
-					<p:commandButton value="Apply" update=":globalMessages"
-						action="#{applicationBean.createApplication()}" />
-					<p></p>
-					<p></p>
-					<p:link value="Back" outcome="listPosition" />
+					<p:commandButton value="Apply" update=":globalMessages :page"
+						action="#{applicationBean.createSpontaneous()}" />
 				</h:form>
 			</p:panel>
-
+</h:panelGroup>
 		</h:panelGroup>
-
 	</ui:define>
 </ui:composition>
 

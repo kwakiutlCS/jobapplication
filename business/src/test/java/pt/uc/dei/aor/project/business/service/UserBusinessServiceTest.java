@@ -27,7 +27,6 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
-import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.PasswordUtil;
 import pt.uc.dei.aor.project.business.util.Role;
@@ -83,20 +82,19 @@ public class UserBusinessServiceTest {
 
 
 		List<IQualification> qualifications = new ArrayList<IQualification>();
+		
+		IUser user  = Mockito.mock(IUser.class);
 
+		Mockito.when(factory.user(login, test, test, test, test, test,test, test, test, test, qualifications, cv))
+		.thenReturn(user);	
 
-		ejb.createNewCandidate(login, test, test, test, test, test,test, test, test, test, qualifications,provisoryCv, cv);
-
-
+		ejb.createNewCandidate(login, test, test, test, test, test,test, test, test, test, qualifications,cv, provisoryCv);
 
 		verify(upload).mv("cv/temp/"+provisoryCv, "cv/users/"+login, cv);
 
 
 		verify(factory).user(login, test, test, test, test, test,test, test, test, test, qualifications, cv);
 
-		IUser user  = Mockito.mock(IUser.class);
-
-		Mockito.when(factory.user(login, test, test, test, test, test,test, test, test, test, qualifications, cv)).thenReturn(user);	
 		
 		verify(userEjb).save(user);
 	}
@@ -225,18 +223,16 @@ public class UserBusinessServiceTest {
 	}
 	
 	
-	@SuppressWarnings("static-access")
 	@Test
 	public void shouldRecoverPassword(){
 		
 		String email = "email";
 		IUser user  = Mockito.mock(IUser.class);
 				
-		Mockito.when(userEjb.findUserByEmail(email)).thenReturn(user);		
+		Mockito.when(userEjb.findUserByEmail(email)).thenReturn(user);
 		ejb.recoverPassword(email);
 		
-		String password = "password";
-		verify(user).setPassword(Encryptor.encrypt(password));
+		verify(user).setPassword(Mockito.anyString());
 	}
 	
 	@Test

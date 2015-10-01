@@ -48,7 +48,7 @@ public class ScheduledEjb {
     	notificationService.notify(p.getContactPerson(), msg, 
     			"SLA deadline");
     	
-    	emailUtil.send(p.getContactPerson().getEmail(), "SLA deadline", msg);
+    	emailUtil.send(p.getContactPerson().getEmail(), msg, "SLA deadline");
     }
     
     private boolean isOverdue(IPosition position) {
