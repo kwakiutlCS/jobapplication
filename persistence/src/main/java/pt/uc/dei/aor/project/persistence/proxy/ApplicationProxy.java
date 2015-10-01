@@ -227,4 +227,16 @@ public class ApplicationProxy implements IApplication, IProxyToEntity<Applicatio
 	public Date getPropositionDate() {
 		return entity.getPropositionDate();
 	}
+
+
+	@Override
+	public void acceptByCandidate() {
+		entity.acceptByCandidate();
+	}
+
+
+	@Override
+	public void refuseByCandidate() {
+		entity.refuseByCandidate();
+	}
 }

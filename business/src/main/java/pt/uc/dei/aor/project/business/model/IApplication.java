@@ -58,4 +58,8 @@ public interface IApplication {
 	Date getDateObject();
 
 	Date getPropositionDate();
+
+	void acceptByCandidate();
+	
+	void refuseByCandidate();
 }

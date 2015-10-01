@@ -45,6 +45,10 @@ public interface IApplicationBusinessService {
 	List<IApplication> findAllApplicationByCandidate(IUser candidate);
 
 	boolean hasSpontaneous(IUser user);
+
+	IApplication acceptProposition(IApplication selectedApplication);
+	
+	IApplication refuseProposition(IApplication selectedApplication);
 	
 
 }

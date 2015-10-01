@@ -97,5 +97,10 @@ public class JobProposalEntity {
 		return date;
 	}
 
+
+	public void setSituation(ProposalSituation accepted) {
+		situation = accepted;
+	}
+
 	
 }

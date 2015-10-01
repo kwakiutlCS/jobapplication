@@ -240,4 +240,12 @@ public class ApplicationEntity {
 	public Date getPropositionDate() {
 		return proposal.getDate();
 	}
+
+	public void acceptByCandidate() {
+		proposal.setSituation(ProposalSituation.ACCEPTED);
+	}
+	
+	public void refuseByCandidate() {
+		proposal.setSituation(ProposalSituation.REFUSED);
+	}
 }

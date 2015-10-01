@@ -221,6 +221,14 @@ public class InterviewScheduleBean implements Serializable {
 		
 	}
 	
+	public void acceptProposition() {
+		selectedApplication = applicationService.acceptProposition(selectedApplication);
+	}
+	
+	public void refuseProposition() {
+		selectedApplication = applicationService.refuseProposition(selectedApplication);
+	}
+	
 	public void cancelAlterations() {
 		editing = null;
 		interviewDate = null;

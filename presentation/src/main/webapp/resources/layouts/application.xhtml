@@ -104,6 +104,13 @@
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.propositionSent}">
 				<h:graphicImage value="/resources/img/yes.png" />
 				<span>Status: </span><span>Proposition sent (waiting answer by candidate)</span>
+				<h:form>
+					<p:commandButton update=":analyzed"
+					action="#{interviewScheduleBean.acceptProposition}" value="Candidate accepted" />
+					<p:commandButton update=":analyzed"
+					action="#{interviewScheduleBean.refuseProposition}" value="Candidate refused" />
+					
+				</h:form>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refusedByCandidate}">
 				<h:graphicImage value="/resources/img/no.png" />

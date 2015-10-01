@@ -190,4 +190,18 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	public boolean hasSpontaneous(IUser user) {
 		return applicationPersistence.hasSpontaneous(user);
 	}
+
+
+	@Override
+	public IApplication acceptProposition(IApplication selectedApplication) {
+		selectedApplication.acceptByCandidate();
+		return applicationPersistence.save(selectedApplication);
+	}
+
+
+	@Override
+	public IApplication refuseProposition(IApplication selectedApplication) {
+		selectedApplication.refuseByCandidate();
+		return applicationPersistence.save(selectedApplication);
+	}
 }
