@@ -25,66 +25,68 @@ import pt.uc.dei.aor.project.business.util.ProposalSituation;
 @Entity
 @Table(name="application")
 @NamedQueries({
-	@NamedQuery(name = "Application.dummyQuery", query = "from ApplicationEntity u"),
 	@NamedQuery(name = "Application.numberCandidatesByPeriod", 
-	query = "select count(u) from ApplicationEntity u where u.date >= :startDate and u.date < :finishDate"),
+				query = "select count(u) from ApplicationEntity u where u.date >= :startDate and u.date < :finishDate"),
 	@NamedQuery(name = "Application.numberCandidatesByPosition", 
-	query = "select count(u) from ApplicationEntity u where u.position = :position"),
+				query = "select count(u) from ApplicationEntity u where u.position = :position"),
 	@NamedQuery(name = "Application.numberSpontaneousByPeriod", 
-	query = "select count(u) from ApplicationEntity u where u.spontaneous is true and"
-			+ " u.date >= :startDate and u.date < :finishDate"),
+				query = "select count(u) from ApplicationEntity u where u.spontaneous is true and"
+					+ " u.date >= :startDate and u.date < :finishDate"),
 	@NamedQuery(name = "application.findApplicationbyCandidateAndPosition", 
-	query = "from ApplicationEntity u where u.candidate = :candidate and u.position = :position"),
+				query = "from ApplicationEntity u where u.candidate = :candidate and u.position = :position"),
 	@NamedQuery(name = "Application.findRejectedByDate",
-			query = "from ApplicationEntity u where u.refused = true and u.date >= :startDate"),
+				query = "from ApplicationEntity u where u.refused = true and u.date >= :startDate"),
 	@NamedQuery(name = "Application.findApplicationsByPosition",
-			query = "from ApplicationEntity u where u.position = :position"),
+				query = "from ApplicationEntity u where u.position = :position"),
+	@NamedQuery(name = "Application.findApplicationsByCandidate",
+				query = "from ApplicationEntity u where u.candidate = :candidate"),
 	@NamedQuery(name = "Application.findSpontaneous", query = "from ApplicationEntity u where u.spontaneous = true "+
 			"and u.candidate = :user"),
 	@NamedQuery(name = "Application.findApplicationsByDate", 
 			query = "from ApplicationEntity u where u.date between :startDate and :finishDate"),
+
 })
 public class ApplicationEntity {
-	
+
 	@Id 
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-	
+
 	@Column(nullable=false)
 	private String coverLetter;
 	
 	@Column
 	private String sourceInfo; 
-	
+
 	@Column(nullable=false)
 	private String cv;
-	
+
 	@Column(nullable=false)
 	private Date date;
-	
+
 	@Column(nullable=false)
 	private boolean analyzed = false;
-	
+
 	@Column(nullable=false)
 	private boolean refused = false;
-	
+
 	@ManyToOne
 	private UserEntity candidate;
-	
+
 	@ManyToOne
 	private PositionEntity position;
-	
+
 	@Column
 	private boolean spontaneous;
 	
 	@OrderBy("date")
 	@OneToMany(mappedBy="application", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private SortedSet<InterviewEntity> interviews = new TreeSet<>();
-	
+
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private JobProposalEntity proposal;
 
-	
+
 	public ApplicationEntity(String coverLetter, String cv, String sourceInfo, Date date, UserEntity candidate,
 			PositionEntity position) {
 		this.coverLetter = coverLetter;
@@ -110,6 +112,7 @@ public class ApplicationEntity {
 		this.spontaneous = true;
 	}
 
+
 	public SortedSet<InterviewEntity> getInterviews() {
 		return new TreeSet<>(interviews);
 	}
@@ -118,7 +121,7 @@ public class ApplicationEntity {
 		return id;
 	}
 
-	
+
 	public PositionEntity getPosition() {
 		return position;
 	}
@@ -135,7 +138,7 @@ public class ApplicationEntity {
 	public UserEntity getCandidate() {
 		return candidate;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -196,7 +199,7 @@ public class ApplicationEntity {
 		if (proposal == null) return false;
 		return proposal.getSituation() == ProposalSituation.ONHOLD;
 	}
-	
+
 	public boolean isRefusedByCandidate() {
 		if (proposal == null) return false;
 		return proposal.getSituation() == ProposalSituation.REFUSED;

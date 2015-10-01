@@ -32,6 +32,7 @@ public interface IInterview {
 	public void setDate(Date date);
 
 	public void setInterviewers(Collection<IUser> selectedInterviewers);
+	
 
 	
 }

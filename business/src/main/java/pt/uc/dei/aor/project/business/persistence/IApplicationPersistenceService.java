@@ -24,9 +24,12 @@ public interface IApplicationPersistenceService {
 
 	List<IApplication> findAllApplicationsByPosition(IPosition position);
 
+	List<IApplication> findAllApplicationsByCandidate(IUser candidate);
+	
 	boolean hasSpontaneous(IUser user);
 
 	List<IApplication> findApplicationsByDate(Date startDate, Date finishDate);
+
 
 
 	

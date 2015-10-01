@@ -183,6 +183,10 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 
 
 	@Override
+	public List<IApplication> findAllApplicationByCandidate(IUser candidate) {
+		return applicationPersistence.findAllApplicationsByCandidate(candidate);
+	}
+
 	public boolean hasSpontaneous(IUser user) {
 		return applicationPersistence.hasSpontaneous(user);
 	}

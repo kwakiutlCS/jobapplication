@@ -41,8 +41,9 @@ public interface IApplicationBusinessService {
 	IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication) throws
 		IllegalApplicationException;
 
-	boolean hasSpontaneous(IUser user);
+	List<IApplication> findAllApplicationByCandidate(IUser candidate);
 
+	boolean hasSpontaneous(IUser user);
 	
 
 }

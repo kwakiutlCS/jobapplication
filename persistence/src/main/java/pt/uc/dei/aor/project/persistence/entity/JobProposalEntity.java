@@ -39,7 +39,7 @@ public class JobProposalEntity {
 	@Column
 	private long id;
 	
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.STRING) 
 	@Column
 	private ProposalSituation situation;
 	
