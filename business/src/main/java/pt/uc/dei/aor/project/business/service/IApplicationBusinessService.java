@@ -41,12 +41,11 @@ public interface IApplicationBusinessService {
 	IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication) throws
 		IllegalApplicationException;
 
-<<<<<<< HEAD
+
 	List<IApplication> findAllApplicationByCandidate(IUser candidate);
-=======
+
 	boolean hasSpontaneous(IUser user);
 
 	
->>>>>>> branch 'master' of https://github.com/kwakiutlCS/jobapplication.git
 
 }
