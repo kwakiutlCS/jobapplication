@@ -61,5 +61,4 @@ public interface IInterviewBusinessService {
 
 	boolean isCompleted(IInterview interview) throws AllPhasesCompletedException;
 
-	
 }

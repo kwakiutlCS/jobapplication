@@ -224,5 +224,22 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		return proxies;
 	}
 	
+	@Override
+	public List<IApplication> findAllApplicationsByCandidate(IUser candidate) {
+		
+		TypedQuery<ApplicationEntity> q = em.createNamedQuery("Application.findApplicationsByCandidate", 
+				ApplicationEntity.class);
+		q.setParameter("candidate", GenericPersistenceService.getEntity(candidate));
+		
+		List<ApplicationEntity> result = q.getResultList();
+		List<IApplication> proxies = new ArrayList<>();
+		
+		for (ApplicationEntity ae : result) {
+			proxies.add(new ApplicationProxy(ae));
+		}
+		
+		return proxies;
+	}
+	
 	
 }

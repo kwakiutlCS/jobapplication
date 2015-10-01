@@ -1,0 +1,31 @@
+<ui:composition template="/resources/layouts/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="title">My job applications</ui:define>
+
+	<ui:define name="content">
+	
+					<table style="width:100%">		
+  						<tr>
+    						<th>Date</th>
+    						<th>Position</th> 
+    						<th>Situation</th>
+    						<th>Interview</th>
+  						</tr>
+  						<ui:repeat value="#{myPageBean.myApplications}" var="app">
+  						<tr>
+    						<td>#{app.date}</td>
+   							 <td>#{app.position.title}</td> 
+    						<td>#{app.position.stateFormatted}</td>
+    						<td>#{myPageBean.getDateInterview(app)}</td>
+  						</tr>
+  						</ui:repeat>
+					</table>
+				
+	</ui:define>
+</ui:composition>

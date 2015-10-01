@@ -41,29 +41,29 @@ import pt.uc.dei.aor.project.business.util.QuestionType;
 public class InterviewBusinessService implements IInterviewBusinessService {
 
 	private static Logger logger = LoggerFactory.getLogger(InterviewBusinessService.class);
-	
+
 	@Inject
 	private IInterviewPersistenceService interviewPersistence;
-	
+
 	@Inject
 	private IUserPersistenceService workerPersistence;
-	
+
 	@Inject
 	private IApplicationPersistenceService applicationPersistence;
-	
+
 	@Inject
 	private IAnswerPersistenceService answerPersistence;
-	
+
 	@Inject
 	private IModelFactory factory;
-	
+
 	@Inject
 	private EmailUtil emailUtil;
-	
+
 	@Inject
 	private INotificationBusinessService notificationService;
-	
-	
+
+
 	@Override
 	public List<IInterview> findActiveInterviewsByUser(IUser interviewer) {
 		return interviewPersistence.findActiveInterviewsByUser(interviewer);
@@ -75,23 +75,23 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			throws GenericIllegalParamsException, RepeatedInterviewException, AllPhasesCompletedException {
 		if (date == null || application == null 
 				|| interviewers == null) throw new GenericIllegalParamsException();
-		
+
 		if (application.reachedAllPhases()) {
 			throw new AllPhasesCompletedException();
 		}
-		
+
 		IInterview interview = factory.interview(date);
-		
+
 		application.addInterview(interview);
-		
+
 		try {
 			application = applicationPersistence.save(application);
 			interview = application.getInterviewByDate(date);
-			
+
 			for (IUser w : interviewers) {
 				workerPersistence.insertInterview(w.getId(), interview);
 			}
-			
+
 			for (IUser w : interviewers) {
 				String company = interview.getApplication().getPosition().getCompany();
 
@@ -102,7 +102,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 						interview.getDate()+
 						"\nCandidate: "+interview.getCandidate().getFullName()+
 						"\nInterviewers: "+interview.getInterviewersFormatted();
-				
+
 				String msgEmail = "<h1>"+company+"</h1>"+
 						"<p>Interview for position "+
 						interview.getApplication().getPosition().getTitle()+" was created and assigned you as interviewer.</p>"+
@@ -111,25 +111,25 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 						"<p>Interviewers: "+interview.getInterviewersFormatted()+
 						"<p><a href='http://localhost:8080/jobmanagement/interview/interview.xhtml?it="+
 						interview.getId()+"'>Details</a></p>";
-				
+
 				notificationService.notify(w, msg, title);
-				
+
 				Path file;
 				if (interview.getApplication().isSpontaneous()) {
 					file = Paths.get(System.getProperty("jboss.server.data.dir")+
-						"/jobapplication/uploads/cv/users/"+interview.getCandidate().getLogin()+
-						"/"+interview.getCandidate().getCv());
+							"/jobapplication/uploads/cv/users/"+interview.getCandidate().getLogin()+
+							"/"+interview.getCandidate().getCv());
 				}
 				else {
 					file = Paths.get(System.getProperty("jboss.server.data.dir")+
 							"/jobapplication/uploads/cv/applications/"+interview.getApplication().getId()+
 							"/"+interview.getApplication().getCv());
 				}
-				
+
 				emailUtil.send(w.getEmail(), msgEmail, title, file);
-//				
+				//				
 			}
-			
+
 			return application;
 		}
 		catch (Exception e) {
@@ -148,16 +148,16 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			throws IllegalInterviewDeletionException {
 		List<IAnswer> answers = findAnswersByInterview(interview);
 		if (!answers.isEmpty()) throw new IllegalInterviewDeletionException();
-		
+
 		application.remove(interview);
 		application = applicationPersistence.save(application);
-		
+
 		for (IUser w : interview.getInterviewers()) {
 			workerPersistence.removeInterview(w.getId(), interview.getId());
 		}
-		
+
 		interviewPersistence.delete(interview);
-		
+
 		return application;
 	}
 
@@ -173,12 +173,12 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		IApplication application = interview.getApplication();
 		IPosition position = application.getPosition();
 		int phase = interview.getInterviewPhase();
-		
+
 		List<IScript> scripts = position.getScripts();
-		
+
 		if (scripts.size() < phase || phase == -1) return null;
 		IScript script = scripts.get(phase-1);
-		
+
 		return script.getEntries();
 	}
 
@@ -186,10 +186,10 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Override
 	public IAnswer saveAnswer(IInterview interview, String answer, IScriptEntry entry) throws AllPhasesCompletedException {
 		IAnswer answerProxy = answerPersistence.findAnswerByInterviewAndQuestion(interview, entry.getText());
-		
+
 		if (answerProxy == null) answerProxy = factory.answer(interview, answer.trim(), entry);
 		else answerProxy.setAnswer(answer);
-		
+
 		return answerPersistence.save(answerProxy);
 	}
 
@@ -213,7 +213,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 		List<IScriptEntry> entries = getScriptEntries(interview);
 		entries.add(factory.scriptEntry(QuestionType.LONG_ANSWER, 
 				"Interview's Global Appreciation", entries.size()));
-		
+
 		return entries;
 	}
 
@@ -234,7 +234,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public IInterview saveInterview(IInterview interview) throws IllegalInterviewDeletionException {
 		List<IAnswer> answers = findAnswersByInterview(interview);
 		if (!answers.isEmpty()) throw new IllegalInterviewDeletionException();
-		
+
 		return interviewPersistence.save(interview);
 	}
 
@@ -262,7 +262,7 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 			if (!selectedInterviewers.contains(w))
 				workerPersistence.removeInterview(w.getId(), interview.getId());
 		}
-		
+
 		return interviewPersistence.save(interview);
 	}
 
@@ -270,18 +270,18 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	@Override
 	public List<IInterview> getPreviousInterviews(IInterview interview) {
 		List<IInterview> interviews = new ArrayList<>();
-		
+
 		IApplication app = interview.getApplication();
-		
+
 		Calendar date = Calendar.getInstance();
 		date.setTime(interview.getDateObject());
 		Calendar cal = Calendar.getInstance();
-		
+
 		for (IInterview i : app.getInterviews()) {
 			cal.setTime(i.getDateObject());
 			if (cal.before(date)) interviews.add(i);
 		}
-		
+
 		return interviews;
 	}
 
@@ -297,11 +297,11 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public Set<IInterview> findPastInterviews(IApplication application) throws AllPhasesCompletedException {
 		Set<IInterview> past = new TreeSet<>();
 		List<IInterview> all = interviewPersistence.findInterviewsByApplication(application);
-		
+
 		for (IInterview i : all) {
 			if (isCompleted(i)) past.add(i);
 		}
-		
+
 		return past;
 	}
 
@@ -309,11 +309,11 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public Set<IInterview> findFutureInterviews(IApplication application) throws AllPhasesCompletedException {
 		Set<IInterview> future = new TreeSet<>();
 		List<IInterview> all = interviewPersistence.findInterviewsByApplication(application);
-		
+
 		for (IInterview i : all) {
 			if (!isCompleted(i)) future.add(i);
 		}
-		
+
 		return future;
 	}
 
@@ -322,5 +322,6 @@ public class InterviewBusinessService implements IInterviewBusinessService {
 	public boolean isCompleted(IInterview interview) throws AllPhasesCompletedException {
 		return interviewPersistence.isCompleted(interview);
 	}
-	
+
 }
+

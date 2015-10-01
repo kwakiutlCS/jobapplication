@@ -33,4 +33,5 @@ public interface IInterviewPersistenceService {
 	List<IInterview> findInterviewsByApplication(IApplication application);
 
 	List<IInterview> findInterviewsByClosedPositionAndDate(Date startDate);
+
 }

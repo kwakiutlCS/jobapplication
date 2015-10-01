@@ -38,4 +38,6 @@ public interface IApplicationBusinessService {
 	IApplication addPositionToApplication(IPosition positionToAdd, IApplication selectedApplication) throws
 		IllegalApplicationException;
 
+	List<IApplication> findAllApplicationByCandidate(IUser candidate);
+
 }

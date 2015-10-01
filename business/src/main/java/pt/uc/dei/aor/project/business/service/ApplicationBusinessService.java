@@ -151,4 +151,10 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		selectedApplication.addPositon(positionToAdd);
 		return applicationPersistence.save(selectedApplication);
 	}
+
+
+	@Override
+	public List<IApplication> findAllApplicationByCandidate(IUser candidate) {
+		return applicationPersistence.findAllApplicationsByCandidate(candidate);
+	}
 }
