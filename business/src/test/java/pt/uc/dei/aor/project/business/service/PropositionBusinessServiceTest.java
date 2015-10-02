@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.service;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,4 +21,8 @@ public class PropositionBusinessServiceTest {
 	@InjectMocks
 	private PropositionBusinessService ejb;
 
+	@Test
+	public void init() {
+		
+	}
 }

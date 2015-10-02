@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.servlet.http.Part;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,5 +102,18 @@ public class UploadUtil {
 	
 	public void delete(String path) throws IOException {
 		delete(Paths.get(path));
+	}
+
+
+	public void uploadImg(Part img) throws IOException {
+		Path dir = UPLOADS.resolve(Paths.get("images"));
+		
+		if (Files.notExists(dir))
+			Files.createDirectories(dir);
+		
+		Path file = dir.resolve(Paths.get(img.getSubmittedFileName()));
+		
+		Files.createFile(file);
+		Files.copy(img.getInputStream(), file, StandardCopyOption.REPLACE_EXISTING);
 	}
 }	

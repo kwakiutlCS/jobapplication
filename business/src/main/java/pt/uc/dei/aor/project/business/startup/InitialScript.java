@@ -139,6 +139,10 @@ public class InitialScript {
 		tmp = directory.resolve(Paths.get("uploads/usersImport"));
 		if (!Files.exists(tmp))
 			Files.createDirectory(tmp);
+		
+		tmp = directory.resolve(Paths.get("uploads/images"));
+		if (!Files.exists(tmp))
+			Files.createDirectory(tmp);
 			
 		tmp = directory.resolve(Paths.get("uploads/cv"));
 		if (!Files.exists(tmp))

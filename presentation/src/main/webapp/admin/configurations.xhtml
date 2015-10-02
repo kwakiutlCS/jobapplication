@@ -9,7 +9,16 @@
 	<ui:define name="title">Configurations</ui:define>
 
 	<ui:define name="content">
+		<h:form>
+		<p:selectOneMenu value="#{configurationBean.page}">
+			<f:selectItem itemValue="admin" itemLabel="Admin page" />
+			<f:selectItem itemValue="candidate" itemLabel="Public page" />
+			<f:ajax event="change" render="pagePanel" />
+		</p:selectOneMenu>
+		</h:form>
 		
+		<h:panelGroup id="pagePanel">
+		<h:panelGroup rendered="#{configurationBean.page eq 'admin'}">
 		<h:form>
 			<p:outputLabel value="Header" for="header" />
 			<p:colorPicker id="header" value="#{colorTestBean.color.header}" />
@@ -32,6 +41,17 @@
 			
 			<p:commandButton value="Save changes" action="#{colorTestBean.save(1)}" ajax="false" />
 		</h:form>
+		</h:panelGroup>
 		
+		<h:panelGroup rendered="#{configurationBean.page eq 'candidate'}">
+			
+			<h:form enctype="multipart/form-data">
+			<h:inputFile value="#{configurationBean.img}" required="true" id="fileUploader">
+				<f:ajax listener="#{configurationBean.upload}" render=":globalMessages @form" />
+			</h:inputFile>
+			</h:form>
+		
+		</h:panelGroup>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>

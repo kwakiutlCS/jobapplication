@@ -71,4 +71,7 @@ public class ListPositionBean implements Serializable{
 		
 	}
 
+	public int getOpenings() {
+		return position.findOpenPosition().size();
+	}
 }

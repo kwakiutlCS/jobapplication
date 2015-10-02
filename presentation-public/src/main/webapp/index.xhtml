@@ -9,8 +9,12 @@
 	<ui:define name="title">Index</ui:define>
 
 	<ui:define name="content">
-
-
-
+		<div class="jumbotron" style="
+    background: url(/jobapplication/resources/images/1.jpeg) 0 0 no-repeat; background-size: 100% 100%">
+			<h1>Our company</h1>
+  				<p>We have #{listPositionBean.openings} openings available </p>
+  				<p><p:button outcome="listPosition" value="Learn more" /></p>
+		</div>
+	
 	</ui:define>
 </ui:composition>

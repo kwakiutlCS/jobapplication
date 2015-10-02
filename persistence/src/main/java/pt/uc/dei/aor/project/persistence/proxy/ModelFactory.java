@@ -11,6 +11,7 @@ import pt.uc.dei.aor.project.business.model.IAnswerChoice;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IColor;
 import pt.uc.dei.aor.project.business.model.IDegree;
+import pt.uc.dei.aor.project.business.model.IImage;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.INotification;
@@ -134,6 +135,11 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IColor color() {
 		return new ColorProxy();
+	}
+
+	@Override
+	public IImage image(String title) {
+		return new ImageProxy(title);
 	}
 
 

@@ -55,6 +55,8 @@ public interface IModelFactory {
 
 	IColor color();
 
+	IImage image(String submittedFileName);
+
 
 	
 
