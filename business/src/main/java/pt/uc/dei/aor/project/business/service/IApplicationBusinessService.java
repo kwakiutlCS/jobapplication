@@ -50,6 +50,11 @@ public interface IApplicationBusinessService {
 	IApplication acceptProposition(IApplication selectedApplication);
 	
 	IApplication refuseProposition(IApplication selectedApplication);
-	
+
+
+
+
+
+
 
 }
