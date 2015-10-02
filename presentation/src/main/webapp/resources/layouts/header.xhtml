@@ -6,8 +6,8 @@
 
 	<h:panelGroup id="headerBar">
 	<nav class="navbar navbar-default" role="navigation" 
-	style="background-color: #{colorBeanTest.getColor(1).header};color:#{colorBeanTest.getColor(1).headerText};
-	border: 1px solid #{colorBeanTest.getColor(1).header}">
+	style="background-color: #{colorBean.admin.header};color:#{colorBean.admin.headerText};
+	border: 1px solid #{colorBean.admin.header}">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -23,13 +23,13 @@
 				id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right">
 					<h:panelGroup rendered="#{notificationBean.countUnread() gt 0}">
-						<li><p:link
+						<li><p:link style="color:#{colorBean.admin.headerText}"
 								value="#{notificationBean.countUnread()} unread notifications"
 								outcome="/admin/notifications" /></li>
 					</h:panelGroup>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">#{loginBean.user.name} <span
+						aria-expanded="false" style="color:#{colorBean.admin.headerText}">#{loginBean.user.name} <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<h:panelGroup rendered="#{loginBean.user.manager}">

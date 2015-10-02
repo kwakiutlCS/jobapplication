@@ -10,48 +10,52 @@
 
 	<ui:define name="content">
 		<h:form>
-		<p:selectOneMenu value="#{configurationBean.page}">
-			<f:selectItem itemValue="admin" itemLabel="Admin page" />
-			<f:selectItem itemValue="candidate" itemLabel="Public page" />
-			<f:ajax event="change" render="pagePanel" />
-		</p:selectOneMenu>
+			<p:selectOneMenu value="#{metaBean.page}">
+				<f:selectItem itemValue="admin" itemLabel="Admin page" />
+				<f:selectItem itemValue="candidate" itemLabel="Public page" />
+				<f:ajax event="change" render="pagePanel" />
+			</p:selectOneMenu>
 		</h:form>
-		
+
 		<h:panelGroup id="pagePanel">
-		<h:panelGroup rendered="#{configurationBean.page eq 'admin'}">
-		<h:form>
-			<p:outputLabel value="Header" for="header" />
-			<p:colorPicker id="header" value="#{colorTestBean.color.header}" />
-		
-			<p:outputLabel value="Background 1" for="bg1" />
-			<p:colorPicker id="bg1" value="#{colorTestBean.color.content}" />
-			
-			<p:outputLabel value="Background 2" for="bg2" />
-			<p:colorPicker id="bg2" value="#{colorTestBean.color.background}" />
-			
-			<p:outputLabel value="Header Text" for="headerText" />
-			<p:colorPicker id="headerText" value="#{colorTestBean.color.headerText}" />
-			
-			<p:outputLabel value="Main Text" for="contentText" />
-			<p:colorPicker id="contentText" value="#{colorTestBean.color.contentText}" />
-			
-			<p:outputLabel value="Title" for="contentTitle" />
-			<p:colorPicker id="contentTitle" value="#{colorTestBean.color.contentTitle}" />
-			
-			
-			<p:commandButton value="Save changes" action="#{colorTestBean.save(1)}" ajax="false" />
-		</h:form>
-		</h:panelGroup>
-		
-		<h:panelGroup rendered="#{configurationBean.page eq 'candidate'}">
-			
-			<h:form enctype="multipart/form-data">
-			<h:inputFile value="#{configurationBean.img}" required="true" id="fileUploader">
-				<f:ajax listener="#{configurationBean.upload}" render=":globalMessages @form" />
-			</h:inputFile>
-			</h:form>
-		
-		</h:panelGroup>
+			<h:panelGroup rendered="#{metaBean.page eq 'admin'}">
+				<h:form>
+					<p:outputLabel value="Header" for="header" />
+					<p:colorPicker id="header" value="#{colorBean.admin.header}" />
+
+					<p:outputLabel value="Background 1" for="bg1" />
+					<p:colorPicker id="bg1" value="#{colorBean.admin.content}" />
+
+					<p:outputLabel value="Background 2" for="bg2" />
+					<p:colorPicker id="bg2" value="#{colorBean.admin.background}" />
+
+					<p:outputLabel value="Header Text" for="headerText" />
+					<p:colorPicker id="headerText"
+						value="#{colorBean.admin.headerText}" />
+
+					<p:outputLabel value="Main Text" for="contentText" />
+					<p:colorPicker id="contentText"
+						value="#{colorBean.admin.contentText}" />
+
+					<p:outputLabel value="Title" for="contentTitle" />
+					<p:colorPicker id="contentTitle"
+						value="#{colorBean.admin.contentTitle}" />
+
+
+					<p:commandButton value="Save changes"
+						action="#{colorBean.saveAdmin}" ajax="false" />
+				</h:form>
+			</h:panelGroup>
+
+			<h:panelGroup rendered="#{metaBean.page eq 'candidate'}">
+
+				<h:form>
+					<p:inputText value="#{metaBean.test}" />
+					<p:commandButton action="#{metaBean.testFunction()}" value="test" />
+				</h:form>
+
+			</h:panelGroup>
+
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>
