@@ -1,5 +1,8 @@
 package pt.uc.dei.aor.project.business.startup;
 
+import java.io.IOException;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,8 +34,8 @@ public class InitialScriptTest {
 	private InitialScript initScript;
 
 	
-//	@Test
-//	public void shouldLoadDataWhenQualificationIsNotPopulated() throws IOException{
+	@Test
+	public void shouldLoadDataWhenQualificationIsNotPopulated() throws IOException{
 
 //		Mockito.when(qualification.isPopulated()).thenReturn(false);
 //				
@@ -51,7 +54,7 @@ public class InitialScriptTest {
 //
 //		
 //
-//	}
+	}
 
 
 }
