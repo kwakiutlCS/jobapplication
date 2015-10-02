@@ -249,4 +249,18 @@ public class UserBusinessServiceTest {
 		
 
 	}
+	
+	@Test
+	public void shouldUpdateUser(){
+		
+		IUser user  = Mockito.mock(IUser.class);
+		
+		ejb.update(user);
+		verify(userEjb).save(user);
+		
+	}
+
+
+	
+	
 }
