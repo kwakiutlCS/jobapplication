@@ -85,36 +85,36 @@
 			<p:column headerText="Email">#{user.email}</p:column>
 			<p:column headerText="Admin" width="90">
 				<h:form rendered="#{user.admin}">
-					<p:commandLink action="#{workerBean.removeAdmin(user)}" update=":userTable">
+					<p:commandLink action="#{workerBean.removeAdmin(user)}" update=":userTable :globalMessages">
 						<h:graphicImage value="/resources/img/yes.png" />
 					</p:commandLink>
 				</h:form>
 				<h:form rendered="#{not user.admin}">
-					<p:commandLink action="#{workerBean.addAdmin(user)}" update=":userTable">
+					<p:commandLink action="#{workerBean.addAdmin(user)}" update=":userTable :globalMessages">
 						<h:graphicImage value="/resources/img/no.png" />
 					</p:commandLink>
 				</h:form>
 			</p:column>
 			<p:column headerText="Interviewer" width="90">
 				<h:form rendered="#{user.interviewer}">
-					<p:commandLink action="#{workerBean.removeInterviewer(user)}" update=":userTable">
+					<p:commandLink action="#{workerBean.removeInterviewer(user)}" update=":userTable :globalMessages">
 						<h:graphicImage value="/resources/img/yes.png" />
 					</p:commandLink>
 				</h:form>
 				<h:form rendered="#{not user.interviewer}">
-					<p:commandLink action="#{workerBean.addInterviewer(user)}" update=":userTable">
+					<p:commandLink action="#{workerBean.addInterviewer(user)}" update=":userTable :globalMessages">
 						<h:graphicImage value="/resources/img/no.png" />
 					</p:commandLink>
 				</h:form>
 			</p:column>
 			<p:column headerText="Manager" width="90">
 				<h:form rendered="#{user.manager}">
-					<p:commandLink action="#{workerBean.removeManager(user)}" update=":userTable">
+					<p:commandLink action="#{workerBean.removeManager(user)}" update=":userTable :globalMessages">
 						<h:graphicImage value="/resources/img/yes.png" />
 					</p:commandLink>
 				</h:form>
 				<h:form rendered="#{not user.manager}">
-					<p:commandLink action="#{workerBean.addManager(user)}" update=":userTable">
+					<p:commandLink action="#{workerBean.addManager(user)}" update=":userTable :globalMessages">
 						<h:graphicImage value="/resources/img/no.png" />
 					</p:commandLink>
 				</h:form>

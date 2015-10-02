@@ -111,7 +111,11 @@ public class WorkerBean implements Serializable {
 	}
 	
 	public void removeManager(IUser user) {
-		userService.removeManager(user);
+		try {
+			userService.removeManager(user);
+		} catch (IllegalRoleChangeException e) {
+			MetaUtils.setMsg(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	public void addInterviewer(IUser user) {
@@ -119,7 +123,11 @@ public class WorkerBean implements Serializable {
 	}
 	
 	public void removeInterviewer(IUser user) {
-		userService.removeInterviewer(user);
+		try {
+			userService.removeInterviewer(user);
+		} catch (IllegalRoleChangeException e) {
+			MetaUtils.setMsg(e.getMessage(), FacesMessage.SEVERITY_ERROR);
+		}
 	}
 	
 	

@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.util.PositionState;
@@ -268,6 +269,16 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 		}
 		
 		return proxies;
+	}
+
+
+	@Override
+	public IApplication sendProposition(IApplication application, IProposition proposition) {
+		ApplicationEntity entity = em.find(ApplicationEntity.class, application.getId());
+		
+		entity.setProposition(GenericPersistenceService.getEntity(proposition));
+		entity = em.merge(entity);
+		return new ApplicationProxy(entity);
 	}
 	
 	

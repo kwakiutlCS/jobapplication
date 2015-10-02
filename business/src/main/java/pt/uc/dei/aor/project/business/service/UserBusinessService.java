@@ -26,9 +26,11 @@ import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.filter.WorkerFilter;
 import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
+import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IInterviewPersistenceService;
+import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IUserPersistenceService;
 import pt.uc.dei.aor.project.business.startup.Encryptor;
 import pt.uc.dei.aor.project.business.util.EmailUtil;
@@ -52,6 +54,9 @@ public class UserBusinessService implements IUserBusinessService {
 	
 	@Inject
 	private IInterviewPersistenceService interviewPersistence;
+	
+	@Inject
+	private IPositionPersistenceService positionPersistence;
 	
 	@Inject
 	private UploadUtil upload;
@@ -282,7 +287,14 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-	public void removeManager(IUser user) {
+	public void removeManager(IUser user) throws IllegalRoleChangeException {
+		List<IPosition> positions = positionPersistence.findOpenPositions();
+		
+		for (IPosition p : positions) {
+			if (p.getContactPerson().equals(user)) throw new IllegalRoleChangeException(
+					"User is manager of open position(s)");
+		}
+		
 		user.removeRole(Role.MANAGER);
 		userPersistence.save(user);
 	}
@@ -294,7 +306,14 @@ public class UserBusinessService implements IUserBusinessService {
 	}
 
 	@Override
-	public void removeInterviewer(IUser user) {
+	public void removeInterviewer(IUser user) throws IllegalRoleChangeException {
+		List<IInterview> interviews = interviewPersistence.findActiveInterviewsByUser(user);
+		
+		for (IInterview i : interviews) {
+			if (i.getInterviewers().contains(user)) throw new IllegalRoleChangeException(
+					"User is interviewer of scheduled interview(s)");
+		}
+		
 		user.removeRole(Role.INTERVIEWER);
 		userPersistence.save(user);
 	}

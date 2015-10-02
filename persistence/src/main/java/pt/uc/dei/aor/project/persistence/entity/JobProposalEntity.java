@@ -102,5 +102,10 @@ public class JobProposalEntity {
 		situation = accepted;
 	}
 
+
+	public void setApplication(ApplicationEntity application) {
+		this.application = application;
+	}
+
 	
 }

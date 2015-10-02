@@ -20,6 +20,13 @@ public class PropositionPersistenceService implements IPropositionPersistenceSer
 	@PersistenceContext(unitName = "jobs")
     private EntityManager em;
 
+	@Override
+	public IProposition save(IProposition proxy) {
+		JobProposalEntity entity = GenericPersistenceService.getEntity(proxy);
+		entity = em.merge(entity);
+		
+		return new PropositionProxy(entity);
+	}
 	
 	@Override
 	public List<IProposition> findPropositionsByDate(Date startDate) {

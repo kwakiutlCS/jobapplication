@@ -211,6 +211,7 @@ public class ApplicationEntity {
 
 	public void setProposition(JobProposalEntity proposition) {
 		proposal = proposition;
+		proposition.setApplication(this);
 	}
 
 	public JobProposalEntity getProposition() {

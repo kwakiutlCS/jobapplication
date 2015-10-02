@@ -6,6 +6,7 @@ import java.util.List;
 import pt.uc.dei.aor.project.business.filter.ApplicationFilter;
 import pt.uc.dei.aor.project.business.model.IApplication;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.model.IUser;
 
 public interface IApplicationPersistenceService {
@@ -29,6 +30,9 @@ public interface IApplicationPersistenceService {
 	boolean hasSpontaneous(IUser user);
 
 	List<IApplication> findApplicationsByDate(Date startDate, Date finishDate);
+
+	
+	IApplication sendProposition(IApplication application, IProposition proposition);
 
 
 

@@ -60,11 +60,11 @@ public interface IUserBusinessService {
 
 	void addManager(IUser user);
 
-	void removeManager(IUser user);
+	void removeManager(IUser user) throws IllegalRoleChangeException;
 
 	void addInterviewer(IUser user);
 
-	void removeInterviewer(IUser user);
+	void removeInterviewer(IUser user) throws IllegalRoleChangeException;
 
 	boolean interviewerHasCandidate(IUser user, String string);
 

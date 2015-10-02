@@ -31,6 +31,8 @@ public class PropositionBusinessService implements IPropositionBusinessService {
 		application.sendProposition(proposition);
 		applicationPersistence.save(application);
 		
+		//application = applicationPersistence.sendProposition(application, proposition);
+		
 		IPosition position = application.getPosition();
 		List<IApplication> applications = applicationPersistence.findAllApplicationsByPosition(position);
 		

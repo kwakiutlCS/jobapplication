@@ -20,7 +20,7 @@ public class LoggedInFilter2 implements Filter {
 	@Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException { 
     	HttpServletRequest req = (HttpServletRequest) request;
-    
+    	System.out.println("filter");
         IUser user = (IUser) req.getSession().getAttribute("user");
         
         if (user != null) {
