@@ -56,6 +56,7 @@ public class UserEntity {
 		this.completeName = name+" "+surname;
 		this.roles = new HashSet<>(roles);
 		this.roles.add(Role.CANDIDATE);
+		this.intern = true;
 	}
 	
 	public UserEntity() {
@@ -71,17 +72,17 @@ public class UserEntity {
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
+		this.completeName = name+" "+surname;
 		this.address = address;
 		this.city = city;
 		this.country = country;
-		this.qualifications = new HashSet<>();
-		this.qualifications.addAll(qualifications);
+		this.qualifications = new HashSet<>(qualifications);
 		this.cv = cv;
-		this.completeName = name+" "+surname;
-		this.phone=phone;
-		this.mobilePhone=mobilePhone;
+		this.phone = phone;
+		this.mobilePhone = mobilePhone;
 		this.roles = new HashSet<>();
 		this.roles.add(Role.CANDIDATE);
+		this.intern = false;
 	}
 
 
@@ -107,6 +108,9 @@ public class UserEntity {
 	
 	@Column(nullable=false, unique=true)
 	protected String email;
+	
+	@Column(nullable = false) 
+	private boolean intern;
 	
 	@Column
 	private String address;
@@ -336,6 +340,7 @@ public class UserEntity {
 	}
 
 	public void addRole(Role role) {
+		intern = true;
 		roles.add(role);
 	}
 	

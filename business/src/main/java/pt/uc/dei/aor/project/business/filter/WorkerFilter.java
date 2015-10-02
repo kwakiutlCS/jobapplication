@@ -49,4 +49,5 @@ public class WorkerFilter extends GenericFilter {
 	public void mergeRoles(int index) throws IllegalFilterParamException {
 		mergeElements(roles, index);
 	}
+
 }

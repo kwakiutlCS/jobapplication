@@ -179,11 +179,8 @@ public class UserPersistenceService implements IUserPersistenceService {
 		q.select(worker);
 		
 		List<Predicate> criteriaPredicates = new ArrayList<>();
-		Expression<List<Role>> rolesAssigned = worker.get("roles");
-		Predicate rolePredicate = cb.isMember(Role.ADMIN, rolesAssigned);
-		rolePredicate = cb.or(rolePredicate, cb.isMember(Role.MANAGER, rolesAssigned));
-		rolePredicate = cb.or(rolePredicate, cb.isMember(Role.INTERVIEWER, rolesAssigned));
-		criteriaPredicates.add(rolePredicate);
+		Expression<Boolean> intern = worker.get("intern");
+		criteriaPredicates.add(cb.isTrue(intern));
 		
 		// start where
 		if (filter != null) {
