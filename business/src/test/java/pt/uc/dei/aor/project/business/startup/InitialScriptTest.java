@@ -49,24 +49,7 @@ public class InitialScriptTest {
 		System.setProperty("jboss.server.data.dir","fake_path");
 	}
 	
-//	@Test
-//	public void shouldLoadDataWhenQualificationIsNotPopulated() throws IOException{
-//
-//		Mockito.when(qualification.isPopulated()).thenReturn(false);
-//				
-//		Path path = (Path) Mockito.anyObject();
-//				
-//		Mockito.when(Files.exists(path)).thenReturn(true);
-//		
-//		BufferedReader reader = Files.newBufferedReader(path);
-//
-//		Mockito.when(((BufferedReader) Mockito.anyObject()).readLine()).thenReturn("something");
-//		
-//		initScript.initialize();
-//		
-//		verify(qualification).addQualification("something");
-//
-//	}
+
 
 
 	@Test

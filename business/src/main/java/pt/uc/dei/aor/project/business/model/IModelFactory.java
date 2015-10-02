@@ -54,6 +54,8 @@ public interface IModelFactory {
 	IApplication application(String submittedFileName, String cvName, String sourceInfo, Date date, IUser candidate);
 
 	IColor color();
+	
+	IPresentationText insertText();
 
 	IImage image(String submittedFileName);
 
