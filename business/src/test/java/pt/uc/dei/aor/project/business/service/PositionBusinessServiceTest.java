@@ -52,32 +52,6 @@ public class PositionBusinessServiceTest {
 	private PositionBusinessService ejb;
 
 
-	//	@Override
-	//	public IPosition createNewPosition(String title, Collection<Localization> localizations,
-	//			PositionState state, int vacancies, Date closingDate, int sla,
-	//			IUser contactPerson, String company,
-	//			Collection<TechnicalArea> technicalAreas, String description,
-	//			List<IScript> scripts, Collection<IPublicationChannel> channels) {
-	//		
-	//		openingDate = new Date();		
-	//		
-	//		code = codeDefiningMethod(); 
-	//
-	//
-	//		IPosition position = factory.position(code, openingDate, title, localizations, state, vacancies, closingDate, sla, 
-	//				contactPerson, company, technicalAreas, description, scripts, channels);
-	//		
-	//		String msgTitle = "Position opening";
-	//		String message = "Position: "+title+" was created with you as manager";
-	//		notificationService.notify(contactPerson, message, msgTitle);
-	//		
-	//		emailUtil.send(contactPerson.getEmail(), msgTitle, message);
-	//		
-	//
-	//		return positionPersistence.save(position);
-	//	}
-
-
 	@Test
 	public void shouldCreatePositionWithPresentDate() throws ParseException{
 
@@ -104,10 +78,6 @@ public class PositionBusinessServiceTest {
 		
 
 		IPosition pos = ejb.createNewPosition(title, locations, state, vacancies, closingDate, sla, manager, company, areas, description, scripts, channels);
-
-//		verify(factory).position(3L , new Date(), title, locations, state, vacancies, closingDate, sla, 
-//				manager, company, areas, description, scripts, channels);
-
 
 		verify(notification).notify(manager,  "Position: "+title+" was created with you as manager","Position opening");
 
