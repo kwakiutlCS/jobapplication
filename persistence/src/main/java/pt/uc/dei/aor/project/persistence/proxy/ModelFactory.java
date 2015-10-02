@@ -16,6 +16,7 @@ import pt.uc.dei.aor.project.business.model.IInterview;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.INotification;
 import pt.uc.dei.aor.project.business.model.IPosition;
+import pt.uc.dei.aor.project.business.model.IPresentationText;
 import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.model.IPublicationChannel;
 import pt.uc.dei.aor.project.business.model.IQualification;
@@ -140,6 +141,12 @@ public class ModelFactory implements IModelFactory {
 	@Override
 	public IImage image(String title) {
 		return new ImageProxy(title);
+	}
+
+	@Override
+	public IPresentationText insertText() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -22,7 +22,7 @@ public class PresentationTextEntity {
 	@Column
 	private String title;
 	
-	@OneToMany(mappedBy="presentationTextEntity" )
+	@OneToMany
 	private List<TextBoxEntity> text;
 
 	public PresentationTextEntity() {

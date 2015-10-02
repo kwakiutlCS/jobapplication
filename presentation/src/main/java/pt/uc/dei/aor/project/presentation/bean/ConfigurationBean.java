@@ -35,6 +35,7 @@ public class ConfigurationBean implements Serializable {
 	
 	
 	public void upload(AjaxBehaviorEvent event) {
+		System.out.println("uploading");
 		System.out.println(img.getContentType());
 		if (!img.getContentType().equals("application/png")) {
 			MetaUtils.setMsg("Please upload an image file", FacesMessage.SEVERITY_ERROR);
@@ -48,6 +49,15 @@ public class ConfigurationBean implements Serializable {
 		}
 		
 		img = null;
+	}
+
+	
+	public Part getImg() {
+		return img;
+	}
+
+	public void setImg(Part img) {
+		this.img = img;
 	}
    
 }

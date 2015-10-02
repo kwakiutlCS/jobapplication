@@ -5,6 +5,7 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -71,7 +72,7 @@ public class PropositionBusinessServiceTest {
 //		}
 //	}
 	
-	
+	@Ignore
 	@Test
 	public void shouldSendProposition(){
 	
