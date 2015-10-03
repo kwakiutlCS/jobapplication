@@ -10,8 +10,8 @@
 	<ui:define name="content">
 		
 		<h:form>
-			<p>Number of applications by date period</p>
-			<p:selectOneMenu value="#{reportBean.period}">
+			<h2>Number of applications by date period</h2>
+			<p:selectOneMenu value="#{reportBean.period}" class="selectMenu">
 			<f:selectItem itemLabel="Monthly" itemValue="1" />
 			<f:selectItem itemLabel="Quarterly" itemValue="3" />
 			<f:selectItem itemLabel="Yearly" itemValue="12" />
@@ -20,7 +20,7 @@
 			update="@form" />
 
 			<h:panelGroup rendered="#{reportBean.periodicAppVisible}">
-				<p:dataTable value="#{reportBean.periodicAppModel.points}" var="p" id="table">
+				<p:dataTable value="#{reportBean.periodicAppModel.points}" var="p" id="table1">
 					<p:column>
 						<f:facet name="header">
                 			<h:outputText value="Date" />
@@ -38,31 +38,45 @@
 					style="height:300px" widgetVar="chart" />
 			
 			<h:commandLink id="pdf" value="export">
-        		<p:dataExporter type="pdf" target="table" fileName="ApplicationsPeriodReport"
-        		preProcessor="#{documentBean.preProcessPDF}" />
+        		<p:dataExporter type="pdf" target="table1" fileName="ApplicationsPeriodReport"
+        		preProcessor="#{documentBean.preAppDate}" />
     		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		
 				
 		<h:form>
-			<p>Number of applications by position</p>
+			<h2>Number of applications by position</h2>
 			<p:commandButton value="Generate report" action="#{reportBean.generatePositionApp}" 
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.positionAppVisible}">
-				<p:dataTable value="#{reportBean.positionAppModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.positionAppModel.points}" var="p" id="table2">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table2" fileName="ApplicationsPositionReport"
+        		preProcessor="#{documentBean.preAppPos}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		
 		
 		<h:form>
-			<p>Number of spontaneous applications by date period</p>
-			<p:selectOneMenu value="#{reportBean.period}">
+			<h2>Number of spontaneous applications by date period</h2>
+			<p:selectOneMenu value="#{reportBean.period}" class="selectMenu">
 			<f:selectItem itemLabel="Monthly" itemValue="1" />
 			<f:selectItem itemLabel="Quarterly" itemValue="3" />
 			<f:selectItem itemLabel="Yearly" itemValue="12" />
@@ -71,19 +85,34 @@
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.spontaneousAppVisible}">
-				<p:dataTable value="#{reportBean.spontaneousAppModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.spontaneousAppModel.points}" var="p" id="table3">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table3" fileName="SpontaneousPeriodReport"
+        		preProcessor="#{documentBean.preSponDate}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		
 		
 		
 			<h:form>
-			<p>Rejected candidates report</p>
-			<p:selectOneMenu value="#{reportBean.period}">
+			<h2>Rejected candidates report</h2>
+			<p:selectOneMenu value="#{reportBean.period}" class="selectMenu">
 			<f:selectItem itemLabel="Last 3 months" itemValue="3" />
 			<f:selectItem itemLabel="Last year" itemValue="12" />
 			<f:selectItem itemLabel="All" itemValue="-1" />
@@ -92,17 +121,31 @@
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.rejectedCandidatesVisible}">
-				<p:dataTable value="#{reportBean.rejectedCandidatesModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.rejectedCandidatesModel.points}" var="p" id="table4">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table4" fileName="RejectedReport"
+        		preProcessor="#{documentBean.preReject}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		
 		<h:form>
-			<p>Interviews results report</p>
-			<p:selectOneMenu value="#{reportBean.period}">
+			<h2>Interviews results report</h2>
+			<p:selectOneMenu value="#{reportBean.period}" class="selectMenu">
 			<f:selectItem itemLabel="Last 3 months" itemValue="3" />
 			<f:selectItem itemLabel="Last year" itemValue="12" />
 			<f:selectItem itemLabel="All" itemValue="-1" />
@@ -111,17 +154,31 @@
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.interviewReportVisible}">
-				<p:dataTable value="#{reportBean.interviewReportModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.interviewReportModel.points}" var="p" id="table5">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table5" fileName="InterviewReport"
+        		preProcessor="#{documentBean.preInterviews}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		
 		<h:form>
-			<p>Proposals results report</p>
-			<p:selectOneMenu value="#{reportBean.period}">
+			<h2>Proposals results report</h2>
+			<p:selectOneMenu value="#{reportBean.period}" class="selectMenu">
 			<f:selectItem itemLabel="Last 3 months" itemValue="3" />
 			<f:selectItem itemLabel="Last year" itemValue="12" />
 			<f:selectItem itemLabel="All" itemValue="-1" />
@@ -130,39 +187,81 @@
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.proposalReportVisible}">
-				<p:dataTable value="#{reportBean.proposalReportModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.proposalReportModel.points}" var="p" id="table6">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table6" fileName="ProposalsReport"
+        		preProcessor="#{documentBean.preProposals}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 		
 		<h:form>
-			<p>Average time to first interview</p>
+			<h2>Average time to first interview</h2>
 			<p:commandButton value="Generate report" action="#{reportBean.generateInterviewTime}" 
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.interviewTimeVisible}">
-				<p:dataTable value="#{reportBean.interviewTimeModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.interviewTimeModel.points}" var="p" id="table7">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table7" fileName="AverageInterveiwReport"
+        		preProcessor="#{documentBean.preTimeInter}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 	
 		<h:form>
-			<p>Average time for hiring</p>
+			<h2>Average time for hiring</h2>
 			<p:commandButton value="Generate report" action="#{reportBean.generateHiringTime}" 
 			update="@form" />
 			
 			<h:panelGroup rendered="#{reportBean.hiringTimeVisible}">
-				<p:dataTable value="#{reportBean.hiringTimeModel.points}" var="p">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+				<p:dataTable value="#{reportBean.hiringTimeModel.points}" var="p" id="table8">
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}" style="height:300px"/>
+				<h:commandLink id="pdf" value="export">
+        		<p:dataExporter type="pdf" target="table8" fileName="hiringTimeReport"
+        		preProcessor="#{documentBean.preHiringTime}" />
+    		</h:commandLink>
 			</h:panelGroup>
 		</h:form>
 	</ui:define>

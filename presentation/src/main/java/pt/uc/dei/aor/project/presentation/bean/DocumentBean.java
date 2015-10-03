@@ -30,5 +30,75 @@ public class DocumentBean implements Serializable {
 		phrase.add("Job applications received by date\n\n\n");
 		pdf.add(phrase);
 	}
+	
+	public void preAppPos(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Job applications received by position\n\n\n");
+		pdf.add(phrase);
+	}
+	
+	public void preSponDate(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Spontaneous job applications received by date\n\n\n");
+		pdf.add(phrase);
+	}
+	
+	public void preHiringTime(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Average hiring time\n\n\n");
+		pdf.add(phrase);
+	}
+	
+	public void preTimeInter(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Average 1st interview time\n\n\n");
+		pdf.add(phrase);
+	}
+	
+	public void preInterviews(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Results of interviews\n\n\n");
+		pdf.add(phrase);
+	}
+	
+	public void preProposals(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Results of proposals\n\n\n");
+		pdf.add(phrase);
+	}
+	
+	public void preReject(Object document) throws IOException, BadElementException, DocumentException {
+		Document pdf = (Document) document;
+		pdf.open();
+		pdf.setPageSize(PageSize.A4);
+
+		Phrase phrase = new Phrase();
+		phrase.add("Reason for rejection\n\n\n");
+		pdf.add(phrase);
+	}
 }
 
