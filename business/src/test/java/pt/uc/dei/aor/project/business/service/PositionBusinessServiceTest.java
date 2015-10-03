@@ -1,5 +1,6 @@
 package pt.uc.dei.aor.project.business.service;
 
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 import java.text.ParseException;
@@ -8,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -52,7 +52,7 @@ public class PositionBusinessServiceTest {
 	@InjectMocks
 	private PositionBusinessService ejb;
 
-	@Ignore
+
 	@Test
 	public void shouldCreatePositionWithPresentDate() throws ParseException{
 
@@ -77,16 +77,46 @@ public class PositionBusinessServiceTest {
 		Mockito.when(persistence.findBiggestCode()).thenReturn(2L);
 		
 		
-
 		IPosition pos = ejb.createNewPosition(title, locations, state, vacancies, closingDate, sla, manager, company, areas, description, scripts, channels);
 
 		verify(notification).notify(manager,  "Position: "+title+" was created with you as manager","Position opening");
-
-		verify(emailUtil).send("test@mail", "Position opening", Mockito.anyString(), null);
 		
 		verify(persistence).save(pos);
+	
 		
 	}
+	
+	
+	@Test 
+	public void codeDefiningMethodTest() throws ParseException{
+		
+		String title = "titleTest";
+		int vacancies = 5;
+		int sla = 15;
+		String company = "Our Company Test";
+		String description = "testing";
+		List<Localization> locations = new ArrayList<Localization>();
+		List<IScript> scripts = new ArrayList<IScript>();
+		List<TechnicalArea> areas = new ArrayList<TechnicalArea>();
+		List<IPublicationChannel> channels = new ArrayList<IPublicationChannel>();
+		PositionState state = PositionState.OPEN;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy");
+		String dateInString = "22-08-2015";
+		Date date = sdf.parse(dateInString);
+		Date closingDate = date;
+
+		IPosition pos = ejb.createNewPosition(title, locations, state, vacancies, closingDate, sla, manager, company, areas, description, scripts, channels);
+
+		Mockito.when(persistence.findBiggestCode()).thenReturn(2L);
+		verify(persistence).save(pos);
+		long code = ejb.codeDefiningMethod();
+		
+		assertTrue(code==3L );
+		
+	}
+	
+	
 }
 
 
