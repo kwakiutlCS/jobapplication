@@ -7,6 +7,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import pt.uc.dei.aor.project.business.filter.PositionFilter;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
@@ -23,6 +26,8 @@ import pt.uc.dei.aor.project.business.util.TechnicalArea;
 @Stateless
 public class PositionBusinessService implements IPositionBusinessService {
 
+	private static final Logger logger = LoggerFactory.getLogger(PositionBusinessService.class);
+	
 	@Inject
 	private IModelFactory factory;
 
@@ -57,8 +62,14 @@ public class PositionBusinessService implements IPositionBusinessService {
 		String message = "Position: "+title+" was created with you as manager";
 		notificationService.notify(contactPerson, message, msgTitle);
 		
-		emailUtil.send(contactPerson.getEmail(), msgTitle, message);
+		logger.debug("sending email service");
+		logger.debug(contactPerson.getEmail());
+		//emailUtil.send(contactPerson.getEmail(), msgTitle, message, null);
 		
+		String msgEmail = "<h1>"+company+"</h1>"+
+				"<p>Position creation "+
+				title+" was created and assigned you as manager.</p>";
+		emailUtil.send(contactPerson.getEmail(), msgEmail, msgTitle, null);
 
 		return positionPersistence.save(position);
 	}

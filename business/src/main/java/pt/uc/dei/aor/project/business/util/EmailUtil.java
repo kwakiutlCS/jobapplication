@@ -42,6 +42,7 @@ public class EmailUtil {
 	@Asynchronous
 	public void send(String to, String content, String subject) {
 		try {
+			log.debug("email starting");
 			MimeMessage message = new MimeMessage(session);
 			message.setSubject(subject);
  
@@ -50,7 +51,7 @@ public class EmailUtil {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
  			
 			message.setText(content, "utf-8", "html");
-       
+			log.debug("done email");
 	        Transport.send(message);
 		} catch (MessagingException e) {
 			log.error("email failed");
@@ -61,6 +62,8 @@ public class EmailUtil {
 	@Asynchronous
 	public void send(String to, String content, String subject, Path file) {
 		try {
+			log.debug("Sending mail "+to);
+			
 			MimeMessage message = new MimeMessage(session);
 			message.setSubject(subject);
  
@@ -75,14 +78,16 @@ public class EmailUtil {
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(messageBodyPart);
 			
-			BodyPart attach = new MimeBodyPart();
-			DataSource source = new FileDataSource(file.toAbsolutePath().toString());
-			attach.setDataHandler(new DataHandler(source));
-			attach.setFileName(file.getFileName().toString());
-			multipart.addBodyPart(attach);
-			
+			if (file != null) {
+				BodyPart attach = new MimeBodyPart();
+				DataSource source = new FileDataSource(file.toAbsolutePath().toString());
+				attach.setDataHandler(new DataHandler(source));
+				attach.setFileName(file.getFileName().toString());
+				multipart.addBodyPart(attach);
+			}
 			message.setContent(multipart);
 	        Transport.send(message);
+	        log.debug("email sent successfully");
 		} catch (MessagingException e) {
 			log.error("email failed");
 		}

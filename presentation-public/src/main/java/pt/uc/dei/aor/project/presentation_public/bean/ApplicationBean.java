@@ -73,7 +73,7 @@ public class ApplicationBean implements Serializable {
 		} catch (IllegalApplicationException e) {
 			MetaUtils.setMsg("Already applied to this position", FacesMessage.SEVERITY_ERROR);
 		}
-		return "positionDetail?pos="+position.getId();
+		return "myPage.xhtml?faces-redirect=true";
 	}
 	
 	public String createSpontaneous() {
@@ -94,7 +94,7 @@ public class ApplicationBean implements Serializable {
 			System.out.println(e.getMessage());
 			MetaUtils.setMsg("Error creating application", FacesMessage.SEVERITY_ERROR);
 		}
-		return null;
+		return "myPage.xhtml?faces-redirect=true";
 	}
 		
 	public IPosition findPosition(){

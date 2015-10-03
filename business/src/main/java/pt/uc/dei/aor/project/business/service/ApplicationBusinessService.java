@@ -18,6 +18,7 @@ import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IPosition;
 import pt.uc.dei.aor.project.business.model.IUser;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
+import pt.uc.dei.aor.project.business.util.EmailUtil;
 import pt.uc.dei.aor.project.business.util.UploadUtil;
 
 @Stateless
@@ -32,6 +33,12 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 	
 	@Inject
 	private IModelFactory factory;
+	
+	@Inject
+	private EmailUtil emailUtil;
+
+	@Inject
+	private INotificationBusinessService notificationService;
 	
 	
 	@Override
@@ -53,6 +60,22 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 		
 		IApplication application = factory.application(letter.getSubmittedFileName(), 
 				cvName,sourceInfo, date, candidate, position);
+		
+		// notify user
+		IUser user = position.getContactPerson();
+		String title = "Application to a position created";
+		String msg = "Position  "+
+				position.getTitle()+" had an application "+
+				"\nCandidate: "+candidate.getFullName();
+
+		String msgEmail = "<h1>"+position.getCompany()+"</h1>"+
+				"<p>Position "+position.getTitle()+" had an application</p>"+
+				"<p>\nCandidate: "+candidate.getFullName()+"</p>";
+
+
+		notificationService.notify(user, msg, title);
+
+		emailUtil.send(user.getEmail(), msgEmail, title, null);
 		
 		return createApplication(application, tmpLetter, letter, tmpCv, cv, candidate);
 	}
@@ -186,6 +209,24 @@ public class ApplicationBusinessService implements IApplicationBusinessService {
 			throw new IllegalPositionAssignmentException();
 		
 		selectedApplication.addPositon(positionToAdd);
+		
+		// notify user
+		IUser user = positionToAdd.getContactPerson();
+		String title = "Application added to a position";
+		String msg = "Application added to a position "+
+				positionToAdd.getTitle()+" had an application associated"+
+				"\nCandidate: "+selectedApplication.getCandidate().getFullName();
+
+		String msgEmail = "<h1>"+positionToAdd.getCompany()+"</h1>"+
+				"<p>Application added to a position </p>"+
+				"<p>\nCandidate: "+selectedApplication.getCandidate().getFullName()+"</p>";
+				
+
+		notificationService.notify(user, msg, title);
+
+		emailUtil.send(user.getEmail(), msgEmail, title, null);
+		
+		
 		return applicationPersistence.save(selectedApplication);
 	}
 
