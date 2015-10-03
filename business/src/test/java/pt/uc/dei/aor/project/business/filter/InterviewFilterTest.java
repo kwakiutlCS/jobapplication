@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Before;
@@ -193,4 +194,38 @@ public class InterviewFilterTest {
 		assertThat(filter.getPositions().size(), is(equalTo(2)));
 		
 	}
+	
+	@Test
+	public void shouldDeletePositions() {
+		filter.addPosition("title");
+		assertThat(filter.getPositions().size(), is(equalTo(1)));
+		
+		filter.deletePosition(0);
+		assertThat(filter.getPositions().size(), is(equalTo(0)));
+		
+		
+	}
+	
+	@Test
+	public void shouldAddCandidate() {
+		filter.addCandidate("title");
+		
+		assertThat(filter.getCandidate(), is(equalTo("title")));
+		
+		filter.deleteCandidate();
+		assertThat(filter.getCandidate(), is(equalTo(null)));
+		
+		
+	}
+	
+	@Test
+	public void shouldAddstart() {
+		Date d = new Date();
+		
+		filter.setStartDate(d);
+		assertThat(filter.getStartDate().getDate(), is(equalTo(d.getDate())));
+	
+	}
+	
+	
 }
