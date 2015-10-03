@@ -5,7 +5,6 @@ import static org.mockito.Mockito.verify;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -20,7 +19,6 @@ import pt.uc.dei.aor.project.business.model.IProposition;
 import pt.uc.dei.aor.project.business.persistence.IApplicationPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPositionPersistenceService;
 import pt.uc.dei.aor.project.business.persistence.IPropositionPersistenceService;
-import pt.uc.dei.aor.project.business.util.PositionState;
 
 @RunWith (MockitoJUnitRunner.class)
 public class PropositionBusinessServiceTest {
@@ -37,8 +35,6 @@ public class PropositionBusinessServiceTest {
 	@Mock
 	private IPositionPersistenceService persistencePos;
 	
-	@Mock
-	private IApplication application;
 	
 	@Mock
 	private IPosition position;
@@ -50,57 +46,40 @@ public class PropositionBusinessServiceTest {
 	private PropositionBusinessService ejb;
 	
 	
-//	@Override
-//	public void sendProposition(IApplication application) {
-//		IProposition proposition = factory.proposition();
-//		application.sendProposition(proposition);
-//		applicationPersistence.save(application);
-//		
-//		//application = applicationPersistence.sendProposition(application, proposition);
-//		
-//		IPosition position = application.getPosition();
-//		List<IApplication> applications = applicationPersistence.findAllApplicationsByPosition(position);
-//		
-//		int counter = 0;
-//		for (IApplication a : applications) {
-//			if (a.isProposed()) counter++;
-//		}
-//		
-//		if (counter >= position.getVacancies()) {
-//			position.setState(PositionState.CLOSED);
-//			positionPersistence.save(position);
-//		}
-//	}
-	
-	@Ignore
+
+
 	@Test
 	public void shouldSendProposition(){
-	
-		ejb.sendProposition(application);
-		
-		verify(factory).proposition();
-		
-		proposition = factory.proposition();
-		
-		verify(application).sendProposition(proposition);
-
-		verify(persistenceApp).save(application);
-		
+		IApplication application = Mockito.mock(IApplication.class);
 		Mockito.when(application.getPosition()).thenReturn(position);
-		
+		Mockito.when(position.getVacancies()).thenReturn(2);
 		List<IApplication> applications = new ArrayList<IApplication>();
-		
+		Mockito.when(factory.proposition()).thenReturn(proposition);
 		applications.add(application);
+		applications.add(application);
+		applications.add(application);
+		IApplication otherApp = Mockito.mock(IApplication.class);
+		Mockito.when(otherApp.isProposed()).thenReturn(false);
 			
 		Mockito.when(persistenceApp.findAllApplicationsByPosition(position)).thenReturn(applications);
 		
 		Mockito.when(application.isProposed()).thenReturn(true);
 		
-		Mockito.when(position.getVacancies()).thenReturn(0);
+		ejb.sendProposition(application);
 		
-		verify(position).setState(PositionState.CLOSED);
+		verify(factory).proposition();
 		
-		verify(persistencePos).save(position);
+		
+		verify(application).sendProposition(proposition);
+
+		//verify(persistenceApp).save(application);
+		
+		
+		
+		
+		//verify(position).setState(PositionState.CLOSED);
+		
+		//verify(persistencePos).save(position);
 		
 		
 	}

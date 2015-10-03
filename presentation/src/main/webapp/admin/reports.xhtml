@@ -21,14 +21,25 @@
 
 			<h:panelGroup rendered="#{reportBean.periodicAppVisible}">
 				<p:dataTable value="#{reportBean.periodicAppModel.points}" var="p" id="table">
-					<p:column>#{p.x}</p:column>
-					<p:column>#{p.y}</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Date" />
+            			</f:facet>
+            			<h:outputText value="#{p.x}" />
+            		</p:column>
+					<p:column>
+						<f:facet name="header">
+                			<h:outputText value="Applications" />
+            			</f:facet>
+            			<h:outputText value="#{p.y}" />
+            		</p:column>
 				</p:dataTable>
 				<p:chart type="bar" model="#{chartBean.barModel}"
 					style="height:300px" widgetVar="chart" />
 			
 			<h:commandLink id="pdf" value="export">
-        		<p:dataExporter type="pdf" target="table" fileName="ApplicationsPeriodReport" />
+        		<p:dataExporter type="pdf" target="table" fileName="ApplicationsPeriodReport"
+        		preProcessor="#{documentBean.preProcessPDF}" />
     		</h:commandLink>
 			</h:panelGroup>
 		</h:form>

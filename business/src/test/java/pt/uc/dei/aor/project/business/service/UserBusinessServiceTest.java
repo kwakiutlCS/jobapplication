@@ -23,6 +23,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import pt.uc.dei.aor.project.business.exception.DuplicatedUserException;
 import pt.uc.dei.aor.project.business.exception.NoRoleException;
+import pt.uc.dei.aor.project.business.exception.WrongPasswordException;
 import pt.uc.dei.aor.project.business.model.IModelFactory;
 import pt.uc.dei.aor.project.business.model.IQualification;
 import pt.uc.dei.aor.project.business.model.IUser;
@@ -260,6 +261,16 @@ public class UserBusinessServiceTest {
 		
 	}
 
+
+	@Test(expected=WrongPasswordException.class)
+	public void shouldUpdateUserWithPassword() throws WrongPasswordException{
+		
+		IUser user  = Mockito.mock(IUser.class);
+		
+		ejb.update(user, "kjf");
+		verify(userEjb).save(user);
+		
+	}
 
 	
 	

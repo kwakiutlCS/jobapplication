@@ -39,4 +39,16 @@ public class EnumsTypeTest {
 		Role role = Role.ADMIN;
 		assertThat(role.getLabel(), is(equalTo("Admin")));
 	}
+	
+	@Test
+	public void shouldReturnCorrectDescriptionArea() {
+		TechnicalArea area = TechnicalArea.INTEGRATION;
+		assertThat(area.getTechnicalAreaLabel(), is(equalTo("Integration")));
+	}
+	
+	@Test
+	public void shouldReturnCorrectDescriptionNotification() {
+		Notifications area = Notifications.WORKER_CREATED;
+		assertThat(area.getLabel(), is(equalTo("Account created")));
+	}
 }
