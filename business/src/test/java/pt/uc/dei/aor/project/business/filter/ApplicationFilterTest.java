@@ -32,12 +32,5 @@ public class ApplicationFilterTest {
 	
 	}
 	
-	@Test
-	public void shouldAddend() {
-		Date d = new Date();
-		
-		filter.setFinishDate(d);
-		assertThat(filter.getFinishDate().getDate(), is(equalTo(d.getDate())));
 	
-	}
 }

@@ -24,8 +24,8 @@
 				<p:column headerText="Script title">#{script.title}</p:column>
 				<p:column headerText="Number of questions">#{script.entries.size()}</p:column>
 				<p:column>
-					<p:link value="view" outcome="script.xhtml?sc=#{script.id}" />
-					<p:link value="edit" outcome="editscript">
+					<p:link value="view" outcome="script.xhtml?sc=#{script.id}" style="margin-right:20px;"/>
+					<p:link value="edit" outcome="editscript"  style="margin-right:20px;">
 						<f:param name="sc" value="#{script.id}" />
 					</p:link>
 					<p:commandButton value="delete" icon="ui-icon-trash"
