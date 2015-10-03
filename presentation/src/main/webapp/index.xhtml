@@ -14,7 +14,7 @@
 </h:head>
 <h:body>
 
-	<h:panelGroup styleClass="loginForm">
+	<h:panelGroup styleClass="loginForm" layout="block" style="margin:200px auto 0 400px;">
 	<h:form id="loginform">
 		<p:messages autoUpdate="true" />
 		<p:panelGrid columns="2">
@@ -30,22 +30,8 @@
 
 	</h:form>
 	
-	<h:link value="recover password" id="recoverLink" />
 	</h:panelGroup>
 
-	<h:panelGroup styleClass="recoverForm">
-	<h:form id="recoveryform">
-		<p:panelGrid columns="2">
-
-			<p:outputLabel for="mail" value="email" />
-			<p:inputText id="mail" value="#{loginBean.email}" validator="#{emailRepeatedValidator.validate}"
-			required="true" />
-			<p:commandButton action="#{loginBean.recover}" value="Recover password" />
-		</p:panelGrid>
-	</h:form>
-
-	<h:link value="login" id="loginLink" />
-	</h:panelGroup>
 	
 </h:body>
 </html>

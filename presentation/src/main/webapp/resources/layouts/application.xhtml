@@ -3,41 +3,41 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
+		
 		<h:panelGroup id="analyzed" rendered="#{not empty interviewScheduleBean.selectedApplication}">
 		<h:panelGroup id="positionInfo" rendered="#{not interviewScheduleBean.spontaneous}">
 			<h1>Position Description</h1>
-			<div><span>Title</span><span>#{interviewScheduleBean.selectedPosition.title}</span></div>
-			<div><span>Technical area</span><span>
+			<div><span class="data">Title</span><span class="data">#{interviewScheduleBean.selectedPosition.title}</span></div>
+			<div><span class="data">Technical area</span><span class="data">
 			#{interviewScheduleBean.selectedPosition.technicalAreasFormatted}</span></div>
-			<div><span>Localization</span>
+			<div><span class="data">Localization</span>
 			<span>#{interviewScheduleBean.selectedPosition.localizationsFormatted}</span></div>
-			<div><span>Company</span><span>#{interviewScheduleBean.selectedPosition.company}</span></div>
-			<div><span>Manager</span><span>#{interviewScheduleBean.selectedPosition.contactPerson.fullName}</span></div>
-			<div><span>Closing date</span>
+			<div><span class="data">Company</span><span class="data">#{interviewScheduleBean.selectedPosition.company}</span></div>
+			<div><span class="data">Manager</span><span class="data">#{interviewScheduleBean.selectedPosition.contactPerson.fullName}</span></div>
+			<div><span class="data">Closing date</span>
 			<h:outputText value="#{interviewScheduleBean.selectedPosition.closingDate}">
 				<f:convertDateTime pattern="dd/MM/yyyy" />
 			</h:outputText>
 			</div>
-			<div><span>Description</span>
-			<span>#{interviewScheduleBean.selectedPosition.description}</span></div>
+			<div><span class="data">Description</span>
+			<span class="data">#{interviewScheduleBean.selectedPosition.description}</span></div>
 		</h:panelGroup>
 		
 		<h:panelGroup id="candidateInfo">
 			<h1>Candidate</h1>
-			<div><span>Name</span><span>#{interviewScheduleBean.selectedCandidate.fullName}</span></div>
-			<div><span>City</span><span>#{interviewScheduleBean.selectedCandidate.city} - 
+			<div><span class="data">Name</span><span class="data">#{interviewScheduleBean.selectedCandidate.fullName}</span></div>
+			<div><span class="data">City</span><span class="data">#{interviewScheduleBean.selectedCandidate.city} - 
 			#{interviewScheduleBean.selectedCandidate.country}</span></div>
-			<div><span>Phone</span><span>#{interviewScheduleBean.selectedCandidate.mobile} - 
+			<div><span class="data">Phone</span><span class="data">#{interviewScheduleBean.selectedCandidate.mobile} - 
 			#{interviewScheduleBean.selectedCandidate.phone}</span></div>
 			<div>
-				<div>Qualifications</div>
+				<div><h4>Qualifications</h4></div>
 				<ui:repeat var="q" value="#{interviewScheduleBean.selectedCandidate.qualifications}">
-					<div><span>#{q.school}</span><span>#{q.degree}</span></div>
+					<div><span class="data">#{q.school}</span><span class="data">#{q.degree}</span></div>
 				</ui:repeat>
 			</div>
 			<div>
-				<span>Documents</span><span> <h:outputLink
+				<span class="data">Documents</span><span> <h:outputLink
 						value="https://localhost:8443/jobmanagement/cv/applications/#{interviewScheduleBean.selectedApplicationId}/#{interviewScheduleBean.selectedApplication.cv}">
 				cv
 			</h:outputLink> - <h:outputLink value="https://localhost:8443/jobmanagement/letter/#{interviewScheduleBean.selectedApplicationId}/#{interviewScheduleBean.selectedApplication.letter}">
@@ -90,11 +90,13 @@
 				</h:form>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{interviewScheduleBean.selectedApplication.refusedByCandidate}">
+				<br /><br /><br /><br />
 				<span>Status: </span><span>Proposition refused by candidate</span>
 			</h:panelGroup>
 		</h:panelGroup>
 		
 		<h:panelGroup id="interviewListPast"  rendered="#{not empty interviewScheduleBean.selectedApplication}">
+			<h2>Interviews</h2>
 			<ui:repeat
 				value="#{interviewScheduleBean.pastInterviews}"
 				var="interview">
@@ -205,10 +207,11 @@
 		<h:panelGroup rendered="#{not empty interviewScheduleBean.selectedApplication
 		and not interviewScheduleBean.selectedApplication.refused and 
 		not interviewScheduleBean.selectedApplication.proposed}">
+			<h2>Add Interview</h2>
 			<h:form id="addInterviewForm"
 				rendered="#{empty interviewScheduleBean.editing}">
 				<div class="ui-grid-row">
-					<div class="ui-grid-col-4">
+					<div class="ui-grid-col-3">
 						<p:outputLabel for="dateSelector" value="Date" />
 
 						<p:calendar id="dateSelector"
@@ -259,6 +262,7 @@
 		</h:panelGroup>
 
 	<h:panelGroup id="propositionPanel">
+		<h2>Add proposal or refusal</h2>
 		<h:form	rendered="#{not interviewScheduleBean.selectedApplication.refused and 
 		not interviewScheduleBean.selectedApplication.proposed}">
 			<p:commandLink value="Send Proposition" 
