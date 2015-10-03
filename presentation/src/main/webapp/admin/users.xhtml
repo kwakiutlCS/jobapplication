@@ -12,7 +12,7 @@
 	
 	<ui:define name="content">
 
-		<h2>users page</h2>
+		<h2>Search users</h2>
 
 		<h:panelGroup id="preFilterSection">
 			<h:form prependId="false">
@@ -121,6 +121,7 @@
 			</p:column>
 		</p:dataTable>
 
+		<h2>Add User</h2>
 		<h:form id="addUserForm">
 			<p:panelGrid columns="2" id="userFormTable">
 				<p:outputLabel for="login" value="Login" />
@@ -147,13 +148,14 @@
 				<p:spacer />
 
 				<p:commandButton value="Create User" action="#{workerBean.register}"
-					update="userTable userFormTable" />
+					update="userTable userFormTable :globalMessages" />
 			</p:panelGrid>
 		</h:form>
 
 
 		<h:form enctype="multipart/form-data">
-   
+   			<h2>Add bulk users</h2>
+   			<p>csv file: login, email, name, surname, roles</p>
    			 <p:fileUpload value="#{workerBean.file}" mode="simple" skinSimple="true"/>
  
     		<p:commandButton value="Submit" ajax="false" action="#{workerBean.upload}" />

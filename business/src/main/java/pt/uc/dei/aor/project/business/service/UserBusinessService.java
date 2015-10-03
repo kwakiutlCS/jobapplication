@@ -75,7 +75,7 @@ public class UserBusinessService implements IUserBusinessService {
 			String p = PasswordUtil.generate(8);
 			password = Encryptor.encrypt(p);
 			logger.debug("User: "+login+" with password: "+p+" created");
-			emailUtil.send(email, "test", "other");
+			emailUtil.send(email, "Your user account for jobmanagement plaform was created with login "+login+" and password "+p, "User account created");
 		}
 		
 		IUser worker = factory.user(login, email, 

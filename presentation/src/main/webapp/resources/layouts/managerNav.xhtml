@@ -5,12 +5,44 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-	<p:menu>
-		<p:menuitem value="Positions" outcome="/manager/positions" />
-		<p:menuitem value="Applications" outcome="/manager/applications" />
-		
-		<p:menuitem value="Notifications" outcome="/manager/notifications" />
-		<p:menuitem value="User account" outcome="/manager/useraccount" />
-	</p:menu>
+	<div class="lateralNav">
+      		<ul>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.manager.header}">
+              				<h:link value="Positions" outcome="/manager/positions" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.manager.header}">
+              				<h:link value="Applications" outcome="/manager/applications" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+			
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.manager.header}">
+              				<h:link value="Notifications" outcome="/manager/notifications" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.manager.header}">
+              				<h:link value="User Account" outcome="/manager/useraccount" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				
+      </ul>
+    </div>
 
 </ui:composition>

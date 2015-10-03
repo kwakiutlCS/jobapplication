@@ -5,10 +5,43 @@
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
 
-	<p:menu>
-		<p:menuitem value="Interviews" outcome="/interview/interviews" />
-		<p:menuitem value="Notifications" outcome="/interview/notifications" />
-		<p:menuitem value="User account" outcome="/interview/useraccount" />
-	</p:menu>
-
+	<div class="lateralNav">
+      		<ul>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.interview.header}">
+              				<h:link value="Interviews" outcome="/interview/interviews" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.interview.header}">
+              				<h:link value="Applications" outcome="/manager/applications" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+			
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.interview.header}">
+              				<h:link value="Notifications" outcome="/interview/notifications" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				
+				<li>
+	 				 <div>
+              			<div class="topico leftSideHeading" style="background-color: #{colorBean.interview.header}">
+              				<h:link value="User Account" outcome="/interview/useraccount" />
+              			</div>
+	      			
+	  				</div>
+				</li>
+				
+      </ul>
+    </div>
 </ui:composition>
