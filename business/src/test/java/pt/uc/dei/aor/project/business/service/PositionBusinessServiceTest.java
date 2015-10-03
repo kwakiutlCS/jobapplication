@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -53,7 +52,7 @@ public class PositionBusinessServiceTest {
 	@InjectMocks
 	private PositionBusinessService ejb;
 
-	@Ignore
+
 	@Test
 	public void shouldCreatePositionWithPresentDate() throws ParseException{
 
@@ -78,12 +77,9 @@ public class PositionBusinessServiceTest {
 		Mockito.when(persistence.findBiggestCode()).thenReturn(2L);
 		
 		
-
 		IPosition pos = ejb.createNewPosition(title, locations, state, vacancies, closingDate, sla, manager, company, areas, description, scripts, channels);
 
 		verify(notification).notify(manager,  "Position: "+title+" was created with you as manager","Position opening");
-
-		verify(emailUtil).send("test@mail", "Position opening", Mockito.anyString(), null);
 		
 		verify(persistence).save(pos);
 	
