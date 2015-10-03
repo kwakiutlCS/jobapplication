@@ -94,13 +94,13 @@
 		
 		
 		
-		<h:panelGroup id="filterList">
+		<h:panelGroup id="filterList" style="margin-bottom: 20px;display:block;">
 			
-			<h:panelGroup id="keyword">
+			<h:panelGroup id="keyword" style="margin: 15px 0;display:block;">
 				<h:form>
 					<ui:repeat value="#{positionFilterBean.keywordSets}" var="key"
 						varStatus="status">
-						<span class="filterUnit"> <h:outputText value="#{key}" />
+						<span class="filterUnit"> <h:outputText value="keyword: " /><h:outputText value="#{key}" />
 							<p:commandLink value="x" styleClass="removalLink"
 								action="#{positionFilterBean.deleteKeyword(status.index)}"
 								update=":filterList :positionsTable" />
@@ -110,20 +110,22 @@
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{positionFilterBean.filter.code gt 0}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
+			<h:panelGroup style="margin: 15px 0;display:block;" 
+			rendered="#{positionFilterBean.filter.code gt 0}" 
+			>
+				<h:form style="display:inline-block" styleClass="filterUnit">
+				<h:outputText value="code: " />
 					<h:outputText value="#{positionFilterBean.filter.code}" />
 					<p:commandLink value="x" action="#{positionFilterBean.removeCode}" 
 					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 
-			<h:panelGroup id="title">
+			<h:panelGroup id="title" style="margin: 15px 0;display:block;">
 				<h:form>
 					<ui:repeat value="#{positionFilterBean.titleSets}" var="title"
 						varStatus="status">
-						<span class="filterUnit"> <h:outputText value="#{title}" />
+						<span class="filterUnit"><h:outputText value="title: " /> <h:outputText value="#{title}" />
 							<p:commandLink value="x" styleClass="removalLink"
 								action="#{positionFilterBean.deleteTitle(status.index)}"
 								update=":filterList :positionsTable" />
@@ -134,11 +136,11 @@
 			</h:panelGroup>
 		
 			
-			<h:panelGroup id="technicalAreas">
+			<h:panelGroup id="technicalAreas" style="margin: 15px 0;display:block;">
 				<h:form>
 					<ui:repeat value="#{positionFilterBean.areaSet}" var="set"
 						varStatus="status">
-						<span class="filterUnit"> <ui:repeat value="#{set}"
+						<span class="filterUnit"><h:outputText value="area: " /> <ui:repeat value="#{set}"
 								var="area" varStatus="innerStatus">
 								<h:outputText value="#{area.technicalAreaLabel}" />
 								<p:commandLink value="x" styleClass="removalLink"
@@ -158,11 +160,11 @@
 				</h:form>
 			</h:panelGroup>
 
-			<h:panelGroup id="localizations">
+			<h:panelGroup id="localizations" style="margin: 15px 0;display:block;">
 				<h:form>
 					<ui:repeat value="#{positionFilterBean.localizationSet}" var="set"
 						varStatus="status">
-						<span class="filterUnit"> <ui:repeat value="#{set}"
+						<span class="filterUnit"> <h:outputText value="localization: " /><ui:repeat value="#{set}"
 								var="local" varStatus="innerStatus">
 								<h:outputText value="#{local.localizationLabel}" />
 								<p:commandLink value="x" styleClass="removalLink"
@@ -182,19 +184,20 @@
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not empty positionFilterBean.filter.company}" 
-				styleClass="filterUnit">
-				<h:form style="display:inline-block">
+			<h:panelGroup rendered="#{not empty positionFilterBean.filter.company}"  style="margin: 15px 0;display:block;"
+				>
+				<h:form style="display:inline-block" styleClass="filterUnit">
 					<h:outputText value="#{positionFilterBean.filter.company}" />
 					<p:commandLink value="x" action="#{positionFilterBean.removeCompany}" 
 					update=":positionsTable :filterList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 
-			<h:panelGroup styleClass="filterUnit"
+			<h:panelGroup style="margin: 15px 0;display:block;" 
 				rendered="#{not empty positionFilterBean.filter.startDate or 
 							not empty positionFilterBean.filter.finishDate}">
-				<h:form style="display:inline-block">
+				<h:form style="display:inline-block" styleClass="filterUnit">
+					<h:outputText value="date: " />
 					<h:outputText value="#{positionFilterBean.filter.startDate}" converter="dateConverter">
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty positionFilterBean.filter.startDate}"

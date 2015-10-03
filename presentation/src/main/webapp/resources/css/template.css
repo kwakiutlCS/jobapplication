@@ -150,3 +150,9 @@ header {
 .defaultGrid td {
 	padding: 15px 0;
 }
+
+.selectMenu {
+	display: inline-block; 
+	vertical-align: top;
+	width: 125px;
+}

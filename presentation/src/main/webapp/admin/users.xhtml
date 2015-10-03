@@ -14,9 +14,9 @@
 
 		<h2>Search users</h2>
 
-		<h:panelGroup id="preFilterSection">
+		<h:panelGroup id="preFilterSection" style="margin-bottom:20px;">
 			<h:form prependId="false">
-				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
+				<p:selectOneMenu  id="filterSelector" onchange="changeSelector(this)">
 					<f:selectItem itemValue="userFilter" itemLabel="users" />
 					<f:selectItem itemValue="roleFilter" itemLabel="roles" />
 				</p:selectOneMenu>
@@ -30,7 +30,7 @@
 			</h:form>
 			
 			<h:form class="filter" id="roleFilter">
-				<p:selectOneMenu value="#{workerBean.role}" 
+				<p:selectOneMenu value="#{workerBean.role}" styleClass="selectMenu"
 				converter="omnifaces.SelectItemsConverter">
 					<f:selectItems value="#{workerBean.possibleRoles}" var="role" 
 					itemLabel="#{role.label}" />
@@ -41,12 +41,12 @@
 			
 		</h:panelGroup>
 
-		<h:panelGroup id="filterSection">
-			<h:panelGroup id="users">
+		<h:panelGroup id="filterSection" style="margin-bottom: 20px;display:block;">
+			<h:panelGroup id="users" style="margin: 15px 0;display:block;">
 				<h:form>
 					<h:panelGroup styleClass="filterUnit"
 						rendered="#{not empty workerBean.keyword}">
-						<h:outputText value="#{workerBean.keyword}" />
+						<h:outputText value="Keyword: #{workerBean.keyword}" />
 						<p:commandLink value="x" styleClass="removalLink"
 							action="#{workerBean.removeKeyword}"
 							update=":filterSection :userTable" />
@@ -54,11 +54,11 @@
 				</h:form>
 			</h:panelGroup>
 
-			<h:panelGroup id="roles">
+			<h:panelGroup id="roles" style="margin: 15px 0;display:block;">
 				<h:form>
 					<ui:repeat value="#{workerBean.roleSets}" var="set"
 						varStatus="status">
-						<span class="filterUnit"> <ui:repeat value="#{set}"
+						<span class="filterUnit"><h:outputText value="Role: " /><ui:repeat value="#{set}"
 								var="role" varStatus="innerStatus">
 								<h:outputText value="#{role.label}" />
 								<p:commandLink value="x" styleClass="removalLink"
