@@ -100,15 +100,6 @@ public class ApplicationBean implements Serializable {
 		state = null;
 	}
 	
-	public void addType() {
-		filter.setType(type);
-	}
-	
-	public void removeType() {
-		filter.setType(null);
-		type = null;
-	}
-	
 	public void addSpontaneous() {
 		if (spontaneous.equals("True"))
 			filter.setSpontaneous(true);

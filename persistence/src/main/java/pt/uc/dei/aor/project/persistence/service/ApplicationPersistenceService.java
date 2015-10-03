@@ -135,16 +135,6 @@ public class ApplicationPersistenceService implements IApplicationPersistenceSer
 				criteriaPredicates.add(statePredicate);
 			}
 			
-			// type filter
-			String typeFilter = filter.getType();
-			if (typeFilter != null) {
-				if (typeFilter.equals("Internal")) {
-					criteriaPredicates.add(cb.isNull(application.get("candidate")));
-				}
-				else {
-					criteriaPredicates.add(cb.isNull(application.get("internalCandidate")));
-				}
-			}
 			
 			// spontaneous filter
 			Boolean spontanenousFilter = filter.getSpontaneous();

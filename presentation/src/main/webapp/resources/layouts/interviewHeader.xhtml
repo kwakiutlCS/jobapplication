@@ -34,11 +34,11 @@
 						<ul class="dropdown-menu">
 							<h:panelGroup rendered="#{loginBean.user.manager}">
 								<li><p:link value="see as manager"
-										outcome="/manager/index.xhtml" /></li>
+										outcome="/manager/positions.xhtml" /></li>
 							</h:panelGroup>
-							<h:panelGroup rendered="#{loginBean.user.interviewer}">
-								<li><p:link value="see as interviewer"
-										outcome="/interview/index.xhtml" /></li>
+							<h:panelGroup rendered="#{loginBean.user.admin}">
+								<li><p:link value="see as admin"
+										outcome="/admin/users.xhtml" /></li>
 							</h:panelGroup>
 							<li role="separator" class="divider"></li>
 							<li><h:form>

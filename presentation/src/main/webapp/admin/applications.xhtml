@@ -13,17 +13,18 @@
 	</ui:define>
 	
 	<ui:define name="content">
-		
+		<h1>Job Applications</h1>
+		<p></p>
 		<ui:include src="/resources/layouts/applicationFilter.xhtml" />
 		
 		
 		<p:dataTable value="#{applicationBean.activeApplications}" var="app" id="filteredList">
-			<p:column>#{app.date}</p:column>
-			<p:column><h:outputText value="#{app.position.code}" rendered="#{app.position.code gt 0}" />
+			<p:column headerText="Date">#{app.date}</p:column>
+			<p:column headerText="Code"><h:outputText value="#{app.position.code}" rendered="#{app.position.code gt 0}" />
 			</p:column>
-			<p:column>#{app.position.stateFormatted}</p:column>
-			<p:column>#{app.candidate.fullName}</p:column>
-			<p:column>
+			<p:column headerText="State">#{app.position.stateFormatted}</p:column>
+			<p:column headerText="Candidate">#{app.candidate.fullName}</p:column>
+			<p:column headerText="Analyzed">
 				<h:graphicImage value="/resources/img/yes.png" rendered="#{app.analyzed}"	/>
 				<h:graphicImage value="/resources/img/no.png" rendered="#{not app.analyzed}"/>
 			</p:column>

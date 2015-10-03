@@ -10,7 +10,6 @@ public class ApplicationFilter extends GenericFilter {
 	private Date startDate;
 	private Date finishDate;
 	private String candidate;
-	private String type;
 	private PositionState state;
 	private Boolean spontaneous;
 	
@@ -20,7 +19,6 @@ public class ApplicationFilter extends GenericFilter {
 		setStartDate(null);
 		setFinishDate(null);
 		setCandidate(null);
-		type = null;
 		setState(PositionState.OPEN);
 		setSpontaneous(null);
 	}
@@ -59,14 +57,7 @@ public class ApplicationFilter extends GenericFilter {
 		this.candidate = candidate;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String applicationType) {
-		this.type = applicationType;
-	}
-
+	
 	public PositionState getState() {
 		return state;
 	}

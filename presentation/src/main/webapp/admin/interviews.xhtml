@@ -20,8 +20,9 @@
 	</ui:define>
 	
 	<ui:define name="content">
-
-		<h:panelGroup id="preFilterSection">		
+		<h1>Interviews</h1>
+		<p></p>
+		<h:panelGroup id="preFilterSection"  style="margin-bottom:20px;">		
 			<h:form prependId="false">
 				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
 					<f:selectItem itemValue="interviewersFilter" itemLabel="interviewers" />
@@ -70,12 +71,12 @@
 			
 		</h:panelGroup>
 
-		<h:panelGroup id="filterSection">
-			<h:panelGroup id="interviewers">
+		<h:panelGroup id="filterSection" style="margin-bottom: 20px;display:block;">
+			<h:panelGroup id="interviewers" style="margin: 15px 0;display:block;">
 			<h:form>
 						<ui:repeat value="#{interviewListBean.interviewerSets}" var="set"
 							varStatus="status">
-							<span class="filterUnit"> 
+							<span class="filterUnit"> <h:outputText value="Interviewer: " />
 								<ui:repeat value="#{set}"
 									var="interviewer" varStatus="innerStatus">
 									<h:outputText value="#{interviewer.fullName}" />
@@ -96,11 +97,11 @@
 					</h:form>
 				</h:panelGroup>
 
-			<h:panelGroup id="positions">
+			<h:panelGroup id="positions" style="margin: 15px 0;display:block;">
 				<h:form>
 					<ui:repeat value="#{interviewListBean.positionSets}" var="position"
 						varStatus="status">
-						<span class="filterUnit"> <h:outputText value="#{position}" />
+						<span class="filterUnit"> <h:outputText value="Position: " /><h:outputText value="#{position}" />
 							<p:commandLink value="x" styleClass="removalLink"
 								action="#{interviewListBean.deletePosition(status.index)}"
 								update="@form :filteredList" />
@@ -110,10 +111,10 @@
 				</h:form>
 			</h:panelGroup>
 
-			<h:panelGroup id="candidates">
+			<h:panelGroup id="candidates" style="margin: 15px 0;display:block;">
 					<h:form>
 						<h:panelGroup styleClass="filterUnit" rendered="#{not empty interviewListBean.candidate}">
-								<h:outputText value="#{interviewListBean.candidate}" />
+								<h:outputText value="Candidate: " /><h:outputText value="#{interviewListBean.candidate}" />
 								<p:commandLink value="x" styleClass="removalLink"
 										action="#{interviewListBean.deleteCandidate}"
 										update="@form :filteredList" />
@@ -121,10 +122,10 @@
 					</h:form>
 					</h:panelGroup>
 					
-			<h:panelGroup styleClass="filterUnit"
+			<h:panelGroup style="margin: 15px 0;display:block;"
 				rendered="#{not empty interviewListBean.filter.startDate or 
 							not empty interviewListBean.filter.finishDate}">
-				<h:form style="display:inline-block">
+				<h:form style="display:inline-block" styleClass="filterUnit"><h:outputText value="Date: " />
 					<h:outputText value="#{interviewListBean.filter.startDate}" converter="dateConverter">
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty interviewListBean.filter.startDate}"
@@ -142,10 +143,10 @@
 
 		<h:panelGroup id="filteredList">
 		<p:dataTable value="#{interviewListBean.interviews}" var="interview">
-			<p:column>#{interview.date}</p:column>
-			<p:column>#{interview.application.position}</p:column>
-			<p:column>#{interview.candidate.fullName}</p:column>
-			<p:column>#{interview.interviewersFormatted}</p:column>
+			<p:column headerText="Date">#{interview.date}</p:column>
+			<p:column headerText="Position">#{interview.application.position.title}</p:column>
+			<p:column headerText="Candidate">#{interview.candidate.fullName}</p:column>
+			<p:column headerText="Interviewers">#{interview.interviewersFormatted}</p:column>
 		</p:dataTable>
 		</h:panelGroup>
 		

@@ -46,13 +46,13 @@ public class LoginBean {
 			List<String> roles = worker.getRoles();
 			
 			if (roles.contains("ADMIN")) {
-				result = "/admin/index.xhtml?faces-redirect=true";
+				result = "/admin/users.xhtml?faces-redirect=true";
 			}
 			else if (roles.contains("MANAGER")) {
-				result = "/manager/index.xhtml?faces-redirect=true";
+				result = "/manager/positions.xhtml?faces-redirect=true";
 			}
 			else if (roles.contains("INTERVIEWER"))
-				result = "/interview/index.xhtml?faces-redirect=true";
+				result = "/interview/interviews.xhtml?faces-redirect=true";
 			else {
 				logout();
 			}

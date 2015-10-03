@@ -6,13 +6,12 @@
 
 	
 		
-		<h:panelGroup id="preFilterSection">		
+		<h:panelGroup id="preFilterSection" style="margin-bottom:20px;">		
 			<h:form prependId="false">
 				<p:selectOneMenu id="filterSelector" onchange="changeSelector(this)">
 					<f:selectItem itemValue="codeFilter" itemLabel="code" />
 					<f:selectItem itemValue="candidateFilter" itemLabel="candidate" />
 					<f:selectItem itemValue="stateFilter" itemLabel="state" />
-					<f:selectItem itemValue="typeFilter" itemLabel="type" />
 					<f:selectItem itemValue="dateFilter" itemLabel="date" />
 					<f:selectItem itemValue="spontaneousFilter" itemLabel="spontaneous" />
 				</p:selectOneMenu>
@@ -31,7 +30,7 @@
 			</h:form>
 			
 			<h:form class="filter" id="stateFilter">
-				<p:selectOneMenu value="#{applicationBean.state}" 
+				<p:selectOneMenu value="#{applicationBean.state}" styleClass="selectMenu"
 				converter="omnifaces.SelectItemsConverter">
 					<f:selectItems value="#{positionBean.positionStates}" var="state" 
 					itemLabel="#{state.positionStateLabel}" />
@@ -40,17 +39,8 @@
 				update=":filterSection :filteredList" />
 			</h:form>
 			
-			<h:form class="filter" id="typeFilter">
-				<p:selectOneMenu value="#{applicationBean.type}">
-					<f:selectItem itemValue="External" itemLabel="External" />
-					<f:selectItem itemValue="Internal" itemLabel="Internal" />
-				</p:selectOneMenu>
-				<p:commandButton value="Add Type" action="#{applicationBean.addType}" 
-				update=":filterSection :filteredList" />
-			</h:form>
-			
 			<h:form class="filter" id="spontaneousFilter">
-				<p:selectOneMenu value="#{applicationBean.spontaneous}">
+				<p:selectOneMenu value="#{applicationBean.spontaneous}" styleClass="selectMenu">
 					<f:selectItem itemValue="True" itemLabel="true" />
 					<f:selectItem itemValue="False" itemLabel="false" />
 				</p:selectOneMenu>
@@ -72,11 +62,11 @@
 			
 		</h:panelGroup>
 		
-		<h:panelGroup id="filterSection">
+		<h:panelGroup id="filterSection" style="margin-bottom: 20px;display:block;">
 		
-			<h:panelGroup rendered="#{not empty applicationBean.filter.code}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
+			<h:panelGroup rendered="#{not empty applicationBean.filter.code}" style="margin: 15px 0;display:block;" 
+			>
+				<h:form style="display:inline-block" styleClass="filterUnit"><h:outputText value="Code: " />
 					<h:outputText value="#{applicationBean.filter.code}" />
 					<p:commandLink value="x" action="#{applicationBean.removeCode}" 
 					update=":filterSection :filteredList :preFilterSection" styleClass="removalLink" />
@@ -84,8 +74,8 @@
 			</h:panelGroup>
 			
 			<h:panelGroup rendered="#{not empty applicationBean.filter.candidate}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
+			style="margin: 15px 0;display:block;">
+				<h:form style="display:inline-block" styleClass="filterUnit"><h:outputText value="Candidate: " />
 					<h:outputText value="#{applicationBean.filter.candidate}" />
 					<p:commandLink value="x" action="#{applicationBean.removeCandidate}" 
 					update=":filterSection :filteredList" styleClass="removalLink" />
@@ -93,36 +83,28 @@
 			</h:panelGroup>
 			
 			<h:panelGroup rendered="#{not empty applicationBean.filter.state}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
+			style="margin: 15px 0;display:block;">
+				<h:form style="display:inline-block" styleClass="filterUnit"><h:outputText value="State: " />
 					<h:outputText value="#{applicationBean.filter.state.positionStateLabel}" />
 					<p:commandLink value="x" action="#{applicationBean.removeState}" 
 					update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup rendered="#{not empty applicationBean.filter.type}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
-					<h:outputText value="#{applicationBean.filter.type}" />
-					<p:commandLink value="x" action="#{applicationBean.removeType}" 
-					update=":filterSection :filteredList" styleClass="removalLink" />
-				</h:form>
-			</h:panelGroup>
-			
+		
 			<h:panelGroup rendered="#{not empty applicationBean.filter.spontaneous}" 
-			styleClass="filterUnit">
-				<h:form style="display:inline-block">
+			style="margin: 15px 0;display:block;">
+				<h:form style="display:inline-block" styleClass="filterUnit"><h:outputText value="Spontaneous: " />
 					<h:outputText value="#{applicationBean.filter.spontaneous}" />
 					<p:commandLink value="x" action="#{applicationBean.removeSpontaneous}" 
 					update=":filterSection :filteredList" styleClass="removalLink" />
 				</h:form>
 			</h:panelGroup>
 			
-			<h:panelGroup styleClass="filterUnit"
+			<h:panelGroup style="margin: 15px 0;display:block;"
 				rendered="#{not empty applicationBean.filter.startDate or 
 							not empty applicationBean.filter.finishDate}">
-				<h:form style="display:inline-block">
+				<h:form style="display:inline-block" styleClass="filterUnit"><h:outputText value="Date: " />
 					<h:outputText value="#{applicationBean.filter.startDate}" converter="dateConverter">
 					</h:outputText>
 					<p:commandLink value="x" rendered="#{not empty applicationBean.filter.startDate}"

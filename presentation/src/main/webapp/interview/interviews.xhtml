@@ -6,11 +6,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<ui:define name="content">
+		<h1>Interviews</h1>
+		<p></p>
 		
 		<p:dataTable value="#{interviewListBean.activeInterviews}" var="interview">
-			<p:column>#{interview.date}</p:column>
-			<p:column>#{interview.application.position.title}</p:column>
-			<p:column>#{interview.application.candidate.fullName}</p:column>
+			<p:column headerText="Date">#{interview.date}</p:column>
+			<p:column headerText="Position">#{interview.application.position.title}</p:column>
+			<p:column headerText="Candidate">#{interview.application.candidate.fullName}</p:column>
 			<p:column><p:link value="detail" outcome="interview.xhtml?it=#{interview.id}" /></p:column>
 		</p:dataTable>
 

@@ -13,7 +13,9 @@
 	<ui:define name="title">List Position</ui:define>
 
 	<ui:define name="content">
-
+<h1>Positions</h1>
+		<p></p>
+		
 		<ui:include src="/resources/layouts/positionFilter.xhtml" />
 		
 
@@ -56,7 +58,7 @@
 					<h:outputText value="#{position.company}" />
 				</p:column>
 
-				<p:column headerText="Detail" style="width:32px;text-align: center">
+				<p:column headerText="Detail" style="width:60px;text-align: center">
 					<p:link value="detail" outcome="position">
 						<f:param name="pos" value="#{position.id}" />
 					</p:link>

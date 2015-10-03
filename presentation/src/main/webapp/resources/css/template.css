@@ -34,8 +34,7 @@ nav.navbar-default.navbar {
 }
 
 .navbar-default ul.navbar-nav > li > a:hover, .navbar-default ul.navbar-nav > li > form > a:hover {
-	background-color: #fff;
-	color: #6A943F;
+	font-weight:bold;
 }
 
 .leftSideHeading {
@@ -54,8 +53,7 @@ nav.navbar-default.navbar {
 
 
 .leftSideHeading > a:hover {
-	color:#6A943F;
-	background-color: #fff;
+	font-weight:bold;
 	
 }
 
@@ -69,7 +67,7 @@ ul.lista > li > a {
 	color: #777;
 }
 ul.lista > li > a:hover {
-	color: #000;
+	font-weight:bold;
 }
 
 ul.lista > li {
@@ -132,8 +130,7 @@ header {
 }
 
 .logoutLink:hover {
-	background-color: #e7e7e7;
-	color: #333;
+	font-weight:bold;
 }
 
 
